@@ -1,0 +1,631 @@
+The last part about GAN
+we are going to talk about is a magical application of GAN.
+What kind of magical application is this?
+This is to use GAN
+for unsupervised learning.
+You often hear people say
+GAN can be used for
+unsupervised learning.
+I am going to tell you now
+how to use GAN in unsupervised learning.
+So far,
+what we have talked about
+is supervised learning.
+We want to train a network.
+The input of the network is called X and the output is called Y.
+We need paired data
+to train such a network.
+But you may encounter a situation that
+we have a bunch of x ​​and a bunch of y,
+but X and Y are not a pair.
+In this situation,
+is there any way to train the network
+with this kind of data?
+These kinds of unpaired data
+are called unlabeled data
+or unmarked data.
+As for how to use
+these unlabeled data,
+there are two examples
+in homework 3 and homework 5.
+Let's just put this thing,
+how to do semi-supervised learning
+with unlabeled data,
+in the homework.
+You can come if you are interested
+in how much help
+semi-supervised learning can bring.
+But these methods are more or less
+still need some paired data,
+whether it is the pseudo labeling in homework 3
+or the back translation in homework 5.
+In homework 3,
+you have to train a model first.
+This model can help you provide pseudo labels.
+If there are not many paired data
+at the beginning,
+your model will be bad.
+You have no way to produce
+a good pseudo label.
+As for back translation,
+you also need a model,
+of back translation
+and then you can do back translation.
+So, for the method in homework 3
+and the one in homework 5,
+we still need some paired data.
+But suppose we encounter
+a more difficult situation.
+It’s because we don’t have any paired data.
+What should I do?
+You might ask in what situation
+do I have no paired data.
+I can always find a student worker
+to help me label some data,
+but there may be less paired data.
+When will there be no paired data at all?
+Let's take an example here.
+For example, image style conversion.
+Suppose I want to train
+a deep network.
+The network needs to convert
+the picture in domain X to the picture in domain Y.
+The picture of domain X is the avatar of the real person.
+The picture of domain Y is the avatar of the animated character.
+The conversion of an avatar from a real person to a animated character
+is called image style conversion.
+The real person’s avatar is in domain X.
+The animated avatar is in domain Y.
+The conversion of things in domain x
+to things in domain Y
+is image style conversion.
+In this example, we might
+have no paired data, right?
+If you want paired data, for example,
+you have to take a photo for Yui Aragaki first.
+Take a photo for Yui Aragaki.
+Then we draw the anime version
+of Yui Aragaki.
+Then you could use it to train Network.
+This is obviously too expensive.
+Even part-time worker can’t do this.
+So for the image style transform,
+you may not have any paired data.
+In this situation,
+is there any way to train a network?
+Input a X to generte a Y.
+This is what GAN can do for us.
+Then we will see how to use GAN
+to learn in the situation
+where there is no any paired data.
+This is what we were talking about before
+in unconditional generation.
+When you see the architecture of the generator.
+The input is a Gaussian distribution.
+The output may be a complex distribution.
+Now we slightly
+change our mind.
+We are not going to say the input is Gaussian distribution.
+We say it is the distribution of X domain's pictures.
+That output we refer it
+to the distribution of Y domain's pictures.
+Is it possible for us to train
+such a generator?
+The input is the distribution of X domain's pictures.
+The output is the distribution of Y domain's pictures.
+It's over, if we could make it.
+Then we successfully solve this question.
+You train a network,
+which can take in an X domain data
+and transfom it to the Y domain data.
+Is there a way to do this?
+It seems not so difficult.
+You can apply the ides of the original GAN.
+In the original GAN ​​we said
+that we sample a vector from Gaussian.
+Input it to the generator.
+Then we also said that at the beginning.
+In fact, you don’t have to sample from Gaussian.
+As long as there is a way to
+sample it from any distribution.
+We chose Gaussian only because
+we know the Gaussian formulation.
+We can sample it very easily.
+Now what should we change
+if we input the distribution of X domain?
+We just need to change it to
+sample from the distrubution of domain X and it's over.
+Can you sample from
+the X domain?
+Yes, you can start from the face photos
+and pick one out of the real faces randomly,
+suck as a nerd, and it is over.
+You can sample a pciture
+from X domain
+and input this picture to the generator.
+Let it generate another picture.
+Generate a picture of
+another distribution.
+Then how to transform it
+to the Y domain distribution?
+We need two to three discriminators.
+Then let these discriminators
+see a lot of pictures of Y domain.
+So it can distinguish whether it is
+a Y domain picture.
+If it sees a Y domain picture, gives it a high score.
+If it sees the picture that is not Y domain,
+gives it a low score if it is not animation.
+Then it's done.
+You might ask what's the difference from
+the trainning process of original GAN?
+There is no difference.
+If you want do it by yourself
+in that homework.
+Just remember that in original homework
+the input of the Gaussian generator
+is sampled from
+Gaussian distribution.
+Now, remember to change the sampling method.
+We sample a picture out
+from the face of a real person.
+That's it.
+But think it twice.
+Simply apply the original GAN ​​training
+generator and discriminator
+seems to be not enough, right? Why?
+Because what our current discriminator
+has to do is to make this generator
+output a picture of the Y domain.
+The generator may learn
+to output the graph of the Y domain.
+But does the image of the Y domain it outputs
+have to be related to input?
+You don't have any restrictions
+to ask your generator to do this.
+Your generator may just take this picture
+as Gaussian noise
+and ignores anything it sees
+no matter what you enter,
+as long as it outputs
+an animated character.
+The discriminator thinks it does a good job.
+It's actually over, right?
+Hence, it is obviously not enough
+if we only apply this general GAN ​​approach
+by changing the input distribution
+from Gaussian to the X domain image,
+and train one generator,
+and then train a discriminator.
+Obviously, it's not enough
+because the generator you trained
+can generate the avatar of the animated character.
+But it has no relationship with
+the real photo input.
+This is not what we want.
+What should I do? How to solve this problem?
+How to strengthen the relationship between the input and the output?
+This generator completely ignores the input.
+You will find that
+when we were in conditional GAN,
+we have seen the same problem.
+When talking about the conditional GAN,
+I specifically mentioned this problem.
+Suppose your discriminator only looks at Y.
+Then it may ignore the generator's input.
+The result is not what we want.
+But here,
+if we want to learn from the unpaired data,
+We have no way to
+apply the idea of ​​conditional GAN ​​directly
+because I just said that
+we have paired data
+in conditional GAN.
+We can use these paired data
+to train the discriminator.
+But today, we don’t have paired data.
+We have no way to come up with paired information
+to tell the discriminator
+what the right combination of the X and the Y is.
+We don't have this kind of information. How to solve it?
+Here I have an idea.
+called cycle GAN.
+In cycle GAN,
+we will train two generators.
+The job of the first generator is to
+turn the X domain picture into the Y domain picture.
+The job of the second generator is to
+restore a picture of the Y domain
+back to the X domain picture.
+During training,
+we added an additional goal today.
+For the input picture,
+after we switch it from the X domain to the Y domain
+and switch it back from the Y domain to the X domain,
+the output picture is similar to the input picture.
+After two conversions,
+the input and output should be as close as possible.
+How to make the two pictures as close as possible?
+This is so simple.
+This is a picture.
+It’s actually a vector, right?
+Two pictures are just two different vectors.
+So the closer the distance
+between the two vectors,
+the better.
+We want the two pictures to be as similar as possible.
+It is called cycle GAN
+because of the cycle here means,
+to transform from X to Y,
+and then transform from Y back to X.
+So the output is generated from the input with two transformations.
+The closer the input is to the output, the better.
+This is called the Consistency of the cycle.
+Now we have three networks.
+The first generator
+converts from X to Y,
+and second generator
+converts from Y to X.
+The discriminator's job
+is to determine whether
+the output of the blue generator
+looks like a picture in Y domain.
+So what is the difference
+after adding the orange generator
+from Y to X?
+After adding it, the blue generator in the front
+can't mess up anymore.
+It can’t just create some random nonsense
+that has nothing to do with the input.
+Suppose the input is an "otaku"
+and the output is "Kaguya".
+This picture here is
+"Shinomiya Kaguya."
+For the second generator,
+which takes "Kaguya" as its input,
+how does it even know that
+it should transform "Kaguya" into an "otaku"?
+It has no way to know
+what the original input picture looks like.
+It doesn't even know
+the original input!
+In order to allow the second generator to
+successfully restore the original picture,
+the pictures produced by the first generator
+can't be too different from the input.
+So if the input is an "otaku",
+at least the output should be something like
+a boy wearing glasses.
+So here we have a boy wearing glasses,
+"Shinpachi".
+Then the second generator may be able to
+restore the original input.
+So the Cycle GAN at least
+forces the first generator
+to output something
+that is somehow related to the
+input picture.
+But there is a problem here.
+We can only guarantee that
+the input and output has some sort of relationship,
+what if this relationship is not exactly what we want?
+If that is the case,
+maybe the second generator will learn some weird conversion.
+For example, if the input to the first generator is a man with glasses,
+and the first one learned to wipe off the glasses
+and turn it into a mole.
+Then the second generator might have learned to
+turn a mole into glasses.
+This can still satisfy cycle consistency,
+as it successfully
+restored the input from the first generator's output.
+Let me give a more extreme example.
+Assuming that the first generator learned
+to horizontally flip the picture.
+The second generator only needs to learn to
+flip it again
+to restore the input.
+So cycle consistency
+seems to be not enough
+for a cycle GAN
+to ensure that the input and output faces
+look similar
+because the machine will might learn some weird conversions
+as long as the second generator can convert it back.
+Will it happen?
+It is possible.
+What should we do?
+There is no special solution temporarily.
+But I can tell you that
+this situation is rare
+when you use Cycle GAN.
+When you use Cycle GAN,
+you will find that input and output
+are similar most of the time.
+Moreover,
+in practice,
+even if you don’t have a second generator
+and you don't use cycle GAN,
+you can usually do this style conversion successfully
+with a normal GAN.
+You will find that
+network is actually very lazy.
+Given a picture,
+it usually wants to output
+something very similar.
+It doesn’t want to
+do the complicated conversion
+such as turning some glasses into a mole.
+It doesn't like such troublesome things.
+Generating glasses if you have glasses
+may be an easier choice for it.
+So,
+this problem is not big practically.
+Input and output will be similar.
+But in theory, there seems to be no guarantee that
+the input and the output pictures must be very similar
+even if you add cycle consistency.
+So this may be the gap
+between the practice and the theory.
+In short, although Cycle GAN does not guarantee that
+input and output must be very similar,
+you will find that the input and output
+are usually very similar,
+and they are only different in style.
+Furthermore, this Cycle GAN can be bidirectional.
+What does that mean?
+We just have a generator
+which can transform a picture in Y domain
+to an image in X domain.
+We first convert the image in X domain to Y
+then turn Y back to X.
+When training cycle GAN,
+you can do training in another direction at the same time.
+That is,
+you use this orange generator
+to transform a picture in Y domain
+to the one in X domain.
+And then use the blue generator
+to transform the picture in X domain
+back to the original Y domain.
+At the same time, input and output
+should be as close as possible.
+Also, you have to train a discriminator.
+This discriminator is
+in X domain.
+It is used to chech whether
+an image looks real or not.
+This green discriminator
+should check the similarity
+between the output picture and the real faces.
+On the contrary, this orange generator is going to cheat
+this Dx is on the left side.
+This together is Cycle GAN.
+In addition to Cycle GAN,
+you may have heard about many other
+GAN that can do style conversion.
+For example, Disco GAN, Dual GAN.
+What's the difference?
+It’s actually the same.
+You will find that
+Disco GAN ,Dual GAN, ​​and Cycle GAN
+are actually the same things.
+They have the same idea.
+However, they are proposed by different teams.
+Nearly simultaneously, they came up with almost the same idea.
+You can find the time that three articles uploaded to ArXiv are
+March 2017, April 2017, and March 2017 respectively.
+The cool thing is that
+different teams
+at almost the same time
+came up with almost the same idea.
+In addition to the Cycle GAN,
+there is another more advanced version that can do image style transfer.
+It is called the StarGAN.
+The Cycle GAN can only transfer between the two styles,
+while the StarGAN can transfer between multiple styles.
+That is not the key point that I want to elaborate on today.
+Accordingly, We just stop this topic here.
+As for transfering from real face images to animated face images,
+can we make it today?
+Actually, we can.
+There is a link in the upper right corner.
+The link will direct you to a website made by a Korean team.
+You can upload a picture to the website, and the website will transfer your image into an animated style.
+Actually, they did not use the Cycle GAN.
+They utilized a more advanced GAN technology.
+We won’t go into details here.
+I just put a link here for your reference.
+Here I will show you how the webpage does.
+I don’t know if you know this.
+This is Yui Aragaki, which is your wife.
+You should know her.
+This website will turn your wife into an animated character.
+The result is here.
+Your wife will then look like this.
+You will find that the machine do learn some animated characteristics.
+For example, it make the eyes bigger.
+In reality, the eyes are actually not very big.
+After being transferred into animated style,
+the eyes become much bigger than before.
+However, it fails to transfer in some time.
+For example, this is the former president of the United States.
+The result after conversion looks like this.
+One of the eyes is big, while the other one is small.
+It fails to transfer in some time.
+This technology can be applied to other tasks.
+You can also perform text style transfer, too.
+For example, turn a negative sentence into a positive one.
+Of course if you want to train a model that
+takes a sentence as input and output a sentence.
+The model has to take a sequence as input and output a sequence,
+so it is a Sequence to Sequence model.
+You might want to use the transformer architecture we built in homework 5 to do this text style conversion problem.
+What we did in homework 5 is translation,
+in which we take a language as input and output another language.
+As for the text style transfer,
+you also take a sentence in and transfer it into another style.
+How do we do text style transfer?
+It's exactly the same as the Cycle GAN.
+First, you need some training data, including sentences with negative style and sentences with positive style.
+Suppose you want to turn negative sentences
+into positive sentences,
+the style conversion problem would be
+turning negative sentences into positive sentences.
+It is actually not that difficult to collect
+a dataset that contains a bunch of
+positive and negative sentences.
+We can simply use a web crawler to achieve that.
+For example, our data was collected from the website PTT.
+We were able to collect
+a large amount of data by
+labeling the upvoting comments as positive sentences
+and the downvoting comments as negative sentences.
+It's just that the sentences weren't paired.
+We don't know how to turn a positive sentence
+into a negative sentence,
+and vice versa.
+We don't have that kind of data.
+At the very least, we can still obtain
+plenty of positive and negative sentences.
+Next,
+we simply apply the Cycle GAN method.
+Since the method is completely identical to Cycle GAN,
+we won't go into details.
+We now have a discriminator.
+Suppose we want to turn a negative sentence
+into a positive sentence.
+It's the discriminator's job to
+determine whether the positive sentence
+generated by the generator
+does indeed look like a positive sentence.
+Then, another generator is required.
+So there are two generators in total.
+The second generator has to learn
+to turn the positive sentence back to the original negative sentence.
+We have to achieve cycle consistency,
+so after a negative sentence is turned into a positive one,
+we should be able to turn it back to the original negative sentence.
+You might wonder
+how we can calculate the similarity
+between two sentences.
+An image is easier to understand
+since it is a vector.
+The distance between two vectors can represent their similarity.
+How about sentences?
+I'll leave it for you to find out
+if you're interested in that.
+Another problem is that
+the Seq2seq model
+outputs texts.
+Didn't we just say that
+there will be problems if we pass texts
+to the discriminator?
+Yes, it's going to be problematic. We'll have to solve it by reinforcement learning.
+What does the result look like?
+Here is a real demo of that.
+We actually collected comments from PTT
+and labeled them into positive and negative sentences,
+depending on whether it is upvoting or downvoting.
+This way, the model can turn a negative sentence
+into a positive sentence.
+Here's how it looks like.
+When it takes "stomach aches, didn't sleep enough, feeling down" as the input,
+it outputs "happy birthday, slept well, feeling awesome".
+When it takes
+"I even want to go to work now, how pathetic" as the input,
+it outputs "I even want to go to sleep now, how cool".
+It's quite powerful.
+It knows that the opposite of going to work is going to sleep.
+Pretty smart, right?
+When it takes
+"This sucks. I saw a flasher while I was eating barbeque" as the input,
+it outputs
+"Hell yeah. I saw a handsomer while I was eating barbeque"
+It invented a phrase by itself,
+turning the word "flasher" into "handsomer"
+without any idea of what it is talking about.
+Since this training
+is completely unsupervised
+and only negative and positive sentences were given,
+sometimes it makes very strange mistakes.
+For example, it turns the sentence "My stomach is hurting bad"
+into "My happy birthday is going good".
+Then you will find that although the machine sometimes generates some nonsense,
+some patterns can still be observed.
+For example, any abdomen symptoms,
+like stomachache or abdominal pain,
+will all be translated to happy birthday.
+I don’t know how the machine relates
+abdomen symptoms with happy birthday.
+You may wonder if this machine is of any value or usefulness.
+I can tell you, it's totally useless.
+But if you bear a grudge against your boss
+who often treats you badly,
+you can add this system
+to your earphones.
+And all of a sudden,
+you can live a better life
+since all the criticisms
+now become compliments.
+There are actually many other applications
+that make use of such text style transfer technique.
+besides negetive-to-positive sentiment transfer.
+For example, suppose I have a lot of long documents on hand
+along with some abstracts
+that are from different sources.
+Namely, they are unpaired.
+The machine is able to learn text style transfer
+with these unpaired articles.
+You can make the machine learn to summarize a long document
+into a short summary.
+It can learn how to write more concisely
+and learn to summarize long articles into short sentences.
+Even more incredibly,
+the same idea can be applied to
+unsupervised machine translation.
+Then what is unsupervised machine translation?
+The data consist of some English sentences
+and some Chinese sentences.
+None of the sentences are paired.
+This is different from your homework 5.
+In homework 5, you are provided with paired data.
+In homework 5, each English sentence is paired with its Chinese translation.
+But an unsupervised translation task means
+there's no paired data at all.
+Your data can be some crawled Chinese and English sentences,
+possibly from different sources on the Internet.
+You can still make the machine learn Chinese-English translation
+by directly adopting the aforementioned Cycle GAN approach.
+You may refer to the literature
+for recent advances in unsupervised machine translation.
+So far,
+we've talked about transfer between texts.
+Can we transfer styles
+between two different types of data?
+It is possible.
+The first such experiment was done by our lab members.
+Back then, we tried to do unsupervised automatic speech recognition,
+which is called ASR.
+What is ASR?
+Doing ASR means that
+you need to collect paired data.
+You have to first collect a lot of speech signals
+and hire part-time workers to
+help you transcribe those utterances
+so that the machines can learn
+the recognition of a speech.
+However, it’s too expensive to hire transcribers.
+So we made up our mind to
+face the challenge of unsupervised ASR.
+That is, the machine only had access to some speech signals
+without the corresponding transcription.
+And the only available text data crawled from the Internet
+had no paired sound files.
+We directly adopted the Cycle GAN approach
+and checked if the machine could succeed in
+converting a speech signal into the right text.
+If your are curious about
+how low the error rate could be,
+you can refer to the reference here.
+This is the end of the GAN part.

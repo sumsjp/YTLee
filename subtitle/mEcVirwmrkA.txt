@@ -1,0 +1,175 @@
+Okay! Let's talk about the next topic.
+What we are going to talk about
+is called self-supervised learning.
+Before we talk about self-supervised learning,
+we must introduce Sesame Street.
+Why?
+Because, somehow,
+self-supervised learning models
+are named after characters from Sesame Street.
+I especially wore a Sesame Street T-shirt today.
+Everyone could take a look at
+the Sesame Street T-shirt.
+The classmates who can't see clearly,
+or online classmates
+can also look at this picture here. They are the same.
+This is me,
+and these characters are from Sesame Street.
+For these Sesame Street characters,
+what kind of models are they?
+We first take a look at their names first.
+Before we actually understand what they do,
+we get to know their names first.
+This red monster is called ELMO.
+For self-supervised learning,
+there is a model called
+"Embeddings from Language Modeling",
+which is the earliest self-supervised learning model.
+Its abbreviation is called ELMO.
+After ELMO,
+there is another animal called Bert.
+It is also the abbreviation for the most popular self-supervised model today.
+BERT is the abbreviation of
+"Bidirectional Encoder Representation
+from Transformers."
+ELMO and BERT are both Sesame Street characters.
+After having two Sesame Street characters,
+Bert’s best friend is this one.
+Who is it? Its name is Ernie.
+In fact, after having Bert,
+two different models immediately appeared.
+They are both called ERNIE.
+The full model name of the first one is
+"Enhanced Representation
+from Knowledge Integration."
+Its abbreviation is called ERNIE.
+It's a little bit weird.
+They just name it after ERNIE because they want it to be.
+You might think this is ridiculous enough.
+But, this animal
+is called Big Bird,
+and there is a model called Big Bird, whose full name is
+"Transformers for Longer Sequences."
+Now, they even gave up making up words.
+They have gave up collecting characters from their name.
+They just call it Big Bird, and that's it.
+So, in those
+self-supervised learning models,
+there are a bunch of characters from Sesame Street.
+No one has touched Cookie Monster yet.
+It is waiting for you to make up Cookie Monster.
+When it comes to Bert, I have to mention the attacking giant.
+In the following, I will mention the plot of the attacking giant.
+I personally believe there is no leak of the story.
+But, if you are afraid of listen to part of the story,
+you should close your eyes and cover your ears like this.
+I personally believe there is not.
+Okay. I'm going to mention the attacking giant.
+Why do I mention the attacking giant?
+It's because BERT is a very huge model.
+How big is it? It has 340 million parameters.
+Maybe, a number of
+340 million
+may not make you feel anything.
+Let me tell you how big the model of homework 4 is.
+The model of homework 4 is also a Transformer,
+but it only has 0.1 million parameters.
+You may think the baseline model of homework 4 is very large,
+but it only has 0.1 million parameters.
+So, indeed, it is a very large model.
+So, when we think of BERT,
+we think of a kind of super huge giant,
+whose kick can break through Maria’s wall.
+But, I have a discovery.
+I found out who is the controller of the super huge giant.
+Do you know?
+It's Bertholdt, right?
+There is BERT in Bertholdt's name.
+This is definitely not a coincidence.
+I believe this is definitely not a coincidence.
+You may feel confused because
+Bertolt should appear
+before BERT was proposed.
+When was BERT proposed?
+It was proposed at the end of 2018.
+The Attack on Titan was there 10 years ago.
+So Bertolt appeared before BERT.
+But why is the Colossal Titan
+controlled by Bertolt?
+That's because Hajime Isayama
+has the ability of a titan.
+He can know the future.
+So he names the controller of the Colossal Titan
+Bertolt.
+That's it.
+So this is BERT.
+You might think that BERT is already very big,
+but there are bigger models.
+This era is a time when
+there are lots of titans gushing from the ground.
+What are the titans?
+The earliest is ELMO.
+ELMO has 94 million.
+We use the height of these characters to
+represent the number of its parameters.
+BERT is a little bigger, with 340 million.
+Far more than what you have in your homework.
+Almost a thousand times bigger.
+But it’s not the biggest.
+GPT-2 has 1,500 million parameters.
+But even GPT-2
+is not too big.
+This Megatron has 8 billion parameters.
+About 8 times of GPT-2.
+Later there was T5.
+By the way, there is a Ford car also called T5.
+Although T5 is made by Google
+and has nothing to do with the car,
+I use the car here to represent it.
+T5 has 11 billion,
+but it's nothing.
+Turing NLG has 17 billion,
+and this is nothing.
+GPT-3 is ten times as big as Turing NLG.
+It's ten times as big.
+How big is GPT-3?
+If we visualize it.
+It's this big.
+We first convert the size of these models into height.
+BERT has 340 million,
+we will treat it as 1 meter high.
+So this is BERT and this is me.
+How big is GPT-3?
+It's the size of the Taipei 101 behind us.
+So from BERT to GPT-3,
+the model went from being as tall as a person to as tall as the Taipei 101.
+However, GPT-3 is not the biggest model yet.
+The biggest model I've seen
+is the Switch Transformer.
+It has 1.6T parameters.
+More than a trillion parameters.
+It is ten times bigger than GTP-3.
+I put a Switch here
+although it has nothing to do with Nintendo.
+You can also guess correctly
+that this is done by Google.
+I put its paper here for your reference.
+If you ever see a bigger model, tell me.
+So now there are models with trillions of parameters.
+I heard that the human brain has 100 billion neurons.
+If we map neurons to parameters,
+the amount of parameters in this Switch Transformer
+turns out to be more than
+the number of neurons in the human brain.
+These huge models,
+what are they doing?
+In the following lectures,
+we will talk about two things.
+We will talk about BERT and GPT.
+We will introduce these two models to you.
+Let you know
+what these self-supervised learning models do.
+I think we are
+reaching the end of this section.
+Let's take a break
+and we will be back in ten minutes.

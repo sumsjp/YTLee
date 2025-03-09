@@ -1,0 +1,1934 @@
+Ok! Let's talk about
+self-supervised learning.
+What is self-supervised learning?
+Everyone should be familiar with supervised learning.
+Assignment 1 2 3 4 5 are supervised learning.
+When we do supervised learning,
+we just have a model.
+The input of this model is x and the output is y,
+so how to make model output the y?
+You need to have the data of label.
+So you can imagine that
+suppose you want to do sentiment analysis today,
+which you just let the machine read an article and
+machine need to classify whether the article is positive or negative,
+you have to find a lot of articles first
+and you need to annotate all articles.
+The article is annotated positive or negative by their meaning.
+The positive or the negative is our label.
+We need to have labels and article data
+to train the supervised model.
+What is self-supervised?
+Self-supervised is to think another way to be supervised
+without labels.
+Suppose we only have a bunch of articles without annotations
+but we try to find a way to divide it into two parts.
+We let one as input data to the model and
+the other one is used as the label.
+Assuming you have unannotated data,
+for example, an article is called x and
+we divide x into two parts,
+one is called x',
+and the other one is called x''.
+I know the illustration now is abstractive.
+A few moment later when we actually talk about BERT,
+you can understand the meaning of self-supervised better
+and how is the case
+that there is obviously no way to do supervised training but
+it still find a way to make supervised training by itself in the end.
+Okay, so now let’s briefly said the concept.
+We split x into two parts,
+x' and x''
+and then input x' into the model
+and let it output y.
+Then, we want to make y
+close to its label x'',
+which is our learning target.
+It should be as close as possible to have better performance.
+Then, this is called self-supervised learning.
+Self-supervised learning
+can be deemed as one kind of unsupervised learning.
+What is unsupervised learning?
+If we use label during model training, we called it supervised learning.
+Without label, we called it unsupervised learning.
+"Supervised" is the opposite of "unsupervised".
+As we don’t use labels
+in self-supervised learning,
+we can say that
+self-supervised learning is also a unsupervised learning method.
+But the reason why it’s called
+self-supervised learning
+is to make the definition clearer.
+The term "self-supervised learning" which
+Yann LeCun said it at first,
+is actually not an old word.
+When did Yann LeCun say this?
+According to a post on Facebook in April 2019,
+he said that this method
+which I’m talking about now
+he called it self-supervised learning.
+Why don't we call it unsupervised learning?
+Because unsupervised learning
+is a relatively large family,
+there are many different methods in it.
+In order to make the definition clearer,
+we called it "self-supervised".
+For example, cycle gahn which we metioned previously
+is also a case of unsupervised learning.
+We also do not use the labeled paired data.
+However, it is still slightly different from self-supervised learning.
+There are many methods
+in the category of unsupervised learning,
+and self-supervised learning is one of them.
+Okay, what I just said is very abstractive, which
+includes dividing x into x' and x'',
+learning by itself,
+and generating labels by itself.
+What does the self-supervised learning mean?
+Let's take the BERT model directly.
+Let me explain it to everyone
+how self-supervised actually do?
+Okay! First, BERT is a transformer encoder
+and we have already talked about transformer.
+We also spent a lot of time introducing encoder
+and decoder.
+The encoder in transformer is BERT.
+It is actually the architecture of BERT.
+It's exactly the same as the encoder of transformer.
+There are a lot of self-attention and
+residual connection inside it.
+There are also normalization and so on.
+Then, this is BERT.
+If you have forgotten what components are in the encoder,
+it is already ok.
+Anyway, the keypoint you need to remember is
+that BERT can
+input a row of vectors and then
+output another row of vectors.
+The length of output is same as the length of input.
+What is the input of the BERT?
+BERT is generally used in the natural language processing, which
+used in the text scenario,
+so generally, its input is a sequence of text,
+which is also a sequence of data.
+When we are actually talking about self attention,
+we also said that not only text is a kind of sequence but
+voice also can be regarded as a sequence.
+Even image can be seen as a bunch of vector.
+The same idea as BERT is
+not only used in NLP, or used in text.
+It can also be used for voice and video.
+Because BERT was just first used in text,
+we all take text as an example here.
+You can say that I change the input to voice
+or change input to image.
+It's all the same.
+Okay, the input of BERT is a piece of text here.
+The next thing we need to do is
+randomly masking some input text.
+Which parts will be masked?
+The masked part is decided randomly.
+For example, we enter 100 tokens.
+What is a token?
+A token is your basic unit when processing a paragraph of text.
+The unit size of this token is decided up to you.
+In chinese text,
+we usually regard a chinese characters as a token.
+When we enter a sentence,
+some words will be randomly masked in there.
+Which part need to be masked?
+It is decided randomly.
+How to mask it?
+What is the detail implementation of masking?
+There are two ways.
+The first approach is
+to replace a word in the sentence with a special symbol.
+We use "MASK" token to represent the special symbol.
+You can regard it as a new character.
+This character is completely a new word
+and it is not in your dictionary.
+It means to mask the original text.
+Another way is
+to randomly replace a word
+with another word.
+Originally, the chinese word "wan" was placed here.
+Then you can just choose another chinese word and replace it.
+It can change to the word "one", change to the word "sky", change to the word "big", or change to the word "small".
+We just replace it with a certain word that is chosen randomly.
+So there are two ways to do masking.
+One is to add a special token called "MASK".
+The other one is to replace a certain word with another word.
+Then, which one to use?
+Both can be used.
+Which one to be used is also randomly determined.
+So when BERT is training,
+We should input a sentence to BERT and
+first randomly decide which part of chinese characters will be masked.
+After that, we decide how to do masking.
+Is the masking part going to be replaced by the special symbol "MASK"
+or just be replaced with another chinese characters?
+Both of these two methods can be used.
+What do we do after masking?
+After masking, we also input a sequence to BERT.
+We regard the corresponding output of the BERT as
+another sequence.
+Next, we look the corresponding output of masking part in the input sequence.
+We still input word in the masking part and
+it may be a "MASK" token or a random word.
+There still is word in the token being masked or replaced
+and it still outputs a vector.
+Then, this vector will pass a linear transform.
+The so-called linear transform means that
+the input vector will multiply with a matrix.
+Then do softmax and
+output a distribution.
+What is the meaning of the distribution in the output?
+This is the same distribution of output
+as the one we mentioned in the Seq2Seq model
+when we were doing translations
+using transformers.
+The output is a very long vector that
+contains every Chinese character
+that we would like to process.
+Every character corresponds to a score,
+and it is a distribution
+because of the softmax function.
+Now, how do we train the BERT model?
+Let's first talk about
+the objective of the training.
+We have the knowledge of
+what the masked character is,
+while BERT doesn't.
+Since it was masked when we gave it to BERT,
+BERT wouldn’t know what the character was.
+However, humans would know
+what the masked character is,
+which is "wan" from the word "Taiwan".
+So, the objective of the training
+is to output a character
+that is close to the real answer,
+which is the character "wan" in Chinese.
+We can represent the character by a one-hot vector
+and minimize the cross-entropy loss
+between the output and the one-hot vector.
+Or to make it simpler,
+we are actually solving a classification problem.
+It's just that the number of classes
+is as many as the number of Chinese characters.
+It depends on how many Chinese characters are there.
+Let's say it's roughly around 4000.
+That makes it a 4000-class classification problem.
+Now, what BERT has to do is
+predict what is masked successfully.
+The masked character, "wan",
+belongs to the class "wan".
+During training,
+we add a linear model after BERT
+and train them both together.
+So, inside BERT
+is an encoder of a transformer,
+which has a bunch of parameters.
+The linear model is a matrix,
+which also has some parameters,
+albeit quite a bit lower in quantity
+when compared to BERT.
+Those two need to be jointly trained
+and try to predict
+what the covered character is together.
+That's it.
+This is called masking.
+In fact, when we train a BERT,
+we'll also use another method
+in addition to masking.
+This additional method
+is called next sentence prediction.
+What it means is that
+we come up with two sentences
+from our database,
+which is a large collection of sentences we can get
+by crawling and searching documents
+on the internet,
+and we add a special token between the two sentences.
+The special token added between the two sentences
+represents the separation between them.
+This way, BERT can know that
+these two sentences are different sentences
+because there is a separator between the two sentences.
+We will also add
+a special token
+at the start of the sentence.
+Here we use CLS to represent this special token.
+We will later know
+the use of this special token.
+Now, we have a very long sequence
+that includes two sentences
+separated by the SEP token
+and the CLS token at the front.
+If we pass it into BERT,
+it should output a sequence
+since the input is also a sequence.
+This is the purpose of the encoder after all.
+BERT is a transformer encoder,
+so that is something BERT can do.
+For now, we only take the output corresponding to CLS.
+There are of course other outputs,
+but we'll ignore them for now.
+We will only look at the output of CLS
+and we will multiply it by a linear transform.
+Now what?
+Now it has to do a binary classification problem
+that has two possible outputs, yes or no.
+What does it mean by yes or no?
+This method is called next sentence prediction,
+so we need to predict
+whether the second sentence is the subsequent sentence of the first one.
+If the second sentence are indeed subsequent sentence,
+we need to train BERT to output
+"yes". When the second sentence is not the subsequent one,
+BERT needs to output "no" as the prediction.
+That's all.
+However, later researches found out that
+next sentence prediction
+isn't really helpful
+for the task BERT is going to do.
+What is BERT going to do next?
+We will get to it soon.
+In short, this method is not very useful.
+For example,
+there is a paper called "Robustly Optimized BERT Approach",
+or RoBERTa in short.
+Inside the paper,
+it clearly stated that
+implementing the next sentence prediction method
+did little to no help at all.
+Then, this concept somehow became mainstream.
+Following that, another paper said Next Sentence Prediction was useless,
+so many more papers after it started to say it's useless too.
+For example, SCAN-BERT and XLNet
+all said that the next sentence prediction method is useless.
+One of the possible reasons that it might be useless is that
+next sentence prediction is too simple and
+it's an easy task.
+Predicting whether two sentences are connected
+isn't a particularly difficult task perhaps.
+The typical approach to this task
+is that you first choose a sentence at random,
+and then choose the sentence that is going to be connected to the previous one,
+either from the database or at random.
+Usually, when we choose a sentence randomly,
+it looks a lot different from the previous sentence.
+For BERT,
+it isn't too hard to predict if the two sentences
+are connected.
+So, nothing too useful was learned
+when training BERT to complete the task of
+next sentence prediction.
+There is another method similar to next sentence prediction
+and we'll introduce it later.
+It appears
+to be more useful on paper.
+It is called sentence order prediction,
+or SOP in short.
+The main idea of this method is that
+the two sentences that we picked initially
+could be connected.
+There could be two possibilities:
+Either sentence 1
+is connected behind sentence 2,
+or sentence 2
+is connected behind sentence 1.
+There are two possibilities,
+and we ask BERT which one it is.
+Perhaps because this task is more difficult,
+it seems to be more effective.
+It was used in a model called ALBERT,
+which is an advanced version of BERT.
+Since the name ALBERT
+is similar to Albert Einstein,
+I put an image of Einstein
+in my slide.
+Every model we've talked about
+has its own name.
+Don’t claim that you have proposed a model
+without giving the model a name.
+So, how do we use BERT?
+We just mentioned what BERT can do.
+When we're training, we asked BERT to learn two tasks.
+One is to cover up some characters,
+Chinese characters to be specific,
+and ask it to fill in
+the missing character.
+It is able to do that.
+The other task showed that it could
+predict whether two sentences have sequential relationship.
+However, I said that this trick seems to be useless.
+So overall,
+what actually
+did BERT learn?
+It learned how to fill in the blanks.
+What if the task I want to solve
+is not a fill-in-the-blank question?
+What's the use of BERT
+when it could only fill in blanks?
+Since it was only trained to fill in blanks,
+it can only be used to fill blanks, right?
+The magical thing about it is that
+after you trained a model to fill in blanks,
+it can be used for other tasks.
+These tasks don’t have to be related to filling in the blanks.
+It could be something totally different.
+BERT can still be used for these tasks nonetheless.
+These tasks are the ones where BERT is actually used,
+and they are called downstream tasks.
+Later on,
+we will talk about
+some examples of downstream tasks.
+We will give a few concrete examples later.
+The so-called "Downstream Tasks" means
+the tasks that you actually care about.
+But, when we want BERT to learn to do these tasks,
+we still need some labeled information.
+We will take a close look later.
+In short, BERT only learns to fill in the blanks,
+but, later on, it can be used to make all kinds of
+downstream tasks you are interested in.
+It's like stem cells in an embryo.
+It has all kinds of unlimited potential
+although it hasn't used its power yet.
+It only can fill in the blanks,
+but later on it has the ability to solve all kinds of tasks.
+We just need to give it a little data to elicit it,
+and then it can do it.
+You know that embryonic stem cells are
+those that can differentiate into
+all kinds of different cells, such as
+cardiomyocytes, myocyte, etc.
+BERT is also the same.
+You give it some labeled data.
+It can learn all kinds of tasks.
+It can differentiate into functional cells for various tasks.
+The differentiation of BERT into functional cells for various tasks
+is called fine-tuning.
+You might called it "Wei-Tio" in Chinese.
+So, we often hear people say
+he fine-tunes BERT,
+which means he has a BERT on his hand,
+and he applies fine-tuning on this BERT
+so that it can do a certain kind of task.
+In contrast to fine-tuning,
+the process of generating this BERT before fine-tuning
+is called pre-training.
+So, the process of generating BERT
+is Self-Supervised Learning.
+But, you can also call it pre-training.
+You will realize that, in the homework,
+we actually repeatedly say that
+"we don't use pre-trained models."
+If you don't know what a pre-trained model is,
+it doesn't matter.
+Anyway, since you don't know what it is,
+you won't be able to use it.
+If you know what it is,
+here we ask you
+not to use this method of Self-Supervised Learning.
+You should not search somewhere else
+for a model of Self-Supervised Learning
+to apply it directly on the homework.
+Because these methods
+often come with incredible and powerful abilities,
+which will make it boring about what you are going to do.
+Okay! There is actually a BERT homework next.
+Homework 7 is to use BERT.
+So, in homework 7,
+of course, you can use pre-trained model.
+This is the only homework that you can use a pre-trained model
+because homework 7 is
+to fine-tune BERT.
+So, of course, you have to use pre-trained BERT
+to perform fine-tuning.
+So, only in homework 7, you can use pre-trained models.
+Okay, before we talk about how to fine-tune BERT,
+we should first take a look at its ability.
+Today, to test
+the ability of Self-Supervised Learning,
+usually, you will test it on multiple tasks.
+Since we just said that
+BERT is like an embryonic stem cell
+and it is going to differentiate
+into functional cells for all kinds of tasks,
+we usually don't just test
+its ability on a single task.
+You would let this BERT
+differentiate into functional cells for all kinds of tasks
+to see how accurate it gets on every tasks,
+and we average them to get an overall score.
+Such collection of different tasks,
+which a model is tested on,
+we could call it the task set.
+The most well-known benchmark in the task set
+is called GLUE.
+It is abbreviation of
+General Language Understanding Evaluation.
+Inside GLUE,
+there are 9 tasks in total.
+Generally, you want to know
+whether a model like BERT was trained well or not.
+You will fine-tune it,
+and fine-tune it on 9 separate tasks.
+So, you will actually get nine models
+for nine separate tasks.
+You take a look at the average accuracy of these 9 tasks.
+Then, you get a value.
+This value represents
+the performance of this Self-Supervised model.
+Let's take a look at the performance of BERT on GLUE.
+With BERT,
+the GLUE score,
+which is the average score of the 9 tasks,
+does increase year by year.
+Okay! In this picture,
+the horizontal axis indicates different models.
+It is listed here.
+You can find that
+besides ELMO and GPT, others are
+BERT, BERT, BERT, BERT, BERT,
+a lot of BERT,
+all kinds of BERT.
+The black line
+indicates human work,
+which is the accuracy that humans get on this task.
+Then, we treat this as 1.
+Each point here represents a single task.
+Then, why do you compare it to human accuracy?
+The human accuracy is 1.
+If they are better than humans, the values of these points will be greater than 1.
+If they are worse than humans, the values of these points will be less than 1.
+That's because of these tasks,
+whose evaluation metrics may not be accuracy.
+The evaluation metrics used for each task are different.
+It may not be accuracy.
+If we just compare their values,
+it may be meaningless.
+So, here we are looking at the difference between humans.
+So, you will realize that,
+only on 1 task of the original 9 tasks,
+machines
+can do better than humans.
+As more and more technologies were proposed,
+more and more,
+there are 3 other tasks that can be done better than by humans.
+For those tasks far worse from humans,
+they are also gradually catching up.
+The performance of the machine is also slowly catching up.
+The blue curve indicates the average of the machine's GLUE Scores.
+It was also found that some recent strong models,
+for example, XLNET,
+even surpassed human beings.
+Of course, it is just the result of these data sets.
+It does not mean that machine really surpasses humans in general.
+It surpasses humans in these data sets.
+What does it mean?
+It means that these data sets is not representative of actual performance, and it's not difficult enough.
+So, after GLUE,
+someone made Super GLUE.
+They find harder natural language processing tasks
+for the machine to solve.
+Okay! the meaning of showing this picture is mainly to tell you that,
+with the technology like BERT,
+it is true that the ability of machine in natural language processing
+takes another step forward.
+Okay! How exactly is BERT used?
+BERT is used like this.
+We will give 4 cases about application of BERT.
+The first case is like this.
+We assume that our downstream task
+is to input a sequence
+and output a class.
+It is a classification problem,
+and the input is a sequence.
+What kind of task is
+inputting a sequence and outputting a class?
+For example, Sentiment Analysis,
+which is giving the machine a sentence,
+and tell it to judge whether the sentence is positive or negative.
+For BERT,
+how does it solve the problem of Sentiment Analysis?
+You just give it a sentence,
+which is the sentence that you want to use it to determine Sentiment,
+and put the CLS token in front of this sentence.
+I just mentioned CLS token.
+The last time we mentioned it is about talking
+the Next Sentence Prediction.
+We put the CLS token in front,
+and throw it into the BERT.
+These 4 inputs actually correspond to 4 outputs.
+Then, we only look at the part of CLS.
+CLS outputs a vector here,
+and we apply linear transformation to it,
+which multiplies it by a matrix
+of linear transformation.
+Softmax is omitted here.
+Through Softmax,
+it determines the output class is
+positive, negative or other.
+However, in practice,
+you must have the labeled data for your downstream tasks.
+In other words, BERT has no way to solve
+Sentiment Analysis problems from scratch.
+You still have to provide BERT some labeled data.
+You need to provide it a lot of sentences
+and their positive or negative labels
+to train this BERT model.
+During training,
+we actually put BERT
+together with this linear transformation
+to call it a complete
+Sentiment Transportation model.
+In the training time,
+both the Linear transform and BERT model utilize the gradient decent to update the parameters.
+As for now,
+the parameters of the linear transform are randomly initialized,
+while the parameters of BERT is initialized from
+the BERT that learned to fill in the blanks.
+Every time when we train the model,
+we have to initialize the parameters.
+We utilize gradient descent to update these parameters, right?
+Then try to minimize the loss.
+Likewise,
+We have a loss to Minimize.
+For example, we are doing the Sentiment Classification.
+However, we have the BERT now.
+We don't have to randomly Initialize all parameters.
+The only part we randomly initialized is here.
+The backbone of BERT
+is a huge Transformer Encoder.
+The parameters of this Network are not randomly initialized.
+We directly took the BERT that has learned to fill in the blanks
+to initialize the parameters here.
+Put the BERT parameter that learned to fill in the blanks
+into the BERT in this place as parameter initialization.
+Why do we do that?
+Why do we use the BERT that learned to fill in the blanks
+and put it here again?
+The most intuitive and simplest reason is that
+it performs better than network with randomly initialized new parameters.
+It will get better performance than a random initialized BERT
+when you put the BERT that learned to fill in the blanks here.
+There is an example in the article.
+The horizontal axis is the training Epochs.
+The vertical axis is the training loss.
+Everyone must be very familiar with this kind of figure so far.
+As the training progresses,
+of course, the loss will get lower and lower.
+The most interesting part of this figure is that
+there are various tasks.
+We won’t explain the details of these tasks.
+I just want to show that there are various tasks.
+"Fine-Tune" means model is used with Pre-Training.
+That is the BERT part of the network.
+That encoder of the network.
+The parameter of that part is initialized by
+the parameters of BERT that learned to fill in the blanks.
+Scratch means the whole model, including the BERT and
+the encoder part are randomly initialized.
+Scratch is the dotted line.
+The dotted line is Scratch.
+From the results of Scratch you can have some observations.
+First of all, when training the network
+the loss drops relatively slow
+compared to the ones initialized with
+BERT that learned to fill in the blanks.
+The loss drops relatively slow.
+In the end,
+the loss of network with randomly initialized parameters
+is still higher than that
+initialized the parameters of the BERT learned to fill in the blanks.
+So these are the benefits that BERT brings to us.
+Let's stop here.
+I actually left a slide here on purpose.
+Just want to mention that
+there will be more content.
+I want to stop here
+to make sure everyone understands what I mean so far.
+You have to make sure you understand what I talked so far
+so as to realize the following parts.
+So I want to ask
+do you have any questions for this part?
+Can you realize what is "Pre-Train" and "Fine-Tune"?
+During the break time, there is a classmate asked
+Whether the training method of BERT
+is a Semi-Supervised method?
+Is it Semi-Supervised or Unsupervised?
+Actually, it's both Semi-Supervised and Unsupervised.
+It's Unsupervised or Self-Supervised when learning to fill in the blanks.
+However, when you utilize the BERT to do the downstream tasks.
+You need human-labeled data to do the downstream tasks.
+You use a lot of unlabeled data
+when you do the Self-Supervised Learning.
+Plus, the downstream tasks require a small amount of labeled data.
+So it becomes Semi-Supervised.
+The so-called "Semi-Supervised" means that
+you have a lot of unlabeled data
+and a small amount of labeled data.
+This situation is called "Semi-Supervised".
+So the whole process of using BERT
+is to apply Pre-Train and Fine-Tune in a row.
+It can be regarded as a Semi-Supervised method.
+Do you have any questions so far?
+If there's question,
+let's move on.
+The following content resembles Case 1 introduced previously.
+So if you can understand what Case 1 is talking about.
+You will find that they are actually the same.
+Followingly, there are three more cases.
+Okay, if you have no problems, we will move on.
+Okay, what are the next three cases?
+The second case is
+to enter a Sequence
+and then output another sequence,
+while the length of input and output are the same.
+We gave similar examples when we talked about the Self-Attention.
+What kind of task requires the input and output length to be the same?
+For example, the POS Tagging.
+POS Tagging means part of speech tagging.
+You give the machine a sentence.
+It has to tell you the part of speech of each word in this sentence.
+Even though the word is the same,
+it may have different parts of speech.
+I talked about it in the section of Self Supervised Learning.
+Okay, how does BERT tackle this task?
+You just enter a sentence to BERT.
+Afterwards,
+for every token in this sentence,
+it is a word in Chinese,
+that has a corresponding vector representing that word.
+Then these vectors
+are passed through a linear transformation and a Softmax layer sequentially.
+Finally, the network predicts the category that the given word belongs to.
+For example, its part of speech.
+Of course the category depends on your task.
+If your task differs, the corresponding category will also be different.
+The next thing you have to do
+is exactly the same as Case 1.
+In other words, you need to have some labeled data.
+This is still a typical classification problem.
+The only difference is
+the BERT part,
+the encoder part of the network,
+whose parameters are not randomly initialized.
+It already found nice parameters during the Pre-Train process.
+Is there any question so far?
+If no,
+let's go to the Case 3.
+In Case 3, model input two sentences and output a category.
+Of course,
+the examples that we showed here belong to the natural language processing.
+However, you can change these examples into other tasks.
+For instance, you can change them into speech tasks
+or change them into the computer vision tasks.
+I have mentioned in the section of Self-Supervised Learning
+that speech, text, and images
+can be represented as a row of vectors.
+Although the following examples are in text,
+this technology is not only limited to process texts.
+It can also be used for other tasks such as computer vision.
+Okay,
+the third Case take two sentences as input and outputs a category.
+What kinds of tasks take such input and output?
+The most common one is the natural language inference.
+Its abbreviation is NLI.
+What does it do?
+Here are two input sentences for the machine.
+A sentence called Premise is the premise.
+Another sentence is called hypothesis.
+What the machine does is to judge
+whether it is possible to infer the hypothesis from the premise.
+Does this premise contradict this assumption?
+Or are they not contradictory sentences?
+In this example,
+our premise is that a man is riding a horse,
+then he jumped over a broken plane,
+which sounds weird.
+But this sentence
+actually looks like this.
+This is an
+examples in a benchmark corpus.
+There was a man riding a horse and jumping over the plane
+He was also doing a juggling.
+The inference here is that
+this person
+is at a diner.
+Is this person at a diner?
+It’s not. So this is a contradiction.
+So what the machine has to do is
+take two sentences as the input and output the relationship between these two sentences.
+This kind of task
+is quite common.
+Where can it be used?
+For example, position analysis.
+Given an article
+and there is a comment below,
+does the message agree with this article
+or oppose to it?
+You just put the article and the comment together into the model.
+What the model wants to predict is the position of each comment.
+There are in fact lots of applications that take in two sentences
+and output one category.
+Okay, how does BERT solve this problem?
+You just give it two sentences,
+and we put a special token
+between these two sentences,
+and put the CLS token
+at the very beginning.
+This sequence is the input of BERT.
+Then BERT will output another sequence
+whose length is the same as the output's.
+But we only take the CLS token
+as the input of the linear transform.
+And it decides the category
+of these two input sentences.
+Are these two sentences contradictory?
+For NLI, you have to ask
+whether these two sentences are contradictory or not.
+Okay, this is case 3.
+We still need some labeled data
+to be able to train this model.
+Note that this part of BERT is no longer randomly initialized.
+It is initialized with some pre-trained weights.
+Okay, let’s move forward to the fourth case.
+The fourth case is actually in our homework.
+If you don’t understand the previous cases, just forget about them.
+This fourth case
+is what we are going to do in homework 7.
+Homework 7 is a question-answering system.
+That is, after the machine reads an article
+and you ask it a question,
+it will give you an answer.
+But the questions and the answers here
+are slightly restricted.
+This is extraction-based QA.
+That is, we assume that the answer
+must appear in the article.
+The answer must be a snippet in the article.
+Okay, how do you make this QA system?
+How to make an extraction-based QA system?
+In this task,
+an input sequence contains an article and a question.
+Both the article and the question
+are a sequence.
+For Chinese,
+each d here represents a Chinese character;
+each q here represents a Chinese character.
+You put D and Q into a QA model.
+What will it output?
+We want it to output two positive integers s and e.
+According to these two positive integers,
+we can cut a paragraph directly from the article, and it is the answer.
+Given s and e,
+we want to take the segment from the s-th word to the e-th word in this article.
+This segment is the correct answer.
+This sounds very crazy.
+However, this is a quite standard method used nowadays.
+Six years ago,
+when I first heard that
+this mechanism can solve QA tasks,
+I couldn't believe it.
+But anyway, this is a very common method today.
+Okay, if you still don’t understand what I’m talking about,
+to be more specific,
+here is a question and an article,
+and the correct answer is "gravity".
+How does the machine output the correct answer?
+Your QA model should output
+s equals to 17
+and e equals to 17
+to represent gravity.
+Since it is the 17th word in the whole article.
+So s equals to 17 and e equals to 17
+means to output the 17th word
+as the answer.
+Or give another example,
+the answer is
+"within a cloud",
+which is the 77th to the 79th word
+in the article.
+What your model has to do is
+to output the two positive integers 77 and 79.
+Then the segement in the article
+from the 77-th word to the 79-th word
+should be the final answer.
+This is what homework 7 will ask you to do.
+Of course,
+we do not train the QA model from scratch.
+To train this QA model,
+we use BERT pre-trained models.
+Well, how to solve
+this kind of QA problem with pre-trained BERT?
+This solution looks like this.
+For BERT,
+you have to show it a question,
+an article,
+and a special token
+between the question and the article.
+Then we put a CLS Token at the beginning.
+This is the same as
+the case of Natural Language Inference.
+Just in Natural Language Inference,
+one is the premise and the other is the conclusion,
+while, here, one is the article and the other is the question.
+In this task,
+the only thing you need to
+train from scratch are only two vectors.
+By "training from scratch",
+I mean random initialization.
+Here we use the orange vector and the blue vector to represent them.
+The length of these two vectors
+are the same as the output of BERT.
+Assuming the output of BERT
+are 768-dimensional vectors,
+these two vectors are also 768-dimensional vectors.
+Then,
+how to use these two vectors?
+First of all,
+calculate the inner product
+of this orange vector and
+those output vectors corresponding to the documents.
+Since there are 3 tokens representing the article,
+it will output three vectors.
+Calculate the inner product of these three vectors and the orange vector.
+You will obtain three values.
+Then pass them through a softmax function and you will obtain another three values.
+This inner product
+is quite similar to attention.
+You can think of the orange part as query
+and the yellow part as key.
+This is an attention.
+Then we should try to find position that has maximum score.
+It's here.
+The inner product of the orange vector and d2.
+If this is the max,
+s should be equal to 2.
+The starting position of your output
+should be 2.
+The blue part does exactly the same thing.
+The blue part represents where the answer ends.
+We calculate the inner product
+of this blue vector and the yellow vectors
+corresponding to the article.
+Then,
+we also use a softmax here.
+Lastly, find the max value.
+If the third value is the largest,
+e should be 3.
+The correct answer is d2 and d3.
+So what your model has to do
+is actually to predict
+the starting position of the correct answer.
+Because the answer must be in the article.
+Okay, if the answer is not in the article, you can't use this trick.
+Here we suppose the answer must be in the article.
+We have to find the starting position
+and the end position of the answer
+in the article.
+This is what a QA model
+needs to do.
+Of course you need some training data
+to be able to train this model.
+Note that these two vectors are initialized randomly,
+while BERT is initialized
+by its pre-trained weights.
+So let's talk about this part,
+do you have any questions?
+Is there a limit on the input size of the token?
+Are you talking about there is no limit to the length of the input, right?
+Well this is a very good question.
+Let me repeat it.
+Is there any limit to the length of the BERT's input?
+Theoretically, no. In reality, yes
+In theory, because BERT Model
+is an Transformer Encoder.
+So it can input very long Sequence.
+As long as you have to be able to do Self-Attention.
+But computation complexity of Self-Attention is
+extremely high.
+So you find that in practice,
+BERT can’t actually input sequence that is too long.
+You may at most input 512-length sequence.
+If you input a 512-length sequence,
+Self-Attention in the middle is about to generate
+the 512 times 512 size of Attention Metric.
+Then you may be overwhelmed by computations.
+So actually its length is not infinite.
+In the teaching assistant's program,
+it have already dealt with this problem for everyone.
+We limit the length of input for BERT
+and it takes long time to train with an article.
+What will we do?
+We divide the article into several paragraphs.
+Then each time,
+we will only take one of them for training.
+We will not input the entire article into BERT.
+Because the distance you want is too long,
+You will have problems with training.
+So does that answer your question?
+Thank you.
+Okay, do you have any questions?
+I'm sorry. I didn't hear it very clearly.
+Could you say it again?
+"What does it relate to the fill-in-the-blank questions?"
+Wow this question is great.
+You will argue that this fill-in-the-blank question is just a fill-in-the-blank question.
+But I'm going to do a Q&A right here.
+What's the relationship
+between these two things?
+Okay, let me keep your guessing.
+I'll try to answer you later.
+Okay, are there any questions?
+Do you have any further questions?
+If not, then we will continue.
+The next slide will tell you
+BERT is such a well-known model,
+and it can do anything
+Then you might think that BERT
+in Pre-Train, it’s just filling-in-the-blanks.
+You should be able to do this youself.
+You will revise the program of homework 4,
+and also let the machine learn how to do fill-in-the-blank questions.
+So what's so great about this?
+What's great is
+you really can't do this yourself.
+You really can’t train it yourself.
+First of all, the earliest Google BERT,
+the size of data it uses is already large.
+It contained 3 billion vocabulary in the data.
+How many words do 3 billion have?
+It's 3000 times the complete works of Harry Potter.
+The Complete Works of Harry Potter is about 1 million words.
+Then when Google was training BERT,
+the earliest BERT
+It used 3000 times as much data as the complete works of Harry Potter.
+So it will be a bit painful for you to deal with it.
+The more painful thing is the training process.
+Why do I know that the training process is painful?
+Because there is a student in our lab.
+He is actually one of the teaching assistants.
+He tried to train a BERT himself.
+He feels that he can't reproduce Google’s results.
+Okay, so in this picture
+the vertical axis represents the GLUE score.
+We just talked about GLUE, right?
+There are 9 tasks and 9 tasks on average,
+the average score is called the GLUE score
+Okay, so the blue line is
+Google’s original BERT's GLUE score.
+Then our goal is actually not to implement BERT.
+our goal is to implement ALBERT.
+ALBERT is an advanced version.
+It's the orange line.
+The blue line is ALBERT trained by ourselves.
+But what we actually train is not the largest version.
+BERT has a Base version and a Large version.
+For the Large version, it's hard for us to
+train it by ourselves, so we
+try to train with the smallest version.
+See if it have the same as the result from Google.
+Google is like this.
+You might say that this 3 Billion data.
+There seems to be a lot of data for 3 Billion words.
+Actually because it is Unlabelled data.
+So you just sort a bunch of text from the Internet.
+There is same amount of information.
+So it’s not very difficult for you to climb this level of information.
+The hard part is the training process.
+Okay, this horizontal axis is the training process.
+How many times does the parameter update?
+About one million times of updates.
+How long will it take?
+Run with TPU for 8 days.
+So your TPU has to run for 8 days.
+If you do it on Colab,
+this one needs to run for at least 200 days.
+You may not get the results even until next year.
+So it's really hard for you to
+train this kind of BERT model by yourself.
+Fortunately, the homework is just to fine-tune it.
+You can fine-tune it on Colab.
+It only take about half an hour to an hour
+to fine-tune BERT on Colab.
+But if you want to train it from scratch.
+That is, train it to do fill-in-the-blanks.
+it will take so much time and
+you can’t do it by yourself on Colab.
+Okay then you might ask
+Why should we train a BERT ourselves?
+Google has already trained BERT,
+and these Pre-Train models are public.
+We train one by ourselves,
+and the result is similar to Google's BERT.
+What's the point?
+Okay, what do you want to do here?
+Actually want to establish BERT embryology.
+What does BERT embryology mean?
+We know it requires very large computing resources
+in the training process of BERT.
+So we want to know if it’s possible
+to save these computing resources.
+Is it possible to make it train faster?
+To know how to make it train faster,
+maybe we can start by observing its training process.
+No one has ever observed the training process of BERT in the past.
+Because in Google’s Paper,
+They just tell you that I have this BERT.
+Then it does a good job in various tasks.
+What did BERT learn
+in the process of learning
+to fill-in-the-blanks?
+When does it learn to fill in verbs in this process?
+When do it learn to fill in nouns?
+When does it learn to fill in pronouns?
+No one has studied in this topic.
+So after we train a BERT by ourselves.
+We can observe when BERT
+learned to fill in what kind of vocabulary.
+How does its improve the ability of fill-in-the-blank?
+Okay, the details
+are not the focus of this course,
+so I won’t talk about it here.
+I attach the link of the paper here
+for your reference.
+I just take the conclusion here.
+It's not the same as what you intuitively imagine.
+Okay, we haven't talked about
+why BERT is good yet.
+But let’s add one thing.
+None of the aforementioned tasks include
+Seq2Seq Model.
+What if we want to solve
+the Seq2Seq Model?
+BERT is only a Pre-Train Encoder.
+Is there a way to Pre-Train
+the decoder of Seq2Seq Model?
+Yes, but what to do?
+You just say I have a
+Seq2Seq Model.
+There is a Transformer.
+There is also an Encoder and a Decoder.
+The input is a string of sentences and the output is a string of sentences.
+Connected them with Cross Attention in the middle.
+Then you deliberately make some disturbance
+on the input of the encoder to corrupt it.
+I will tell you specifically what I mean by "corrupt" later.
+Then what is Decoder?
+Decoder is the sentence I want to output
+exactly the same sentence as before I corrupt it.
+Encoder sees the corrupted result
+Then the Decoder should output the result before the sentence was corrupted.
+Training this model is actually Pre-Training a
+Seq2Seq Model.
+Okay, how to corrupt it?
+There are various ways.
+There is a paper called MASS
+In MASS, it said the method to corrupt is
+just like waht BERT does.
+Just cover up some places and it's over.
+Then there are various ways to corrupt it.
+For example, delete some words.
+Mess up the order of words.
+Rotate the order of words.
+Or insert a MASK
+to get rid of some words again.
+In short, there are various methods.
+After breaking the input sentence,
+it can restore it
+by the Seq2Seq model.
+There is a paper called BART.
+It just uses all of these methods.
+I found that it is better to use all possible methods.
+It can be better than MASS.
+I want to ask a question
+why is it not a character from Sesame Street?
+You might ask that
+there are so many ways to break it,
+and there are so many masking methods,
+which method is better?
+Maybe you want to do some experiments by yourself to try it out.
+Let me tell you that you don’t have to do it.
+Google did it for you.
+There is a paper called T5.
+What is the full name of T5?
+It is Transfer Text-To-Text Transformer.
+There are five T, so it’s called T5.
+Inside this T5,
+it just made various attempts.
+It has done every combination you can imagine.
+That’s it. The paper has 67 pages.
+You can go back, read it,
+and see the conclusion.
+The T5 is trained on a corpus
+called "Colossal Clean Crawled Corpus".
+For this dataset,
+Colossal is Colossal,
+which means very huge.
+It's called C4.
+You use C4 to train T5.
+Everyone is a master of naming.
+This naming is very powerful.
+How big is this C4?
+C4 is a public dataset.
+You can load it.
+It is public.
+But its original file size is 7 TB.
+You can download it,
+but you don't know where to save it.
+And after it’s loaded,
+you can do pre-processing by the script
+provided by Google.
+The script has a document.
+I see it released on the website.
+The document on the corpus website says that
+It takes 355 days for pre-processing
+with one GPU.
+You can download it,
+but you have problems with the pre-processing.
+So, you can find that
+the amount of data and models
+are amazing
+in deep learning.
+Okay, the next step is to answer
+the question from classmates.
+Why is BERT useful?
+Here,
+we first provide the most common explanation.
+The most common explanation is that
+when inputting a string of text,
+every text
+has a corresponding vector.
+For this vector,
+let’s call it embedding.
+What's special about this vector?
+It is special because
+these vectors represent
+the meaning of the input word.
+For example, the model inputs "Tai Wan Da Xue" (National Taiwan University)
+and outputs 4 vectors.
+These 4 vectors represent the "Tai"
+, "Wan"
+, "Da",
+, and "Xue".
+What does it mean?
+More specifically,
+suppose you put the vectors corresponding to these words
+and draw it
+or calculate the distance between them,
+you will find that
+words with more similar meanings,
+their vectors are closer.
+For example, fruits and grasses are both plants.
+Their vectors are relatively close.
+But this is a fake example.
+I will show you a
+true example later.
+"Birds" and "fish" are animals,
+so they may be closer.
+That "electricity" is not an animal
+nor a plant,
+so it is not close.
+You might ask that
+there are ambiguities in Chinese.
+In fact, not only in Chinese,
+many languages ​​have ambiguities.
+BERT can consider the context.
+So, the same word,
+for example, the word "apple",
+its context is different from the other "apple".
+Their vectors will not be the same.
+The fruit "apple"
+and the mobile phone "apple"
+are both "apple",
+but according to the context,
+their meanings are different.
+So, its vector
+and corresponding embedding will be very different.
+The fruit "apple"
+may be closer to "grass".
+The mobile phone "apple"
+may be closer to "electricity".
+Can BERT do this?
+This is just a silly example,
+and I will show you a real example now.
+Suppose we now consider the word "apple",
+we will collect a lot of sentences that
+have the word "apple".
+Like "drinking apple juice",
+"apple Macbook", and so on.
+Then, we put these sentences
+into the BERT.
+Next, we will calculate the corresponding embedding
+of the word "apple".
+Input "drinking apple juice"
+and get a vector for "apple".
+"apple Macbook" also has a vector for "apple".
+These two vectors will not be the same.
+Why not the same?
+There is self-attention
+in the encoder,
+so according to
+different contexts of the word "apple",
+the resulting vector will be different.
+Next, we calculate the cosine similarity
+between these results.
+That is, calculate their similarity.
+The result is like this.
+There are 10 sentences here.
+The "apple" in the first 5 sentences
+represent edible apples.
+For example,
+the first sentence is
+"I bought apples to eat today".
+The second sentence is
+"What is the average per kilogram of imported Fuji apples".
+The third sentence is
+"Apple tea is terrible".
+The fourth sentence is
+"The season of Chile' apple is coming".
+The fifth sentence is
+"Something about imported apple".
+These five sentences have the word "apple".
+The next five sentences also have the word "apple",
+but all of them refer to Apple incorporation.
+For example, "Apple is about to announce a new iPhone next month."
+"Apple obtains new patent".
+"I Bought an apple phone today".
+"Apple shares have fallen".
+"Apple bet on fingerprint recognition technology".
+There are ten "apple".
+Calculate the similarity between each pair,
+and get a 10 × 10 matrix.
+Each grid here represents the similarity
+between embeddings of two "apple".
+Then you will find that
+the "apple" in the first five sentences is close to yellow.
+The higher the calculated value is,
+the lighter this color is.
+So, the degree of similarity between me and myself must be the biggest.
+The degree of similarity between me and others must be smaller.
+The first five "apple" have a relatively high degree of similarity between each others.
+The last five "apple" also have a higher similarity within them.
+But the similarity between
+the first five "apple" and the last five "apple"
+is relatively low.
+BERT knows that
+the first five "apple"
+refer to edible apples,
+so they are closer.
+The last five "apple"
+refer to the Apple incorporation,
+so they are closer.
+In contrast, upper and lower piles of "apple"
+are different in meaning.
+These vectors of BERT
+are the output vectors.
+Each vector
+represents
+the meaning of that word.
+So we might be able to say,
+"Wow!
+BERT has learned the meaning of
+each Chinese character
+in the process of filling in the blanks."
+Maybe it really understands Chinese.
+For it,
+Chinese characters are no longer unrelated.
+Since it understands Chinese,
+it can do better in the next tasks.
+Then the question you might ask next is,
+"Why does BERT have such a magical ability?"
+Why...
+Why can it
+output vectors that
+represents the meaning of the input words?
+Here,
+John Rupert Firth,
+a linguist in the 1960s,
+proposed a hypothesis.
+He said
+to know the meaning of a word,
+We need to look at
+its "company",
+which are the vocabularies that often appear with it,
+that is, its context.
+The meaning of a word
+depends on its context.
+So take the character 果(fruit) in 蘋果(apple) for example.
+If it often appears with
+eat, tree, etc.,
+then it may refer to
+the edible apple.
+If it often accompanies
+electronics,
+patents,
+stock price, etc.,
+it may refer to Apple the company.
+So, the meaning of a word
+can be inferred from its context.
+And what BERT does
+in the process of learning to fill in the blanks,
+maybe it's learning
+to extract information from the context.
+When we were training BERT,
+we give it w1, w2, w3, and w4.
+We cover w2,
+and tell it to predict w2.
+How does it predict w2?
+It looks at the context.
+It extracts information from the context
+to predict w2.
+So this vector
+is the essence
+of its contextual information,
+which can be used to predict what w2 is.
+Thoughts like this
+already existed before BERT.
+In the past, there was a technique called Word Embedding.
+There is a technique in word embedding called CBOW.
+What CBOW does
+is exactly the same as BERT.
+Make a blank space
+and ask it to predict what is in the blank space.
+This CBOW,
+this word embedding technique,
+can give each vocabulary a vector,
+which represents the meaning of that vocabulary.
+Then someone will ask,
+"Why..."
+CBOW is a very simple model.
+It uses two transforms.
+It is a very simple model.
+Someone will ask,
+"Why does it only use two transforms?"
+"Can it be more complicated?"
+The author of CBOW,
+Thomas Mikolov, once came to Taiwan.
+At that time, when I was in class,
+people often ask me
+why is CBOW only in linear and
+why not use deep learning.
+I asked Thomas Mikolov this question.
+He said that it could use deep learning,
+but the reason for choosing a linear model,
+a simple model,
+the biggest concern,
+was actually the performance.
+Computing power at that time
+was not in the same order of magnitude as today.
+It was probably
+in 2016.
+The technology was not in the same order of magnitude a few years ago.
+At that time, it was still difficult
+to train a very large model,
+so he chose a relatively simple model.
+Today, when you use BERT,
+it is equivalent to a deep version of CBOW.
+You can do more complicated things.
+And BERT can also produce
+different embeddings from the same vocabulary
+according to different contexts.
+Because it is an advanced version of word embedding
+that considers context.
+BERT is also called
+contextualized embedding
+These vectors or embeddings extracted by BERT,
+are called
+contextualized word embedding.
+I hope
+everyone can accept this answer.
+Any questions you would like to ask?
+Do you think it's acceptable?
+Any questions?
+Ok, if you can accept this answer,
+that's great.
+You can sleep soundly tonight.
+But I want to talk a little bit more.
+Something that will keep you awake tonight.
+This answer, however
+is it really true?
+This is the answer you will hear the most in literature.
+When you discuss BERT with others,
+this is the reason most people will tell you.
+Is it really true?
+Here is one incomprehensible
+experiment done by a student in our lab.
+The experiment goes like this:
+We apply BERT trained for text
+to classify proteins,
+DNA strands,
+and music.
+Let's take the classification of DNA strands as an example.
+DNA, as you know,
+is a series of adenosine...
+Uh, not adenosine triphosphate,
+what's it called?
+It's called nucleobase, right?
+DNA is a series of
+nucleobases.
+There are four kinds of nucleobases,
+represented by A, T, C, and G respectively.
+So a DNA strand
+looks like this.
+Okay, our problem is to do DNA classification.
+Given a DNA strand,
+try to determine which category
+the DNA belongs to.
+So here the letters
+represent DNA.
+These things here
+are categories.
+You might ask,
+"What does EI IE and N stand for?"
+Do not mind the details.
+I don't know either.
+Anyway, it’s a matter of classification.
+Just train it
+with the training data and labeled data,
+and it's done.
+Here is the magical part.
+DNA can be represented by ATCG.
+Now, we are going to use BERT
+on DNA classification.
+How?
+We assign each letter
+to a corresponding English vocabulary.
+For example,
+"A" is "we",
+"T" is "you",
+"C" is "he",
+and "G" is "she".
+The corresponding words are not important.
+You can generate them randomly.
+"A" can correspond to any vocabulary,
+so are "T",
+"C",
+and "G".
+It doesn't matter.
+It has little effect on the result.
+Then, you turn a string of DNA into a string of words.
+It's just that this string of text is incomprehensible.
+For example, "AGAC" becomes
+"we she we he".
+Don't know what it's talking about.
+And then,
+threw it into a general BERT
+with CLS token,
+an output vector,
+a linear transform,
+and classify it.
+It’s just that the classification is to DNA classes,
+which I don’t know what they mean.
+And as before,
+linear transform uses random initialization
+and BERT is initialized
+by pre-train model.
+But the model used for initialization
+is the one that learns to fill in the blanks.
+It has learned how to fill in the blanks in English.
+You might think that
+this experiment is
+completely nonsense.
+What is the purpose of BERT
+if we pre-process a DNA sequence
+into a meaningless sequence?
+Everyone knows that
+BERT
+can analyze the semantics
+of a valid sentence.
+How can you give it
+an incomprehensible sentence?
+What's the point of doing this experiment?
+The magical thing is that
+here are different tasks.
+There are three classifications of that protein
+Then protein is made up of amino acids
+There are ten kinds of amino acids
+Just give every amino acid
+a random vocabulary
+Then DNA is a set of ATCG and
+music is also a set of musical notes.
+Give it a vocabulary for each note.
+Then,
+do it as an article classification problem.
+Train it hardly.
+You will discover that
+if you didn't
+use BERT,
+the result you get is the blue part
+If you use BERT,
+the result you get is the red part.
+It's actually better.
+Most of you must be very confused now.
+You guys are probably recalling the song
+where kids had a lots of question marks on them.
+This experiment can be described by no other words but magical.
+No one knows why it works,
+and currently
+there's no good explanations yet.
+The reason I wanted to talk about this experiment
+is to inform you that
+there are still a lot of work to do
+to understand the power of BERT.
+I am not trying to
+deny the fact that
+BERT is able to analyze sentences' meanings.
+From the embedding,
+we clearly observe that
+BERT knows the meaning of every word.
+It spots out the words that have similar meanings
+and those that do not.
+But as I was trying to point out,
+even if you give it
+a meaningless sentence,
+it can still classify the sentences very well.
+So perhaps its power does not entirely come from
+understanding the actual article.
+There might be other reasons.
+For example,
+maybe,
+BERT is simply a better set of initial parameters.
+Perhaps it is not necessarily related to the semantics.
+Maybe this set of initial parameters
+is simply better at training large models.
+Is it so?
+This question requires further research to answer.
+The reason why I want to talk about this experiment
+is to let you know that
+the models we are using currently are often very new,
+and further research is needed
+for us to understand its capabilities.
+Before I finish the class,
+there is still something I want to talk about.
+What you learned today
+about BERT
+is only a drop in the ocean.
+I will put the links
+to some videos here.
+If you want to learn
+more about BERT,
+you can refer to the links.
+You don't need to watch it if you aren't interested.
+You won't need it for the homework,
+nor the remaining of the semester.
+I just want to tell you that
+there are many other variants of BERT.
+Next, I'm going to talk about
+a BERT called
+Multi-lingual BERT.
+What is the magic of multi-lingual BERT?
+It is trained by
+by a lot of languages
+such as Chinese, English, German, French, and etc.
+Train the BERT with fill-in-the-blank questions.
+This is how the Multi-Lingual's BERTis trained.
+The Multi-Lingual BERT has a very magical feature.
+The Multi-Lingual BERT released by Google
+is trained with 104 different languages.
+So it is able
+to do fill-in-the-blank questions in those 104 languages.
+Here comes the magical part.
+If you training it
+with English Q&A data,
+it will automatically learn how to do Chinese Q&A.
+I don’t know if you fully understand what I mean,
+so here is an example
+of a real experiment.
+Here are some of the training data.
+They used SQuAD for fine-tuning.
+It's an english
+Q&A data set.
+The Chinese dataset was released by DELTA,
+called DRCD.
+This dataset is also
+the dataset that we are going to use
+in the homework.
+Before BERT was proposed,
+the results were not good.
+Before BERT, the strongest model is QANet.
+Its correct rate is only...,
+well, I mean F1 score,
+not accuracy,
+but you can temporarily think of it as accuracy or the correct rate.
+Its correct rate is 78%.
+What about BERT?
+If we allow pre-training with
+fill-in-the-blank questions in Chinese
+then fine-tuning with Chinese Q&A data,
+then it achieves 89% correct rate
+on Chinese Q&A test sets.
+In fact, human beings can only do 93%
+on the same dataset.
+So the performance is quite impressive.
+The magical thing is,
+if we take a multi-lingual BERT
+and fine-tune it
+with English Q&A data,
+it can still answer Chinese Q&A questions
+and has 78% correct rate.
+This is almost the same as
+the accuracy of
+QANet!
+It has never been trained to translate between Chinese and English,
+and has never read the Chinese Q&A data collection.
+It takes this Chinese Q&A test
+without any preparation,
+and somehow it managed to answer them
+even though it had never seen Chinese tests.
+Sounds amazing, right?
+Some of you might say:
+"It had read 104 languages
+during pre-training,
+one of the 104 languages was Chinese
+was Chinese, right?
+If yes, this is not surprising."
+But during pre-training,
+the learning goal is to fill in the blanks.
+It can only fill in the blanks in Chinese.
+With this knowledge
+and the ability to do English Q&A,
+somehow it learned to do Chinese Q&A automatically.
+Sounds magical, huh?
+So how did BERT manage to do it?
+A simple explanation is:
+maybe different languages
+don't have that much differences
+for the multi-lingual BERT.
+Whether you show it in Chinese or English,
+for the words sharing the same meaning,
+their embeddings are close.
+So maybe 兔子 (Rabbit) in Chinese is close to Rabbit in English
+in the embedding.
+跳 (Jump) in Chinese is close to jump in English.
+魚 (Fish) in Chinese is close to fish in English.
+游 (Swim) in Chinese is close to swim in English.
+Maybe it had learned this automatically
+during the learning process.
+This is not simply a hypothesis.
+It can be verified.
+We actually did some verification.
+The criterion for verification
+is called Mean Reciprocal Ranking
+The abbreviation is MRR.
+We won’t go into details here.
+You just need to know that
+the higher the value of MRR,
+the better the aligning
+between different embeddings.
+A better aligning means that
+words with the same meaning but from different languages
+will be transformed to
+closer vectors.
+If the MRR is high,
+then the vectors of words with the same meaning but from different languages
+are closer.
+The vertical axis is MRR. The higher, the better.
+Ok, what is this
+rightmost dark blue line?
+This dark blue line
+is the MRR of multi-lingual BERT
+with 104 languages ​​released by Google.
+Its value
+is very high.
+This indicates that
+there's no much difference between different languages.
+Multi-lingual BERT just looks at the meaning
+and different languages ​​do not
+have much difference to it.
+We tried to train
+the multi-lingual BERT by ourselves.
+We used fewer data.
+Only 200,000 sentences were used in each language.
+The data was fewer.
+The result of our self-training model
+was not good.
+We did not know why
+our multi-lingual BERT
+couldn't align different languages ​​together.
+It seemed that it couldn't learn
+those symbols that had the same meaning in different languages.
+They should have the same meaning.
+This matter had bothered us for a long time.
+Why did we this experiment?
+Why?
+Why did we train multi-lingual BERT by ourselves?
+Because we wanted to understand
+what makes multi-lingual BERT.
+We wanted to set different parameters,
+different vectors
+and see which vector
+would affect multi-lingual BERT.
+Which vector would affect the capability of multi-lingual?
+But we found that
+for our multi-lingual BERT,
+no matter how you adjusted the parameters,
+it just couldn't achieve the effect of multi-lingual.
+It just couldn't achieve the effect of alignment.
+One day we suddenly felt that
+maybe the amount of data was not enough.
+200 K per language was not enough.
+We increased the data five times larger
+to see if we could achieve alignment.
+Before doing this experiment,
+everyone was a little bit resistant.
+Everyone felt a little scared
+because the training time had to be 5 times longer than the original one.
+What happened in the end?
+This was the graph of loss.
+After training for two days,
+nothing happened.
+The loss couldn't even decrease.
+Just when we were about to give up,
+the loss suddenly fell.
+It took 8 V100 to train.
+We also didn't have 8 V100 in our lab.
+It was run from a machine at NCHC (National Center for High-Performance Computing).
+After training for two days,
+the loss didn't fall.
+It seemed to fail.
+When we were about to give up,
+the loss dropped.
+Okay, this is a Facebook post from a certain student.
+I quote it here to tell you
+the exclamation in my heart at that time.
+The whole experiment
+has to run for more than a week
+to learn it well for
+the 1000 K data per language.
+Is it useful to have more data?
+Wow, yes, it is.
+With more data,
+it can learn the alignment.
+So it seems that
+the amount of data is a very critical factor to
+the sucess to align different languages ​​together.
+So sometimes the magical thing is that
+many problems or many phenomena
+show up only if there's
+a sufficient amount of data.
+In the past, no one has said
+what kind of model has the capability of multi-lingual.
+It can be trained on QA in A language
+and then directly transfer to B language.
+No one has ever said anything about this.
+It came out in the past few years.
+One possible reason is that
+there was not enough data in the past.
+There is enough data now.
+There are a lot of computing resources now.
+So this phenomenon is now possible to be observed.
+Okay, there is the last one here.
+I know the time is almost up,
+but I want to talk about the last magical experiment.
+Don't you think this whole thing
+is still a bit weird?
+I think the whole thing is weird.
+What's weird?
+You said BERT could put
+symbols with the same meaning in different languages together,
+and make their vectors close.
+But when training multi-lingual BERT,
+if giving it English,
+it can fill in the blanks in English.
+If giving it Chinese,
+it can fill in the blanks in Chinese.
+It won't mix together.
+Then,
+if there is no difference between different languages,
+how is it possible to
+fill in the English sentences with only English tokens?
+Give it an English sentence.
+Why will it not fill the blank
+with Chinese tokens?
+It just doesn't do it.
+It means that
+it knows the information of the language
+is also different.
+Those symbols from different languages
+are still different after all.
+It does not completely erase the language information.
+So I came up with a research topic.
+Let's find
+where the language information is.
+Later we find out that the language information
+doesn't hide itself very deep.
+A student finds out that
+we put the embedding
+of all the English words
+into multi-lingual BERT,
+taking the average of the embedding.
+And we do the same thing with Chinese words.
+Their difference
+is the gap between Chinese and English.
+What are magical things?
+Here, we give multi-lingual BERT a sentence in English
+and get its embeddings.
+We add this blue vector
+to the embeddings,
+which is the gap between English and Chinese.
+These vectors
+become Chinese,
+from the perspective of multi-lingual BERT.
+Then when you ask it to fill in the blanks,
+it can actually fill in the answer in Chinese.
+So it's amazing.
+With this magical thing, you can do
+a wonderful unsupervised translation.
+For example,
+You show BERT
+this Chinese sentence.
+This Chinese sentence is
+"能幫助我的小女孩在小鎮的另一邊，
+沒人能幫助我"
+Now we throw this sentence into multi-lingual BERT.
+Then we take out one of the multi-lingual BERT layers.
+It does not need to be the last layer.
+It can be any layer.
+We take out a certain layer
+and give it an embedding
+plus this blue vector.
+For it, this sentence immediately
+transforms from Chinese to English.
+Its output is doing reconstruction.
+When doing this fill-in-the-blank question,
+its answer suddenly
+becomes English.
+And, of course, it cannot do a complete translation.
+It looks a bit weird.
+For example, "沒人能幫助我" (no one can help me).
+It becomes "There 是(is) 無人(no people) 人(people) Can Help 我 (me)".
+Then it knows that "幫助" is "Help".
+It knows that
+"there" needs to be added here and so on.
+Ah, I just made a mistake.
+The sentence entered just now is actually in English.
+I just thought the input was Chinese.
+I was wrong.
+Sorry.
+I'll repeat it again.
+The sentence entered is in English.
+The sentence is
+"The girl that can help me is all the way across town."
+"There is no one who can help me."
+The sentence BERT sees is in English.
+After inputting English to BERT,
+Converting the hidden Layer
+in the middle
+by plusing a blue vector.
+In a flash,
+the Chinese come out.
+"There is no one who can help me."
+becomes "There 是(is) 無人(no one) 人(people) can help 我(me)".
+"me" becomes "我".
+"no one" becomes "無人".
+So it somehow
+can do the unsupervised token level translation.
+Although it's not perfect,
+the magical thing is that
+multi-lingual BERT
+still keeps semantic information.

@@ -1,0 +1,903 @@
+Let's take a break
+after talking about domain adaptation.
+The video recorded by the TAs will be played in the next class.
+The video about domain adaptation recorded by the TAs
+is very clear,
+so we will go through it fast here.
+If you can’t hear well,
+you still have a chance to listen again
+to the video recorded by the TAs.
+If you already understand the content
+that I would talk about later,
+although I speak a little fast,
+then when we play the video recorded by the TAs,
+you just take a break and do other things.
+Okay.
+Let’s talk about domain adaptation.
+So far,
+we have trained a lot of
+machine learning models.
+So, for everyone,
+training a classifier is not a problem at all.
+Suppose you want to train a classifier for digit recognition,
+you just need to get the training data,
+train a model,
+and apply it to the testing data. It's over.
+The digit recognition problem is simple.
+You can do whatever you want
+and achieve 99.5% accuracy
+on the MNIST
+benchmark corpus.
+But if the distribution of testing data
+is different from the one of training data,
+How to do it?
+Let's take a simple example.
+When training,
+your numbers are black and white.
+But when testing,
+your numbers are colorful.
+What will it happen?
+You might think
+although one side is black and white
+and the other side is colorful,
+but since the shapes of the numbers are the same,
+if the model can recognize numbers
+in black and white pictures,
+would it be possible to recognize the numbers
+in the colorful pictures?
+Actually, it is not.
+If your model is trained
+on such black and white numbers,
+when it is directly used for the colorful numbers,
+the correct rate you get will be very low.
+It will be about 57%,
+which is not a passing score.
+So we know that
+once there are some differences
+in the training data and testing data,
+or the distribution between them is different,
+the model you trained on the training data
+may be broken on the testing data.
+This kind of problem is called domain shift.
+That is, when the distribution of your training data
+is different from the distribution of your testing data,
+this situation is called domain shift.
+In most of this kind of homework
+or benchmark corpus,
+we all ignore the problem of domain shift.
+Our training data and testing data
+tend to have the same distribution.
+This will give everyone a wrong impression, such as
+"Wow, what kind of artificial intelligence is this?",
+"It is really amazing",
+or "It is beyond human beings
+on many tasks".
+But in real applications,
+When your training data and testing data
+does not have exactly the same distribution,
+whether the machine can perform well
+is unknown.
+So, today we are going to talk about that
+assuming there is a little difference
+in training data and testing data,
+is there any way we can
+get a better result.
+Okay, today I’m going to talk about the technology of domain adaptation.
+The technology of domain adaptation
+can also be regarded as a type of transfer learning.
+How to say that?
+Transfer learning is that
+the skills you learned on task A
+can be used on task B.
+For domain adaptation,
+your training data is in a domain,
+whereas your test data is in another domain.
+On the training data,
+for the information learned from a certain domain,
+you need to use it in another domain,
+and use it on the test data.
+So you are applying the knowledge learned from a domain
+to another domain.
+So it can be seen as
+a part of the transfer learning process.
+In the video of the past lessons,
+we have a comprehensive introduction about transfer learning.
+But since time is limited today,
+we will only focus
+on the Domain Adaptation part.
+If you are interested,
+you can take a look at the video of the past lessons.
+Okay, domain shift
+has many different types.
+What we just saw
+is that the distribution of the input data changes.
+However,
+it is just one case of domain shift.
+In fact, there is another case.
+The distribution of output may also changes.
+For example, in your training data,
+maybe every number has equal chance of appearing.
+But on the test data,
+the probability of each output may be different.
+It is possible that a certain number has a particularly high probability of output.
+Is this possible?
+It is actually possible.
+Then this is also a kind of domain shift.
+There is also a much rarer,
+but not completely impossible case.
+Although the distribution of input and output may be the same,
+the relationship between them is changed.
+Maybe in your training materials,
+this kind of thing is called 0.
+But in your test data,
+this kind of thing is called 1.
+It's not impossible.
+It's also possible
+that the relationship between the input and the output
+is not identically the same in the training data
+and in the test data.
+Then this is another kind of domain shift.
+Today we will only focus on
+the domain shift with different data.
+Okay, in the following class,
+we will call the test data
+the training data of the target domain.
+Similarly, our training data comes from the source domain.
+the data in the target domain is our test data.
+Okay, so in domain adaptation,
+our situation is like this.
+We have a bunch of training materials.
+Here we will directly use the classification of handwritten numbers
+as our example.
+We have a bunch of training materials.
+This information comes from source domain.
+And these training data are labeled.
+We know what number corresponds to each picture.
+But now we want to use these data
+to train a model
+so that this model can be used on different domains.
+Then in order to use this model in a different domain,
+during training,
+we have to have have some understanding on the another domain,
+which is the target domain where the test data is located.
+Then depending on our understanding on the target domain,
+we have different kinds of methods of domain adaptation.
+The case we have the most understanding is
+that we not only have data on the target domain,
+but we also have the corresponding labels to the data.
+This is one case.
+But there is another better situation.
+Maybe you already have a lot of data
+on the target domain.
+Those data also have labels.
+Then you don’t actually need to do domain adaptation.
+You just use the information from target domain to train.
+So if you have a really good undeestanding on the target domain,
+which means there is already a lot of data,
+and the data are also labeled,
+then you don’t need to do domain adaptation at all.
+The situation for making domain adaptation may be that
+you have the labeled target domain data,
+but the amount is very small.
+What should I do in this situation?
+This situation is still easy to handle
+in the domain adaptation.
+If what you encounter today is
+the case of a small amount of labeled data,
+you can use these labeled data
+to fine-tune the model you trained on the source domain.
+The so-called fine-tuning here
+was like your behavior when you were doing BERT.
+You already have a pre-trained model
+on the source domain.
+Then you take the data of the target domain
+to train with a few epochs.
+Okay, in this situation,
+the problem you need to pay attention to is this.
+Because the amount of data in your target domain is very small,
+you have to be careful not to overfit.
+In other words, don’t use the data on the target domain
+to run too much iteration.
+If you run too much iteration,
+it may overfit these small amounts of data on the target domain.
+Then, you can’t do well on your real testing set.
+It is possible.
+In order to avoid overfitting,
+there were many solutions in the past,
+like a lower learning rate.
+For example, you want to make the difference between
+the parameters before fine-tuning, and after fine-tuning
+small.
+Or you can force the relationship between its input and output
+in the model before fine-tuning and after fine-tuning,
+to be close.
+There are many different ways.
+We won’t go into details here.
+Okay, the situation I mainly want to share with you today,
+is that we have a lot of data on the target domain,
+which is also the situation in our homework.
+But these data are not labeled.
+Your target domain is numbers with colors.
+You also collect a lot of pictures with colored numbers.
+But no one labels
+what the number is in each picture.
+What we have to deal with in the homework is
+to find a solution to this
+when we encounter this common situation.
+How should we solve it?
+A situation like this
+is a possible situation
+in a real system.
+For example, you train a model in the laboratory.
+You want to use it in the real field.
+You just put your model online.
+Some people actually use it.
+But you find that the feedback you get is very poor.
+Everyone dislikes that your system has a low accuracy rate.
+What sould you do?
+At this time,
+you may be able to use the domain adaptation technology.
+Because your system is already online,
+and some people have already used it,
+you can collect a lot of data.
+It’s just that the data are not labeled.
+The question to be asked now is
+how to use these unlabeled data
+to help us train a model
+on the source domain that
+can be used on the target domain?
+The most basic idea here is like this.
+The basic concept here is like this.
+We want to find a feature extractor.
+This feature extractor
+is actually a network.
+This Network will take a picture as input.
+It generates a vector,
+which is a feature.
+Although the images on the source domain and the target domain
+look different,
+the feature extractor
+will take away their different parts
+and extract only the parts they have in common.
+So, although for the two pictures,
+one has color and the other has no color.
+It's already very different.
+But we expect that
+this feature extractor can learn
+to ignore the color.
+It can filter out the information of color.
+So whether it’s the picture from the source domain
+or the picture from the target domain,
+the feature it gets looks no differenct
+after going through this feature extractor.
+They seem to have the same distribution.
+So you can use these features
+to train a model.
+Train a model with the Source Domain
+and directly apply it to the Target Domain.
+The next question is
+how to find such a feature extractor.
+How can we find such a feature extractor?
+In fact, we can split a general classifier
+into a feature extractor
+and a label predictor.
+An image classifier
+takes an image as input
+and outputs the result of classification.
+Let’s say that the image classifier has ten layers.
+Then we can split the layers into two parts,
+the first 5 layers belong to the feature extractor,
+while the last 5 layers belong to the label predictor.
+Why?
+The output given an image after the first 5 layers
+is a vector.
+If the model is a CNN,
+its output is actually a Feature Map,
+but the Feature Map
+can also be regarded as a vector.
+The classification result
+is the output of the later 5 layers
+of the feature vector.
+So we can think of the first 5 layers
+as the feature extractor.
+You might ask:
+why should we pick 5 layers?
+Why not pick the first 4, or any other number?
+Well,
+this is up to you.
+You can freely decide
+which part of the classifier
+belongs to the feature extractor
+or the label predictor.
+Actually, the number of layers picked
+can be regarded as a hyper parameter,
+which need to be adjusted.
+Later on,
+we are going to use
+a method called
+Domain Adversarial Training.
+When using Domain Adversarial Training,
+you also need to decide
+which part of the classifier
+is used as the feature extractor
+by yourself.
+So how can we train
+the feature extractor and the label predictor?
+The data in the source domain
+are labeled.
+Just throw it into
+the classifier,
+and force it to produce the correct answer
+after passing through the feature extractor
+and the label predictor.
+But there is one slight difference.
+We have a bunch of
+Target Domain data,
+but they are unlabeled.
+These data are not marked.
+So we can not use the
+the output of the label predictor.
+to train it.
+Because we don’t have
+the correct answer.
+How can these data be used?
+The answer is,
+we throw these images
+into the image classifier,
+and take out
+the output of
+the feature extractor.
+We hope that
+the feature extractor's output for
+both source and target domain images
+to be indistinguishable.
+The blue dots represent
+the feature
+of images from source domain.
+The red dots represent
+the images from target domain.
+We want to minimize the difference
+between the blue and the red dots.
+How to make the blue dots and the red dots
+indistinguishable?
+It has to rely on
+the technology of domain adversarial training
+It is totally fine
+if you didn't totally understand this part.
+The TAs will go over the details again later.
+Okay, what we have to do now is
+to train a domain classifier.
+The domain classifier
+is a binary classifier.
+The input is this vector
+and it needs to discriminate whether
+the vector is from the source domain
+or the target domain.
+It has to discriminate whether this factor
+is from the source domain
+or the target domain.
+The learning goal of the feature extractor
+is to think of a way to fool the domain classifier.
+The process of fooling
+might remind you of
+GAN,
+in other words,
+the generative adversarial network.
+That's right, the domain adversarial training
+is pretty much like GAN.
+You can think of the feature extractor
+as a generator,
+and think of the domain classifier
+as a discriminator.
+The first paper of
+domain adversarial training
+if I remember correctly is published on ICML in 2015.
+Just a little bit later than that GAN.
+But they can be viewed as works almost at the same time.
+In the paper of domain adversarial training
+had a reference to the paper of GAN.
+But at that time, the paper of GAN
+had not been accepted by NeurIPS.
+The only thing it said is that
+there is another paper
+proposed a method called GAN
+posted on the internet
+have some similarity with this work.
+So they can be regarded as contemporaneous works.
+However,
+the domain adversarial training
+still has a little difference compared to the GAN.
+It seems that the generator
+has too much advantage over the discriminator.
+For the generator,
+there is a really naive way
+to fool
+the discriminator.
+Which is the feature extractor
+or the generator
+output 0
+no matter what the input is.
+The output is always the zero factor regardless of the input.
+Then the domain classifier
+will have no clue of what the input image looks like.
+The zero factor is what it can see
+so there is no way it can distinguish
+which domain the factor comes from.
+But this is obviously not what we want to see.
+If the feature extractor will only output zero vectors
+then it is totally useless.
+Will this situation happen?
+Actually, it won't happen.
+Why?
+Because the label predictor also needs this feature.
+The label predictor also needs this feature
+to judge
+which category does the input image belongs to.
+If the generator
+outputs zero vectors
+no matter of the input image,
+for the label predictor,
+it has no way to determine which picture it is.
+In this case,
+because the feature extractor
+still needs to generate the factor
+to make the label predictor produce the correct answer.
+The feature extractor
+can not always output zero vectors
+regardless of the input.
+Now,
+we will go over the above process again with symbols
+just to make it clear.
+Assuming the parameters of label predictor
+is θp,
+The parameter of domain classifier is θd,
+and the parameter of feature extractor is θf.
+Then these images on the Source Domain
+has a classification cross entropy
+because the images in the Source Domain
+have labels.
+So you can calculate their cross entropy.
+Based on their cross entropy,
+we can design a loss.
+For θp,
+Oh, I haven’t talked about θp yet.
+There is an L here.
+L is the cross entropy
+of those images
+on the Source Domain
+which is calculated according to their labels.
+Then for this Domain Classifier,
+It has to find a way to distinguish
+the gap between Source and Target Domain.
+It is actually doing
+a binary classification.
+This classification problem has a loss called Ld.
+Then we are going to find a θp.
+to make this L as small as possible.
+We are going to find a θd
+to make this Ld as small as possible.
+What the label predictor does
+is to make the classification of the
+images in the Source Domain as correct as possible.
+The Domain Classifier aims to
+make the classification of the domain as correct as possible.
+As for feature extractor,
+what feature extractor does is
+to stand on the side of the label predictor,
+and fight against the Domain Classifier.
+That is, It does the opposite things of Domain Classifier.
+So the loss of feature extractor
+is the loss of label predictor, L
+subtracted by the loss of the Domain Classifier
+called Ld.
+So the loss of feature extractor
+is the L minus Ld.
+You have to find a set of parameters θf,
+making the value of L minus Ld as small as possible.
+This is the most original
+method of Domain Adversarial Training.
+But is it the best in practice?
+You can think about it.
+We won’t go into details.
+Everyone can think about it and discover for themselves.
+Think about it.
+Assuming the job that the domain classifier does
+is to separate the Source Domain from the Target Domain.
+For example, it wants to know that its feature comes from Source Domain
+upon seeing this kind of picture,
+or it wants to know that its feature comes from Target Domain,
+upon seeing this kind of picture.
+It needs to separate these two groups of features.
+If the loss of the feature extractor
+is a minus sign added on the Domain Classifier directly,
+what does that mean?
+It means that the feature extractor's job
+is the opposite of Domain Classifier.
+Originally, Domain Classifier classifies the feature of this picture
+as source.
+Now, feature extractor
+aim to let Domain Classifier classify this picture
+as Target.
+For this picture, in turn, as Source.
+If you do so,
+didn’t you also separate the two groups of features?
+What we are going to do now
+is to eliminate
+the difference between the Source and the Target Domain.
+But either you use Ld
+or still negative Ld,
+it's all necessary to
+separate Source Domain from Target Domain.
+Originally,
+Domain Classifier
+is to make the value of Ld as small as possible.
+It is now negative Ld.
+feature extractor should make the value of Ld the bigger the better.
+In fact, it also separates Source Domain from Target Domain.
+So this may not be the best practice.
+Of course, this trick works.
+But how can we do better?
+We leave this question for everyone to discover the answer yourself.
+That'll be some food for thought for you guys.
+Now, let's take a look at
+the original paper on
+domain adversarial training.
+What is the result of it?
+When I saw this paper back then,
+I was really amazed by the results.
+It did four tasks,
+all of them being basically digit recognition.
+The upper part is the image from the source domain,
+and the bottom half is the image from the target domain.
+Now, if we were to
+use the images from the target domain
+for both training and testing,
+the result would look something like this.
+The accuracy of each task is above 90%.
+However, if we were to
+use the images from the source domain for training
+and the images from the target domain for testing,
+we would be training on black and white digits
+and testing on colored digits.
+The result would be quite poor in comparison.
+The accuracy of it
+dropped significantly.
+Now, if we add domain adversarial training,
+what would the result look like?
+Originally, when it was trained on black and white images
+and tested on colored images,
+the accuracy was 57.5%.
+When we add domain adversarial training,
+the accuracy soared to 81%.
+The improvements in many other tasks are also quite substantial.
+From 59% to 71%.
+From 74% to 88.7%.
+The improvement is quite evident and significant.
+That's domain adversarial training.
+Okay, let's pause for a bit
+and see if there's any question.
+Okay,
+let me see.
+Someone asked
+if the domain classifier
+is similar to something like the k-means clustering.
+Well, no.
+It is a binary classifier.
+The domain classifier
+is simply a network
+that can have many layers,
+and you can decide how many layers it has.
+So, it is not a
+k-means clustering.
+It is just a classifier.
+We train the classifier
+that takes the feature vector as the input
+and outputs whether the input belongs to the source domain
+or the target domain.
+Wait, someone has already answered that for me.
+It seems that the teaching assistant
+has already answered that question for me.
+Fine, let's continue.
+Okay, there are still some limitations
+to this idea.
+There is a small problem.
+What is it?
+Let's take a look.
+The blue circles and blue triangles
+represent two classes on the source domain.
+Of course, we can find a boundary
+that separates these two groups of classes.
+For the data on the target domain,
+we don’t have its class labels.
+We can only say that all the data from the target domain
+are represented by squares.
+The goal of the training
+is to make the distribution of these squares
+align to the distribution of the circles and triangles as much as possible.
+What does it mean to align them as much as possible?
+In the case on the left,
+the red dots and the blue dots
+are pretty aligned together.
+Their distributions are somewhat close.
+In the case on the right,
+the red dots and the blue dots
+are also pretty aligned together.
+Now, which one do you think is better?
+Is it the one on the left or the one on the right?
+Let's try to have some interactions.
+If you think left is better,
+enter 1 in the chat.
+If you think right is better,
+enter 2 in the chat.
+Let's see if there is a way to interact with you guys.
+I can answer the classmates' questions when waiting for your choices.
+What does the percentage in parentheses
+after the proposed approach mean?
+That percentage is
+the amount of improvement.
+It is the amount of improvement.
+It does not have special meaning.
+Ok.
+A student asked:
+"The training data only has Source Data"
+Oh, he is answering
+other student's questions.
+It is good.
+Ok, most students choose 2.
+Most students choose 2.
+Some students also choose -1.
+It is good.
+There are so many 2 in the chat.
+I think most of the students
+think right is better.
+Yes, many people choose right.
+Should we let the situation on the right happen
+and avoid the situation on the left?
+How to do it?
+How to make the situation on the right happen
+and avoid the situation on the left.
+We have a simple idea.
+We know where the decision boundary
+between the blue circle and the blue triangle is.
+We know this decision boundary.
+We should make these squares,
+although we don’t know which category it is,
+we should keep these squares away from this decision boundary.
+How to keep the square away from this decision boundary?
+There are many different methods in the literature.
+You can refer to the literature.
+See what kind of method is better.
+For example, one of the easiest ways is this.
+We have a lot of unlabeled pictures.
+Feed pictures to feature extractor
+and then feed to the label predictor.
+Although I don’t know which category it is,
+I hope it is as far away from boundary as possible.
+What does it mean to be far away from boundary?
+If we have a very high score in one category
+is called far away from boundary.
+If output probability of categories is close
+is called near the boundary.
+Feed the unlabeled image
+into feature extractor and then
+feed it into the label predictor.
+Make output result
+as far away from boundary as possible.
+In other words, to have a high score on a certain category.
+Although we don’t know which category it should be,
+at least it should be in one category.
+This is one but
+not the only trick.
+Then you can refer to the literature.
+For example, there is a well-known method called DIRT-T.
+DIRT-T.
+In the paper,
+the authors told you DIRT-T
+should pronounce Dirty.
+You have to pronounce it dirty.
+Everyone is a master of naming models.
+Everyone will name some very creative names.
+Well, this DIRT-T is a trick.
+There is another trick called
+Maximum Classifier Discrepancy
+If you want to get the best results
+in this domain adaptation homework,
+these tricks are indispensable.
+How these tricks work
+is complicated.
+I’ll leave this to everyone’s own research.
+There is another problem here.
+What kind of problem is it?
+So far,
+we assume that
+the Source domain and the target domain
+have the exactly the same categories.
+Source domain is a problem of image classification.
+Source domain has categories of tigers, lions, and dogs.
+Target domain should also have categories of tigers, lions, and dogs
+Will it really be like this?
+Target domain does not have a label.
+We don’t even know what’s inside the target domain.
+We don’t know what category is inside the target domain.
+And in this illustration,
+the solid circle represents
+things in the source domain.
+The dashed circle
+represents things in the target domain.
+So is it possible
+that there are more things in the source domain
+than there are in the target domain?
+Is it possible
+that there are fewer things in the source domain
+and more things in the target domain?
+Is it possible that the two overlaps
+but each also has its own unique category?
+It's all possible.
+So under this premise,
+Aligning source domain
+and target domain
+sounds a bit weird.
+Because for example, in this case,
+you say you want the data's feature in the source domain
+and the data's feature in the target domain
+to completely matched together.
+That means,
+you force the tiger to be like a dog.
+Or force the tiger to be like a lion.
+Eventually, you won’t be able to distinguish the tiger category.
+Sounds like a problematic method.
+So how to solve this problem?
+What to do when source domain and target domain
+have different labels.
+You can refer to this article
+"Universal Domain Adaptation".
+Let’s see if anyone has questions to ask.
+OK. One asked,
+"If feature extractor is CNN
+instead of a linear layer,
+then the input of the domain classifier
+is a latent embedding
+that is straightened from the feature map.
+Will domain adaptation
+affect what the latent space has learned
+because feature map originally considers space
+and now it's just being straightened?
+You are right.
+Really, that's totally true.
+Feature extractor
+is a complex network.
+If we want to
+pull the things of the two domains together,
+they may only come together for the sake of coming together
+and do not learn anything
+we expect this feature space to learn.
+The simple answer is yes.
+Yes.
+So domain adaptation
+is not as easy to train as you might imagine,
+although it seems that everything went smoothly just now.
+You can experience it yourself in the homework.
+Domain adaptation
+is a rather difficult homework.
+So,
+you know when we are training,
+we have two things,
+two things fighting against each other.
+One is to cheat the domain classifier,
+the other is to make the classification correct.
+We expect these two things to be done at the same time.
+In other words, on the one hand, it has to fool the domain classifier.
+On the other hand, it has to classify well.
+So we align the two domains together at the same time
+At the same time,
+we hope latent space's distribution is correct.
+For example, we think 1 is more like 7.
+Because we want to make the classifier do a good job,
+your feature extractor
+will make 1 and 7 look more alike.
+Then,
+for example, 1 does not look like 4.
+It will move 1 and 4 a little further.
+We expect that
+through optimizing to increase the performance
+of the label predictor,
+The space in the latent representation
+still keep a better latent space.
+But it may not always be successful.
+If the weight for
+fooling the domain classifier
+is too great,
+your model will learn that
+to just fool the Domain Classifier,
+and it won't generate a good Latent Space.
+So, the issue mentioned by the classmate
+might happen.
+So, when everyone is practicing in the homework,
+there are also some parameters to adjust.
+Alright!
+I hope I have answered the question.
+Okay! Next, there is a more severe situation.
+Previously, we assumed that there is no labeled data.
+But, there is a lot of data at least.
+At this time, you can even say that
+I want to pull two spaces together.
+However, there are one more possible situation.
+In addition to having no labels,
+we also don't have much data.
+For example, I only have one image.
+You only have one at this time.
+Your Target Domain only has one image.
+It only has one point in the latent space.
+You have no way
+to align it to the points in the Source Domain.
+What should we do now?
+Assuming that there is little data in the Target Domain,
+what should we do?
+It's not impossible to do.
+There is a method called Testing Time Training,
+which is abbreviated as "TTT."
+We attach the link here for your reference.
+Testing Time Training is to deal with the following situation.
+Assuming there is no label in my Target Domain,
+and there is only one image,
+Testing Time Training provides a solution in this situation.
+But, there is actually a more severe situation.
+This situation is,
+if we don't know anything,
+if we don't know anything about the Target Domain,
+what should we do?
+At this time, it is divided into two situations.
+For the problem that we have no knowledge about the Target Domain at all,
+we will not call it Domain Adaptation.
+Usually, we call it Domain Generalization
+because we are not going
+to adapt to a specific Domain.
+We don't know anything about that specific Domain.
+We are looking forward to making the machine learn
+Domain Generalization.
+During testing,
+no matter what magical domain comes,
+it can always handle.
+For Domain Generalization,
+it could also be divided into two situations.
+One situation is that the training data are very rich,
+originally containing a variety of different Domains.
+We assume that you want to make a classifier to separate cats and dogs.
+Now, in the training data,
+there are real pictures of cats and dogs,
+and sketches of cats and dogs,
+and watercolor pictures of cats and dogs.
+We expect that the model could learn to diminish the differences between domains.
+because there are different domains in the training data.
+Now, if there is the cartoon pictures of cats and dogs in the test data,
+it can also handle.
+This is one situation,
+which you can better imagine how to deal with it.
+So, we won't go into details here.
+We only put some representative papers,
+for your reference.
+But, there is another situation,
+which you will feel that you really don't know how to do is
+the situation where there is only one domain in the training data.
+If there is only one domain in the training data
+and there are different domains in the test data,
+how should you deal with it?
+It's not no one tried in the literatures.
+There are some people trying to solve this kind of issue.
+What do they do?
+We won't talk about the details.
+Conceptually, it's a bit like Data Augmentation.
+Although you have data in only one domain,
+you could come up with a Data Augmentation method
+to generate data for different domains.
+Then, you can do it with the Scenario above
+to see if it can work in the test data
+of the new domain.
+Okay! This is Domain Generalization.
+Okay! We just talk briefly to everyone
+about the different techniques of Domain Adaptation.
+For more details,
+in the next class,
+the TAs will explain to everyone carefully.
+We now are going to take a five minutes break.
+You could take a break and come back later.

@@ -1,0 +1,932 @@
+Okay, let's continue the class.
+Thank you all for mentioning the solutions
+about closing the microphone.
+I will study it myself.
+I guess I can do it on OBS
+as the classmates said.
+I’m not so familiar with OBS.
+I will practice OBS myself.
+Some classmates asked
+good questions in the chat room.
+These two questions are the same.
+In the first question, he said
+"We have one s and one a in pair."
+"If we don't want the Actor takes a,"
+"what action does the Actor take?"
+"Does the Actor do nothing?"
+So, that the Actor doesn't take action a means
+that it can do any other things.
+Doing nothing
+for an Actor
+is also an action.
+If you want the Actor to have
+the opportunity to do nothing,
+then doing nothing is also an action.
+There are three actions
+in Space Invaders:
+to fire, to go left, and to go right.
+Suppose you want your Actor
+has another possible action,
+where the Actor doesn't choose
+any of the three actions but stay.
+You should add "stay" into
+the possible choices for Actor
+That the Actor doesn't take action a means that
+it can do any other things.
+For example, you don’t want your spaceship to go left.
+It can either fire or go right.
+Okay. Here's the second question.
+"Given s, can we decide one desired action a and another undesired action a'?
+Yes, you can.
+Given one observation,
+you want your Actor to choose to fire
+but not to go right.
+Then, to fire will have a high score.
+To go right will have a low score.
+The Actor wants to fire
+but not to go right.
+Actions are sampled randomly.
+Give an observation,
+the decision may not be the same every time.
+The randomness of sampling
+make decisions different.
+The score of these actions
+will determine the probability of its appearance.
+If you want your Actor to choose to fire
+but not to go right.
+just give the action "to fire" a higher score.
+To fire will have a higher probability to be sampled
+and to go right will have a lower probability.
+There is another question.
+"Actor will have a positive score if it does A1."
+"If you want to maximize the scores of all actions,"
+"why don't add a negative sign to the loss function?"
+Let me take a look.
+The Actor takes the action A1
+will have a positive score.
+If you want to maximize the scores of all actions,
+Why don't you add a negative sign?
+Sorry, I didn't understand your question.
+I don't understand the problem.
+We are not trying to maximize the scores of all actions.
+What we want to maximize is
+the total reward.
+After one episode,
+we can get the reward of each action.
+Sum up rewards from each action
+then we can get the total reward.
+Maybe,
+I don't answer your question correctly.
+If you still have questions,
+you can try to express your question
+in another way.
+I will answer your question if I can.
+Okay,
+let's continue the class.
+So far,
+you might think there is no difference
+between supervised learning and reinforcement learning.
+That is indeed no difference.
+The next key point is
+how we define a
+How to define a.
+Let me talk about the simplest
+but incorrect version first.
+This one is actually
+the version that teaching assistant's sample code adopts.
+How exactly did we do it in the incorrect version?
+This incorrect version looks something like this.
+First of all, we still need to collect some training data,
+which are (s, a) pairs.
+How do we collect these pairs?
+We need to have an Actor
+that interacts with the environment.
+This way, it can collect (s, a) pairs.
+Where did the Actor come from?
+You may find it a bit odd
+since the goal of this task
+was to train an Actor.
+However, we need to have an Actor
+to interact with the environment
+and record the s and a of the Actor.
+Where did we get the Actor from?
+For now,
+treat the Actor as something random.
+The initial Actor
+is just a random thing.
+When it sees s1,
+the action it performs makes no sense,
+or at random, so to speak.
+But, we will record
+every a that it performs
+at each s.
+Usually, when we're collecting data,
+we won't only make one episode of the Actor and the environment.
+We usually make multiple episodes
+in hope of collecting enough data.
+For instance, there are five episodes
+in the sample code
+to collect enough data.
+Now, we go and observe an Actor
+and see how it interacts with the environment.
+We then record
+the actions the Actor performs
+from each observation
+and use it to evaluate
+each action
+and whether it's a good move or a bad move.
+After the evaluation,
+we can take the result of our evaluation
+to train the Actor.
+How do we evaluate?
+We've mentioned that
+we will use A
+to evaluate each step
+and whether we hope the Actor
+to take a certain action or not.
+Here's the easiest way to do evaluations.
+Assume that we executed a1
+in a certain step s1
+and got reward r1.
+If the reward was positive,
+perhaps it means that the action is a good one.
+If the reward is negative,
+perhaps it means that the action is a bad one.
+So, we treat r1, r2, which are the rewards,
+as A.
+A1 is r1,
+A2 is r2,
+A3 is r3,
+and AN is rN.
+This would be equivalent to telling the machine that
+a1 is a good action
+and we should execute a1 every time we encounter s1
+because we got a positive reward
+by executing a1.
+If you execute a2 when we encountered s2
+and got a negative reward,
+it means that a2 is a bad move
+and we should not execute a2
+next time we see s2.
+Now,
+the version 0 we're talking about
+was not a good version.
+Why is it not a good version?
+Because, if you use this method
+and set A1 to r1
+and A2 to r2,
+the network trained by this method
+would create a short-sighted Actor.
+It would be an Actor
+that has no concept of long-range planning at all.
+Why's that?
+We know that every action
+would affect future interactions.
+In other words, the Actor executing a1 in s1 and getting r1
+do not represent the whole interaction.
+Because selecting action a1 affect, the "s2" we'll see in the future.
+"s2" will affect the next action "a2",
+and also affect the next reward "r2."
+So, "a1" will also affect
+whether we will get "r2" or not.
+So, each action is not independent.
+Every action will affect what happens next.
+Okay! When we are interacting with the environment,
+there is a problem called
+Reward Delay.
+What is Reward Delay?
+Sometimes, you need to sacrifice short-term benefits
+in exchange for a longer-term goal.
+Assuming you are playing Go,
+if you watched Demi-Gods and Semi-Devils, you would know that
+Xu-zhu cracked Zhen-long's Go game
+by sacrificing one play,
+which reduces a lot of advantages temporarily,
+but, in the end, he won the game.
+A similar play
+in the game of Space Invaders may be like that
+you may need to move left and right to target on
+and then shoot to get points.
+For moving left and right,
+there is no Reward.
+The reward obtained by moving left and right is zero.
+Only shooting will give you reward,
+but it doesn't mean that moving left and right is not important.
+We will need first to move left and right to find the target,
+and then our shooting will be effective.
+So, sometimes we will
+need to sacrifice some short-term rewards
+in exchange for a long-term Reward.
+So, assuming that we use version 0,
+what will it happen?
+From the perspective of the machine,
+as long as it takes left and right,
+the reward it gets will always be zero.
+If the machine choose to fire,
+the reward it gets will be positive.
+Only when firing,
+will the entailing reward be positive.
+The reward will be positive only when machine fires.
+Then, Machine will learn that
+only firing madly is correct
+because only firing could give it positive rewards.
+Any other behaviors will not receive any reward.
+So, any other behaviors are not encouraged,
+and only firing is encouraged.
+Version 0 will let it learn to only madly fire.
+Version 0 is used in the sample code from TA.
+Of course, this is also executable.
+It's just that the results won't be good.
+The reason why TA
+adopted version 0 is that,
+somehow, this version 0
+for everyone, seems to be
+a common mistake
+while implementing reinforcement learning.
+While implementing, you are prone to take
+version 0 directly
+and get a bad result.
+What should we do to avoid this issue?
+So now, we start to officially introduce reinforcement learning.
+We will take a look at how Policy Gradient works.
+So, we need to have a new version 1.
+Fortunately, in version 1,
+how good a1 is doesn't
+depend on r1.
+It depends on everything that happens after a1.
+We will first execute a1
+and collect all the rewards
+from r1, r2, r3, to rN
+and sum them up
+to get a value called G1.
+Then, we will say that A1 is equal to G1.
+We use this G1
+as a metric for evaluating whether an Action is good or not.
+Previously, we used r1 to evaluate directly.
+Now, it is not.
+We take G1 to evaluate.
+Then, we add up all the following r (reward)
+to evaluate the action a1.
+Because, after we execute "a1",
+a series of things, like these, happen.
+Adding up those series of things,
+we may be able to evaluate "a1"
+to know whether it is a good action or not,
+and so on.
+How good is a2?
+After executing a2,
+we add up all the following "r"
+from r2 to rN
+to evaluate the G2.
+Then how good is a3?
+After executing a3,
+we add up all "r"
+and get G3.
+So we add up all those things.
+We call G as the
+Cumulated Reward.
+Adding up all future rewards
+to evaluate the quality of an Action
+sounds much more reasonable.
+So this G is the cumulated reward.
+What is Gt?
+Starting from
+the time point t,
+we add from rt to rN.
+All together is the
+cumulated reward Gt.
+Then we use this cumulated reward
+to evaluate the quality of an Action.
+When we use
+cumulated reward,
+we solve the problems encountered in the version 0.
+Because you may move to the right,
+then aim, fire,
+and hit the aliens.
+Then the action "move to the right"
+also has cumulated reward,
+although there is no immediate reward for moving to the right.
+Suppose a1 is "move to the right".
+Then r1 may be 0.
+But this action might
+lead to aiming,
+and caused aliens to be killed.
+Hence, the cumulated reward will be positive.
+Then we will know that
+moving to the right is also a good action.
+This is version 1.
+But if you think more thoroughly, you will find out that
+version 1 seems to have some problems.
+What's the problem?
+Assume that the game last very long,
+It seems inappropriate that you attribute rN to a1.
+That is, when we take the behavior of a1,
+the immediate impact is r1,
+and then affect r2,
+and then affect r3.
+If this process is very, very long,
+Then we say that a1
+results in rN.
+This possibility should be very low.
+Maybe the credit for rN
+should not be attributed to a1.
+How to solve it?
+There is a second version of cumulated reward
+We use G'
+to denote the cumulated reward.
+We will multiply a discount factor
+in front of r.
+This discount factor γ
+is a value less than 1.
+May we set γ to
+like 0.9 or 0.99.
+So what is the difference between this G'1 and G1?
+G1 equals to r1 plus r2 plus r3.
+What about G1'?
+G1' is r1 plus γ*r2 plus γ^2*r3.
+The farther away from taking this action,
+the more power of γ it have.
+So r2 is one step away from a1.
+We just multiply γ.
+r3 is two steps away from a1.
+We multiply γ squared.
+When we finally get to rN,
+rN has almost no influence on G1'.
+Because γ is multiplied many times,
+where γ is a value less than 1.
+Even if you set 0.9,
+0.9 to the power of 10
+is very small.
+With this method,
+The rewards that are closer to a1
+gain more weight.
+Those rewards far away from me
+gain a smaller weight.
+So we now have a new A.
+This new A,
+this assessment of Action,
+can be represented by G1'.
+Then its formula can be written like this.
+Gt' is the summation over
+n from t to the capital N
+Then we multiply rn by γ to the power of n-t.
+So for the reward far away from
+the action,
+its γ is multiplied many times,
+thus having less effect on G'.
+This is the second version.
+Do you think it makes more sense?
+Okay, let's see if you have any questions to ask.
+Some classmates said that it is similar to Monte Carlo.
+Great!
+I'll talk about Monte Carlo later.
+Here is a question.
+"Is a brace an episode,"
+"or is this blue brace"
+"an episode?"
+Well, a brace is not an episode.
+A brace is
+an observation.
+When executing this action,
+this is a piece of data.
+It is not an episode.
+An episode consists of
+many observations
+combine with many actions.
+Here is one more question.
+"Does G1 need to be normalized?"
+It is a great question.
+Why?
+Because it is version 3.
+Okay, let's continue to talk about version 3.
+Here is another problem.
+Do the earlier actions accumulate more points
+and the later action accumulate fewer points?
+Yes.
+It is correct.
+Indeed.
+However, that the earlier actions accumulate more points
+can also be a reasonable situation.
+Think about it:
+those earlier actions have a greater impact to the latter ones.
+At the end of the game,
+there are no aliens to kill,
+what you might do has little impact on the result.
+So the actions of the earlier observation
+are something we may need to pay special attention to.
+But how to decide like this kind of A?
+There are many different methods.
+If you don’t want the earlier action to have a larger weight,
+you can completely change the definition of A.
+In fact, different RL methods
+have different ways
+to define A.
+It still seems not suitable for games like Go.
+After all, a game like Go only has a score at the end.
+Okay, this is a good question.
+Can the methods we are talking about
+handle the kind of game
+with a score at the end.
+It's not impossible, right?
+Actually, it is still possible.
+How?
+Assuming that the only rN has a score.
+Everything else is 0.
+What will happen?
+After taking a series of actions.
+As long as you win in the end,
+this series of Actions are all good.
+If you lose,
+this series of actions
+are all bad.
+And you might feel like doing so
+will be difficult to train the network.
+It's really hard to train.
+But as far as I know,
+The earliest version of AlphaGo
+is trained by this method.
+It's amazing.
+It actually did so.
+It used such technology,
+of course along with some other methods.
+For example, value network, etc.
+I'll talk about it later.
+The earliest AlphaGo
+has adopted this kind of technology to do learning.
+It has tried to adopt such a technique
+and seems to be able to learn.
+Take the estimated error as the reward.
+A classmate said that it is in fact AlphaGo.
+You can use the estimated error as a reward.
+However, you have to have a way to estimate the error first.
+Then you can use it as the reward.
+So is there any way to estimate in advance
+how much reward will we get next?
+Yes, in the later version
+there will be such a technology.
+But I haven’t talked about that one yet.
+Okay, let’s talk about the version 3 next.
+Version 3 is just like what the classmate asked.
+Do we need to normalize it?
+Yes.
+Then why?
+Because good or bad is relative.
+Good or bad is relative.
+Why is good or bad relative?
+suppose today in this game,
+every time you take an action.
+The lowest score is preset to 10 points.
+Then getting a reward of 10 points
+is actually very bad.
+It's like saying that today you said you got
+60 points in a certain course.
+Is it good or bad?
+Is it bad?
+Nobody knows.
+Because it depends on how many points others get.
+If everyone else get 40 points,
+you get the highest score in the class.
+Then you are great.
+If everyone else get 80 points,
+then you have the lowest score in the class.
+That's not great.
+So reward is relative.
+So if we simply calculate G,
+we may encounter a problem.
+Suppose in this game
+we always get a positive score.
+Every action will give us a positive score.
+It's just that there are big and small scores.
+Then your G will be all positive when you calculate in the old way.
+Some behaviors are actually bad.
+But you will still encourage your model
+to take these actions.
+So what to do?
+We need to standardize.
+Let me talk about the easiest way here.
+We subtract a "b" from all G'.
+This b is usually called
+Baseline in the literature of RL.
+This is a bit different from the baseline of our homework.
+But anyway, in the literature of RL.
+It's called baseline.
+We subtract a b from all G'.
+The goal is to make some G' positive and some negative.
+For very high G', makes it positive.
+For very low G', makes it negative.
+Okay, but there will be a problem here.
+How to set this baseline?
+How do we set a good baseline to
+let G'be positive and negative?
+We will mention it again in the next version.
+But now we stop here.
+Okay, a classmate said that we might need a better
+heuristic function.
+Yes, we need one.
+When playing Go,
+supposing today your reward is very sparse,
+then you may need a good heuristic function.
+If you have seen the most ealier,
+the Deep Blue paper,
+which before the machine has beaten humans in Go,
+it has already beaten humans in chess.
+That's called Deep Blue.
+Deep Blue has a lot of heuristic functions.
+It’s not just getting rewards at the end of the game.
+There will be many situations that it will get rewards
+in the middle of the game.
+Okay, what I just talked about is the overall concept.
+Then I will actually tell you
+how does policy gradient work.
+Then you can read the TA's sample code carefully.
+That's the algorithm in the sample code.
+First you have to initialize randomly.
+Initialize your actor randomly.
+You just give your actor a randomly initialized parameters.
+That's call it θ0.
+Then next, you enter your training iteration.
+Suppose you want to run T training iterations.
+Okay, then you take your
+current Actor to interact.
+At the beginning, this θ0
+was stupid, it knows nothing.
+It randomly takes actions.
+But it will get better.
+You take your Actor to interact with the environment,
+and then you get a lot of s and a.
+You get many s and a,
+and record the process of these interactions.
+After getting these s and a,
+you have to evaluate them.
+You use A1 to AN to decide
+whether these actions are good or not.
+You take your Actor to interact with the environment
+and collect these observations.
+Next, you have to evaluate them.
+See if these actions are good or not.
+What you really need to care about,
+or what you need to change
+is the process of evaluating.
+In the TA's code, this A is directly set to
+the immediate reward.
+You have to change this part
+to get good results.
+After setting this A properly,
+it's over.
+You just define the loss
+and update your model.
+The update process
+is the same as the Gradient Descent.
+It will calculate the Gradient of L
+multiplied by the learning rate.
+Then, take this Gradient to update your model.
+Update θ(i-1) to θi.
+But there is a magical thing here.
+In general training methods
+or the training methods we have learned so far,
+data collection is outside the for loop.
+for example, I have a bunch of data
+and use this bunch of data for training
+and updating
+the model many times.
+Finally, you can get a converged parameters
+and use these parameters for testing.
+But the flow in RL is not the same.
+You can find that the data collection
+is in the for loop.
+Suppose you plan to run 400 times
+in this for loop,
+you have to collect data 400 times.
+Or, we use a graphical way to represent it.
+This is the data you collected.
+You observe a certain Actor
+and the actions it executes in each state,
+and then you give an evaluation.
+As for what evaluation is used,
+it is up to you.
+You use the evaluation
+to judge whether the action is good or not.
+After you have these data and evaluations,
+you can take them to train your Actor.
+You can use these evaluations to define a loss.
+Then, you can update your parameters once.
+But the interesting part is that
+you can only update once.
+Once the parameters are updated,
+you have to collect data again.
+After updating the parameters once,
+you have to collect data again
+to update the parameters for the next time.
+So, this is why RL takes a lot of time
+during the training process.
+The process of data collection
+is in the for loop.
+After you update the parameters,
+your data will be collected again
+to update the parameters.
+After the update process is completed,
+you need to collect data again.
+If your parameters need to be updated 400 times,
+your need to collect data 400 times.
+This process takes a lot of time.
+You will ask
+why it is like this.
+Why can't we have a single set of data
+to update the model 400 times?
+Why do we need to collect data again
+every time we update our model parameter?
+A simpler analogy here is that
+someone's food
+may be another person’s poison.
+These data are collected by θ(i-1).
+This is the result of θ(i-1) interacting with the environment.
+This is the experience of θ(i-1).
+These experiences can be used to update θ(i-1).
+It can be used to update the parameters of θ(i-1),
+but it is not necessarily suitable to update the parameters of θi.
+Or let us see a particular example.
+This example comes from the eighth episode of Hikaru no Go.
+I believe everyone has seen it.
+I shouldn’t need to explain the plot.
+This is Hikaru Shindo.
+He is playing chess with Sai.
+Here, Hikaru Shindo
+plays kogeima.
+What exactly does kogeima mean
+I'm not very sure.
+But here is an explanation.
+Placing a go stone diagonally in a square is called kogeima.
+Placing a go stone a few squares diagonally is called ogeima.
+Okay, after playing the move,
+Sai says don’t play kogeima at this time,
+ogeima is better.
+Then Hikaru says, "Why ogeima?
+I think kogeima is also good."
+Sai explains,
+"If ogeima has 100 possibilities,
+then kogeima has only 99 possibilities."
+Here comes the key point.
+It’s right to play kogeima before
+because the moves after kogeima are easier to predict
+and less error-prone.
+Moves after ogeima will be more complicated.
+But if Hikaru wants to become stronger,
+he should learn to play ogeima.
+Or after Hikaru became stronger,
+he should play ogeima.
+So you see that the same move,
+which is playing kogeima,
+have different effects
+for Go players of different level of skills.
+For the weaker Hikaru,
+it's right to play kogeima
+because he is less likely to make mistakes.
+But for a stronger Hikaru,
+it's better to play ogeima.
+It becomes bad to play kogeima.
+So the same action, the same behavior,
+for different actors,
+its outcome is not the same.
+So suppose we use θ(i-1) to
+collected a bunch of data.
+These are the trajectory of θ(i-1).
+These data can only be used to train θ(i-1).
+You can’t use these data to train θi.
+Why can't we use these data to train θi?
+Because even if θ(i-1) and θi
+in s1 both take a1,
+They may act differently at s2.
+So if θi
+uses the trajectory of θ(i-1),
+The trajectory that θ(i-1) will execute
+is totally different from θi.
+So it is inappropriate
+if you take θ(i-1) and the reward it gets to
+evaluate the reward that θi will get.
+So if we go back to the example of Hikaru no Go,
+assume that this a1 is kogeima.
+Before Hikaru becomes stronger,
+this is a suitable way.
+But for Hikaru after becoming stronger,
+it may not be a proper move.
+So when we are collecting data
+to train your actor,
+you have to pay attention to
+whether the actor who collected the data is the same
+as the actor being trained.
+When your actor is updated,
+you'd better go ahead and collect data again.
+This is why gradient descent
+takes so much time.
+Okay, let's see if anyone has any questions.
+Let's see.
+"First-hand tengen 5-5."
+Very good.
+In fact, you have to play 5-5 first-hand.
+Second-hand tengen.
+Third hand 5-5.
+Then everyone will be very surprised.
+Okay, if you don’t have any questions for now,
+then we'll continue.
+We said
+that the actor to be trained
+should be the same as
+the actor that interacts with the environment.
+When the actor we trained
+is the same as the interacting actor,
+it's called On-policy Learning.
+The one we just demonstrated,
+the entire algorithm of Policy Gradient,
+is On-policy Learning.
+There's also off-policy learning.
+We will not go into the details today.
+The main idea of
+off-policy learning is:
+can we separate
+the Actor which is being trained
+and the Actor that interacts with the environment?
+Can we train the Actor
+with the experience of other actors
+interacting with the environment?
+There are lots of advantages to do off-policy learning.
+In the previous case,
+I just told you that
+θ(i-1) cannot be used to train θi,
+if you are learning on-policy.
+But there exists special methods
+using off-policy learning,
+which can make use of the data collected by θ(i-1)
+to train θi.
+Although θi and θ(i-1)
+are not the same,
+but some methods allow us
+to utilize the interaction data
+generated by θ(i-1)
+to train θi.
+The advantage is that
+you don't have to keep collecting data.
+One of the difficulties
+of reinforcement learning is that
+you need to collect data every time you update the parameters.
+As you can see, TA's demonstration updated the parameters 400 times.
+400 times is not a lot
+but it is a lot
+compared to the networks you've trained before.
+Wouldn't it be great
+if the data we collected
+can be used to update parameters multiple times?
+This is one of the off-policy learning's great advantages.
+But we won't go into the details of
+how off-policy learning is implemented.
+One classic method is called
+Proximal Policy Optimization.
+Its abbreviation is PPO.
+It is commonly used method.
+It remains a strong method until now.
+So the most important point
+of off-policy learning is that
+the network
+must consciously recognize that
+it is different from
+the Actor to interact.
+I won’t go into the details today.
+I've leaved a link to
+the recording of the class before,
+you can study PPO by yourself
+if you are interested.
+Here is an analogy if you like.
+Imagine you are asking Chris Ivan, the Captain America,
+how to pursue a girl.
+Chris Ivan will
+show you how to do it.
+He is the Actor to interact.
+He is the Actor responsible for demonstrating.
+He said he has never failed
+if he confess his feelings to a girl.
+But you have to recognize that
+you are not Chris Ivan.
+Handsome people eat grass and ugly people...
+Oh, sorry,
+Handsome people eat grape and Ugly people eat grass.
+You are different from Chris Ivan.
+So you might not be able to use
+the tricks Chris uses.
+You might have to change a little bit.
+This is the spirit of off-policy learning!
+The "actor to train"
+has to understand that
+the "actor to interact" is different from itself.
+So some of the data given by the "actor to interact"
+can be adopted,
+while some may not.
+For the details,
+here are some recordings you can listen to
+if you want to learn more.
+Here we have another very important concept
+called Exploration.
+What does Exploration mean?
+We have just talked about
+how the Actor works.
+Today, when our Actor
+takes an action,
+it has some randomness.
+And this randomness is in fact very important.
+Most of the time, if your the degree of randomness is not enough,
+you will not be able to train.
+Why?
+I'll give the simplest example here.
+Assume that your initial Actor
+always moves to the right.
+It never knows to fire.
+If it has never taken the action of firing,
+you never know about firing.
+Is it good or not?
+Only when the Actor
+tries to fire and get a reward from firing
+will you have a way to evaluate whether this behavior is good or bad.
+Suppose there are some actions that have never been executed.
+Then you have no way of knowing
+whether this action is good or bad.
+So during training,
+the randomness of the Actor used to interact with the environment
+is very important.
+You will expect the Actor that interacts with the environment
+to be more random
+so that we can collect more data.
+Then, there won't be the case
+that the rewards of some situations are never known.
+In order to make this Actor more random,
+when you are training,
+you will deliberately increase its randomness.
+For example, the Actor's output
+is a distribution.
+Someone will deliberately increase
+the entropy of the distribution,
+which makes it easier to sample the behaviors that have a lower probability.
+during training.
+Or someone will directly add noise
+to the Actor's parameters.
+Directly adding artificial noise to the Actor's parameters
+can let the Actor behave differently every time.
+Okay, this is exploration.
+Exploration
+is also a very important technique
+in the process of training RL.
+If you don't let the network
+try different actions during training,
+you are very likely to produce bad results.
+Okay, let's take a look.
+In fact, for this PPO method,
+DeepMind and Open AI
+both propose the idea of ​​PPO at the same time.
+Let's take a look at
+the video of DeepMind's PPO demo.
+It looks like this.
+Okay, this is DeepMind's PPO.
+That is, you can use the PPO method.
+You can use this method
+in reinforcement learning to learn
+to do some movement or actions
+for spider-shaped robots or human-shaped robot,
+like running, jumping
+or stepping over the fence.
+Okay, the next video is the OpenAI's PPO.
+It’s not as fancy as the previous one.
+It doesn't have dubbing.
+But I will dub it.
+I call this video
+"You taking the course "machine learning."
+Ok, I took a course called machine learning.
+But in this course,
+there are so many obstacles. I kept encountering frustrations.
+The red ball is the baseline.
+And the baselines come one after another,
+which never stop.
+I train a network for a long time.
+Then, my colab is offline.
+The model, after three hours of training, disappears.
+But I still get up and keep moving forward.
+I want to create a larger model
+to see if I can train better.
+But what happened?
+Out Of Memory.
+The circle keeps turning.
+It just doesn't run.
+How to do it?
+But I still get up
+and keep going.
+However, for the private set and the public set,
+the results are different,
+which really make people feel very angry.
+This video ends here.
+It’s okay. We still have to give it a positive caption in the end.
+Even with so many setbacks,
+I'm still trying to move forward and learn well.
+This is PPO.
+Okay, we can just stop here.
+For the remaining parts,
+we will talk about them next week.
+What I have said so far
+is quite enough for your homework.
+Okay, thank you all for listening online today.
+It happened to be almost six o'clock.

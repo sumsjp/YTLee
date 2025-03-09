@@ -1,0 +1,1179 @@
+Okay, let's start the class.
+In this lecture,
+we are going to talk about
+Deep Reinforcement Learning,
+which is abbreviated as RL.
+I believe everyone is not a stranger
+to RL,
+to reinforcement learning.
+You already know a lot of trendy applications,
+like AlphaGo.
+Behind AlphaGo,
+it uses the RL technique.
+There's a lot of techniques about RL
+that we can talk about.
+It can’t be finished in one class.
+In fact,
+if someone wants to teach it for a whole semester,
+it is actually possible and doable.
+So today,
+the purpose of this class
+is not to tell you everything about RL,
+but to let everyone have a basic understanding
+about what RL is.
+You can find many RL-related courses
+and a lot of reference materials
+on the Internet.
+If RL has to be very difficult,
+it can be very difficult.
+But for today's class,
+we try to avoid the part that is too theoretical.
+I expect this class will
+not make you feel,
+"Wow, RL is very difficult.
+Not sure what it is doing."
+But I expect to make you feel,
+"Ah, so this is RL.
+I should be able to do it myself."
+I hope this class can achieve this goal.
+Okay, what is reinforcement learning?
+So far,
+almost all we talked about is Supervised Learning.
+Suppose you want to make an image classifier.
+Not only should you tell the machine
+what is the input,
+you also have to tell the machine
+what kind of output it should produce.
+Then,
+you can train an image classifier.
+So far, most of the techniques taught in this course
+are based on the method of supervised learning.
+Even when we are talking about Self-supervised Learning,
+we are actually using
+a method similar to Supervised Learning.
+The only difference is that our label
+does not need humans to annotate it.
+It can be generated automatically.
+Or when we are talking about Auto-encoder.
+Although we say it is an unsupervised method,
+we didn't use human for labeling,
+but in fact,
+we still have a label.
+It's just that this label
+doesn’t need humans to produce it.
+Okay, but RL is a different aspect.
+In RL,
+the problem we encountered is like this.
+When we give the machine an input,
+we don’t know what the best output should be.
+For example,
+suppose you want to ask the machine to learn to play Go.
+Using the supervised learning method
+seems to be able to do it.
+You just tell the machine
+when seeing the current situation,
+where should the next step be.
+But the problem is
+where should the next step be?
+Which is the best next step?
+Which step is the divine move?
+Maybe even humans don’t know.
+Of course,
+we can let the machine read the game records of many professional Go players.
+Let the machine read the game records of many grand players,
+maybe the answer is in these games.
+Maybe there is a certain game in these records,
+the next step
+is a good answer.
+But is it the best answer?
+We do not know.
+In this case where you don’t know what the correct answer is,
+RL can often come in handy.
+So when you
+find it difficult to collect labeled information
+and humans don’t know the correct answer,
+maybe it's when you can consider using RL.
+But when RL is learning,
+the machine is not knowing anything at all.
+Although we don’t know the correct answer,
+the machine will know what is good and
+what is bad.
+The machine will interact with the environment
+and get something called "Reward".
+We will talk more about this later.
+So the machine will know
+its current output is good or bad.
+By interacting with the environment,
+and by knowing what kind of output is good
+and what kind of output is bad,
+the machine can still learn a model.
+Okay, so
+this is the outline of today’s slides.
+First,
+we will start with the most basic concept of RL.
+When introducing the concept of RL,
+there are many different entry points.
+Perhaps the entry point you have heard more often is the
+Markov Decision Process.
+We chose a different entry point here.
+I want to tell you
+If you read the RL literature,
+you will feel
+RL is very complicated.
+It seems different from ordinary machine learning.
+But I want to tell you that
+RL is similar to the machine learning we learned in this course.
+They are the same framework.
+In the first class of this semester,
+I told you that
+machine learning has three steps.
+What about RL?
+RL has the same three steps.
+I'll explain that to you later.
+Okay.
+At the beginning of this course,
+I have told you
+what machine learning is.
+Machine learning is to find a function.
+Reinforcement learning.
+RL is also a type of machine learning.
+It is also looking for a function.
+What kind of function is it looking for?
+In reinforcement learning,
+We will have an Actor
+and an environment.
+This Actor will interact
+with the environment.
+Your environment
+will give the Actor
+an observation.
+The observation
+is the input of the Actor.
+What about the Actor?
+After seeing this observation,
+the Actor will give an output.
+The output
+is called an action,
+and this action
+will affect the environment.
+After the Actor takes this action,
+the environment will give a new observation.
+Then, the Actor
+will give a new action.
+This observation is the input of the Actor,
+and this action
+is the output of the Actor.
+So the Actor itself
+is a function.
+The Actor
+is the function we are looking for.
+The input of this function
+is the observation given by the environment.
+The output is the action taken by this Actor.
+In the process of this interaction,
+the environment
+will continually give this Actor some rewards
+to tell it
+whether the action you take now
+is good or not.
+Finding the Actor is equivalent to
+looking for a proper function.
+You can take the observation as input.
+and take the action as output.
+The goal of this function
+is going to maximize
+the sum of the rewards
+received from the environment.
+We want to find a function,
+and use this function to interact with the environment.
+Input observation.
+Output action.
+Maximize the sum
+of the reward.
+This is the function that RL is looking for.
+I know
+you may still think this is a little abstract.
+Let's take a more specific example.
+We are going to use
+Space Invader as an example.
+Space Invader is a very simple game.
+In the first few papers
+of reinforcement learning,
+most of them
+let the machine
+play this Space Invader game.
+In Space Invader,
+What you want to control is the green thing below.
+The green thing below
+is your space shuttle.
+The number of actions that you can take
+is three.
+Move left, move right, and fire.
+Just these three actions.
+What you are going to do
+is to kill these aliens on the screen.
+These yellow things on the screen
+are aliens.
+If you fire
+and hit those aliens,
+the alien will die.
+What are these things in front?
+That is your protective cover.
+If you accidentally hit your own protective cover,
+your protective cover
+will also be broken.
+You can hide behind the protective cover
+to block the alien's attack.
+There will be scores.
+There will be a score on the screen.
+When you kill aliens,
+you will get points.
+In some versions of Space Invader,
+there will be a supply package
+flying across from above.
+If you hit the supply package,
+you will get a very high score.
+And the score
+is the reward
+given by the environment.
+This game
+will eventually end.
+When will it end?
+It will stop when all the aliens are killed.
+Sometimes the aliens
+will open fire on your mothership.
+If the aliens hit your mothership
+you will be destroyed,
+and this game
+also ends.
+Okay, this is an introduction to
+Space Invader.
+What will it look like
+if you want to
+play Space Invader with an Actor?
+Now the Actor
+is a machine.
+It controls the joystick
+and the mothership
+from the same perspective
+of people
+fighting the aliens.
+What exactly is
+your environment?
+It's the game console.
+The game console controls the aliens
+to attack your mothership.
+So the observation is the screen of the game.
+The view
+for the Actor
+is exactly the same as
+what the human sees when playing the game,
+which is the screen of the game.
+What about the output?
+The output is the available actions
+for the Actor.
+Which is usually pre-defined.
+In this game,
+there are only three possible actions,
+which are fire, left, and right.
+When your Actor takes the action to the right,
+it will get a reward.
+Because in this game
+only killing aliens will get points.
+If we just define the score as our reward,
+then the left and the right don’t actually
+kill any aliens.
+So the reward you get
+is zero.
+When you take an action
+that make the game screen change,
+you will then get
+a new observation
+from the environment.
+Your Actor will decide to take a new action.
+Your Actor is a function.
+This function will be based on the input observation
+and the output of the corresponding action.
+Suppose your Actor
+chooses to fire
+when a new frame comes in
+and kills an alien.
+Then you will get points.
+Suppose that the score you obtain here is 5 points.
+The score of killing an alien
+is 5 points.
+Then the reward you get is 5.
+What happened
+when the Actor
+plays the Space Invader?
+What is the goal
+the Actor needs to learn?
+During playing the game,
+we will keep getting the reward.
+In the previous example,
+doing the first action,
+which is turned to the right, you get 0 points.
+Doing the second action,
+which is fire, you get 5 points.
+Then you take a series of actions
+that may give you points.
+What is the learning goal
+of this Actor?
+The Actor we are looking for is
+the one that gives us the largest sum of rewards,
+when using this Actor,
+or this function,
+in this game.
+This is what
+RL is doing when it is used
+in this little game.
+If you use RL
+to play Go.
+There is no much difference
+compared to this mini-game.
+The only difference is the scale and the complexity of the game.
+If you use RL to play Go.
+Then your Actor is AlphaGo.
+What is your environment?
+Your environment is the human opponent of AlphaGo.
+What is the input of AlphaGo?
+What is the input of your Actor?
+The input of your Actor is
+the positions of black and white on the chessboard.
+If it is
+at the beginning
+of the game,
+then the board is empty.
+There is no black or white.
+The Actor
+needs to produce and output,
+to decide its next step
+after it observes the board.
+If it's Go,
+the number of probabilities of your output is 19×19.
+Then, for these 19×19 probabilities,
+Each probability
+corresponds to a position on the Go board.
+Okay! We assume that your Actor
+decides to stay in this place.
+Then, this result
+will be the input to your environment,
+which is actually a go player.
+Then, this environment
+will generate a new observation
+because this Lee Se-dol, the go player,
+will take a new step.
+Then, the environment you see now is different again.
+While your Actor sees this new observation,
+it will generate a new Action again
+and so on.
+You can let the machine do the game of Go.
+Ok!
+For the reward in the game of Go,
+how is it calculated?
+In Go,
+almost every action you do
+has no rewards.
+In the game of Go,
+we define that
+if you win,
+you could get 1 point,
+but if you lose, you get -1 point.
+That's to say, the whole game of Go,
+where your Actor interacts with the environment,
+is settled only when
+the last play of the whole game of Go happen,
+and then you could get the Reward.
+When your last play
+finally happen,
+you win,
+and get 1 point.
+After last play finally happen,
+the game is over.
+If it loses,
+you get -1 point.
+All the Reward in the process of interactions in the game
+count as 0 point.
+There is no reward.
+Then the learning goal of this Actor
+is to maximize
+the reward it may get.
+Okay! Maybe, you have heard about it.
+This is the most common way to explain RL.
+Then, I will tell you in the following that
+what the relation
+between RL and machine learning framework is.
+In the first class, I told you that
+there are three steps in Machine Learning.
+The first step is that
+you have a function
+with some unknown numbers,
+which are unknown variables,
+to be searched.
+The second step is that
+You define a Loss Function.
+The third step is that
+You try to find the unknown variables by minimizing your loss,
+which is also known as optimization.
+In fact, there are also three steps in RL.
+We first look at the first step.
+The first step is in below.
+We have a function with unknown variables.
+What is it?
+This function with unknown variables
+is our Actor.
+In RL,
+your Actor is
+just a network,
+which we usually call it Policy Network.
+In the past,
+before applying Deep Learning to RL,
+your Actor is relatively simple,
+and usually not a network.
+It may just be a Look-Up-Table,
+which will tell you what kind of output it generates,
+based on what kind of input it sees.
+Today, we all know to use a network
+as this Actor.
+For this network,
+it's actually a very complicated Function.
+What is the input of this complicated function?
+Its input is the screen of the game.
+It's the screen of the game.
+Here,
+since we are not playing the Go,
+there is no black and white stones.
+If you take this,
+which is playing Space Invader, as an example,
+all the pixels
+on this game screen,
+is the input of this Actor.
+What is its output?
+Its output is the score of
+available actions
+that can be taken.
+Every action that can be taken has its corresponding score.
+For example, you input this screen
+to your Actor.
+Your Actor is actually a network.
+Its output may be like
+0.7 points to the left,
+0.2 points to the right,
+and 0.1 points to fire.
+Actually,
+There is no difference to classification.
+You know that classification is to input a picture
+and output the decision that which category the picture should be.
+Then, your network will give each category a score.
+You may pass through a Softmax Layer.
+Then each category has a score.
+And the sum of these scores is 1.
+Actually in RL,
+Your actor, your policy network
+and the classification network
+are actually exactly the same.
+You just enter a picture.
+In fact, you will also have a softmax layer at the end of the output.
+Then,
+you will give left, right and fire,
+these three actions a score respectively.
+You will also let the sum of these scores
+to be 1.
+As for the architecture of this network,
+you can design it yourself.
+You can have whatever architecture you want to design.
+For example, if the input is a picture,
+maybe you will want to use CNN to process.
+But in the teaching assistant's code,
+actually images are not processed by CNN.
+Because in our homework,
+when playing the games,
+we don't just let our machine watch the game screen.
+It’s harder to let it directly watch the game’s screen.
+So we let it look at
+some parameters related to the current game situation.
+So in homework,
+in the teaching assistant's sample code,
+it’s not as complicated as CNN.
+It's a simple fully connected network.
+But suppose you want your actor's
+input is directly the game screen,
+then you might consider to use CNN.
+You may use CNN as the architecture of your network.
+You might even say that
+you don’t just look at the game screen at this particular moment in this time,
+but you also want to see all the things that have happened so far in the whole game.
+Can it?
+Yes.
+In the past, you might use RNN to consider
+the current picture and all the pictures in the past.
+Now you may want to use Transformer
+to consider everything that has happened.
+So the architecture of the network can be designed by yourself
+as long as you can input the game screen
+and output an action like classification.
+Then in the end the machine will decide which action to take
+depending on the score obtained by each action.
+A common practice
+is to directly put this score
+as a chance.
+Then the machine use sampling
+to randomly decide which action to take,
+according to this score, or probability.
+For example, in this example,
+going to the left and get 0.7 points.
+That is, there is a 70% chance that it will take the left.
+20% chance it will take to the right.
+10% chance of firing.
+Then you might ask,
+Why not use argmax?
+Why don't just to the left
+and get the highest score?
+You can do it.
+But in TA's sample code,
+in most RL applications, you will find that
+We all use sampling.
+One advantage of sampling is that
+even if you saw the same game screen today,
+every action taken by your machine
+will be slightly different.
+In many games, this kind of randomness
+might be important.
+For example, in rock-paper-scissors,
+if you always get rocks,
+just like doraemon,
+you will be knocked out very easily.
+If you have some randomness,
+you are less likely to be knocked out.
+In fact, there is another important reason
+to use random sampling
+for the output.
+We'll talk about this later.
+Ok so this is the first step.
+We have a function.
+This function has unknown variables.
+We have a network.
+There are parameters.
+The parameters are unknown variables
+that has to be learned.
+This is the first step.
+Then for the next step,
+we want to define the loss.
+In RL,
+What does our loss look like?
+Let's take a look at
+the process of our machine interacting with the environment.
+We just use a different method now
+to show what I just said.
+Okay, first, there is an initial game screen.
+This initial game screen
+is used as input of your actor.
+Your actor then outputs an action.
+For example, to the right.
+For the input game screen,
+we call it s1.
+for the output action,
+we call it a1.
+Then we will get a reward now.
+Here because we don't kill any aliens
+when we move to the right,
+the reward may be 0 point.
+After taking to the right,
+we will see a new game screen.
+This is called s2.
+According to the new game screen s2,
+your actor will take a new action,
+like firing.
+Here, I use a2
+to denote the action taken
+when it sees the game screen s2.
+Let’s suppose you shot and killed an alien,
+then your Actor will
+get a reward,
+which is 5 points
+After this action,
+the machine sees a new frame of the game,
+and it makes another move.
+So this interactive process
+will keep going
+until the machine takes a certain action
+causing the game to end.
+When will the game end?
+It depends on the rules of the game itself.
+For example,
+the action you took was
+to move to the right,
+and you get hit by a bullet from the alien.
+Your spaceship is destroyed,
+and the game is over.
+Or, the last action you took is to fire
+and the action killed the last alien.
+Then the game ended.
+If you perform a certain action
+that meets the conditions of ending the game,
+the game is over.
+The whole process from the beginning to the end of the game
+is called an Episode.
+Throughout the game,
+the machine will take a lot of actions.
+The machine might earn some rewards with some of the actions.
+Summing all the rewards together,
+we obtain
+the Total Reward of the whole game.
+The Total Reward
+is the reward that accumulates
+all the rewards as the game goes on.
+Starts from r1, and ends up with rt,
+which is the total rewards
+of the game.
+Suppose there are
+T interactions in the game.
+Here,
+we use the capital R
+to represent the total reward.
+The total reward is also called
+Return.
+You might encounter
+those two names at the same time
+in RL documents.
+Reward and Return are actually a bit different.
+Reward refers to
+the immediate prize
+after an action;
+but the return refers to
+the sum of the rewards throughout the whole game.
+But I understand that
+you will forget the difference between them soon.
+So I don’t use the word Return hereafter.
+Therefore I will use
+the Total Reward to refer to
+the sum of the rewards throughout the game.
+The Total Reward
+is the target
+that we want to maximize.
+But this is different from Loss.
+Loss should be
+as small as possible,
+but the Total Reward should be as big as possible.
+So it's a bit different.
+But in the context of RL,
+we can use the
+negative Total Reward
+as the Loss.
+Since we want to maximize the total reward,
+obviously we can
+just minimize the negative total reward.
+We can treat negative Total Reward
+as the Loss in RL.
+Before entering the third step,
+let me answer your questions if you have any.
+Do you have any questions?
+Good.
+Some students suggested that
+I should turn off the microphone during breaks.
+But sorry,
+I don't know how to do that.
+I will try.
+Okay. It is not bad
+to talk about
+pure theory.
+If you want a more theoretic approach,
+you can watch the recordings
+on classes in the past few years.
+I'd also put some links in the slides.
+In these links you can find more theoretic approaches.
+But today,
+I'm going to provide you a simple explanation of RL.
+You can still study the theoretic contents
+with the past recordings of this class,
+if you want to learn more.
+Okay, if you don’t have any other questions,
+let's continue to talk about the Optimization.
+Here is a different picture of
+the interaction of
+the agent
+with the environment.
+So this part is the environment.
+The environment
+outputs an Observation
+called s1.
+s1 will become the input of the Actor.
+The next step of the actor
+is to output a1.
+Then the a1 will be
+the input of the Environment again.
+What about your Environment?
+After seeing a1,
+it outputs s2.
+Then this interactive process
+will continue.
+Then, s2 is the new input of the Actor.
+The actor outputs a2.
+a2 is a new input to the Environment
+and it outputs s3.
+This interaction
+continues on
+until the conditions for stopping the game are satisfied.
+The sequence formed by differnt s and different a,
+is called a Trajectory.
+, represented by τ.
+For example, the sequence of s1 a1 s2 a2 s3 a3 is a Trajectory.
+According to this interactive process,
+the machine will get the Reward.
+You can actually think of Reward as a function.
+We use a green square to represent it.
+Function formed by
+this Reward
+has different expressions.
+In some games,
+Maybe your reward
+only depends on which action you take.
+But usually, when we design the reward,
+it is not enough to solely consider actions.
+You have to look at the current Observation.
+For example, you won't get points every time you fire.
+The fire has to hit the alien.
+You only get points if you fire
+in front of the alien.
+So usually when defining the Reward Function,
+we consider not only Action,
+but also Observation.
+We can know whether we have scored
+by considering both Action and Observation at the same time.
+So Reward is a function.
+This function
+takes a1 and s1 as input,
+and produces r1 as output.
+It takes a2 and s2 as input,
+and produces r2 as output.
+Combining all r all together,
+and adding up r1, r2, r3, and all the way to rT,
+we can finally get R.
+This is the Total Reward,
+which is the Return.
+This is the term we want to maximize.
+What does this optimization problem
+look like?
+The optimization problem is like this.
+You are going to find a network,
+to be more specific, the parameters in the network.
+You are going to learn a set of parameters.
+This set of parameters is placed inside the Actor.
+It can make the value of R the bigger the better.
+That's all.
+That's it.
+The whole optimization process is done.
+You have to find the network parameters
+to let the R generated here be the bigger the better.
+At first glance,
+If this Environment Actor
+and Reward
+are both Networks,
+this question is actually not difficult.
+Maybe you can solve it now.
+It looks a bit like a Recurrent Network.
+This is a Recurrent Network,
+and your loss looks like this.
+The only difference is that we replace the loss with the Reward.
+So you have to make it bigger to be better.
+You can use Gradient Descent
+to learn the parameters, and you can make it the bigger the better.
+But the point that make RL difficult is that
+this is not a general optimization problem.
+Because of your Environment,
+there are many issues here that lead to
+different training methods from the normal ones.
+The first question is that
+the output of your Actor is random.
+This a1 is generated from sampling.
+Even if you have the same s1, the a1 generated may not be the same every time.
+So if you combine Environment Actor with Reward
+together as a huge network,
+this network is not normal.
+There is randomness in this network.
+The result of a certain layer in this network
+is different every time.
+The output of a certain layer in this network
+is different every time.
+Another bigger problem is that
+your Environment and Reward
+are not networks at all.
+It's just a black box.
+You don't even know what happened inside.
+Environment is the game console.
+You don't know what happened in this game console.
+You only know that if you input something, you will get some outputs.
+You take an action and it will respond accordingly.
+But how the corresponding response is generated?
+We do not know.
+It's just a black box.
+And what about the Reward?
+Reward may be more explicit.
+But it is not a network, either.
+It's a rule.
+It is a rule saying that
+the number of points you will get
+upon seeing the optimization and the action like this.
+It's just a rule.
+So it’s not a network.
+What's worse
+is that
+Reward and Environment
+is often random too.
+If we're talking about video games,
+the reward is usually less random
+because the rules are fixed.
+There are some RL problems
+with rewards that are random.
+However, randomness still exists
+in the environment
+even in video games.
+Given the same behavior,
+the way the game responds
+could involve randomness
+and may vary a bit every time.
+Take Go for example.
+If we place a stone
+at the same position every time,
+the way the opponent responds
+might not be the same
+every time.
+So, there could be some randomness in the environment.
+This means that this is not a general optimization problem.
+You may not be able to use what we have learned in this course
+and find the Actor that maximizes the reward
+by training a network.
+Therefore, the real difficulty of RL is
+how to solve the optimization problem.
+How to find a set of network parameters
+that maximizes R.
+If you think about it,
+there are some similarities between this problem and GAN.
+They have some parts in common
+and some parts that are different.
+Let start with the parts in common.
+Remember how you trained a GAN?
+You would connect the generator and the discriminator together
+when training the generator
+and try to maximize the output of the discriminator
+by tuning the parameters of the generator.
+In RL,
+the actor is analogous to the generator in GAN.
+The environment and reward are analogous to the discriminator in GAN.
+We adjust the parameters of the generator
+to maximize the output of the discriminator.
+So, RL and GAN have some parts in common.
+What's different between them?
+In GAN, the discriminator
+is also a neural network.
+You know everything about the discriminator.
+It is a network that
+can be trained
+by using gradient descent
+to maximize the output.
+However, in RL,
+although the reward and the environment
+can be treated as a discriminator,
+they are not networks.
+They are actually a black box
+that you have no way to tune the parameters
+and maximize the output
+by using general gradient descent methods.
+That's the difference between RL
+and the normal machine learning.
+Still, we can divide RL into three stages.
+It's just that
+the way we minimize the loss,
+or maximize the reward,
+would be a bit different from what we've learned.
+Okay, that was about
+the relationship between RL and the three steps of machine learning.
+Let’s see if any of you have questions.
+Someone asked
+why the negative of the total reward is equal to the loss.
+Why is that?
+Just like what we've talked about before,
+when we're doing training,
+all the training processes in deep learning
+defines their losses,
+and we try to minimize the loss.
+In RL,
+we define a total reward R
+and try to maximize it.
+However, in terms of maximizing the R,
+we can do it from a differnt perspective.
+We can try to minimize negative R,
+which is just R
+with the negative sign.
+This way,
+we can define the loss of RL as the negative of R.
+Next question. "Previously, is there also randomness
+since we didn't fix the random seed?"
+Well, these two types of randomness are not the same.
+When we were training the model,
+the random seed wasn't fixed,
+so there is randomness during training.
+By not fixing the random seed,
+the parameters may be initialized differently.
+This way, every time you train, the result is different.
+However, RL has randomness during testing.
+In other words, the randomness still persists outside of training.
+The randomness also exists during testing.
+If compared to normal training,
+it would be like
+having different outputs
+when we're doing testing
+on a trained model,
+even if we gave it the same input data
+every time we test it.
+The output is different every time,
+which is the randomness of RL.
+In RL, when we finish training
+an actor,
+the parameters of the actor are fixed.
+However, when you use this actor to interact with the environment,
+the result is different every time.
+That's because even if your environment sees the same input,
+the output may be different every time.
+All in all, RL is a task with high randomness.
+As you can imagine, the homework on RL
+is also quite challenging.
+Sometimes, it is hard to say
+how difficult a homework is.
+RL might be the hardest without any reference materials on the Internet.
+might be the hardest
+without any reference materials on the Internet.
+On the other hand, it is quite easy to find
+all kinds of code on GitHub.
+It doesn't seem to be that difficult.
+However, the randomness of RL algorithms will be very large.
+Even if it’s the same network,
+your results can be different
+every time you test.
+"Is it wrong to write argmax below a1?" (Question)
+I have been changing my slides
+after the first release.
+Ask me if you have any questions about the slides.
+I just changed this slide before the class.
+New slides will be released after the class.
+Okay,
+any questions?
+If you have no questions,
+then we will continue.
+We can have a break
+after finishing this section.
+Next,
+we are going to talk about a commonly used algorithm
+for solving the optimization of RL.
+It is called policy gradient.
+If you want to know
+where did policy gradient come from,
+you can watch the videos of lessons in the previous years.
+There is a more detailed derivation of policy gradient.
+Today, we are going to talk about policy gradient
+from another point of view.
+Before talking about policy gradient,
+let's think about how to control
+the output of an Actor.
+How do we make an Actor
+take an action
+when seeing an observation?
+How do we make an Actor
+output a^
+when seeing s?
+You can think of it as a classification problem.
+In other words, the Actor takes s as input
+and output a^
+Suppose a^ is Left.
+Assuming you already know that
+it’s correct to go left when seeing this game scene.
+You want to teach your Actor to go left
+when seeing this game scene.
+How do you let your Actor learn this?
+That means s is the input of the Actor
+and a^ is our label.
+a^ is our ground truth.
+a^ is our correct answer.
+Next,
+You can calculate the cross-entropy between
+the output of the Actor and the ground truth.
+Then you can define a loss.
+If you want your Actor
+takes a^,
+you define a Loss.
+This loss is equal to cross-entropy
+Then,
+You can learn a θ.
+You find a θ
+that can minimize the loss.
+Then, you can make the output of this Actor
+as close to your ground truth as possible.
+You can let your Actor learn
+go left when
+seeing this game scene.
+This is what to do when you want you Actor
+to take a certain action.
+Suppose you want your Actor
+not to take a certain action.
+How to do it?
+For instance, you want your Actor
+not to go left
+when seeing a certain observation s.
+It is very easy.
+You need to add a negative sign to loss.
+You want your Actor to take the behavior a^.
+You define your L as equal to cross-entropy
+and minimize cross-entropy.
+If you want your Actor
+not to take a^,
+you will set your loss
+as negative cross-entropy.
+Cross-entropy multiplied by a negative sign.
+Then you go to
+minimize this loss.
+Make the cross-entropy as large as possible,
+which is to make the distance between a and a^ as far as possible.
+In this way, you can prevent your Actor from taking a^
+when it sees s.
+As long as we give the appropriate label and loss,
+we can make our Actor
+do what we want.
+What if we want our Actor
+to take "a" when seeing s
+and not to take "a^'" when seeing s'.
+How to do this?
+Given observation s,
+we have ground truth a^.
+given observation s',
+we have ground truth a^'.
+For these two pairs
+of ground truth,
+we can calculate cross-entropy.
+We can calculate these two cross-entropy
+e1 and e2.
+Then,
+we define our loss
+as e1 minus e2.
+In other words, we want to make this
+cross-entropy as small as possible.
+The cross-entropy of this case is the bigger the better.
+Then,
+we will get θ⋆
+by finding a θ to minimize the loss.
+It is the actor that
+can take action a^ when you see s,
+and take action a^' when you see s'.
+So it's like
+the behavior of training a classifier.
+By this kind of data of
+training a classifier,
+we can control the behavior of an actor.
+Ok, so far,
+does any student want to ask questions?
+Okay, a classmate asks a very good question.
+"We just took the Alien’s game as an example,"
+"Because only if you shoot Alien will there be a reward."
+"Isn’t the model always inclined to shoot?"
+We will solve this problem later.
+We will solve it in later slides.
+There is another classmate
+with a very good question.
+"Doesn't it just go back to supervised learning?"
+In this slide, it looks like
+just training a classifier.
+We are training the classifier.
+You just told it that
+output a^ when seeing s.
+Don't output a^' when you see s'.
+Isn't this supervised learning?
+This is indeed supervised learning.
+This is the same as the image classifier
+with supervised learning.
+But later, we will see the difference
+between it and the general supervised learning.
+Okay, let's move on
+and take a break afterwards.
+So,
+if we want to train an actor,
+we actually need to collect some training data
+like the following condition.
+I hope to take a^1 at s1,
+and I hope not to take a^2 in s2.
+But you may ask
+where this training material comes from.
+We'll talk about it later.
+So you collect a lot of data.
+This is very similar to training an image classifier.
+You think of this s as an image.
+You think of a^ as a label.
+It’s just that there are some behaviors want to be taken,
+while some actions do not want to be taken.
+You collect a bunch of this kind of data.
+You can define a loss function.
+With this loss function,
+you can train your actor
+to minimize this loss function.
+Then, it's over.
+You can train an actor
+and expect it to perform our actions.
+You can expect it to perform the action we want.
+And you can even go further.
+In fact, every action is not just good or bad.
+It’s not just that you want to execute or you don’t want to execute.
+It has a degree of difference for each action.
+Some are well executed.
+Some are nice to have.
+Some are a little bad.
+Some are very bad.
+So, just now,
+we say that every action is either to be executed or not to be executed.
+This is a binary problem.
+We just use ±1 to represent it.
+But now,
+We change that for each pair of s and a,
+it has a corresponding score.
+This score represents that
+how much we wish the mahchine to perform action a1^
+when it sees s1.
+For example, the first data and the third data here.
+We have +1.5 and +0.5, respectively.
+It means that we expect the machine can do a1^
+when seeing s1.
+When it sees s3, it can do a3^.
+But we expect that when it sees s1,
+the expectation of doing a1^ is stronger than
+the expectation of doing a3^ when seeing s3.
+Then, we hope that when it sees s2,
+it doesn't do a2^.
+We expect it not to aN^
+when it sees sN.
+And we really don't want
+it to do aN when it sees SN^.
+With this information,
+you can also define a loss function.
+You are just do something in front of your original cross-entropy.
+Originally, either +1 or -1 is
+in front of cross-entropy.
+Now you change to multiply it by An.
+You tell the machine
+that there is some action
+we extremely want the actor to execute.
+There are some actions that we absolutely don’t want the actor to perform.
+There are some behaviors that are better if executed.
+There are some actions that I hope to take as few as possible.
+But even if it is executed, the damage may not be that big.
+So we use this An to control the degree of
+how much every action we want the actor to execute.
+Then, there will be a loss.
+We train a θ
+and find a θ⋆.
+Following that, you have an actor whose behavior meets our expectations.
+Then, the next difficulty is
+how this a is determined.
+This is our next difficulty.
+This is the problem we will face next.
+Another problem we have to face is that
+how the pairs of s and a are generated.
+How do I know to execute a1 when seeing s1?
+Or don’t execute a2 when seeing s2?
+This is also a problem we have to deal with later.

@@ -1,0 +1,1344 @@
+Linear models
+may be too simple.
+Why do we say it is too simple?
+We can imagine that x1 and y
+may have a more complicated relationship.
+But for a linear model,
+the relationship between x1 and y is a straight line.
+As x1 gets higher and higher,
+y should get larger and larger.
+You can set different w to
+change the slope of this line.
+You can set different b to
+change the point of intersection
+of this blue line and the y axis.
+But no matter how you change w and b,
+it's always a straight line.
+When x1 is getting bigger,
+y is always getting bigger too.
+The more people watched the video on the day before,
+the larger the number of views on the next day will be.
+But maybe the reality is not like this.
+Maybe when x1 is less than a certain value,
+the number of views on the day before is directly proportional to the number of views on the next day.
+But when x1 is greater than the value,
+y goes in the opposite direction.
+After a threshold,
+assuming that x1 is too large,
+the number of views on the day before was too high,
+then the number of views will decrease on the next day.
+This can happen too.
+Maybe between x1 and y,
+there is a more complicated relationship.
+A relationship like this red line.
+But no matter how you adjust your w and b,
+you can never produce the red line.
+You can never use a linear model
+to fit this red line.
+So what could we do?
+It is obvious that the linear model has a lot of limitations.
+The limitations that come from the model
+are called model bias.
+Notice that at the beginning of the class,
+b is also called bias.
+Here the usages of the two words
+are a little bit ambiguous.
+We should emphasize that
+the limitations are called model bias.
+It is different from the bias b.
+It means that,
+due to the limitations,
+the model can not simulate the real situation.
+So what could we do?
+We need to write a more complicated
+and more flexible function
+with unknown parameters.
+A linear model is obviously not enough.
+Then what should we do?
+How to write a more complicated function
+with unknown parameters?
+We can take a look at the red curve.
+The red curve
+can be seen as a constant function
+plus a bunch of blue functions like this.
+The blue function
+has a special property.
+When the input value,
+the value of the x, is less than a certain threshold,
+the output is a constant.
+When it is larger than another threshold,
+the output is another constant.
+There is a slope in the middle.
+So it first goes horizontally,
+then goes upward or downward,
+and finally goes horizontally again.
+Actually, it has a name.
+We would talk about its name later.
+Here because it is a blue function,
+let's call it the blue function.
+Okay, so this red function
+can be seen as a constant function plus a lot of blue functions.
+Then this constant term,
+how big should its value have to be?
+Look at this red line.
+Where is the intersection with the x-axis?
+Okay, what about this constant function?
+Let's set it to be as big as the value of the intersection with the x-axis.
+Then how to produce the red function
+after adding the blue function?
+You could just add
+this blue function.
+Its slope,
+the starting point of this slope,
+is set at the beginning of the red function.
+Then the second,
+the end of the slope is set at the first corner.
+So there is a corner on the red function.
+Then you have a blue function.
+The end of its slope is set at the first corner of the red function.
+And then,
+you purposely let the slope of this blue function here
+be the same as the slope of this red function.
+Their slopes are the same.
+At this time, if you add 0 to 1,
+you can get this segment of the red function.
+The first one to this.
+The value before the first turning point.
+So after adding 1 to zero,
+you can get the part before the first turning point of the red function.
+Then next,
+plus the second blue function.
+How to add it?
+You could just look at the red line.
+Where is the second turning point?
+Okay, so for the second blue function,
+its slope is between the red function's first turning point
+and the second turning point.
+Between the first turning point and the second turning point.
+Then you purposely set the slope of this segment the same as the slope of this segment.
+At this time, after adding 1 and 2 to 0,
+you can get the line segment between the two turning points.
+You can get the part of the red function.
+Next, we look at the 3rd section.
+How do you create the section after the 2nd turning point?
+You can add a 3rd blue function.
+This 3rd blue function
+will have its slope's starting point
+at the same place as this turning point.
+The slope here
+will be the same as the slope here.
+Okay, then after you sum 0, 1, 2, and 3 up,
+you'll get the red line.
+You'll get the red line.
+So the red line
+can be seen as a constant
+plus a bunch of blue functions.
+If you think about it, you will find out
+that no matter what kind of piecewise linear curve I draw...
+What's a piecewise linear curve?
+When a given curve
+is composed of many line segments,
+when it's composed of many jagged line segments,
+it is called a piecewise linear curve.
+You will find that these piecewise linear curves
+are composed of a constant term
+and a lot of blue functions.
+The difference is that they may not use the same blue functions.
+You need to have many different blue functions.
+Combine them with a constant;
+you can create these piecewise linear curves.
+So if your piecewise linear curves are more complicated,
+that is, they have more turning points,
+you will need more blue functions.
+So,
+when it comes to this, someone might say,
+"What if the relationship between x and y
+is not a piecewise linear curve?"
+Maybe it’s a curve that looks like this.
+Even if it's a curve like this,
+it doesn't matter.
+We can choose some points
+on the curve
+and connect them,
+transforming them into a piecewise linear curve.
+This piecewise linear curve can be very similar
+to the original curve
+if you choose enough points
+or if the locations of the points you choose are favorable.
+If you choose enough points,
+this piecewise linear curve
+can approximate this curve,
+this continuous curve.
+It can approximate this curve which is not piecewise linear
+but rather a curve with an arc.
+So we know one thing today.
+You can use piecewise linear curves to
+approximate any continuous curve.
+And every piecewise linear curve
+can be composed of a lot of blue functions.
+In other words,
+As long as I have enough blue functions,
+I may be able to create any continuous curve.
+So today,
+suppose the relationship between x and y
+is very complicated.
+That's okay.
+We can try to write a function with unknown variables.
+This function with unknowns represents
+the sum of a bunch of blue functions
+and a constant.
+The next question we have to ask is,
+how should the formula
+of this blue function look like?
+How to write the formula of this blue function?
+Maybe it’s not so easy for you to write it out directly.
+But you can use a curve to approximate it.
+Which curve should be used to approximate it?
+We can use a Sigmoid function to
+approximate this blue function.
+The formula of the Sigmoid function
+looks like this.
+Its horizontal input is x1.
+The output is y.
+We first multiply
+the input x1 by w.
+Then we add b.
+We make the result a negative value
+and make it e's exponent.
+We plus 1 to the result
+and place it
+where the denominator should be.
+Divide 1 by 1 + e^{-(b + wx1)}.
+You can multiply the fraction with a constant called c.
+Okay, if the value of x1 you input
+approaches infinity,
+what will happen?
+If this term approaches infinity,
+Then the exponential term will disappear.
+When x1 is very large,
+the line will converge at the height of c.
+If x1 approaches negative infinity,
+what will happen?
+If x1 is very small,
+the denominator will be very large.
+Therefore, the value of y will approach 0.
+So you can use a function like this to
+draw this curve
+and use this curve to approximate this blue function.
+The name of this thing is called Sigmoid.
+What does Sigmoid mean?
+Sigmoid,
+if you have to define it,
+can mean "S-shaped".
+So Sigmoid function is essentially an S-shaped function.
+Because it looks a bit like an S,
+we call it Sigmoid function.
+Here, we don’t even bother to write the exponential out.
+We just write it like this.
+y = c * sigmoid().
+Then put b + wx1 in the parentheses.
+What we actually do to
+this b + wx1
+is to make it the exponent of e
+and add a negative sign in front of it.
+Then we add 1 to this exponential term
+and place it at the denominator.
+We multiply it by c
+and let it equal to y.
+Okay, so we can use this sigmoid function to
+approximate the blue function.
+In fact, this blue function
+is commonly known as
+the hard sigmoid.
+It's just that since we started with
+the blue function first,
+rather than the normal sigmoid function,
+it would be a bit confusing to mention hard sigmoid
+before we introduce the normal sigmoid function.
+Thus, we first introduce the normal sigmoid function,
+then we say that this function
+can approximate the blue function,
+which is commonly known as
+the hard sigmoid.
+Now, we need a variety of
+different blue functions.
+Remember,
+to create different curves,
+we need a variety of suitable blue functions.
+And how are these suitable blue functions made?
+By adjusting the variables, b, w, and c.
+By adjusting b, w, and c,
+you can create different shapes of sigmoid functions.
+The various sigmoid functions created can then be used to
+approximate this blue function.
+For example,
+what happens if we alter the variable w?
+The slope changes.
+More precisely, it changes
+how steep the slope is.
+What happens if we alter the variable b?
+The sigmoid function shifts horizontally,
+allowing us to move it left and right.
+What happens if we alter the variable c?
+The height changes.
+So, with different values of w, b, and c,
+you can create different sigmoid functions.
+After stacking up different sigmoid functions,
+you can create and approximate
+all kinds of
+different piecewise linear functions.
+Then, the piecewise linear functions
+can be used to approximate various continuous functions.
+So,
+suppose we want to write out the function of
+this red line;
+what might it be?
+We can see that the red line is the result of
+stacking these four blue functions.
+As we mentioned earlier,
+these blue functions are sigmoid functions of different shapes,
+and can all be written in the form of
+c1*sigmoid(b+w*x1).
+The only differences between these blue functions are the variables,
+which are w,
+b,
+and c.
+For the variables of the first blue function,
+we denote it as w1, b1, and c1.
+For the second blue function,
+we denote it as
+w2, b2, and c2.
+For the third blue function,
+we denote it as w3, b3, and c3.
+Then, we add
+all four functions together.
+We get a function that
+looks like this.
+We add up 1, 2, and 3.
+This can be written as summation over i,
+where i equals 1, 2, and 3.
+Inside this summation over i,
+is ci times the sigmoid of
+bi+wi*x1.
+So, every formula here
+represents a different blue function.
+We use the summation over i to
+stack these blue functions together
+and create a new function.
+Now,
+don't forget to add a constant,
+which is represented as b here.
+Assume that
+we have a function,
+and we write it out in this form.
+If we treat the parameters in this formula,
+which are b, w, and c,
+as arbitrary variables instead of constants,
+then we can set different b, w, and c
+for each function
+and create different blue functions.
+By stacking these different blue functions,
+we can make different red curves.
+And with these different red curves,
+we can create different piecewise linear curves,
+which can be used to
+approximate all kinds of continuous functions.
+So, we actually have a way to write out functions
+with unknown parameters that
+are very flexible.
+It can be written out as the summation of a bunch of sigmoid functions,
+each with different c, b, and w.
+Okay, so originally, we were working with linear models,
+which can be written as y = b + w*x1.
+The linear model has a very big limitation,
+which is called model bias.
+So, how can we reduce the bias of the model?
+We can do so by creating a more flexible function
+with unknown parameters.
+It can be written as
+y = b + �Uci*sigmoid(bi+wi*x1)
+Originally, we have b + w*x1.
+Here, it becomes bi + wi*x1.
+By choosing different bi,
+different wi,
+and different ci, we can then apply them to this formula and
+add them all up with b to get y.
+By choosing different c, b, and w,
+we can create
+all kinds of different functions.
+Okay, we have actually evolved to
+not just using one feature.
+We can use multiple features.
+Here we use j to
+represent the number of features.
+For example, if we consider the first 28 days,
+j is 1 to 28.
+If we consider the first 56 days,
+j is 1 to 56.
+We can expand this function to
+the one above that we just talked about,
+the more flexible function, which is also very simple.
+We just replace the items in Sigmoid.
+Originally, we have b + summation over j wj xj here.
+Now,
+we put this item in the parentheses,
+changing to bi + summation over j wij xj.
+Put what was originally placed here in Sigmoid.
+Then in each Sigmoid function,
+there are different bi and different wij.
+Then after applying Sigmoid to them, we multiply them by ci, and add all of them up.
+Then after adding b to them, y is obtained.
+We just need to put different values ​​for ci bi and wij here.
+It can become a different function.
+Okay, if you still think it's a bit abstract when it comes to this.
+If you have a bit of headache when looking at the formula,
+Let's use a more intuitive way to
+draw out what this formula actually does.
+It looks like this when it is drawn out.
+Well, let’s first consider the situation where j is 1 2 3.
+That is, we only consider three features.
+For example, we only consider the case of the previous day, the previous two days,
+and the previous three days.
+So j is equal to 1 2 3.
+Okay, so the input is x1, which represents the number of viewers from the previous day.
+x2 represents the number of viewers two days ago.
+x3 represents the number of viewers three days ago.
+What is i?
+Each i represents a blue function.
+Because for each blue function we have,
+we use a Sigmoid function to approximate it.
+So each i represents a Sigmoid function,
+or it represents a blue function.
+Okay, so here,
+this 1 2 3 means we have three Sigmoid functions.
+Let's take a look at
+the thing inside these parentheses.
+Every Sigmoid has parentheses.
+What's the thing inside these parentheses?
+The first case with Sigmoid i equal to 1
+is to multiply x1 by a weight called w11.
+x2 multiplied by another weight is called w12.
+x3 multiplied by weight is called w13.
+Add it all up.
+Don't forget to add another b.
+Then add up b.
+Then the formula obtained is like this.
+Here we use wij to
+represent the weight that the j-th feature
+is multiplied by in the i-th Sigmoid.
+The first feature is multiplied by w11.
+The second feature is multiplied by w12.
+The third feature is multiplied by w13.
+For the three Features 1 2 3,
+the second subscript of this w is 1 2 3.
+The first subscript of w represents that now
+we're considering the first Sigmoid function,
+and we have three Sigmoid functions.
+Okay, for the second Sigmoid Function,
+we won't write down its w.
+We won’t put its w next to this arrow.
+Otherwise, it will be too crowded.
+The second Sigmoid Function,
+what does it do in the parentheses?
+What it does in the parentheses is to multiply x1 x1 by w21,
+multiply x2 x2 by w22,
+multiply x3 x3 by w23.
+Add them all up and add b2.
+What about the third Sigmoid?
+The third thing Sigmoid does in parentheses
+is to put 1 2 3 1 2 3 x1 x2 x3.
+Multiply them by w31, w32 and w33, respectively, and add b3.
+Okay, now for simplicity,
+we use a more simple notation to represent
+the numbers in the parentheses.
+So we treat this bunch of things as r1.
+We treat this bunch of things as r2.
+We treat this bunch of things as r3.
+Then for x1 x2 and x3 and r1 r2 r3,
+what is the relationship between them?
+You can use matrix and vector multiplication method to
+create a more simple and concise writing style.
+We've already known that r1 r2 r3 are
+the results of the calculation in parentheses.
+The result of the calculation in the three Sigmoid parentheses.
+For r1 r2 r3 and the three input features x1 x2 x3,
+the relationship between them is like this:
+Multiply x1 x2 x3 by a different weight
+and plus different bias.
+That is, different b will get different r.
+Then these three formulas, the series of calculations,
+Actually we can simplify them.
+If you are familiar with linear algebra,
+it can be simplified to the multiplication of matrix and vector.
+Put x1 x2 x3 together into a vector.
+Put all w here together into a matrix.
+Combine b1 b2 b3 into a vector.
+Combine r1 r2 r3 into a vector.
+Then for these three formulas,
+You can simplify it so that
+there is a vector called x.
+This x multiplied by a matrix called w.
+There are 9 values ​​in this w, which is the 9 w here.
+It is the 9 weights here.
+x is multiplied by w, and then b is added to get the vector of r.
+What is done here is exactly the same as what is done here.
+There is no difference between them.
+It’s just a different way of expression.
+Originally, to write the three numbers, there are a bunch of additions and subtractions,
+a bunch of other superscripts,
+and two subscripts that seem too annoying.
+Now we replace them with a more commonly used representation in linear algebra.
+x is multiplied by the matrix w, and the vector b is added,
+and then we get a vector called r.
+Okay, so about the operation here.
+What is done in the brackets is that
+we multiply x by w and add b to equal r,
+which are r1,r2, and r3 here.
+Oops, the cursor is a bit erratic.
+That must be a display problem.
+It's okay. I took back control again.
+Here are r1, r2, and r3.
+They will pass
+through the Sigmoid Function separately.
+Okay, pass through the Sigmoid function separately.
+Because what we actually do is...
+What we do is make r1 negative,
+take its exponential, add 1,
+and put it in the denominator.
+1/(1+exp(-r1)) = a1.
+We get a2 from r2 in the same way.
+Put r3 through Sigmoid Function to get a3.
+Basically, what we do in this blue dotted frame
+is get a1 a2 a3 from x1 x2 x3.
+Okay. Next,
+more concisely,
+we pass r through
+a function called Sigmoid,
+which is used...
+We use this symbol here to
+represent the Sigmoid function.
+So, we got the vector a
+by just passing r1 r2 r3 through Sigmoid Function.
+We directly use this symbol to represent such an operation.
+Then we have a1 a2 a3.
+What's next,
+the output of the Sigmoid function
+has to be multiplied by ci and added by b.
+What we are doing here is
+multiply a1 by c1, a2 by c2 and a3 by c3,
+sum them up and add b.
+And we have y finally.
+Okay, for their vector representation,
+a1 a2 a3 form vector a,
+and c1 c2 c3 form vector c.
+Then we can
+transpose c.
+Multiply a by c transpose and add b,
+and we get y.
+About this series of operations,
+the more flexible formula we just wrote
+does the following: Taking input x,
+the Feature vector,
+multiplying it by the matrix w and adding the vector b to get the vector r.
+Pass r through Sigmoid Function to get a,
+then multiplying a with c transpose and adding b to get y.
+So the operation here,
+if expressed in terms of multiplications between vectors and matrices
+defined in Linear algebra,
+will look like this.
+The r here is the same as this one.
+Same for a here.
+Thus we can put this bunch of things
+inside this bracket.
+Similarly, a is put here.
+After combining these equations,
+it will look like this.
+The things above,
+for a more concise
+and more flexible formulation
+in terms of linear algebra,
+should be written as the following.
+x is multiplied by w, added by b, passed through Sigmoid,
+then multiplied by c Transpose and finally added again by b to get y.
+The one at the bottom is exactly the one at the top,
+only it is more flexible.
+They are all the same
+in different formulations.
+The one above is a graphical representation.
+Below is its representation in linear algebra.
+Actually they are telling the same story.
+Okay. Next,
+before we continue with
+how to find these unknown parameters,
+let us redefine our symbols.
+The x here is the input Feature.
+Here are W, b, c and another b.
+Although there are two bs',
+they are not the same.
+This one here is a vector,
+while the other is a scalar.
+Behold that their background colors are different.
+This one is in green while that one is in gray,
+which means they are different.
+We then take the yellow w,
+b, c, and the other b,
+and gather them here.
+Their values haven't been defined.
+Thus they are our unknown parameters.
+Then we flatten all these tensors
+and concatenate them to form a long vector.
+We take out every row of w
+or every column of it.
+Be it rows or columns,
+that doesn’t matter.
+We just take out every column or row of w
+and concatenate them to form a long vector,
+along with b, c and the other b.
+This long vector
+is represented by the symbol θ.
+θ is quite a long vector.
+The first value in it is called θ1.
+The second one is called θ2 and the third is called θ3.
+Inside θ,
+some values come from this matrix,
+some values are from b,
+some values are from c
+and some values are from the other b.
+There's no need for such a division.
+Anyway, θ refers to all unknown parameters collectively.
+We will hereafter refer to them as θ.
+Okay, here we just took the first step.
+We rewrite the first step of machine learning
+by redefining a function with unknown parameters.
+Then we will proceed to the second and third steps.
+Before we proceed,
+let's see if you have any questions to ask.
+Okay, let’s see if there is any problem online.
+I try to answer that.
+I guess his question is about optimization.
+When doing optimization, we need to
+find the parameters to minimize loss.
+One of the most exhaustive methods is to
+"brute-force search" of all possible unknown parameters.
+As we just discussed that there are only two parameters, w and b,
+so we can brute-force search all possible values ​​of w and b.
+So, in the case of few parameters,
+you don’t even need to use the gradient descent method.
+No optimization skills are required.
+But, there will be many parameters in the future.
+In this example, there are a lot of parameters,
+w, b, c, and b, and then concatenate them together to
+get a very long vector called θ.
+So, you can’t use the brute-force search method at this time.
+You need a method, such as gradient descent,
+to find the parameter that can minimize the loss.
+I hope this answers his question.
+OK, are there any classmates who have questions?
+Please say.
+Okay.
+This classmate’s question is that
+there are three sigmoid functions in the example,
+but why is it three?
+Could it be four, five, or six?
+Yes, the number of sigmoid functions is up to you.
+The more sigmoid functions,
+the more complicated
+piecewise linear function are.
+Assume that you only have three sigmoid functions,
+which means you can only generate three line segments.
+But, if you have more sigmoid functions,
+you can generate piecewise linear function
+with more line segments.
+You can approximate the more complex functions.
+As for how to decide the number of sigmoid functions,
+this is another hyperparameter that
+you have to decide it by yourself.
+We use three sigmoid functions in the early example,
+and that is just an example.
+Maybe I shouldn't use three
+because it will make you mistakenly think that
+the number of input features is three,
+so the number of sigmoid functions is also three.
+No.
+You can decide the number of sigmoid functions.
+Ok.
+Do you have any questions?
+Hey, please say.
+With what sigmoid?
+Hard sigmoid.
+First of all, its function may be more complicated for you.
+You can't write down its function at once.
+But if you can write down its function,
+you can actually use the hard sigmoid.
+You can use it if you want.
+So, it’s not necessary to use
+the sigmoid that we just discussed to approximate the hard sigmoid.
+There are many other ways.
+We will talk about other methods later.
+Ok.
+Do you have any questions?
+Okay, if there is no question at the moment,
+we will continue.
+You know that this class ends at 6:20,
+so I can talk about it before 6:20.
+If you want to leave early?
+No problem, our courses are all recorded.
+Okay, then we will move on to the second step.
+We have to set loss.
+After having this new model,
+will our loss be different?
+There is no difference; the method of definition is the same.
+We just changed our symbol a little bit.
+Before, it was L(w, b)
+because w and b are unknown.
+Now, we have a lot of unknown parameters.
+It is too tiring to
+list them one by one.
+So, we directly use θ to set all the parameters.
+Use θ to represent all unknown parameters.
+So, our current loss function becomes L(θ).
+This loss function is to answer
+how bad or good it will be
+if this θ is a certain set of values.
+The calculation method
+is exactly the same
+as the case that there are only two parameters.
+Given a certain set of w b c t and b,
+which means given a certain set of θ values.
+Suppose that you know the value of w.
+Substitute w with its value. Substitute b with its value.
+Substitute c with its value. Substitute b with its value.
+Substitute "x" with a feature value,
+and then see the "y" you estimated,
+and then calculate the gap with the real label.
+You get an e.
+Add up all the errors.
+You get the value of the loss.
+The next step is optimization.
+Is there any difference between this optimization problem and the previous one?
+There is no difference. They are still the same.
+So, even if we change to a new model,
+this optimization step,
+the optimization’s algorithm is still gradient descent.
+It seems that there is not really much difference.
+Our current θ is a very long vector.
+We express it as θ1 θ2 θ3 and so on.
+We are now looking for a set of θ.
+This θ can make our loss as small as possible.
+The set of θ that can make the loss the smallest
+is called the θ*.
+Okay, how do you find the θ*?
+We have to randomly choose an initial value at the beginning.
+Here we called it θ^0.
+You can choose it randomly.
+Later in this lesson, I might also talk about it.
+I will also talk about a better way to find the initial value.
+Let's choose it randomly now.
+Okay, then you have to calculate the differential.
+You have to deal with every unknown parameter.
+Here is represented by θ1 θ2 θ3.
+You have to calculate its differential to L
+for each unknown parameter.
+After calculating the derivative of L with respect to every parameter,
+it makes up a vector altogether.
+We use g to represent this vector.
+Suppose there are 1000 parameters,
+then the length of this vector is 1000.
+There are 1000 numbers in this vector.
+This vector has a name.
+This vector, which is made up by putting it all together with the differential of each parameter to L,
+has a special name.
+We call it "gradient."
+Well, in many cases, you may see that
+a gradient is expressed like this.
+You put an inverted triangle in front of L,
+it represents "gradient."
+And this is an abbreviation of the gradient.
+In fact, what I want to express here is this vector.
+Putting an inverted triangle in front of L means
+taking all the parameters, including θ₁, θ₂, θ₃,
+and differentiate L with respect to each of them.
+That's the meaning of this "L inverted triangle."
+As for the "θ⁰" behind, it means that
+the position we take differential
+is where θ = θ⁰.
+(It is) where θ = θ⁰.
+After we calculate this gradient,
+calculating this g,
+we update our parameters
+in the next step.
+The update method is exactly the same
+as in the situation with only two parameters previously.
+We just need to change the number of parameters
+from 2 to, say, 1000,
+but the update method is exactly the same.
+If there is originally a parameter called θ₁.
+The superscript 0 means it is a starting value,
+which is a randomly selected starting one.
+θ₁⁰ minus learning rate, multiplied by the value of the derivative.
+Then you get θ₁¹,
+which represents the result of θ₁ updated once.
+θ₂⁰, subtracted the derivative and multiplied by...
+(θ₂⁰,) subtracted by learning rate and multiplied by the value of the derivative
+is θ₂¹.
+And so on.
+Now you can update all the 1000 parameters.
+Here comes an abbreviated notation.
+That is, you can combine all the θ's here as a vector,
+and we use θ⁰ to represent it.
+As for here, you can take out the learning rate.
+The remaining part, the differential part,
+the differential to L with respect to each parameter,
+is called gradient, called g.
+So, θ⁰ minus the learning rate times g
+is θ¹.
+We collect all the θ's here...
+(We) collect all the θ's here
+and call it θ¹.
+θ⁰ minus... The vector θ⁰
+minus the learning rate, multiplied by g,
+which is also a vector, is θ¹.
+Suppose you have 1000 parameters here.
+Then θ⁰ has 1000 values.
+It's a 1000-dimension vector.
+g is a 1000-dimension vector.
+θ¹ is also a 1000-dimension vector.
+Okay, this is the whole algorithm.
+That is, you calculate the gradient from θ⁰,
+updating θ⁰ to θ¹ according to the gradient.
+Then, calculate the gradient again,
+updating θ¹ to θ² according to the gradient.
+Calculate the gradient once again and update θ² to θ³.
+And do it so on, until you don't want to do it anymore.
+Or until the gradient you calculated
+is a zero vector,
+causing you cannot update the parameters anymore.
+But, in practice that's almost impossible to
+encounter a result of zero vectors.
+In most cases, you stop just because you want to stop.
+Okay, but in practice,
+here comes a detailed issue of implementation.
+The reason why I mention it here is
+that there is a paragraph about it in TA's code.
+So, we'd better explain it here
+so it will not confuse you when you read TA's program.
+In fact, when we perform gradient descent,
+we will do the following.
+Suppose we have N pieces of data here, capital N.
+We divide the N pieces into individual batches.
+We divide them into batches, into groups.
+How to divide them exactly?
+Just divide them randomly.
+Okay, so there are capital B pieces of data in each batch.
+And there are N pieces of data in total.
+Now group them into B pieces. Group them into B pieces.
+Each group is called a "batch."
+How to group them?
+Just group them however you want.
+Just divide them as you like.
+Originally, we calculate a loss by taking the entire data.
+Now, we don't do that.
+We only take the data in one batch.
+Just take the first batch and calculate a loss,
+and we call it L¹ here,
+in order to distinguish it from the L here.
+Since it might not be the same
+if you calculate the loss
+by considering the whole data
+or only a batch of them,
+here we use L¹ to represent the latter.
+But, you can suppose that if this B is big enough,
+maybe L and L¹ will be very close to each other.
+Therefore, in a real implementation,
+each time we choose a batch first,
+using this batch to calculate L¹,
+calculating the gradient according to this L¹,
+and update the parameters by the gradient.
+Then, select the next batch to calculate L²,
+calculating the gradient according to L²,
+and update the parameters.
+Select another batch to calculate L³,
+calculating the gradient according to L³,
+and use the gradient calculated by L³ to update the parameters.
+Hence, we do not calculate the gradient by the capital L.
+In fact, we calculate the gradient
+using L¹, L², and L³ from batches.
+Processing all the batches once
+is called an Epoch.
+Each time we update parameters, we called it an Update.
+When you read papers,
+you often see the term Update
+and the term Epoch.
+Update is different from Epoch.
+Each time we update parameters, we called it an Update.
+Processing all the batches
+is called an Epoch.
+In order to
+As for the reason to divide data into batches,
+Let's talk about it next week.
+But in order to let everyone know more clearly
+the difference between Update and Epoch.
+Here is an example.
+Suppose we have 10,000 data.
+That is, big N is equal to 10000.
+Suppose the size of our Batch is set to 10.
+That means the big B is equal to 10.
+Here is a question for you.
+In an epoch,
+how many times do we update the parameters in total?
+You can count
+the number of batches formed
+from these 10000 examples.
+A total of 10000 divided by 10 is formed,
+which is 1000 batches.
+So in an epoch,
+you have actually updated the parameters 1000 times.
+So we do not update the parameters once in an epoch.
+In this example, we have
+updated the parameters 1000 times in an epoch.
+The second example.
+Suppose there are 1000 data.
+The batch size is set to 100.
+In fact, the batch size is also determined by you.
+So we have one more HyperParameter here.
+The so-called HyperParameter
+is a parameter decided by yourself.
+Parameter set by human, not machine,
+is called HyperParameter.
+We have learned today that
+learning rate is a HyperParameter.
+The numbers of sigmoids are also HyperParameters.
+The batch size is also a HyperParameter.
+1000 Examples.
+The batch size is set to 100.
+How many times are its parameters updated in an epoch?
+10 times.
+So when someone told you
+that he or she did an epoch training,
+You actually don’t know how many times the parameters are updated.
+Maybe 1000 times.
+Maybe 10 times.
+It depends on how big its batch size is.
+Okay, we can actually make more variations on the model.
+A classmate asked me just now.
+Huh, is this Hard Sigmoid bad?
+Why do we have to change it to Soft Sigmoid?
+You don’t really have to switch to Soft Sigmoid.
+There are other ways.
+For example, the function formula of
+this Hard Sigmoid is a bit difficult to write down.
+Actually, it’s not that difficult to write.
+It can be viewed as the sum of two Rectified Linear Units.
+The so-called Rectified Linear Unit is like this.
+It has a horizontal line.
+There is a turning point somewhere.
+Afterward, it becomes a slope.
+The formula of this function
+is written as c multiplied by max 0, b + w x 1.
+This max 0, b + w x 1 means that
+viewing which is greater between 0 and b + w x 1,
+the larger one will be used as the output.
+So if b + wx1 is less than 0,
+Then the output is 0.
+If b + wx1 is greater than 0,
+the output is b + wx1.
+In conclusion, this line
+can be written as c max(0, b + wx1).
+By using different w, different b, different c,
+you can move its position.
+You can change the slope of this line.
+Then this kind of function in machine learning
+is called Rectified Linear Unit.
+Its abbreviation is called ReLU.
+The name pronounces interesting.
+It really pronounces ReLU.
+If you stack two ReLUs,
+it becomes Hard’s Sigmoid.
+Isn't it?
+We stack a ReLU like this
+on a ReLU like this.
+Add them up produces Hard Sigmoid.
+So can we use ReLU?
+Yes, we can.
+So if we want to use relu
+instead of sigmoid,
+just change the occurrence of Sigmoid to
+max(0, bi + sigma j wij xi ).
+There were only i Sigmoid before.
+But we need 2 ReLUs to
+synthesize a Hard Sigmoid.
+So there are i Sigmoid.
+If ReLU has to do the same thing,
+you may need 2 times of ReLU.
+Because 2 ReLUs combined
+is a Hard Sigmoid.
+So 2 times of ReLU are required.
+So we changed Sigmoid to ReLU.
+We change a formula here.
+Because we want to represent a Hard Sigmoid.
+It means that the blue function is not the only method.
+You can use other methods.
+Okay, this Sigmoid or ReLU.
+They are called activation functions
+in machine learning.
+They have their names.
+They are collectively called the Activation Function.
+Of course, there are other common ones.
+There are other activation functions.
+But Sigmoid and ReLU
+should be the most common Activation Function today.
+We'll talk about
+which one is better next time.
+Which one is better?
+I chose to use ReLU for the next experiment,
+so obviously, ReLU is better.
+As for why it is better,
+that's for next week.
+Okay, then I did this experiment
+with all the real data.
+I did this experiment literally.
+Suppose we have a linear model
+with 56 days of data.
+The loss on the training data is 0.32k.
+The loss on the unseen data in 2021 is 0.46k.
+If you use 10 ReLU functions,
+it doesn't seem to have much improvement.
+The result is similar to the linear model,
+so it seems that 10 ReLUs are not enough.
+There is a significant difference between 100 ReLUs.
+Loss of 100 ReLUs on training data
+can be reduced from 0.32k to 0.28k.
+With 100 ReLUs,
+we can create more complicated curves.
+Originally, Linear is a straight line.
+But with 100 ReLUs, we can generate
+a piecewise linear function with 100 polylines.
+It also performs better on the testing data.
+Next, we change to 1000 ReLUs.
+With 1000 ReLUs,
+the loss is lower on the training data.
+However, with unseen data,
+it doesn't seem to have much improvement.
+Okay, what else can we do next?
+We can modify our model again.
+For example,
+We mentioned that a is calculated from
+x × w + b,
+then pass through the Sigmoid function.
+But we already know that
+Sigmoid function is not necessary.
+You can also get a by
+passing through the ReLU function.
+We can do this process
+several times.
+We just multiply x by w plus b
+then pass through a Sigmoid function to get a.
+Now we can multiply a by another w'
+plus another b',
+then pass through the Sigmoid function
+or ReLU function
+to get a'.
+So we can get a
+by doing a series of operations on x.
+Next, perform a series of operations on a to generate a'.
+Then we can do it over and over several times.
+How many times to repeat
+is another hyperparameter
+you should decide by yourself.
+Should you do it twice, three times, four times, or one hundred times?
+It's your call.
+Notice that w and w'
+are not the same parameter.
+b and b'
+are not the same parameter.
+They are additional parameters.
+Okay, then I carry out the experiment.
+We add 100 ReLUs every time.
+Input features are
+the data from the past 56 days.
+If it only repeat once,
+just multiply w and add b,
+then pass through ReLU or Sigmoid.
+If you repeat once,
+the result is exactly what we just saw.
+Repeating it twice, the loss has dropped a lot,
+from 0.28k down to 0.18k.
+The performance on the unseen data also improved slightly.
+With three layers, there is further improvement,
+decrease from 0.18k to 0.14k.
+From a single layer, which is multiply w once,
+then pass through ReLU once,
+then ass through ReLU three times.
+We can decrease the loss from 0.28k to 0.14k
+on training data.
+On the unseen data,
+it reduced from 0.43k to 0.38k.
+This seems to be a little better.
+Okay, this is the result of the real experiment.
+Let's take a look at
+what the result of
+passing ReLU three times is.
+The horizontal axis that has been discussed
+is time or day.
+The vertical axis is the number of people who watched.
+The red line represents the real data,
+and the blue line is the predicted data.
+One can observe
+the low point in the data.
+The data in red reach a two-day low point
+every once in a while.
+At the low point,
+the machine's prediction is fairly accurate.
+It can accurately predict which two days are low.
+These two days are low.
+There is an interesting thing.
+This machine overestimates the number of real viewers,
+especially on this day.
+There is a very obvious low point on this day.
+But the machine did not predict that there will be a significant low point.
+It predicts the low point one day late.
+Do you know what's going on?
+No, it's not leap year
+because it's not yet February 28.
+Do you have any ideas?
+Right new year!
+What's the lowest point of the day?
+The lowest point of the day is New Year's Eve.
+Who learns machine learning on New Year's Eve, right?
+So you can't blame the machine
+for this mistake.
+It doesn't even know what New Year's Eve is.
+It only uses the data of the previous 56 days to
+predict the numbers for the next day.
+So it doesn’t know that it's New Year’s Eve that day;
+thus you can’t blame it
+for its inaccurate predictions.
+Ok. So far,
+we've discussed various models.
+But we still have one thing missing.
+Do you know what's missing?
+We're missing a good name for the models.
+As all of you know, appearance is very important.
+A weeb can be good-looking after wearing a suit.
+Any random people could sound freaking dope
+if he had a long and fancy name,
+right?
+So our model also needs a good name.
+So what is its name?
+These Sigmoids or ReLUs,
+we call them Neuron(s).
+We have a lot of Neurons here,
+and we give "many neurons" another name--
+Neuron Network.
+What is a Neuron?
+Neuron originally refers to the nerve cells in our body.
+There are many neurons in the human brain.
+Many Neurons connected together form a Neural Network,
+which works similarly to your brain.
+Then you can lie to all those muggles:
+"My models simulate the human brain!
+This is artificial intelligence!"
+Then Muggles will be scammed and give you all their money.
+But this trick had already been used
+back in the 80s and 90s.
+Neural Network is not a new technology.
+It has already existed since the 80s.
+The reputation of it was damaged at that time.
+Because the power of neuron networks was too exaggerated,
+everyone is sick of
+hearing the name "neuron network".
+It's like a dirty word.
+If written on a research paper,
+your paper is destined to be rejected.
+So in order to restore its glory,
+what should we do?
+We need to give it a new name.
+What is the new name?
+Well, we have a lot of Neurons here,
+So we call each row of Neurons a "Layer",
+or also "Hidden Layer".
+And when we have many Hidden Layers, we call it "Deep".
+So this large network is called Deep Learning.
+Okay, so now you know what's Deep Learning.
+After all, that's it.
+That's how the name is born.
+Ok. Then people started to
+pile up the neural network with more and more layers.
+In 2012, a network called "AlexNet" had 8 layers,
+and its error rate is 16.4%.
+Two years later, another network VGG, with 19 layers,
+achieved 7.3% error rate in image recognition.
+Those results are judged with
+a benchmark database in image recognition.
+Later on, GoogleNet's managed to obtain 6.7% error rate
+with 22 layers.
+But these are nothing.
+"Residual Net" has 152 layers,
+even higher than Taipei 101.
+But in fact, training such deep networks
+requires some tips and tricks.
+We will talk about this later.
+So far,
+if you think about
+what you have learned until now,
+have you found anything strange?
+I don’t know if you have noticed
+the strange part I was talking about.
+We said at the beginning
+that we want to use ReLU or Sigmoid
+to approximate a complex function.
+In fact, as long as we use enough ReLUs and Sigmoids,
+any continuous function can be approximately produced, right?
+We only need to have enough Sigmoids
+to produce a function with lots of line segments,
+and thus approximating any continuous function.
+So we only need one row of ReLU
+and one row of Sigmoid, actually.
+Then what's the purpose of adding layers?
+What are the benefits of
+stacking them repeatedly?
+Why not just line them up in a row?
+It can also represent any function.
+So it makes no sense to use it repeatedly.
+So some people say that Deep Learning,
+which uses ReLUs and Sigmoids repeatedly,
+is just a gimmick.
+The reason why people like Deep Learning
+is just because Deep is a nice name.
+If you line up ReLUs and Sigmoids in a row,
+you only come up with a fat network,
+Fat Neural Network.
+This sounds so much lamer
+than Deep Neural Network.
+Deep sounds better.
+Fat Neural Network sounds like some weeb Neural Network.
+Not good.
+So why is Deep better?
+Why don't we make the network fatter
+but make the network deeper?
+This is a topic we will talk about in the future.
+Okay. Then, some other people said:
+Why don't we make it deeper?
+We only stacked 3 layers;
+the number of layers should be way more than this!
+Networks now normally have hundreds of layers.
+You should be embarrassed if you release a network without hundreds of layers.
+After all, you're doing Deep Learning, right?
+Ok, so let's make it deeper.
+So, we actually make it deeper! 4 layers!
+4 layers for the training data.
+Its Loss is 0.1 k.
+On the 2021 data that haven't been read,
+how is it? It's 0.44 k!
+How could it be that we have such a miserable Loss?
+On training data,
+3-layer is worse than 4-layer,
+and 4-layer is better than 3-layer.
+But on the data that haven’t been read,
+4-layer is poorer,
+and 3-layer is better
+on the data that haven't been read.
+On the training data
+and the unread data,
+there are inconsistent results.
+This kind of training data and unread data,
+also known as training data and test data,
+have inconsistent results
+is called Overfitting.
+Then you may hear people saying that
+Overfitting occurs in machine learning training.
+It refers to the accuracy improving on the training data
+while not on the unread data.
+So far,
+we haven’t exerted the real power of this model yet.
+You know that we want to exert the power of this model,
+and the data from 2021 to the latest February 14th
+we already have.
+So, what are we going to do?
+What we are going to do is to predict the unknown data.
+But, if we want to predict unknown data,
+should we choose 3-layer Network
+or 4-layer Network?
+For example, today is February 26th,
+the number of viewers today is unknown.
+If we want to use a Neural Network,
+which we have trained, to
+predict the number of viewers today,
+Will you choose 3-layer Network
+or 4-layer Network?
+Okay! Let's ask your opinions!
+If you choose the 3-layer Network, please raise your hands.
+Good, and hands down.
+If you choose the 4-layer Network, please raise your hands.
+Good, it's less.
+As for how to choose a model,
+that is what we are going to talk about next week.
+Everyone! I know that most of you have a very "Sense" of this topic.
+You know that we have to choose a 3-layer one.
+Most people choose a 3-layer one.
+You might want to ask why not the 4-layer one.
+The result on training data from 4-layer Network is better!
+In fact, we don’t care about the result of the training data.
+What we really care about is the result of the unread data.
+And it is unread data on February 26th.
+While training, we should choose the Model
+that performs well on unread data.
+So, we should choose the 3-layer Network.
+Then, you might think that we are going to end the course.
+Actually not, let's predict it practically!
+How many views should you have on February 26th?
+Please note that it's from YouTube’s statistics.
+It's not so real-time.
+Thus, it only computes the data till February 24th.
+It’s okay. Let’s first calculate the number on February 25th.
+What is the number of viewers?
+This 3-layer Network told me
+that the total number of viewers of this channel on February 25th
+is 5250.
+We assume that it's right on February 25th;
+actually, we don’t know
+because the statistics back-end has not yet been released.
+But, we still assume that it is all right this day,
+and then we let our model predict the number of viewers on February 26th.
+The result is 3960.
+Why is it so few here?
+It's because the model knows that
+the number of people watching this Friday
+is relatively few.
+So, it predicts very few.
+Sounds reasonable!
+But, what do you think about this prediction
+comparing to 380 here?
+Which one will be more accurate?
+What do you feel? What do you think?
+Let's take a look next week.
+What is the actual value on February 26th?
+But, if you think this value
+whose error comparing to the true value:
+is less than 380, please raise your hands.
+is greater than 380, please raise your hands.
+Wow! good! Hands down.
+It seems that you don't have much confidence in me.
+Okay! let's take a look
+that how much error it will be next week.
+Of course, I don’t expect that it will be accurate.
+By seeing so many people stand for the greater error.
+If everyone here goes to click that video,
+wow, the error is great.
+Why am I saying that so long?
+The reason is I'm trying to seduce you to click the videos!
+Well, I actually only talked about deep learning today.
+It's not a traditional way to talk about it.
+If you want to listen to the general way of introduction,
+the lecture videos from the past are also available online.
+I will attach the link here.
+By the way, deep learning training
+used a thing called Backpropagation.
+In fact, it is a method that is more efficient
+than the method of calculating Gradients.
+There is no difference to what we have taught today.
+But, if you really want to know
+what Backpropagation is.
+The video link is also attached here.
+Okay, that's all about today.
+Thanks for your listening! Thank you!

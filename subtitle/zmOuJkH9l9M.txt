@@ -1,0 +1,1028 @@
+next we are going to talk about the
+transformer
+which will be used in homework 5. we
+have already mentioned the transformer
+many times if you still don't know what
+a transformer is
+the transformer here is different from
+the transformer that optimus
+prime is the transformer is strongly
+related to burt
+so here is a bert poking out his head to
+demonstrate that transformer
+is strongly related to bert what is a
+transformer
+a transformer is a sequence to sequence
+model
+we denote sequence to sequence as
+seq2seq then
+what is a sequence to sequence model
+when we talk about inputting a sequence
+when the input is a sequence
+there are several possibilities for the
+output one is that the input and the
+output have the same length
+which is the case in homework two
+another case is that the
+output is an item which is the case in
+homework 4.
+the case of homework 5 is we don't know
+how long the output will be
+the length of the output is determined
+by the machine itself
+in what circumstances or applications
+will
+we need to use the sequence to sequence
+model
+that is the input is a sequence and the
+output is a sequence
+and we don't know the length of the
+output the output length
+should be decided by the machine what
+kind of applications are there
+for example a good application is speech
+recognition
+when doing speech recognition the input
+is a sound signal
+we have seen this in our course many
+times the input audio
+signal is a sequence of vectors what is
+the output
+the output is the result of speech
+recognition which is the text
+corresponding to the input audio signal
+we use circles to represent text
+each circle represents a word in chinese
+of course the length of input and output
+have some sort of relationship
+but there is no absolute relationship we
+say that the input audio signal
+has a length of big t we have no way of
+knowing
+what is the exact length n according to
+the input length t
+it is up to the machine to decide how
+many texts it should output
+by listening to the content of the audio
+signal the machine should decide
+how many words the output sentence
+should contain
+in the speech recognition result this
+example is speech recognition
+there are many other examples for
+example in homework 5 we will do machine
+translation
+the machine read sentences in a language
+and output sentences in another language
+in a translation task the length of the
+input text n
+doesn't necessarily correspond with the
+length of the output n prime
+the model decides the relationship
+between n and n
+prime by itself if we give the machine
+the phrase
+machine learning in chinese the output
+is machine learning in english
+there are two english words in the
+output and four chinese words in the
+input
+but obviously you can't simply divide
+the length of any chinese sentence by
+two
+two obtains its english translation's
+length so given any input
+the machine should find out the length
+of the output text by itself
+with this technique we can handle even
+harder problems
+for example speech translation what is
+speech translation
+in this problem a person says some words
+for example
+machine learning then the machine
+doesn't
+output the english words it outputs the
+chinese translation of the sentence
+directly
+in the previous example the input is the
+audio machine learning
+and the output is machine learning in
+chinese
+some of you might be asking why we need
+to do speech translation
+why don't we put a speech recognition
+model and a language translation model
+together
+to handle this task obviously combining
+these two models
+gives a speech translation model but the
+problem is
+most languages in the world don't have
+characters
+there are more than 7000 languages in
+the world but more than half of those
+languages
+don't have characters for these
+languages
+we can't separate the translation task
+into two tasks since there are no
+characters to represent the sentence
+the first part would fail so is it
+possible that
+we don't separate the task into two
+parts but directly translate the audio
+into a language that can be written down
+taiwanese hakian
+is a good example of such language
+taiwanese isn't a language that don't
+have characters at all
+though many people think that taiwanese
+can be written down
+but those characters aren't that popular
+i've heard that elementary schools
+nowadays teach taiwanese hockey and
+characters
+but most taiwanese hakian users still
+can't understand those characters
+suppose you are using a taiwanese
+hackane speech recognition tool
+you might fail to understand the output
+text since you don't know the words
+right that's why we seek for a machine
+that is able to do translations
+we want a machine that receives a
+taiwanese hakian sentence
+and outputs a chinese sentence with
+exactly the same meaning
+so that ordinary people can understand
+it
+is it possible to do this is it possible
+to
+train a neural network that receives
+audios of a certain language
+and outputs texts with the same meaning
+in another language
+the answer is yes in general to train a
+neural network
+we need to find relationships between
+inputs and outputs
+suppose we want to train a taiwanese
+haki and speech translation model
+then we need some known correspondence
+between taiwanese haki and audio
+and chinese characters but is it easy to
+collect such information
+well sometimes it is still possible for
+example there are many taiwanese soap
+operas
+on youtube these taiwanese soap operas
+have taiwanese audio
+and chinese subtitles so if we download
+those taiwanese audio
+and chinese subtitles we can acquire a
+data set that has
+corresponding audio and words with that
+data we can train a model
+in theory we can use a transformer which
+we will introduce later
+to train a taiwanese speech recognition
+model
+that takes taiwanese audio as input and
+outputs chinese subtitles
+you might think this idea is infeasible
+and comes with many difficulties
+well our lab downloaded 1 500 hours of
+taiwanese soap operas
+and actually trained a speech
+recognition system
+you might think that there are a lot of
+potential problems
+for example there could be a lot of
+noises such as background music
+let's ignore that for now moreover the
+subtitles
+might not necessarily match the audio
+let's also ignore that for now
+you might also wonder if we can first
+romanize the taiwanese audio
+and convert it into phrases written in
+english characters
+with similar pronunciations maybe we can
+use these phrases
+as an intermediate and then convert
+these phrases into chinese
+well we train the model directly without
+overthinking too much
+we take the taiwanese audio as input and
+output the chinese subtitle
+without thinking too much we gave it a
+try
+you might wonder if such reckless
+training can actually work out
+and train a speech recognition system
+successfully
+in fact it is actually possible here are
+some actual results
+after training on 1500 hour-long
+taiwanese soap opera audio the model can
+take taiwanese audio as input
+and successfully output chinese
+subtitles let me show
+you some sample inputs you can try to
+translate it yourself
+and see if your translation is the same
+as the model
+this is what the model heard your body
+can't hold it
+taiwanese what is the output of the
+model
+the output is your body can't hold it
+this audio means your body can't hold it
+in taiwanese
+the machine translated it into a chinese
+sentence
+instead of a taiwanese sentence let's
+try another example
+this is what the model heard why did you
+ask for leave if you're fine
+taiwanese the sentence is why did you
+ask for leave if you're fine
+when the model heard the word fine it
+output the word
+fine in chinese instead of taiwanese
+the taiwanese word for fine has four
+syllables
+which is the same as what the model
+heard in the audio
+however the model correctly translated
+the audio
+into the chinese word for fine which
+only has two syllables
+despite all that machines still often
+make mistakes
+and here is an example of it i'll show
+you the clip
+and you can have a listen aren't you
+tired of it
+taiwanese it means aren't you tired of
+it in taiwanese
+when i heard it myself i thought my
+answer would be the same as the machine
+which is are you about to give birth
+but in fact this sentence means that
+won't you get tired of it won't you get
+tired of it
+of course the machine inverts it you
+know that sometimes from taiwanese
+hakian to chinese
+you need to invert the sentence it
+doesn't learn well in the inverting part
+for example it hears the sentence like
+this
+i asked the factory manager for help he
+said i asked the factory manager for
+help
+the output of the machine is i helped
+the factory manager ask something
+but you know that it is actually an
+inverted sentence
+i asked the factory manager for help is
+me to ask the factory manager for help
+but for the machine if the relation
+between taiwanese hakian and chinese
+needs to be inverted
+it seems to be a little difficult to
+learn this example wants to tell you
+direct conversion from taiwanese haki
+and voice signal to traditional chinese
+is not impossible it is possible to
+achieve
+in fact many people in taiwan are doing
+speech recognition of taiwanese hakian
+if you want to know more about speech
+recognition of taiwanese hakian
+you could take a look at the website
+below
+the reverse of speech recognition of
+taiwanese hakian is
+speech synthesis of taiwanese hakkien
+right if the model's
+input is taiwanese haki and voice and
+its output is chinese text
+that is speech recognition in contrast
+if the model's input is text
+its output is voice signal that is
+speech synthesis
+here we are going to demonstrate the
+speech synthesis of taiwanese hakian
+the data used here is taiwanese haki and
+voice data set
+you could search from google taiwanese
+hockey and voice
+to get this data set inside it is the
+voice signal of taiwanese hakian
+it sounds like this for example you tell
+it that
+welcome to the speech processing
+laboratory of national taiwan university
+just for clarifying here there is no
+real end-to-end model yet
+so the model here is still divided into
+two stages
+it will first convert the chinese text
+to tai luo pinyin of taiwanese hakian
+it's like the kk phonetic transcription
+of taiwanese hakkian
+second it will convert the kk phonetic
+symbols of taiwanese hakian into sound
+signals
+however from the kk phonetic symbols of
+taiwanese hakian
+to sound signals it is a network like
+transformer
+it's actually a model called eketron
+which is a sequence to sequence model
+it looks like this so the text you input
+is
+welcome to speech processing laboratory
+of national taiwan university
+the output of the machine is welcome to
+speech processing laboratory
+of national taiwan university or
+you say this chinese sentence to it then
+the taiwanese hakianit output is
+pneumonia is really serious recently and
+you should remember to wear a mask and
+wash your hands frequently
+and you should go to see a doctor if you
+are sick so
+you really can synthesize the voice
+signal of taiwanese hakian
+by what we have learned from this course
+for example
+transformer or sequence to sequence
+model
+what i just said is much related to
+speech sounds
+in text the sequence to sequence model
+is also widely used
+for example you can use the sequence to
+sequence model
+to train a chatbot a chatbot is a
+machine when you input a sentence
+it will give you a response both the
+input and the output are all texts
+text is a vector sequence so you can use
+the sequence to sequence model
+to make a chat bot how to train a
+chatbot
+you have to collect a large number of
+human conversations
+you can collect conversations like tv
+series
+movie lines and so on you can collect a
+bunch of conversations between people
+suppose in the dialogue there is someone
+who said hi
+and another person said hello how are
+you today
+then you can teach the machine that when
+the input is high
+the output should as close to hello how
+are you today
+as possible then you can train a
+sequence to sequence
+model say something to it and it will
+give you a response
+the usage of the sequence to sequence
+model in the field of nlp
+or in the field of natural language
+processing
+is more extensive than you think many
+natural language processing tasks
+can be thought of as question answering
+that is qa
+tasks how the so-called question
+answering
+is when the machine reads a piece of
+text you ask the machine a question
+hoping that it can give you a correct
+answer a lot of tasks that you think
+are far away from question answering can
+be considered as qa
+for example suppose what you want to do
+is translation
+the article comes out to be an english
+sentence
+what is the question the question is
+what is the german translation of this
+sentence
+then machine outputs the german answer
+or you want the machine to summarize
+automatically the summary task is
+machine reads a long article
+and the machine extracts the key points
+of this article
+that is you just have to give the
+machine a piece of text
+and the question is what is the summary
+of this text
+then expect it to output a summary or
+you want to ask the machine to do
+sentiment analysis what is sentiment
+analysis
+that is the machine has to judge a
+sentence automatically
+is positive or negative the application
+is like
+suppose you have made a product you want
+to know the opinion
+of netizens but it's impossible that you
+always
+find someone on the ptt to read every
+article
+then what to do you train a sentiment
+analysis model
+you saw an article mentioning your
+product then you feed this article
+into your model to judge this article is
+positive or negative
+how to view the sentiment analysis
+problem as qa problems
+you can give the machine the article you
+want to judge
+then your question is is the article
+positive or negative
+then i hope the machine can tell you the
+answer
+thus a wide variety of nlp problems
+can often be regarded as qa problems
+and the qa problem can be solved by the
+sequence to sequence model
+but how to use the sequence to sequence
+model to solve the qa problem
+there is a sequence to sequence model
+input is the concatenation of the
+article and the problem
+and the output is the answer it's over
+the concatenation of your question and
+article
+is a very long text and its answer is a
+paragraph of text
+as long as the input of the sequence to
+sequence model is a paragraph of text
+the output is a paragraph of text that
+is
+input a sequence and get a sequence as
+the output to solve the problem
+so you can solve qa questions by using
+the sequence to sequence model
+let it read an article and a question
+and just output the answer directly
+so all kinds of nlp tasks have the
+opportunity to use the sequence to
+sequence model
+but i must emphasize here that you will
+often get better results
+for most nlp tasks or most
+speech-related tasks
+if you customize the models for these
+tasks
+solving different problems by sequence
+to sequence model
+will be just like doing everything by
+swiss knives
+right swiss knives can do all kinds of
+problems
+you can use a swiss knife to chop wood
+you can also use a swiss knife to cut
+vegetables
+but it's not necessarily the best one to
+use so
+if you customize various models for
+different tasks
+you often can get better results than
+just using the sequence to sequence
+model
+but the customized model for each task
+is not the focus of our course
+suppose you deal with human language
+including speech or natural language
+processing
+and you are interested in these related
+tasks in that case
+you can refer to the link for the course
+webpage below
+it is the course of deep learning and
+human language processing last year
+this course's content will teach you
+what the best model for all kinds of
+tasks
+should be for example doing speech
+recognition
+what we just talked about is a sequence
+to sequence model
+input a sound signal and output text
+directly
+today google's pixel 4 also used
+end-to-end neural network which is
+officially supported by google
+what is inside pixel 4 is a neural
+network
+input audio signal and get the text as
+the output
+but it is not using the sequence to
+sequence model it used
+a model called rnn transducer
+these models are designed by certain
+characteristics of speech
+it can perform better as for what kind
+of customized model should be
+for each task it is the subject of
+another course
+it is not the focus of our discussion
+today
+i just talked about many sequence to
+sequence models
+with their applications in speech and
+natural language processing
+there are still many applications that
+it does not looks like a problem that
+can be solved
+with the sequence to sequence model but
+you still can use the sequence to
+sequence model
+to solve the problem take grammar
+analysis as an example
+what grammar analysis needs to do is
+given a paragraph of text
+such as deep learning is very powerful
+the machine has to produce
+a grammatical analysis tree the tree can
+tell us that the combination of
+deep and learning is a noun phrase
+the combination of very and powerful is
+an adjective phrase
+the combination of the adjective phrase
+and is
+is a verb phrase the combination of the
+verb phrase and noun phrase
+is a sentence what we do in grammar
+analysis
+is to parse a syntactic tree like this
+suppose you want a deep learning
+solution in the task of grammar analysis
+input is a piece of text which can be
+seen as a sequence
+but the output does not look like a
+sequence the output is a tree structure
+but in fact a tree structure can also be
+thought of as a sequence
+why this tree structure can correspond
+to a
+sequence like this from this sequence
+you can also see an opening parenthesis
+and a closing parenthesis
+in this tree structure there is a noun
+phrase in sn
+there are also opening parenthesis and
+closing parenthesis
+there are opening parenthesis and
+closing parenthesis in vp
+we can also see is in vp then there is
+an adjective phrase and
+there are also opening parenthesis and
+closing parenthesis
+this sequence represents the structure
+of this tree
+after you convert the tree structure
+into a sequence
+you can use the sequence to sequence
+model to solve it
+you can train a sequence to sequence
+model the input is this sentence
+the output is this piece of text we can
+convert this piece of text into a tree
+structure
+so that's how to use the sequence to
+sequence model to do grammar analysis
+this idea sounds very crazy but the
+network is trainable
+you can read a paper called grammar as a
+foreign language
+this paper is not too new you can see
+that its uploaded time on archive
+is the end of 2014 so it's an ancient
+paper
+when this article came out the sequence
+to sequence model was not popular then
+at that time the sequence to sequence
+model was
+mainly used in machine translation so
+the title of this paper is called
+grammar as a foreign language he
+regarded grammar analysis
+as a kind of machine translation he
+viewed grammar as another language and
+applied the sequence to sequence model
+that was thought to only be used for
+translation
+as a result he got the state of the art
+result
+i have met the first author oriel
+volniels at an international conference
+at that time the sequence to sequence
+model was still a very trendy thing
+from my point of view i thought this
+model could be pretty hard to train
+i asked him were there any tips to train
+a sequence to sequence model
+i didn't expect you used a sequence to
+sequence model 2
+do grammar analysis and reach the
+state-of-the-art result
+there should be some great tips however
+he said that there were no tips
+he said i didn't even use adam i
+directly used gradient descent
+to complete the training the training
+was successful on my first try
+but i adjusted the hyperparameters a
+little bit to reach the state of the art
+result
+i don't know whether what he said is
+real or fake but these days
+the sequence to sequence model has been
+widely
+used in all kinds of applications
+there are also some tasks that can be
+done using sequence to sequence models
+for example the classification of
+multi-label
+what is the classification of
+multi-label you have to compare
+multi-class classification with
+multi-label classification
+multi-class classification and
+multi-label classification
+sound like the same but they are
+actually different things
+multi-class classification means we have
+more than one class in the machine
+has to select a certain class from
+several classes
+but multi-label classification means
+that a single object
+can belong to more than one class for
+example
+when you are doing article
+classification maybe this article
+belongs to classes 1 and 3.
+this article belongs to class 3 9 1
+7 and so on you might wonder how to
+solve this kind of multi-label
+classification problem can we just treat
+it as a
+multi-class classification problem for
+example
+i threw these articles into a classifier
+originally the classifier would only
+output one answer
+the answer with the highest output score
+i will now take the top three with the
+highest scores
+and see if they can solve the
+multi-label classification problem
+but this method may not work why because
+the number of classes corresponding to
+each article
+is not the same at all some articles
+correspond to two classes
+some are one and some are three so if
+you say i just set a threshold
+and directly select the top three
+highest scores
+the top three with the highest
+classifier output score
+as my output we can not get good results
+obviously
+you can use sequence to sequence to do
+it brutally the input is an article and
+the output is class
+that's it the machine decides how many
+classes it should output
+we say that sequence to sequence model
+is to let the machine decide the numbers
+of output
+and the length of the output sequence
+since you have no way to determine the
+number of classes
+the machine helps you decide it decides
+on its own
+the number of classes each article
+belongs to
+take object detection as another example
+this looks far from
+the sequence to sequence model it can
+also be brutally solved by a sequence to
+sequence model
+object detection is that given the
+machine a picture
+it frames out the objects in the picture
+also
+it recognizes this as a zebra and this
+also is a zebra
+but this kind of problem can be done
+with sequence to sequence brutally
+as for how to do it we won't go into
+details here
+i will put a link a link for your
+reference
+all i wanted to tell you is that
+sequence to sequence model is a
+very powerful model it is a very useful
+model
+we are going to learn sequence to
+sequence models
+generally sequence to sequence model is
+divided into two pieces
+one is the encoder and the other is the
+decoder
+after you enter a sequence the encoder
+is responsible for processing this
+sequence
+and then throws the processed result to
+the decoder the decoder will determine
+what kind of sequence it should output
+we will talk more about
+the internal architecture of encoder and
+decoder later
+the origin of sequence to sequence model
+in fact
+was very early in september 2014. there
+is an article using sequence to sequence
+model
+for translation on archive you can
+imagine the sequence to sequence model
+at the time
+looks pretty naive today when we talk
+about sequence to sequence model
+the first thing that comes to everyone's
+mind is our topic today
+which is the transformer it has an
+encoder and also a decoder
+there are multiple submodules in it
+we'll talk about
+what is the function of each submodule
+okay let's talk about the encoder what
+the encoder of a sequence to sequence
+model does
+is to generate a sequence of vectors
+from the input sequence
+generating a sequence of vectors from
+another sequence of vectors
+can be done by many other models maybe
+the first thing that comes to everyone's
+mind
+is self-attention which we just talk
+about in fact
+not only self-attention but also rnn or
+cnn can actually do it
+input a sequence of vectors and then
+output another sequence of vectors with
+the same length
+inside the transformer the encoder of
+the transformer
+uses exactly the self-attention it looks
+a little bit complicated here
+let's use another picture to explain the
+architecture of the encoder clearly
+and then compare to the graph in the
+original paper of transformer
+in this encoder there are many blocks
+each block will get a sequence of
+vectors as the input
+and then output another sequence of
+vectors you input the first block a
+sequence of vectors in
+the first block outputs another sequence
+of vectors
+this sequence of vectors is also
+inputted into another block
+the last block will output the final
+vector sequence
+each block is actually not a layer of
+the neural network
+the reason that we don't call each block
+a layer is that
+the things being done in each block are
+actually done by several layers
+in the encoder of the transformer what
+each block does
+is like this first do the self-attention
+after inputting a sequence of vectors it
+performs the self-attention
+it considers the information of the
+entire sequence
+and outputs another sequence of vectors
+the output vectors
+will pass through a fully connected
+feedforward network
+and another sequence of vectors will be
+outputted this sequence of vectors is
+the output of the block
+in fact in the real transformer what it
+does is more complicated
+what it actually does is like this this
+is a layer of self-attention
+when we talked about self-attention we
+said that after we inputted a sequence
+of vectors
+another sequence of vectors would be
+outputted every vector here
+is the result after considering all the
+input in the transformer
+it has a special design we don't output
+this vector only
+we also add its input to itself it adds
+the input directly to the output
+and gets the new output here suppose
+this vector is called a
+and this vector is called b you will add
+up a and b
+and treat it as a new output such a
+network architecture
+is called residual connection in fact
+residual connections
+are widely used in the field of deep
+learning if we have time later
+we can discuss more of it in detail why
+use residual connection
+for now you just have to know that there
+is a type of connection
+a type of network design architecture
+called residual connection
+it will sum the input and the output and
+create a new vector
+after getting the residual result we do
+another thing called normalization
+what we do here is not batch
+normalization rather it is called layer
+normalization
+what layer normalization does is a
+little simpler than batch normalization
+what layer normalization does is like
+this
+input a vector and output another vector
+there's no need to consider batch here
+when we were talking about batch
+normalization we need to consider batch
+however layer normalization does not
+need to consider batch
+it inputs a vector and outputs another
+vector
+so what exactly does layer normalization
+do
+it will take the input vector and
+calculate its mean and standard
+deviation
+but pay attention here when doing batch
+normalization
+we are calculating the mean and the
+standard deviation
+of different features in the same
+dimension
+we do it on different examples different
+features
+but the same dimension but in layer
+normalization
+we calculate the mean and the standard
+deviation of the same feature
+the same example but different
+dimensions
+after calculating the mean and the
+standard deviation
+you can do normalization every output
+vector
+equals the original input vector wait
+i found a bug here what is this bug the
+bug is that we don't need prime here
+sorry i'll remember to remove this prime
+we don't need prime here
+we take the input vector and subtract m
+the mean from every dimension in the
+input vector
+next divide them by the standard
+deviation and get x
+prime the output of layer normalization
+the output of layer normalization will
+subsequently be the input of the fully
+connected network
+the fully connected network also has a
+residual architecture
+so we will sum the input of the fully
+connected network
+and the output and make it residual this
+new output is finally
+the output of a block of a transformer
+encoder
+there is one more thing that i missed
+after the fully connected network
+finishes the residual operation
+it's not over yet you have to take the
+result of the residual
+and do layer normalization again we have
+done it once here
+here we have to do it again to get the
+output block
+of a residual network so this is quite
+complicated
+so the illustration we see here is
+actually the things we just talked about
+first you have self-attention actually
+in the input
+there's additional positional encoding
+we have already said that
+if you only use self-attention you have
+no unknown information
+so you need to add positional
+information in this picture
+there is a special drawing of positional
+information
+this piece here has multi-head attention
+this is the block of self-attention
+there is a special emphasis here
+indicating that it's the multi-head
+self-attention
+what does add and norm mean here it is
+residual plus layer normalization
+we just said that self-attention adds a
+residual connection
+then it uses a layer normalization add
+and norm in this picture here
+means residual plus layer norm
+next we go through the feed forward
+network
+fc's feed forward network later do add
+and norm again
+do it again with residual and layer norm
+that is the output of a block
+then this block will repeat n times
+this complicated block will be used in a
+very important model
+bert we will later discuss it bird is
+actually
+the encoder of the transformer now
+your heart must be confused why is the
+encoder of the transformer
+designed in this way actually it does
+not have to be designed like this
+for the network architecture of this
+encoder and the way it is designed now
+i teach them according to the original
+paper but the design of the original
+paper does not mean it is the best
+the most optimal design for example
+there is an article called
+on layer normalization in the
+transformer architecture
+the question it asks is why layer
+normalization is placed there
+why we do residual first then do layer
+normalization
+can layer normalization be put in the
+input of each block
+in other words after you do residual you
+do layer normalization
+then you add it up you can see that the
+picture on the left
+is the original transformer the picture
+on the right is the transformer
+after changing the order after changing
+the order the result will be better
+this means the original transformer
+architecture
+is not the most optimal design you can
+always think about whether
+there is a better way to design here's
+another question
+why is layer norm why not something else
+why not batch normalization
+maybe this paper can answer your
+question this paper is power norm
+rethinking batch normalization in
+transformers
+it first tells you why batch
+normalization
+is not as good as layer normalization
+why in transformers
+batch normalization is not as good as
+layer normalization
+next it talks about the power
+normalization it proposes
+it sounds very powerful once you hear it
+it can be better than layer
+normalization
+and the performance is the same or even
+better

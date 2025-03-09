@@ -1,0 +1,1670 @@
+Hello everyone.
+Let's have a class.
+Okay, in the next one hour,
+we are going to talk about the Decoder.
+In the course two weeks ago,
+we have already talked about the Encoder.
+In the next one hour,
+we are going to talk about the Decoder.
+There are two kinds of decoders.
+I'll spend more time
+introducing the common one later.
+The common one
+is called Autoregressive Decoder.
+How does this
+Autoregressive Decoder work?
+We will use speech recognition
+or machine translation used in homework
+as examples to explain it to you.
+The mechanism of these two tasks are the same.
+The difference between these two tasks
+is their inputs and outputs
+How does speech recognition work?
+Speech recognition, as you know,
+is to input a voice
+an output a string of text.
+You will input a piece of voice to the Encoder.
+For example, you say "Machine learning" in Chinese
+to the machine.
+The Machine receives a audio signal
+and put it into the Encoder.
+What will the output be?
+The output will become a row of vector.
+We spent a lot of time talking about the Encoder last week
+What kind of content is in the Encoder?
+It's very complicated.
+Forget it if you do not remember.
+You should only remember that what the Encoder does
+is to input a vector Sequence
+and output another vector sequence.
+Next, it's the decoder's
+turn to operate.
+What Decoder has to do is generating an output sequence.
+The Decoder generates the result of speech recognition.
+How does the Decoder produce this speech recognition result.
+What the Decoder does is to read
+the output of the Encoder first.
+As for how the Decoder reads them,
+we will talk about it later in class.
+You can first assume that somehow there is some way
+to put the outputs from the Encoder into the Decoder.
+We will deal with this step later.
+How does the Decoder generate a word sequence?
+The output of the speech recognition machine is a word sequence.
+How does the Decoder generate a word sequence?
+First of all,
+you have to give it a special symbol.
+This special symbol
+represents the beginning.
+In the teaching assistants' slide,
+it is written as Begin Of Sentence.
+The abbreviation is BOS.
+I am afraid that you do not know what BOS is
+so I write it out clearly.
+It means the beginning.
+It means Begin.
+Then this is a special token.
+You can add this special token
+to your lexicon.
+Lexicon defines what words the Decoder might generate.
+Add this special symbol.
+Add this special word.
+This symbol or this word
+represents the beginning.
+Represent the beginning of the sentence.
+Okay, so the Decoder
+has this special symbol.
+In the machine learning community,
+suppose you want to deal with NLP problems
+Each token can be represented
+by a one-hot Vector
+The one-hot vector consists of zeros in all dimensions
+except for a single 1 in one of the dimensions.
+BEGIN is also represented by a one-hot vector
+One of the dimension is filled with 1
+and other dimensions are filled with 0.
+Okay Next, the Decoder
+will generate a vector.
+What's in this vector?
+What's in this Vector?
+The length of this vector
+is very long.
+Its length is the same as
+the size of your vocabulary.
+What does the vocabulary mean?
+You have to decide
+what the output unit of your Decoder is first.
+Suppose what we are doing today is Chinese speech recognition.
+The output of our Decoder is Chinese.
+The size of your Vocabulary may be
+the number of Chinese square characters.
+How many Chinese square characters are there?
+Different dictionaries may
+give you different numbers.
+There are about two or three thousand
+Chinese square characters in common use.
+The ordinary people may recognize
+about four to five thousand characters.
+Then the rest are rare characters.
+You might not know how to pronounce it when you see it.
+You can't even write it out.
+So just consider
+what Chinese square characters
+do you want your Decoder to output.
+You just list them here.
+For example,
+If you want to make your Decoder output
+the common 3000 Chinese characters.
+List them in the lexicon.
+Decoders of different languages don’t
+necessarily output different units.
+It depends on your understanding of that language.
+For example, in English,
+you can choose to output letters from A to Z.
+Output the English letters.
+You might think that the letter unit is too small.
+Someone may choose to output English words.
+English words are separated by blanks
+But if you use words as the output,
+there are too many.
+So you will find that
+in the slide from the teaching assistant,
+the teaching assistant said that he used subword as English units.
+There are some ways to separate
+the prefix and root of the word.
+Take the prefix and root as the unit.
+I think it’s relatively simple
+if it’s in the Chinese scenario.
+Usually, you may use the
+Chinese square character as the unit.
+Then in this vector,
+the length of this vector
+is the same as the numbers of the square characters in Chinese.
+The same as the numbers of square characters
+you want the machine to output.
+Then every Chinese character
+will correspond to a value.
+A softmax function is usually passed through
+before generating this vector.
+Just like doing classification.
+Before we get the final output for classification
+we will pass the output through a softmax function.
+After passing through a Softmax function
+the score in this vector
+will be a distribution.
+That is,
+the values in this
+vector will add up
+to 1 for sure.
+After getting this vector,
+it is not the final output result.
+This vector will give each Chinese character a score.
+The Chinese character with the highest score
+is the final output.
+In this example
+Chinese character "ji" has the highest score
+So "ji" is regarded as
+the first output of this Decoder
+Next,
+you treat "ji" as the new input of the decoder.
+Originally, the input of the decoder
+only has the special symbol, "BEGIN".
+Now besides "BEGIN",
+there is also ji as its input.
+For "ji",
+it is expressed as a one-hot vector
+and represented as the decoder's input.
+So the decoder now has two inputs.
+One is the "BEGIN" symbol.
+The other one is ji.
+Based on these two inputs,
+it will get an output.
+It outputs a blue vector.
+According to this blue vector's score
+for each Chinese word,
+we will decide what the second output is.
+Which word gets the highest score
+is the output.
+Assume that "qi" has the highest score,
+then "qi" is the output.
+The decoder will use "qi" as the input.
+Now the decoder sees "BEGIN",
+"ji" and "qi".
+Next,
+it has to decide what to output next.
+It may then output
+"hsueh".
+This process continues repeatedly.
+After the machine inputs "hsueh".
+"hsueh" is used as the input again.
+So now the decode sees
+"BEGIN", "ji", "qi", and "hsueh".
+The encoder here also has input.
+We'll later discuss that for the encoder's input
+and how the decoder handles it.
+So the decoder sees the input from the encoder.
+It sees "ji", "qi", and "hsueh".
+Next, it decides
+to output "xi".
+It will output a vector.
+In this vector,
+The Chinese word "xi" has the highest score.
+So it outputs "xi".
+Then this process
+continues repeatedly.
+There is a key point here.
+We especially mark it with a red dotted line.
+In other words, the input seen by the decoder
+is its own output
+at the previous time.
+The decoder will use its own output
+as the next input.
+The decoder will use its own output
+as the next input.
+So when our decoder is generating a sentence,
+it may actually see the wrong thing
+because what it sees is its own output.
+If today, the decoder has a speech recognition error.
+For example, it misidentifies qi(器)
+as qi(氣),
+then the decoder will see the wrong recognition result.
+It still has to find a way to produce what it wants to produce
+based on the wrong identification result
+and expects that it is the correct output.
+Then you might think that
+we let the decoder see the wrong input.
+We let the decoder see the wrong input produced by itself
+and then feed it into itself.
+Will it cause a problem?
+Will it cause the error propagation problem?
+The so-called error propagation problem is that
+one wrong step can cause every following step wrong.
+Here,
+if you accidentally write qi(器)
+as qi(氣),
+will the whole sentence be wrong?
+Is it possible that there is no way to generate the correct vocabulary anymore?
+Yes, it's possible.
+Later,
+we will talk about
+how to deal with this problem at the end.
+Now,
+we ignore this problem
+and continue.
+Ok, then we
+take a look at this decoder.
+What does its internal structure look like?
+Here we
+temporarily omit the encoder part.
+In the transformer,
+the structure of the decoder
+looks like this.
+It's a bit complicated.
+It's slightly more complicated than the encoder.
+Let’s put the encoder and the decoder together now
+and compare the differences between them.
+Then you will find that
+if we hide
+the middle part of the decoder,
+then the encoder and the decoder
+won't have a big difference.
+Look at the encoder here.
+Multi-Head Attention.
+Then Add and Norm.
+Feed Forward.
+Add and Norm.
+We repeat it N times.
+The decoder is actually the same
+when we hide the middle part.
+We will later talk about
+what's done in this hidden part.
+But when we hide the middle part,
+the decoder is also the same as the encoder.
+There is a Multi-Head Attention.
+Add and Norm.
+Then Feed Forward.
+Then Add and Norm.
+So for the encoder and the decoder,
+actually, there is no very big difference
+except for the difference in the middle.
+Except for the hidden part,
+the encoder and the decoder are the same.
+In the end,
+We may have another softmax function
+so that its output becomes a probability.
+There is a slight difference here.
+On the decoder's side,
+a mask is added to multi-head attention
+in this block.
+What does this masked mean?
+The meaning of the masked is that
+this is our original self-attention.
+Input is a row of vectors.
+Output is another row of vectors.
+For each output of this row of vectors,
+it makes the decision after
+reading the complete input.
+So when outputting b1,
+it is actually based on all the information from a1 to a4
+to output b1.
+When we transform self-attention
+into masked attention,
+what's the difference?
+The difference is that
+now we can no longer look at the right part.
+That is, when b1 is generated,
+we can only consider the information of a1.
+You can no longer consider a2 a3 a4.
+When b2 is generated,
+you can only consider the information of a1 and a2.
+You can no longer consider the information of a3 and a4.
+When b3 is generated,
+you can't consider the information of a4.
+When b4 is generated,
+you can use the entire input sequence information.
+This is masked self-attention.
+To be more specific,
+what you do is like this.
+When we want to generate b2,
+We only take
+the query in the second position
+and the key in the first position,
+and the key in the second position
+to calculate attention.
+For the third position and the fourth position,
+we just ignore it
+and don't calculate attention.
+We ignore the right-hand side of a2 and
+only consider a1, a2,
+q1, q2,
+k1, and k2.
+q2 only calculates Attention with k1 and k2.
+And we only calculate the weighted sum of v1 and v2 at the end.
+Then when we output this b2,
+it only considers a1 and a2
+but not a3 and a4.
+So why is it like this?
+Why do we need it to be masked?
+This is actually very intuitive.
+Well,
+think about how our decoder works at the beginning.
+It outputs one element at a time.
+Its output is produced one by one.
+So a1 is produced first, then a2,
+then a3, and then a4.
+This is different from the original Self-Attention.
+In the original Self-Attention,
+a1 and a4 are input into your model all at once.
+When we talked about encoder,
+it input a1 and a4
+all at once.
+But for a decoder,
+there has to be a1 first before a2,
+then a3, then a4.
+So actually,
+when you have a2
+and want to calculate b2,
+you don't have a3 and a4.
+So you have no way to take a3 and a4 into account at all.
+That's why
+on the image of the decoder,
+transformer’s original paper emphasizes
+that it's not the usual Attention.
+This is a Masked Self-Attention.
+It just wants you to know
+that decoder's tokens
+are produced one by one.
+So it can only consider the things on its left.
+It has no way to consider the things on its right.
+Okay, to this point,
+we talked about
+how the decoder works.
+But here,
+there is a very critical problem.
+The problem is
+that decoder must decide by itself
+the length of the output sequence.
+But what should the length of the output sequence be?
+We do not know.
+You can’t easily infer the length of the output sequence
+from the length of the input sequence.
+Just because
+the 4 vectors of input
+doesn't mean the output must be 4 vectors.
+In this example,
+the length of input and output are the same.
+But you should know that in real-life applications,
+this is not the case.
+The relationship between input and output length
+is very complicated.
+We expect the machine to learn by itself.
+When I give it an input sequence,
+it should know how long the output sequence should be.
+But using our current decoder's
+operating mechanism,
+the machine doesn't know when it should stop.
+After it outputs xi(習),
+It can continue to repeat the exact same process.
+Take xi(習)
+as input,
+then maybe the decoder
+will output guan(慣). (習慣 = habit)
+And it can
+just keep going
+until eternity.
+What does this remind me of?
+It reminds me of Tweet Solitaire.
+I don’t know if you know what this is.
+This is like a tradition
+on a forum called PTT.
+How does it work?
+A person will
+tweet a Chinese character first,
+for example, "超 (super)".
+Next,
+another netizen
+will push another character that
+can follow it.
+So you can generate a row of characters.
+Line them up and you get
+this gibberish.
+Don't know what it's talking about.
+This process
+can last for several months
+without stopping.
+I don't know why either.
+So how do you stop this process?
+How can I stop it?
+Someone has to take the risk to tweet a "斷 (break)".
+Tweet break
+and it will stop.
+So what we want the decoder to do
+is also the same.
+We want to make it output a break.
+So you have to prepare a special symbol.
+This symbol
+will act as the break.
+Here,
+we use "END" to represent this special symbol.
+So except for all the Chinese characters and
+"BEGIN",
+you also have to prepare a special symbol
+"END".
+Actually, in TA's program,
+the symbols for BEGIN and END,
+signifying the start and the break,
+are the same symbols.
+It's okay because
+BEGIN will only appear in the input
+and END will only appear in the output.
+So If you study carefully,
+you will find that END and BEGIN
+are actually the same symbols
+in TA's program.
+But if you want to use a different symbol,
+it's totally fine.
+No problem at all.
+Ok, so now,
+the decoder can output this END symbol,
+to signify a break.
+Now,
+we expect
+that after xi(習) is produced and
+becomes the input of decoder,
+the decoder must be able to output END.
+In other words,
+after taking xi(習) as input...
+After the decoder sees the embedding output by encoder:
+BEGIN,
+ji(機), qi(器), hsueh(學), and xi(習).
+After seeing this information, it needs to know
+that the process of voice recognition is over.
+There's no need to generate more characters.
+In its generated vector,
+the probability of END,
+the break symbol,
+must be the greatest
+in order for END to be output.
+Then, the whole process of
+decoder generating sequences
+will be over.
+Ok, so this is
+the way
+Autoregressive Decoder works.
+Next,
+we use two slides
+to briefly talk about
+Non-Autoregressive Model.
+Non-Autoregressive Model is
+usually abbreviated to NAT.
+So sometimes the Autoregressive Model
+is abbreviated to AT.
+How does the non-autoregressive model work?
+For the autoregressive model,
+given BEGIN,
+it will output w1.
+Then we use w1 as input
+and the model will output w2.
+This process repeats until the model output END.
+For NAT,
+it isn't like this.
+Suppose we want to generate some sentences in Chinese,
+it does not generate one word each time.
+Instead, it generates the entire sentence at once.
+How can we generate the entire sentence at once?
+The input of the NAT decoder
+may be a whole row of BEGIN tokens.
+You just use a bunch of BEGIN tokens as the model input
+and make it generate a row of tokens at a time.
+For example,
+if you use 4 BEGIN tokens as the input,
+the model will
+generates 4 Chinese characters.
+And it's done.
+It only takes one step
+to generate a whole sentence.
+Here you may ask a question.
+Didn’t I just say that the model doesn’t know
+how many tokens should it output?
+How do we know
+how many BEGIN should we put in?
+Yes, there is no way to know this.
+There is no way to know directly.
+So,
+there are a few common solutions.
+For example,
+You can train another classifier,
+whose input is the same as the encoder.
+.
+What about the output?
+Output is a number.
+This number represents the length that the decoder should output.
+So you just train another classifier.
+This classifier
+use encoder's input as its input.
+Then,
+it will output a number.
+.
+For example, it output 4,
+After that,
+NAT decoder
+will receive 4 BEGIN tokens
+as its input.
+Then it generates 4 Chinese characters.
+This is a possible solution.
+Another possible solution is
+You don't have to care about the input length.
+Just give it a bunch of BEGIN tokens.
+Suppose that
+the output length
+is always shorter than 300.
+You just set an upper bound.
+Then,
+you just use 300 BEGIN as the input,
+and it will output 300 words.
+Then,
+you should check
+the location of END
+in the output sequence.
+Afterwards, we ignore
+those tokens on the right hand side of END.
+Then we done.
+This is another possible solution
+for NAT decoder.
+What are the benefits
+of NAT decoder?
+The first benefit is
+Parallelization.
+For AT decoder,
+it output tokens one by one.
+.
+Suppose you want to generate a sentence with 100 words,
+you need to do decode 100 times.
+But this is not the case for the NAT decoder.
+Regardless of the length,
+it generate a whole sentence in one step.
+So,
+NAT decoder is much faster than AT decoder.
+.
+The idea of ​​this NAT decoder is proposed
+after the invention of transformers
+and the self-attention mechanism.
+.
+Because in the past
+when we used LSTM or RNN,
+even if we give the model a row of BEGIN,
+it still has no way to generate the whole sequence at once.
+It can only generate tokens one by one.
+So before the invention of self-attention,
+nobody wants to
+use NAT decoder.
+.
+But since we have self-attention,
+NAT decoder
+has become a popular research topic.
+Another advantage of the NAT decoder is that
+you can control the length of its output well.
+How to say?
+Take speech synthesis as an example.
+Actually,
+NAT decoder is a very common model
+in speech synthesis.
+Nowadays,
+speech synthesis can be realized
+by a sequence to sequence model.
+The most famous model
+may be Tacotron.
+It's an AT decoder.
+While there is another model called FastSpeech,
+which uses the NAT decoder.
+The advantage of NAT decoder is that
+you can control the output length.
+As we have discussed just now,
+How to decide the output length of NAT decoder?
+You may have a classifier
+to determine the output length of the NAT decoder.
+If you are doing speech synthesis,
+suppose you want to make your system speak faster,
+then,
+you can divide the output of the classifier by two.
+It speaks two times faster.
+On the contrary, if you want the model to speak slower,
+you can double the output length.
+.
+Your decoder
+will speak two times slower.
+So, if you have this kind of NAT decoder
+and you have explicitly
+control the output length simultaneously,
+You have a better chance to control
+the output length of your decoder.
+You can apply them in many fields.
+Why does NAT decoder
+becomes a popular research topic recently?
+Although NAT decoder seems to have all kinds of power ostensibly,
+especially for the parallelization,
+the biggest disadvantage is
+its performance.
+.
+It is usually worse than AT decoder.
+So there are many papers trying to
+boost the performance of NAT decoder.
+They try to make it as good as AT decoder.
+But if you want to make the NAT decoder
+be as good as AT decoder,
+you have to use a lot of tricks.
+For a normal AT decoder,
+NAT decoder requires a lot of effort
+to be comparable to it.
+Why is the performance of NAT decoder bad?
+There is an issue which we won’t talk about in detail today.
+It's called multi-modality.
+If you want to know more about NAT,
+the supplementary content
+provided by teaching assistants is here.
+.
+NAT is also a profound subject.
+The teaching assistant gave you a rough description of NAT
+for an hour and a half.
+.
+So this is also a big topic
+we can't talk in detail about it today.
+Just tell you
+there is NAT task in the world.
+Then we will talk about
+how do encoder and decoder interact with each other.
+.
+Which means we are going to talk about
+the part we deliberately masked.
+If you observe this part carefully
+this part is called cross-attention.
+It is the bridge between encoder and decoder.
+In this part
+you will find that there are two inputs from the encoder.
+Encoder provides two arrows
+and decoder provides an arrow.
+Decoder can read the output of encoder
+from the two arrows on the left.
+How does this module actually work?
+We will actually show you the process of its operation.
+Okay, this is your encoder.
+Input a row of vectors
+and output a row of vectors.
+We call it a1 a2 a3.
+Next, it's your decoder.
+The decoder will take a special token BEGIN at begin.
+.
+After reading the BEGIN special token,
+you may go through self-attention.
+This is a masked self-attention.
+Then get a vector.
+Even though it’s a masked self-attention,
+the length of output vectors
+is still the same as the input vectors.
+So input a vector and output a vector.
+Then make a transform for output vector
+by multiplying a matrix.
+Get a query called q.
+The a1, a2, and a3 here
+also, generate key
+k1 k2 k3.
+Then, multiply q with k1, k2, and k3 respectively
+to calculate the attention score.
+Then, obtain α1 α2 α3.
+Of course, you may also do softmax
+for a little bit of normalization.
+So I add '
+It means it may have done normalization.
+Next, multiply α1, α2, and α3
+with v1, v2, and v3
+the weighted sum of them denote as v.
+The vector v
+will pass through the fully-connected layer
+to do the next processing.
+In this step, q comes from decoder
+k and v come from encoder.
+This step is called cross-attention.
+So decoder extracts the information by generating q
+to interact with the encoder.
+The information is the input
+for the fully-connected network of decoder.
+This is how cross-attention works.
+Now, we generated the first Chinese character.
+When we want to generate the next Chinese character
+the operation is the same.
+Enter BEGIN and first Chinese character.
+Generate a vector.
+The vector is transformed by multiplying a matrix
+and obtain q'.
+Get a query q.
+Again, we use q to multiply with k1, k2, and k3
+to calculate the attention score.
+Again, we multiply attention score with v1, v2, and v3
+then add them up to get v'.
+Pass through it to the next fully-connected network.
+This is the operation process of cross-attention.
+.
+There is actual cross-attention
+in the literature
+showing its effectiveness.
+But I want to explain a little bit.
+This picture is not from transformer.
+The title of this paper is called
+Listen, attend and spell.
+This is the earlier successful article that using sequence to sequence model
+on speech recognition.
+It was published in ICASSP 2016.
+I remember ICASSP 2016 was held in Shanghai.
+I also heard this paper report.
+There were huge crowds of people then.
+Everyone thinks it was amazing that
+sequence to sequence model
+can do voice recognition
+and the result only has a little bit gap
+compared with state of the art method at that time.
+The results in this paper show that
+sequence to sequence model still
+lose the state of the art method
+which was the best speech recognition system at the time.
+But there is just a little gap.
+So let everyone think that
+it seems potential for sequence to sequence model
+to be used in speech recognition.
+So it’s not actually the transformer.
+At that time, the encoder and decoder were both LSTM.
+But the cross-attention mechanism
+was already used at that time.
+So, there was already a mechanism
+like cross-attention before transformer.
+There was just no self-attention mechanism.
+So cross-attention was published first
+and self-attention was published later.
+At that time,
+if you use sequence to sequence model,
+I don’t know why
+the paper’s title must contain three verbs.
+There must contain three verbs at that time
+to represent that
+you use a sequence to sequence model.
+So, like this one, listen, attend and spell
+shows that the machine should listen to the sound
+and then do attention, a cross-attention.
+Finally, spell out what it listens.
+Then I show this picture to you
+make it easier to imagine
+how the cross-attention work.
+Okay, this segment is a sound signal.
+It is the input of the machine.
+When the sound signal is input to this Encoder
+it is represented by a string of vectors.
+A string of vectors.
+This is time.
+Then there are vectors row by row.
+Then this row
+is the output of the decoder.
+The decoder only spit one English letter at a time.
+So it will spit h, o, and w sequentially
+to spell "how".
+If it has reached the boundary of a vocabulary
+it will automatically spit out blanks.
+Blank is a special token.
+So the machine may output blank
+means that the vocabulary is over
+and needs to spell new vocabulary.
+The next output are m, u, c, h
+and then a blank again.
+Then output w.
+This sentence is a tongue twister in English.
+The complete sentence of this sentence is
+how much wood could a woodchuck chuck.
+It doesn't matter what the content is.
+It's only a tongue twister.
+That's amazing
+The machine can output one character at a time
+and can generate the correct vocabulary.
+Okay, what does the value here mean?
+The value is the score of attention.
+So when you want to generate this h,
+before generating this h
+the decoder will do attention
+to the output of the encoder.
+So it attends in this place and produces h.
+Then attend this place to produces o.
+Attend this place to produces w.
+The darker the color here means
+that the Attention score
+α greater.
+So you will find that when it produces to h,
+it hears the sound of h in this place, so it produces h.
+Then move a little bit to the right to produce o.
+Move a little bit to the right to produce w.
+After that,
+attend here to generate SPACE token.
+Then attend here to generate m.
+You will see the weight of the Attention
+moves from the top left to the bottom right.
+It's very similar to the mechanism that you think Attention should operate.
+Because every time we generate a vocabulary here,
+the audio signal we want to focus on
+should be from the left to the right.
+So if you look at Model Attention,
+it may also be from the top left.
+Its highest score
+may also be from the top left to the bottom right.
+Speaking of that, maybe some students will ask,
+the Encoder has many layers,
+and Decoder also has many layers.
+From the previous explanation, it sounds like
+no matter which layer of this Decoder is,
+it takes the output of the last layer of the Encoder.
+Yes.
+The implementation in the original paper is like this.
+Does that have to be like this?
+No, it doesn't have to be this way.
+You can always bring some new ideas on your own.
+So here I am quoting a paper to tell you
+some people try different ways of Cross Attention.
+The encoder has many layers here,
+and Decoder has many layers, too.
+Why does every layer of the Decoder have to take
+the output of the last layer of the encoder?
+Can there be a variety of different connection methods?
+This can be a research question to study at all.
+Okay, in the end,
+we are going to talk about training.
+We have already talked about Encoder,
+Decoder,
+and how Encoder and Decoder interact.
+We have already.
+You have clearly stated that how to
+get the final output from an input sequence.
+Then we will move forward to the training part.
+We haven’t talked about the training part yet.
+What we've talked about is
+supposing that after your model is well-trained,
+how does it do testing,
+and how does it do inference.
+The inference is indeed testing.
+So when I say inference,
+I mean testing.
+They are the same.
+So how to do training?
+Next, I will talk about how to do.
+If it is for speech recognition,
+then you need to have training data.
+What kind of training data do you need?
+You have to collect a lot of audio signals.
+Every audio signal must be heard by the servitor
+to type out what the corresponding vocabulary is.
+Servitor listens to this passage which is machine learning,
+then he types out the words, machine learning.
+So you know that your Transformer
+should learn to output machine learning
+when hearing this sound signal.
+How can machines learn to do this?
+We already know that when the input is this audio signal,
+the first output word should be ji(機).
+So, when we put BEGIN token
+to this Decoder,
+its first output word should be as closer to ji(機) as possible.
+What is the closer the better means?
+The word ji(機) will be represented as a one-hot vector.
+In this vector,
+only the dimension corresponding to the ji(機) is 1.
+All the others are 0.
+This is the ground truth.
+Then the output of our Decoder
+is a distribution,
+a probability distribution.
+We hope that this distribution
+is closer to this one-hot vector.
+So you will calculate the Cross Entropy
+between ground truth and this distribution.
+Then we hope that the smaller value of
+this Cross Entropy is, the better it is.
+That's all.
+You may find that this task is very similar to classification.
+Yes, it is very similar to classification.
+The TA mentioned this when he explained the homework just now.
+You can think of it as every time Decoder
+generates a Chinese character,
+it does a classification task.
+There are 4,000 Chinese characters.
+Therefore, that is to do the classification task with 4,000 categories.
+Okay so actually it looks like this during training.
+We already know that the output should be the four words of machine learning.
+Then you tell the machine,
+tell the Decoder,
+the first output, the second output,
+the third output, and the fourth output
+should be the
+one-hot vectors of these four Chinese characters.
+We want the outputs to be
+closer to the one-hot vector of these four words the better.
+During training,
+every output will have a Cross Entropy.
+Every output and one-hot vector,
+the ground truth corresponding to it, has a Cross Entropy.
+Have a Cross Entropy.
+We want the sum of all Cross Entropy to be lower.
+The lower the better.
+So here are four classification tasks.
+We hope that the Cross Entropy sum of
+these classification tasks is as low as possible.
+But don't forget there is an
+END token.
+So, suppose this sentence
+has four Chinese characters.
+But when you are training,
+what you want the Decoder to output is not only these four Chinese characters.
+You have to ask it to remember that after these four Chinese characters,
+output this special token END.
+So you have to tell your Decoder that the cross entropy of
+the last output vector at the fifth position
+and the one-hot vector of END token,
+should be as low as possible.
+Then this is the Decoder training.
+You give ground truth,
+the correct answer, to it.
+Hope that the output of the Decoder is as close to the ground truth as possible.
+There is something worthy of our attention.
+The thing is like this.
+Look at the input of Decoder,
+which is the ground truth.
+We will show the Decoder
+the ground truth during training.
+That is, we will tell it that
+given BEGIN and ji(機),
+it should output qi(器).
+Given BEGIN, ji(機), and qi(器), it should output hsueh(學).
+Given BEGIN, ji(機), qi(器), and hsueh(學), it should output xi(習).
+Given BEGIN, ji(機), qi(器), hsueh(學), and xi(習),
+it should output END.
+During Decoder training,
+we will give it the ground truth.
+This is called Teacher Forcing.
+I am not
+sure why it’s called Teacher Forcing.
+It seems like the teacher will force you to do something.
+Doesn't sound great.
+But this skill is called Teacher Forcing.
+That is, we put the ground truth
+as the input of the Decoder.
+Then you will have a problem right now,
+during this training
+the Decoder has peeked at the ground truth.
+However, when testing,
+obviously there is no ground truth to show to the Decoder.
+I also emphasized that when we using this model
+for inference,
+what the Decoder sees is its input.
+There is a mismatch.
+Later, We will have a slide of explanations about
+the possible solutions.
+What's next
+is to talk about training Transformer.
+There are some tips for
+training Transformer
+or sequence to sequence model.
+It’s not limited to Transformer.
+The first tip is the copy mechanism.
+For many tasks
+in our discussion,
+we make the Decoder generate its own output.
+But for many tasks,
+maybe the Decoder does not need to create the output by itself.
+What it needs to do
+is to copy something from the input.
+Is there any way we can make the Decoder
+copy something from the input?
+In fact, there is a way.
+Which tasks can use the copy mechanism?
+The chatbot is an example.
+For example,
+people say "Hello, I'm Kulolo" to the machine.
+Kulolo is the leader of Phantom Troupe.
+It doesn’t matter who he is.
+I haven't seen him for a long time.
+"I am Kulolo."
+What should the machine reply?
+The machine should answer
+"Hi Kulolo, nice to meet you".
+For the machine,
+it is not necessary to create the term "Kulolo".
+This must be a very weird word for machines,
+so it may be difficult.
+It may not appear in the training data even once,
+so it is unlikely to correctly generate this vocabulary
+or this sentence.
+But suppose when the machine is learning,
+what it learned is not the three Chinese characters of "Kulolo".
+It learns when it sees the input of "I am someone",
+it just copy "someone"
+no matter what it is.
+Training of such a machine will be easier.
+It is more likely to get the correct result.
+So, copying for dialogue
+is a required skill and ability.
+Let me give another example.
+Gon can't use his "Nen".
+He can't use his "Nen".
+You might answer
+What do you mean by not being able to use "Nen".
+For the machine,
+repeating this paragraph that it doesn't understand
+doesn’t need to create this paragraph from scratch.
+It may learn from users,
+from human input to copy some vocabulary as its output.
+When doing a summary,
+you may need skills like copying.
+The so-called summary is that
+you have to train a model,
+and this model will read an article,
+and then generate a summary of this article.
+There is a way to do this task.
+You just collect a lot of articles,
+and every article has a summary written by someone.
+You train a
+sequence-to-sequence model
+It's done.
+To do such a task,
+you can’t do it with a little data.
+Some students collected tens of thousands of articles
+then train a
+sequence-to-sequence model
+and found that the result is a bit poor.
+The students come and ask me why.
+I'll tell you that
+training a model
+to speak reasonable sentences
+usually needs millions of articles.
+So, if you have a million articles,
+and those articles have human-labeled abstracts,
+or you put the title of the article
+as an abstract,
+which spend less manpower to label,
+then you can train a model
+to help you read an article
+and make a summary.
+We know that when doing a summary,
+sometimes a lot of vocabulary
+is directly copied
+from the original article.
+Right?
+When I was young, the teacher asked us to write
+a summary of the text in the Chinese class.
+You didn’t create your vocabulary.
+You just find some sentences from this text
+and re-write them.
+In fact, it becomes a summary.
+So, for the task of summary,
+copying some information from the article
+may be a very critical ability.
+Does the sequence-to-sequence model
+has the ability to do this?
+In short, yes.
+We won't go into details.
+The earliest model with the ability to copy things from the input
+is called Pointer Network.
+I've talked about it in class in the past.
+I put the video here for your reference.
+There is a deformation later
+called Copy Network.
+You can take a look at this paper.
+Copy Mechanism
+in Sequence-to-Sequence.
+Any Questions?
+See how the sequence-to-sequence model
+copies things from input to output.
+Okay, the sequence-to-sequence model
+is sometimes known as a black box.
+Sometimes you don't know
+what it learns.
+Sometimes it will make very low-level mistakes.
+What kind of low-level mistake it is?
+Here is an example of a real low-level error.
+The example given here is speech synthesis.
+For speech synthesis,
+you can just train
+a sequence-to-sequence model.
+Everyone is familiar with
+the sequence-to-sequence model.
+Transformer is an example.
+You take it out.
+For the input,
+you collect a lot of voices
+and correspondence between text and audio signals.
+Collect a lot of text
+and audio signal correspondence.
+Then, tell your
+sequence-to-sequence model that
+when this Chinese sentences are input,
+you need to output this sound.
+And then, end of the story.
+Just train,
+then the machine can learn to do speech synthesis.
+So what is the result of the method like this?
+Well, not bad.
+For example, I asked the machine to talk "fah chai" 4 times.
+Let's see how it speaks.
+The output of the machine is like this.
+"fah chai fah chai fah chai fah chai".
+I found it amazing that
+I entered the same vocabulary "fah chai"
+for 4 times,
+The machine actually output with prosody.
+You may ask why it has prosody.
+Listen carefully.
+"fah chai fah chai fah chai fah chai".
+The tones of 4 "fah chai fah chai fah chai fah chai" are not the same.
+"fah chai fah chai fah chai fah chai".
+It has cadence and frustration.
+How did it learn?
+I don't know.
+It’s trained by itself and look like this.
+Then, you let it say "fah chai" 3 times.
+"Fah chai, fah chai, fah chai."
+It's also fine.
+Then, you let it say "fah chai" twice.
+"Fah chai, fah chai."
+It's also fine.
+Then, you let it say "fah chai" once.
+"Chai, chai, chai, chai."
+Why didn't it pronounce "Fah"?
+Why didn't it do?
+We still don't know the reason why it's like this.
+It's that your Sequence-to-Sequence Model
+sometimes will be trained
+to give inexplicable results.
+Maybe, in the training dataset,
+there is only few short sentences like this.
+So, the machine could not deal with it.
+We don't know how to deal with a very short sentence like this.
+You ask it to pronounce "fah chai."
+It omits "fah" and only says "chai."
+You dare to let it say "fah chai" 4 times.
+It's fine to repeat "fah chai" 4 times,
+but, when it comes to once,
+there is a problem.
+It's so weird.
+Of course, this example does not appear so often.
+This Sequence-to-Sequence,
+which the TTS learned from,
+is not as terrible as you think.
+To find such a terrible example like this takes time.
+It takes much time to find such a terrible example like this.
+But, it does exist.
+Ok! So, what should we do?
+One possible solution is below.
+Since we just found out that the machine missed words,
+there are some things in the input that is ignored.
+Can we force it
+to read through everything from the input?
+It's possible.
+This trick is called "Guided Attention."
+It’s useful for this kind of "Guided" tasks.
+I think it is most suitable
+for tasks like speech recognition and speech synthesis.
+Because for tasks like speech recognition,
+it's hard for you to accept the scenario below.
+You say a word.
+It is recognized, but
+with a section lost by the machine.
+Or, you enter a paragraph of text for speech synthesis.
+It is synthesized but with a section lost by the machine.
+It's hard to accept.
+If it's for other applications,
+for example, Chatbot
+or Summary,
+it may not be so strict
+Because, for a Chatbot,
+you input the sentence,
+and it just replies a sentence.
+Would it finish reading the whole sentence?
+You don't really care, somehow.
+You actually don't know,
+but for speech recognition and speech synthesis,
+"Guiding Attention"
+may be a relatively much important technology.
+What "Guiding Attention" is going to do is
+asking the machine to
+guide,
+or to lead this Attention process.
+When asking the machine to do Attention,
+there is a certain way.
+For example,
+for speech synthesis or speech recognition,
+the Attention we imagine
+should be from left to right.
+Fortunately, in this cases,
+we use the red curve
+to indicate the Attention score.
+The higher the score, the greater the value of Attention.
+Now, no matter it is
+doing speech recognition or speech synthesis.
+We take speech synthesis as an example.
+Then, your input is a string of text.
+Then, when you synthesize the voice,
+obviously it is read from left to right.
+So, the machine
+should first look at the leftmost input vocabulary to produce voice,
+and then it should look at the words in the middle to produce voice,
+and then it should look at the words in the right to produce voice.
+If you do speech synthesis today,
+and you find the attention of the machine
+is irregular,
+looking at the end first
+then the front,
+looking at the whole sentence indiscriminately,
+it is obviously that something goes wrong.
+Obviously,
+something is wrong,
+or something goes wrong.
+Obviously, this kind of Attention is problematic.
+When you do speech synthesis,
+you obviously can't get a good result.
+So, what "Guiding Attention" has to do is
+to force Attention to have a fixed appearance.
+Then, for this problem,
+if you already understand that,
+for problems like speech synthesis TTS,
+your Attention score
+and the position of Attention should be from left to right,
+why don't you put this limitation
+into your training
+to force the machine learning Attention
+from left to right.
+How should we do like this?
+I put some key words here
+to let everyone google it.
+For example, Monotonic Attention
+or Location-Aware Attention
+This part is also a big pit.
+I won't go into details
+and leave it to everyone to study.
+Well, there is another thing called
+"Beam Search."
+The term of "Beam Search",
+when the TAs are explaining the homework just now,
+is also mentioned.
+What is "Beam Search"?
+Let's take an example here.
+In this example, we assume that
+our current decoder
+can only generate two words.
+Let's assume that in this world,
+there are only two possible outputs.
+One is called "A", and the other is called "B."
+If there are only two words in the world, "A" and "B."
+Okay! For a decoder,
+what it should do is,
+every time at the first time step,
+to pick one from "A" and "B."
+After "A" is selected,
+it uses "A" as another input
+and picks one from "A" and "B."
+For example,
+it may choose "B" as input,
+and then pick one from "A" and "B."
+In the Process we just mentioned,
+every time decoder picks
+the one with the highest score, right?
+Do you remember that we always pick
+the maximum one?
+So, we assume the score of "A" is 0.6,
+and the score of "B" is 0.4.
+The decoder will output "A" for the first time.
+Then, we assume the score of "B" is 0.6,
+and the score of "A" is 0.4.
+The decoder will output "B"
+Alright!
+Then, we assume that "B" is used as input.
+Now, there are "A" and "B" for inputs.
+Then, next,
+the score of "A" is 0.4,
+and the score of "B" is 0.6.
+Then, decoder will pick "B" as output.
+So, the outputs are "A", "B" and "B."
+Looking for the token with the highest score every time like this,
+or looking for the word with the highest score every time
+as output is called
+"Greedy Decoding."
+However, is Greedy Decoding
+necessarily the better method?
+How about not choosing
+the token with the highest score at first?
+For example, even though B is 0.4 in the first step,
+we still choose B nonetheless.
+If we choose B,
+perhaps the possibility of the next B will greatly increase
+and rise to 0.9.
+And for the next three steps,
+the probabilities of B are also 0.9.
+When we compare the red route
+with the green route,
+we can see that even though we chose
+a slightly worse output in the first step,
+the overall outcome of the green route
+seems to be better than the red route.
+We didn't choose the optimal route in the first step,
+right?
+However, the result
+seems to be better.
+So, when we compare the red route
+with the green route,
+the first step of the red route
+seems to be optimal.
+However, the overall outcome is worse
+than the green route, whose first step
+doesn't seem optimal.
+So, should we actually choose the green route instead?
+Do you know what this reminds me of?
+This is just like pursuing a PhD.
+It is a turning point in your life,
+and many people face difficulties when deciding.
+If you choose to pursue it, you might go through a tough time,
+but it's ultimately better in the long run.
+If you choose not to pursue it and look for a job instead,
+you might make more money in the short term,
+but that might come at the cost of a better future.
+So, should you pursue a PhD
+or not?
+Well, since the PhD degrees
+in our school aren't really popular,
+I'll advertise them every now and then.
+Okay, back to the topic.
+How can we find
+the best route?
+Maybe we could
+list out every possibility.
+The problem is that we actually can't
+search all possible paths because
+there are too many choices for every turning point.
+Take Chinese for example.
+There are over 4000 Chinese characters.
+So, there are 4000 possible paths
+at every fork of this tree.
+After two or three steps,
+the number of total possible routes grows too large.
+What should we do, then?
+There is an algorithm called Beam Search that
+uses a more effective method
+to find an approximate solution.
+As the name suggests,
+the approximate solution
+is not the most accurate answer.
+This technique is called Beam Search,
+and you can search it up yourself.
+So, is Beam Search
+actually effective?
+The interesting thing is that
+it is sometimes useful
+and sometimes not so useful.
+Some researches have shown that
+Beam Search is completely useless.
+How come?
+For example, in this paper called
+"The Curious Case Of Neural Text Degeneration",
+the task they're trying to do is
+sentence completion.
+That is, the machine reads the first half of the sentence first
+and tries to fill out the second half
+of the sentence.
+You can give it the first half
+of a news article or story
+and watch it fill out the rest of it
+using nothing but
+its imagination and creativity.
+We can see that
+using Beam Search in this paper
+is quite problematic,
+and it is stated at the start of this paper.
+If we choose to
+use Beam Search to complete this task,
+the machine will keep on repeating the same words
+over and over again and fall into
+an infinite loop.
+If we choose to not use Beam Search
+and add some randomness to our decisions,
+the result may not be perfect,
+but at least the sentences look normal.
+So, what's interesting is that,
+for the decoder,
+sometimes it's better to not
+find the route with the highest score.
+You might feel a little confused at this point.
+Didn't we just show in the previous slide that
+we want to find the route with the highest score?
+Now, suddenly you're telling me that
+it’s not necessarily better to find the route with the highest score.
+What's going on?
+Well, it all comes down to
+the nature of the task.
+Let's assume a task
+that has a very clear answer to it.
+What does it mean to have a clear answer?
+For example,
+for the task of speech recognition,
+there is only one possible answer for each sentence,
+which is the text of that sentence.
+There is no grey area for that.
+In my opinion, Beam Search will usually be more helpful
+for these kinds of tasks.
+Then, what kinds of tasks
+are Beam Search not helpful for?
+When we need the machine to be a bit creative,
+Beam Search is relatively unhelpful.
+For example, the task of sentence completion.
+When the machine is given
+the first half of the story,
+there are endless possibilities for the second half.
+These kinds of tasks that require some creativity
+and have no definitive answers
+often require some randomness
+to be added in the decoder.
+There is another task
+that also requires some randomness in the decoder,
+which is the task of Text-to-Speech.
+Text-to-Speech, or TTS in short,
+is a very memorable task for me.
+Back then, when our lab was trying to
+do Text-to-Speech
+using the Sequence-To-Sequence model,
+we failed a lot of times
+and couldn't quite figure out why.
+One time, someone from Google came to visit
+our lab,
+and we asked about his opinion on this matter.
+He said,
+"Don't you know you have to add noise to the decoder
+when doing TTS?".
+It sounded absurd.
+This is very counterintuitive
+and quite unorthodox.
+We know that in the field of machine learning,
+we sometimes add noise during training.
+For example, we might add dropout during training.
+We haven’t covered dropout yet,
+so some of you might not know what it is.
+If you don't know what dropout is,
+imagine that we add some noise
+during the training phase.
+This way, the machine sees more diverse possibilities
+throughout the training phase.
+This will make the training process more robust
+and allows the machine to adapt to
+situations that it has not seen before.
+While this is common practice during training,
+adding noise during the testing phase is counterintuitive
+since intuitively speaking,
+that should make the result worse.
+But this is exactly the special part
+of TTS.
+During testing,
+it is better
+to add some noise beforehand
+to achieve better results.
+Sounds magical, isn't it?
+If we use the normal decoding method,
+the sound we obtain sounds like a machine gun.
+You might not be able to recognize that the sound origins from a human speaking.
+But adding some random factors during decoding
+results in better sound quality.
+This is a very interesting fact:
+randomness in decoders
+might improve the results!
+This is also consistent with an English proverb:
+"Accept that nothing is perfect.
+True beauty lies in the cracks of imperfection."
+In tasks such as TTS or Sentence Completion,
+the best result the Decoder can find
+might not correspond with the best result we found,
+and that's why
+adding some randomness
+can give better results.
+There is still another problem.
+Let's take our homework
+as an example.
+In our homework,
+the evaluation criterion is
+the BLEU Score.
+How is the BLEU Score measured?
+After the decoder generates a sentence,
+we take this sentence as a whole,
+and compare it with
+the correct answer
+to calculate the BLEU score.
+But we don't do that while training.
+During the training phase,
+each word is considered separately.
+Also,
+we are minimizing the Cross Entropy.
+The question is, can we really maximize BLEU score
+by minimizing Cross Entropy?
+Obviously not.
+Because these two are not the same.
+They might be a little related,
+but not much.
+After all, they are two different functions.
+So minimizing Cross Entropy
+does not necessarily maximize BLEU score.
+That's why we choose, in the sample code provided by TA,
+the model with the highest BLEU score
+as the best model
+but not the model
+with the smallest Cross Entropy.
+So the loss function for training
+is Cross Entropy,
+but the evaluation criterion
+is BLEU Score.
+So you should use BLEU Score
+for the validation set, right?
+Then some of you might ask:
+Why don't we optimize
+the BLEU Score during the training phase?
+Can we define
+the loss function as
+negative BLEU score
+and minimize the loss?
+Because if you can minimize
+negative BLEU Score,
+you can maximize BLEU score itself.
+But the reality is not that simple.
+Of course you can take BLEU Score
+as the optimization function
+which you hope to maximize.
+But the explicit formula of BLEU Score is very complicated.
+And even worse, it is not differentiable.
+If you treat it as the loss function,
+you don’t even know what to do.
+The reason we use Cross Entropy
+and calculate the contribution for each character separately
+is because this is the only thing we know how to do.
+On the other hand,
+the BLEU Score
+between two sentences
+is not even differentiable.
+Then what should we do?
+I’ll teach you a trick here.
+Whenever you encounter a problem
+that you can't solve by optimization,
+simply use RL.
+Thinking of the loss function, which you can't optimize,
+as RL's reward,
+and treat your Decoder as the Agent.
+Then you can try to solve the whole problem
+by Reinforcement Learning,
+then you might be able to solve the problem.
+Had anyone actually tried this?
+The answer is yes.
+I will list the reference here.
+Of course this is a difficult approach,
+and I don't recommended you to use this trick in your homework.
+Now let's talk about
+the topic I'd been mentioning repeatedly:
+the inconsistency between training and testing.
+While testing,
+the Decoder sees its own output.
+So it might encounter
+something wrong during testing.
+But the decoder receives completely correct answers
+while training.
+This inconsistency is called
+Exposure Bias.
+Since the Decoder had only seen
+correct answers while training,
+once it makes a mistake
+during testing,
+all the following steps
+are likely to be wrong.
+Because it has never seen a wrong answer,
+it will be very surprised when it sees a wrong answer,
+thus resulting in errors.
+Can we solve this problem?
+One possible way is
+to add something wrong to the input of Decoder.
+This method is very intuitive.
+You don’t give Decoder correct answers only.
+It will learn better
+if you give it some wrong answers occasionally.
+This trick is called
+Scheduled Sampling.
+It’s not the same as the Schedule Learning Rate
+that TA just told you.
+That one is totally different
+from this one.
+Scheduled Sampling
+is actually a very old technique.
+It first appeared in a paper
+15 years ago.
+At that time, Transformer didn't even exist.
+Scheduled Sampling had already been proposed
+when people are still using LSTM.
+But this technique
+actually harms
+Transformer's ability to parallelize.
+You can study the details by yourself.
+The point is,
+the originally proposed Scheduled Sampling for LSTMs
+for LSTMs
+and the Scheduled Sampling here
+for Transformers
+are two different tricks.
+I will put
+all the references here.
+Okay, we've finished discussing
+the Transformer and its various training techniques.
+We've talked about the Encoder
+and the Decoder,
+and the relationship between them.
+Also, we've talked about
+methods and tips for training.
+Okay,
+let's stop here for a while,
+and answer some questions if you have any.
+Any questions?
+Does any student online have questions?
+Good.
+If you don't have questions,
+let's take a break for 10 minutes.
+We will come back in 10 minutes.

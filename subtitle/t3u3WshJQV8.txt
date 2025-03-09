@@ -1,0 +1,844 @@
+Here is a quick introduction
+to the technique of batch normalization.
+You might remember that
+we mentioned that
+we could not directly change
+the shape of the error surface.
+If the error surface is very rugged,
+it is harder to train.
+Then can we level the surface directly
+to make it better to train?
+Batch normalization is one of the ideas
+of ​​leveling the surface.
+When we talk about optimization,
+I said that not to underestimate the problem of optimization
+in the beginning.
+Sometimes even if your error surface is convexed
+or it is the shape of a bowl,
+it is not necessarily easy to train.
+For example,
+suppose the slopes to loss of the two parameters
+are very different.
+The slope changes slightly
+in the direction of W1.
+The slope changes greatly in the direction of W2.
+If you use a fixed learning rate,
+you may have a hard time getting good results.
+That's why we said that
+you need an adaptive learning rate.
+You need to use advanced optimization methods
+such as Adam
+to get good results.
+Now let's look from another perspective,
+which is changing the rugged error surface directly.
+Can we get good results?
+The first question
+we have to ask is
+what made the slopes of W1 and W2
+differ so much?
+Where did it come from?
+Let's look at an example here.
+Suppose we have a very simple model;
+the input of the model is x1 and x2.
+The corresponding parameters of x1 and x2 are W1 and W2.
+It is a linear model
+with no activation function.
+y equals to
+W1 times x1 add W2 times x2 add b.
+The difference between y and y hat is e.
+The loss is the sum of all e
+in training data.
+Then you want to minimize your loss.
+What kind of situation will result in
+the hard-to-train error surface mentioned above?
+Let's take a look at this W1.
+How do we analyze the loss
+when there is a change in W1?
+When we made a small change to W1,
+for example, when a delta W1 is added,
+then the L will also have a change.
+What about the W1?
+When you change W1,
+you also change y,
+and when you change y, you also change e,
+then L is changed.
+So when W1 changes, L changes accordingly。
+When will the change of W1 have little effect on L?
+When does the change of W1
+have a little slope of the error surface?
+One possibility is when your input is small.
+Suppose the values ​​of x1 are very small.
+Assuming that the values of x1 are small
+in different training examples,
+and because x1 is directly multiplied by W1,
+if the values of x1 are very small,
+when there is a change in W1,
+the impact
+on y will be small.
+The impact on e will be also small.
+The impact on L will be also small.
+So, if the input numbers which will be multiplied by w₁
+are relatively small,
+then changes in w₁ will have a small influence on L.
+On the other hand,
+if the values of x₂ in the input data
+are all relatively large,
+then small variations of w₂
+may still have a large influence on y,
+because the variation of w₂
+will be multiplied by x₂,
+which has a large value.
+A great change in y
+produces a great change in e
+and a great change in L.
+So the error surface
+is steep
+in the direction of w₂
+compared to other directions.
+Let's conclude the discussion.
+We discovered that if the magnitude
+of some dimensions' values are large,
+while the values are small for other dimensions,
+then the error surface
+has a bad behavior
+in the sense that
+the magnitude of the slope
+varies a lot between different directions.
+How can we deal with this problem?
+Is it possible for us to modify the feature vectors
+such that every dimension's values
+lie in the same range?
+If we do this correctly,
+we may be able to create
+a better error surface
+to make training easier.
+But how can we squeeze every dimension
+into the same range?
+Actually, there are many different ways to do this.
+Usually,
+we call all those methods
+"Feature Normalization".
+The method I'm going to talk about
+is only one plausible way of Feature Normalization.
+It is not the entirety of Feature Normalization.
+Let's start.
+Let's call the feature vectors in the training data
+x₁, x₂, etc.
+Also, label the elements in a vector with upper indices.
+For example, x₁¹
+stands for the first element
+of the first vector,
+x₁²
+stands for the second element
+of the first vector,
+etc.
+For the first dimension,
+collect every feature vector's
+first element
+and calculate its mean.
+Do the same
+for every dimension.
+The notation mᵢ stands for
+the mean of the i-th dimension.
+Also, calculate the standard deviation
+of every dimension,
+and represent the i-th dimension's standard deviation
+as Σᵢ.
+Now let's normalize all the dimensions.
+Actually, the normalization we are going to do
+has another name,
+standardization.
+But I will call it normalization
+in the rest of this class.
+So how do we do normalization?
+We subtract the mean of this dimension
+from the x shown here,
+which is one of the values.
+We then take the subtracted x
+and divide it by the standard deviation of this dimension.
+We get a new value called x tilde by
+subtracting the mean from x
+and divide it by the standard deviation.
+We then replace the old value
+with the new value.
+From now on,
+I will use the tilde symbol to
+represent the normalized value.
+Now, what are the benefits of normalization?
+After normalization,
+the mean of this dimension will be 0,
+and the variance will be 1.
+So, this row of values
+will be distributed around 0.
+Now, we apply normalization
+to every dimension.
+This way, every dimension
+will have its mean close to 0,
+and its variance
+close to 1.
+We can see that
+the values of every feature across different dimensions
+all lie around 0.
+This may, in turn,
+create a better error surface.
+This is why doing feature normalization
+is often helpful to the training process.
+It makes the loss converges a bit faster
+when doing gradient descent
+in the training process.
+This should make gradient descent
+a bit smoother during training.
+All in all, that's feature normalization.
+Of course, feature normalization
+can also be applied to deep learning.
+In fact, in the sample code
+provided by the teaching assistants,
+feature normalization is always used.
+After we get x tilde,
+which is the normalized feature,
+we use it as the input of the deep network to
+do further calculations
+and conduct the training process.
+We pass x¹ tilde through the first layer to get z¹.
+We then pass it through an activation function,
+whether it's sigmoid or ReLU,
+to get a¹,
+and so on,
+depending on how many layers of network there are.
+We do the same process for every x.
+But if we think about it,
+for W²,
+a¹ to a³ and z¹ to z³
+can be considered as another kind of input.
+However, even if x tilde
+is normalized,
+it's no longer normalized after being passed through W².
+If we get z¹ by passing x tilde through W¹,
+and there is still a big difference in the distribution
+between different dimensions of z¹,
+will we face difficulties training the parameters
+of the second layer?
+Come to think of it;
+we should also apply feature normalization
+to a and z.
+For W²,
+a and z are also features,
+and we should normalize these features.
+You might be unsure
+whether you should do normalization
+before the activation function
+or do normalization
+after the activation function.
+In practice, they're pretty much the same.
+If you try it yourself in the homework,
+you can see that these two implementation methods
+aren't too different in reality.
+So, whether you do feature normalization for z
+or do feature normalization for a
+are all fine.
+If you choose Sigmoid,
+doing feature normalization for z is much recommended.
+You know that Sigmoid is an s shape,
+so it has a larger slope near 0.
+If you do feature normalization for z,
+which will move all the values ​​neighboring 0,
+when you are counting the gradient,
+the calculated value will be larger.
+Since you may not use Sigmoid,
+it is not necessary to do feature normalization
+for z.
+If you choose something else,
+perhaps you choose a, it may have a
+better result.
+Maybe.
+In short,
+generally speaking,
+this normalization
+could be put before
+or after the activation function.
+Practically,
+there may not be much difference.
+Ok! Here,
+we do it on z.
+We do feature normalization on z.
+Okay! How do we do feature normalization on z?
+Then, you consider z
+as another feature.
+Here, we have z1, z2 and z3.
+We take z1, z2 and z3 ,
+and we calculate its min.
+How do we calculate its min?
+The μ here
+is a vector.
+We calculated the mean of
+these three vectors,
+z1, z2 and z3,
+to get this vector, μ.
+Then, we can also calculate a standard deviation.
+This standard deviation here
+contains a Σ,
+which also represents a vector.
+How does this vector be calculated?
+You just subtract μ from zi,
+and then square it.
+The square is here.
+The notation here is a little bit confusing.
+The square here means
+to square every element
+and apply the root sign.
+The root sign here should be applied to
+every element in a vector.
+We apply the root sign on every element
+to get Σ.
+Anyway! You know what I mean.
+For these three vectors, we just calculate
+every dimension inside
+to get their μ
+and their Σ.
+Ok! Here,
+I won’t draw those arrows.
+From z1, z2 and z3
+to μ
+and Σ,
+next,
+you let every z here
+be subtracted by μ and be divided by Σ.
+You subtract μ from zi
+and divide it by Σ.
+You would get the zi~.
+The Μ and Σ here
+are all vectors.
+So, the notation of this division here
+is a bit of abuse.
+What I mean here is
+element-wise division.
+That is, z^i minus μ
+is a vector.
+The numerator is a vector,
+and the denominator is a vector, too.
+Dividing the value of the corresponding element
+in these two vectors
+is what the division sign here means.
+We get z tilde here.
+Okay, so we just subtract μ from z^1 and divide by Σ
+to get z^1 tilde.
+Similarly, z^2 minus μ divide by Σ
+to get z^2 tilde.
+z^3 minus μ divided by Σ
+to get z^3 tilde.
+That is, we perform feature normalization
+on z^1, z^2, and z^3.
+to get z^1 tilde,
+z^2 tilde, and z^3 tilde.
+Okay,
+what should we do next?
+You can do what you want, like
+get other vectors
+through activation functions,
+then pass them through
+other layers, and so on.
+That's it.
+So, you perform feature normalization
+on z^1, z^2, and z^3
+to get z^1 tilde, z^2 tilde, and z^3 tilde.
+There is an interesting thing here.
+The μ
+and Σ here
+are actually calculated based on z^1, z^2, and z^3.
+So, the z^1 here,
+if we originally didn't
+do feature normalization,
+changing the value of z^1
+will change the value of a here.
+But now,
+when you change the value of z^1,
+μ and Σ will also change accordingly.
+After μ and Σ change,
+the value of z^2, the value of a^2,
+the value of z^3, and the value of a^3
+will also change.
+Originally,
+x^1 tilde, x^2 tilde, and x^3 tilde
+were handled separately.
+But after we do feature normalization,
+these three examples
+become related to each other.
+As long as there is a change on z^1,
+z^2, a^2, z^3, and a^3
+will also change.
+Thus,
+you should…
+When feature normalization is applied,
+you have to take this whole process,
+which collects a bunch of features
+and calculates this bunch of features into μ and Σ,
+as part of the network.
+In other words,
+Now you have a relatively large network.
+Your previous network
+only needs one input.
+And it has one output.
+Now
+you have a large network.
+This network
+eats a bunch of input
+and uses them
+to calculate μ and Σ.
+Then generate a bunch of output.
+This part is a bit abstract.
+I don't know if you guys have it.
+I hope you understand.
+If you feel confused,
+you can ask later
+or ask on the discussion board.
+In this section,
+I think
+it can only be understood like this.
+I don’t know whether you can understand this section.
+It's not the situation that
+one network handles one example,
+but there is a huge network
+handling a bunch of examples.
+Use a bunch of examples
+to calculate μ and σ,
+and then get an output.
+There will be a problem.
+In your training data,
+you have a lot of data.
+There are millions of pieces of data
+in a benchmark corpus.
+How can you put millions of data
+into a network at once?
+The memory of your GPU can't handle it.
+This one.
+This one is dead.
+The microphone is dead.
+Great.
+Okay, your GPU memory
+can not load the data
+of the entire data set.
+So, what to do?
+During implementation,
+you won't let this network consider
+all examples in the entire training data.
+You will only consider examples in a batch.
+For example,
+the batch size is set to 64.
+Your huge network
+just read 64 pieces of data,
+and calculate the μ of these 64 pieces of data,
+and calculate the σ of these 64 pieces of data,
+and then perform normalization on all 64 pieces of data.
+Because during the implementation,
+we only deal with the data in a single batch
+to do normalization,
+so this trick is called batch normalization.
+This is the batch normalization
+you often heard of.
+Obviously, there is a problem
+with batch normalization.
+You must have a large enough batch
+to calculate μ and σ.
+Suppose today you
+set your batch size to 1,
+then you don’t have any μ or σ to calculate.
+You will have problems.
+So, batch normalization
+is suitable when the batch size is relatively large.
+If the batch size is larger,
+maybe the data in this batch size
+is enough to indicate
+the entire corpus's distribution.
+If so, you can
+change the object
+which should be performed feature normalization
+from the entire corpus
+to a batch of examples
+as an approximation.
+When doing batch normalization,
+there are often such designs.
+After you calculate this z tilde,
+next, you will put this z tilde
+multiplied by another vector,
+called γ.
+This γ is also a vector.
+So you take z tilde to do
+element-wise multiplication with γ.
+Take the element in the z vector
+and the element in the γ vector
+to do element-wise multiplication.
+We add the β vector to the multiplication result
+and get z hat.
+For β and γ,
+you have to think of them as network parameters.
+They can be learned by updating the network.
+Then why do we introduce β and γ?
+Some people might think
+after we do normalization,
+the average of
+Z tilde
+must be 0.
+However,
+if the average must be 0,
+it can be seen as a restriction to the network, and
+this restriction may bring some negative effects.
+We add β and γ back, so
+the average of
+its hidden layer's output
+will not be restricted to 0.
+If the network wants the average
+to be nonzero,
+the network will learn β and γ by itself
+to adjust the output distribution or
+the distribution of this z hat.
+But someone will ask
+you said that
+to make the range of
+each dimension the same,
+we have come up with the solution of
+batch normalization.
+But now, if we multiply it by γ
+and add β,
+does this operation
+make the distribution of each dimension
+different again?
+It is possible.
+But in practice or during training,
+when it comes to
+the initial values ​​of γ and β,
+you will set the initial value of γ to 1.
+So initially,
+γ is a vector
+that contains only ones.
+And initially, β is a vector
+that contains only zeros.
+So γ is one vector
+that contains only one.
+β is a zero vector
+that contains only zero.
+So in the initial stage of the network training,
+the distribution of each dimension
+is relatively close.
+Maybe after training
+for a long enough time,
+we have found a better error surface
+or reach a better place,
+then the training will add γ and β slowly.
+Ok, so adding batch normalization
+is often helpful for your training.
+Okay, then I'm going to talk about the testing part.
+What I just talked about is the training part and
+I haven't talked about the testing part yet.
+The term testing
+is sometimes called inference.
+So in some papers, when the author mentions
+the term inference,
+it refers to testing.
+Batch normalization will cause problems
+during testing
+or inference.
+What kind of problems?
+While testing,
+if you are doing homework,
+we will give you all the test data at once.
+So you can actually make batches
+from the test data.
+But if you have a system online,
+a real online application,
+can
+you wait for 64 pieces of
+information to come in,
+assuming your batch size is 64,
+then doing the calculations once?
+This is obviously not feasible.
+If this is an online service,
+you have to
+do the calculations
+every time data comes in.
+You can't
+do the calculations after
+accumulating a batch of data.
+However, when we do Batch Normalization,
+x~,
+a normalized
+feature comes in.
+You get a z.
+z then
+subtract μ and divide sigma.
+The μ and sigma
+are calculated using a batch of data.
+But when testing,
+there is no batch at all.
+Then how do we calculate this μ?
+How to calculate this sigma?
+The solution
+in practice looks like this.
+If you use PyTorch,
+You don’t need to do anything special
+on Batch Normalization during testing.
+PyTorch will take care of it.
+How does PyTorch handle this?
+During
+training,
+if you are doing Batch Normalization,
+During training,
+it will calculate the moving average of
+Μ and sigma calculated in each batch.
+What does that mean?
+Every time you take a batch out,
+you will calculate μ1.
+When you take the second batch out,
+you calculate μ2.
+When you take the t-th batch out,
+You calculate μ t.
+Then, you will calculate a moving average.
+That is,
+You will multiply the average value of μ you calculated,
+called μ bar,
+with a factor.
+This is also a constant.
+This is also a hyperparameter.
+It needs to be adjusted.
+In PyTorch,
+p is 0.1
+if memory serves me right.
+Okay.
+Then we add 1 minus P
+multiplied by μ t.
+Then update your average value of μ.
+Finally, in testing,
+you don’t need to calculate μ and sigma in batch,
+because when testing
+on the real application
+there is no such thing as a batch.
+You just use μ bar and sigma bar directly.
+That is, we replace μ and sigma with
+the moving average of
+μ and sigma during training,
+which is μ bar and sigma bar.
+This is how Batch Normalization
+works during testing.
+Okay, this is an experiment result
+extracted from the original paper of batch normalization.
+There are many other things mentioned in the original paper.
+For example,
+What we haven’t talked about is
+how batch normalization is used on CNN.
+How to use it?
+After reading the original paper,
+you will know that
+if you want to apply batch normalization on CNN,
+how it should be done.
+Okay, this is a result extracted from the original paper.
+This horizontal axis
+represents the training steps.
+This vertical axis
+represents the accuracy on the validation set.
+The black dashed line is
+the result without using batch normalization.
+It uses the network called inception.
+It's a certain kind of network architecture.
+It is also a network architecture based on CNN.
+Anyway, the black dashed line
+represents the result without using batch normalization.
+Then if batch normalization is used,
+you will get this red dashed line.
+You will find that
+the training speed
+of the red dashed line
+is much faster than the black dashed line.
+Although the final results, when they are converged,
+which take enough training time,
+may all reach the same accuracy.
+But the red dashed line
+can achieve the same accuracy
+in a relatively short period of time.
+These blue diamonds over here
+indicate that the accuracies of these points are the same.
+The red dashed line
+takes only half of the time
+compared to that without using batch normalization.
+It only takes half
+or even less time
+to achieve the same accuracy.
+There are other lines here.
+There is a pink line here.
+What is this pink line?
+The pink line is the result using the sigmoid function.
+As for the general concept of the sigmoid function,
+although we haven't discussed this matter yet,
+generally, we choose ReLU,
+instead of using sigmoid function.
+Because using sigmoid function
+will make the training much difficult.
+But I want to emphasize here is that
+even using sigmoid makes the training much difficult.
+After using batch normalization,
+we could still get an acceptable result.
+Note that there is not a result that uses sigmoid
+while without using batch normalization.
+Because in this paper,
+the author says that
+the experiment using sigmoid without batch normalization
+can't even train at all.
+Okay, there is a blue solid line.
+What about the blue solid line and the blue dotted line?
+They are trained with some larger learning rates.
+X 5
+means that the learning rate increases to 5 times.
+And X 30,
+means that the learning rate increases to 30 times.
+That’s because if you apply batch normalization,
+your error surface
+will be smoother and the model will become easier to train.
+Applying batch normalization makes your error surface smoother,
+so you can
+larger your learning rate.
+There's a strange thing here that is hard to explain.
+For some reason,
+when the learning rate is 30 times the original,
+it's worse than when it's 5 times.
+The author didn't give an explanation.
+As you know,
+sometimes this kind of weird, unexplainable thing happens when
+you're doing deep learning.
+The author just truthfully
+presented the results of his experiments
+on this graph.
+Okay, the next question is about
+batch normalization.
+Why is it helpful?
+In the original paper discussing
+batch normalization,
+he came up with a concept
+called internal covariate shift.
+The term "covariate shift" already exists,
+but "internal covariate shift",
+I think,
+is invented by the author of the paper.
+He thought...
+He believed that when one trains a network,
+the following question will occur.
+The question is like this:
+A network has many layers.
+After x goes through the first layer, we get a.
+After a goes through the second layer, we get b.
+After we calculate the gradient,
+we update A to A′ and
+B to B′.
+But the author thinks that
+when we update B to B′;
+when we were calculating the gradient
+to update B to B′,
+the parameters of the previous layer were A.
+Or in other terms, the output of the previous layer was a.
+When the previous layer changes from A to A′,
+its output changes from a to a′.
+But when we calculate this gradient,
+we calculate it based on this a.
+So maybe the direction of this update
+is suitable for use on a
+but not suitable on a′.
+So if we do batch normalization,
+we will let...
+Because we do normalization every time,
+we will let a and a′
+have similar distributions.
+Maybe this will be
+helpful for training.
+But there is a paper called
+"How Does Batch Normalization
+Help Optimization?"
+which gives a slap in the face
+to this internal covariate shift concept.
+In this paper,
+he tells you from all aspects that
+internal covariate shift,
+first of all, is not necessarily
+a problem when training a network.
+Secondly, the fact that batch normalization
+is better
+may not be due to
+its ability to solve internal covariate shift.
+In this paper,
+he did a lot of experiments.
+For example, he studied the distribution
+of a during training and found out that
+the distribution hadn't changed much
+whether you had done batch normalization or not.
+Then, he said
+even if it changed a lot,
+it didn’t do much harm to the training process.
+He also said that
+no matter if the gradient is calculated
+based on a or a′,
+the directions were almost the same.
+So it tells you that
+the internal covariate shift
+may not be the training network.
+The main problem is that
+it may also not be
+the key to a good batch normalization.
+For more experiments,
+you can refer to this article by yourself.
+Good. So
+why is batch normalization better?
+This paper, "How Does
+Batch Normalization Help Optimization",
+experimentally
+and theoretically
+supports that batch normalization
+can change the error surface.
+It makes the error surface less rugged.
+So this view is supported by not only theory
+but also experimental evidence.
+In this article,
+the author also says a very interesting thing.
+He says he thinks that
+it's a positive impact on batch normalization.
+Because he says that
+if we want to make network's
+error surface become less rugged,
+it’s not necessary to do batch normalization.
+There are many other ways that
+can make the error surface less rugged.
+Then he tried some other methods
+and discover that
+they perform similarly to batch normalization,
+even slightly better.
+So he said the following exclamation.
+He thinks that
+the
+positive impact of batchNorm on training
+may be somewhat
+serendipitous.
+What is serendipitous?
+This word may be translated as "accidental".
+But "accidental" did not fully express the meaning of this word.
+This word means that
+you found something unexpected.
+For example,
+penicillin is
+an unexpected discovery.
+Everyone knows the origin of penicillin.
+There was a man named Fleming.
+He originally wanted to
+cultivate some staphylococci.
+But because he didn’t do the experiment well,
+his staphylococcus was infected.
+Some mold fell into his Petri dishes.
+And then he found those molds
+in his Petri dishes
+would kill staphylococci.
+So he invented
+Penicillin.
+This is an accidental discovery.
+The author of this article also thinks that
+batch normalization is also like Penicillin,
+which is an accidental discovery.
+But anyway,
+it is a useful method.
+Ok, actually, batch normalization is not
+the only way of normalization.
+There is a lot of normalization methods.
+There are a few well-known ones listed here.

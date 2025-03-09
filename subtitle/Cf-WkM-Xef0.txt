@@ -1,0 +1,835 @@
+Okay, let's start our class.
+The plan for the following lesson is like this.
+Let's first talk about RL.
+Then the teaching assistant will announce the assignment.
+Okay, regarding the last part of RL,
+we mentioned that we want to learn an Actor.
+This time,
+we want to learn another thing.
+This thing is called Critic.
+I will first explain what the Critic is.
+Then I will talk about
+the help of the Critic to
+the Learn Actor.
+Okay, let’s see what the Critic is.
+What is the Critic?
+The job of a Critic
+is to
+evaluate the quality of an Actor.
+You already have an Actor,
+and its parameter is called θ.
+Then the Critic’s job is to
+evaluate the reward this Actor might get
+after seeing a
+certain Observation
+or a certain game screen.
+There are many different variants of the Critic.
+Some Critics just consider the game screen to judge.
+Some Critics consider
+a certain game screen
+and a certain Action that the Actor took.
+It decides the rewards you will get,
+depending on both conditions.
+Maybe it is
+still a bit abstract.
+So let’s be more specific.
+We give an example,
+and it will be used later.
+You can use it in your homework.
+This Critic is called Value Function.
+We use uppercase Vθ(S) to
+represent this Value Function.
+What is its input?
+Its input is S,
+which is the current state of the game.
+For example, the screen of the game,
+please pay special attention to the V.
+It has a superscript θ.
+What does this superscript θ mean?
+It means that this V
+observes the Actor θ.
+What about the Actor it observes?
+Its parameter is θ.
+What about this V?
+Vθ is a Function.
+Its input is S.
+The output is a Scalar.
+Here we use Vθ(S) to represent this Scalar.
+What about this Scalar?
+What is the meaning of this value?
+The meaning of this value is the
+Discounted Cumulated Reward
+it gets if
+this Actor θ,
+the one in the superscript,
+sees Observation S,
+sees the inputted game screen of S.
+Do you remember
+what Discounted Cumulated Reward is?
+Do you remember what we said before?
+When evaluating the quality of a certain Action,
+you can’t just look at the reward after the Action is executed.
+You have to add the Reward after executing that Action
+and all the following rewards
+to get a Cumulated Reward called G.
+Then, you will be able to evaluate
+how well the execution of a certain Action is
+in a certain state.
+But we also said,
+"You add all the R
+from the execution of a certain Action to the end of the game."
+All the R are directly added together,
+which is not a good idea.
+You should multiply a discounted factor called γ,
+meaning that the reward you got farther from
+the time of this certain Action
+has less relation to the Action.
+So it should be multiplied by a Discounted Factor,
+called γ.
+Then we get G'.
+What is this G'?
+It is a discounted
+cumulated reward.
+We use the value function
+to estimate
+how much Discounted Cumulated Reward
+a certain actor will get
+if it has seen a certain game screen.
+Of course, to get the Discounted Cumulated Reward,
+you can play the game till the end.
+You already have Actor θ.
+Suppose it sees this State S,
+then how much G' will it get in the end?
+You'll know it after playing this game.
+But the purpose of this value function
+is to guess the future.
+Guess before you see it.
+Even the game is not over yet,
+after seeing S, it has to predict
+how well the Actor can achieve.
+This is what Value Function does.
+For example,
+suppose you give the Value Function this game screen,
+it should directly predict that
+you should get a very high Cumulated Reward
+after seeing this game screen.
+Why is that?
+Because in this game,
+there are still many aliens.
+Suppose your Actor is very powerful
+and it is a good actor,
+which can kill aliens
+and get a lot of rewards.
+This game screen
+is already at the end of the game,
+the final round of the game.
+The game is almost over.
+There are few aliens left.
+There are only little rewards left.
+Then these values
+would be known after you play the whole game.
+But the what Value Function wants to do
+is to guess the result.
+Before the game is over,
+it wants to guess how much Discounted Cumulated Reward
+you would get.
+There is one thing that needs to be emphasized.
+This Value Function has a superscript θ.
+This Value Function
+is related to the Actor.
+With the same observation,
+the same game screen,
+and a different actor,
+it should get a different
+Discounted Cumulated Reward.
+In the last example, I said that
+suppose we have a good Actor,
+after seeing this game screen, we will have a high value,
+and seeing this game screen, we will have a low value.
+But suppose your Actor is weak.
+Aliens can easily kill it.
+Then maybe after seeing this picture,
+the value is low.
+Because there are a lot of aliens,
+your Actor could be killed in few moves.
+It won't get any Reward.
+In this screen, this weak Actor
+may also get a low V.
+As a result, the output of the Value Function
+is related to the Actor.
+Okay, so this is Critic.
+Before telling how the Critic is used
+in Reinforcement Learning,
+let’s talk about how to train the Critic.
+There are two commonly used training methods.
+The first method
+is the Monte Carlo Based method.
+It is abbreviated as MC here.
+Okay, then how to train this Value function?
+How to train the Critic V θ?
+If you use the MC method
+intuitively, you can just do as following.
+You just let the Actor
+interact with the environment.
+Let it interact many rounds.
+After the Actor interacts with the environment,
+plays the game,
+we will get some game records.
+You will find that
+if the Actor sees Sa,
+the coming cumulated reward will be Ga'.
+You have played a lot of games
+and finished them.
+We know that
+when the agent sees observation Sa,
+the cumulated reward will be Ga'.
+I omitted "discounted" here.
+Anyway, you know what I mean.
+Then, your value function
+will get training data.
+This training data tells the Actor that
+if it sees Sa
+and its output, Vθ(Sa),
+should be as close to Ga' as possible.
+Sample and get another observation,
+another game screen.
+You can get the cumulated reward Gb'
+after finishing the game.
+Input Sb into
+the value function,
+you will get Vθ(Sb).
+The Vθ(Sb) should be as close to Gb' as possible.
+The approach is very intuitive.
+Observing the Actor,
+you will get the cumulated reward.
+After sampling, you will get training data.
+Train value function using these training data directly.
+Monte Carlo
+is a very intuitive approach.
+Next, let’s look at
+another less intuitive approach.
+This approach is called the temporal-difference approach;
+the abbreviation is TD.
+In the temporal-difference approach,
+you can get the training data
+for the value function
+without playing the entire game.
+For an observation St,
+the Actor takes action at
+gets the reward rt
+and the observation St+1.
+Seeing such a piece of data
+can train Vπ(S).
+Seeing tuple (St, at, rt, St+1)
+can be used to update the parameters of Vπ(S).
+If you can update the parameters of Vπ(S)
+using a piece of data, what are the benefits?
+In Monte Carlo,
+you have to play the entire game
+to get a piece of training data.
+Some games are very long.
+Some games
+may not end at all.
+It always goes on forever.
+It never ends.
+It is very unsuitable for you
+to use MC for games like this.
+In these cases,
+you can use the TD approach.
+How can we train Vπ(S)
+only when we see such information?
+Here is an example.
+Let’s look at the relationship
+between Vθ(St) and Vθ(St+1).
+What is Vθ(St)?
+Vθ(St) is
+the Cumulated Reward after seeing St.
+Vθ(St) is rt + γrt+1 + γ²rt+2 and so on.
+Then Vθ(St+1) is rt+1 + γrt+2 and so on.
+We find that
+there is a relationship
+between Vθ(St) and Vθ(St+1).
+What kind of relationship is it?
+Vθ(St) is equal to
+Vθ(St+1) multiplied by γ plus rt.
+Multiply each item by γ and add rt
+will become Vθ(St).
+There is a relationship
+between Vθ(St) and Vθ(St+1).
+Now,
+after we have such a piece of data,
+we can use it to train our value function.
+Hoping that the value function can satisfy
+the formula we wrote here.
+What does it mean?
+Suppose we have a piece of data
+We substitute St
+into the Value Function to get Vθ(St)
+Substituted St+1 into the Value Function
+to get Vθ(St+1)
+Although we don’t know what
+the value of Vθ(St) and Vθ(St+1),
+we know the difference
+of subtracting one from another.
+According to the equation as mentioned earlier,
+we multiply Vθ(St+1) by γ
+and subtract from Vθ(St).
+This value, Vθ(St) minus Vθ(St+1) multiplied by γ,
+should be as close to rt as possible.
+Here's rt,
+which has been collected in the dataset.
+We also know the relationship
+between Vθ(St) and Vθ(St+1).
+So we know that Vθ(St) minus Vθ(St+1) multiplied by γ
+should be as close to rt as possible.
+Input St
+and St+1
+into Vθ
+and subtract one from another.
+Then, the value should be as close to rt as possible.
+This is the TD method.
+Okay, so we introduced two
+methods to train the Value Function,
+which is the Critic.
+One is MC.
+And the other is TD.
+Actually,
+if you use these two methods,
+which are MC and TD,
+to calculate the Value Function
+of the same data,
+then the Value Functions you calculated
+are likely to be different.
+Let me give you an example,
+which looks like this.
+We observe an Actor.
+The Actor had interacted with the environment
+and played the game eight times.
+For simplicity,
+we assume that the game is so simple that
+it can be finished in
+one or two rounds.
+So when the Actor played the game for the first time,
+Sa is observed,
+and the reward is 0.
+Next, Sb is observed.
+and the reward is also 0. Game over.
+Subsequently,
+in the following six games,
+only Sb is observed
+and all end up with the reward of 1.
+In the last game, however,
+Sb is observed
+but ends up with the reward of 0.
+Here, we ignore Actor
+and also assume
+γ is equal to 1
+for simplicity,
+which means that there is no discount.
+Okay, so how much is Vθ(Sb)?
+We know that Vθ(Sb)
+represents the expectation of the reward
+when observing Sb.
+In this example,
+Sb is observed
+eight times in total.
+I saw Sb every time I play.
+Then, what is the expectation of rewards
+you get after observing Sb?
+We got 1 point six times
+and got 0 points twice.
+So the average is 3/4 points
+Vθ(Sb) should be 3/4.
+There's no controversy at all.
+What should the Vθ(Sa) be?
+After seeing Sa, how much do you think
+the reward should be next,
+based on these eight training data?
+How much reward should the Sa be next?
+Ok! I give you ten seconds to
+write your answer on the message board
+or type your answer on the message zone.
+I will use this free time to answer
+questions from classmates.
+Do we have any question?
+Ok! If you have any questions,
+you could send them to the chat room.
+Next, I will give everyone some time to think.
+How much do you think the Vθ(Sa),
+based on the eight training data we have seen,
+should be?
+You could put your answer
+in the chat room,
+and I will check if this chat room can be used.
+Yes, it can.
+Ok! I have seen a lot of answers.
+Nearly everyone said it is 0.
+Almost everyone said it is 0.
+Do we have other answers?
+Ok! There are almost no other answers.
+Everyone said it is 0.
+Ok! The majority of students said it is 0.
+Is 0 a correct answer?
+It is both right and wrong.
+Actually, there is another possible answer, which is 3/4.
+I don't see anyone answering 3/4.
+I will explain it later.
+Why is it possible to calculate 3/4 out?
+But, at the same time, 0 is also a reasonable answer.
+Why do you think it should be 0?
+0 is obtained by Monte-Carlo's ideas.
+Why is it 0?
+Because we have seen Sa only once.
+How much reward will it be after seeing Sa?
+It is 0.
+After seeing Sa, the reward is 0.
+After Seeing Sb, the reward is still 0.
+So, the cumulated reward is 0.
+So, if you look at it from the perspective of Monte-Carlo,
+after seeing Sa,
+what the calculated G should be
+is 0.
+So, Vθ(Sa) should be 0.
+There's no doubt.
+Almost all the students choose the correct answer.
+But, if you use TD,
+what you calculate
+might be a different result.
+How is this?
+Because, between Vθ(Sa) and Vθ(Sb),
+there is a relation.
+This Vθ(Sa) should be equal to Vθ(Sb) plus reward.
+That is the reward after seeing Sa.
+Next, it enters Sb.
+Then, this Vθ(Sa)
+should be equal to Vθ(Sb) plus this reward.
+The notation here is not so well.
+This r refers to this r here.
+So, according to this idea,
+what is Vθ(Sb)?
+It's 3/4.
+What is this r?
+it's 0.
+But, Vθ(Sa) should be 3/4, right?
+According to the idea of TD,
+Vθ(Sa) should be 3/4.
+You might ask that
+between Monte-Carlo and TD,
+Which is right?
+They both can be right.
+They just have different assumptions behind them.
+For Monte-Carlo,
+it looks directly at the data we observe.
+Since the cumulated reward of
+Sa followed by Sb is 0,
+Vθ(Sa) should also be 0.
+But, for TD,
+the assumption behind it is
+Sa has nothing to do with Sb.
+Seeing Sb after seeing Sa
+will not affect the reward of Sb.
+These eight training data
+give you an illusion,
+thinking that Vθ(Sa) should be 0.
+That’s just because the number of data you sampled is too small.
+At Sb,
+the reward is expected to be 3/4.
+But because of bad luck,
+the r of Sa preceding Sb
+is 0.
+However, the expected value should be 3/4.
+You just happen to be out of luck to see that r is 0
+and you think Sa is 0.
+But Sb...
+The expected reward after seeing Sb should be 3/4.
+So after seeing Sa then sees Sb,
+the expected reward you get should also be 3/4.
+So from the perspective of TD,
+how much reward will Sb get
+has nothing to do with Sa.
+So the cumulated reward of Sa should be 3/4.
+But for Monte-Carlo,
+it doesn’t think that Sa and Sb are irrelevant.
+Maybe Sa is an unlucky observation.
+If you see Sa,
+the reward that Sb will get is affected.
+Maybe after seeing Sa,
+Sb will get 0 rewards.
+They can affect each other.
+Therefore, Sb will be equal to 0 if Sa precedes it.
+Then Vθ(Sa) should be equal to 0.
+So, in short, there will be subtle differences
+between calculating with MC
+and calculating with TD.
+Let me see if any classmates have questions.
+Ok, so far, none.
+TA says
+only one classmate answered 1 and
+all the others answered 0.
+Okay, so this is MC and TD.
+This is MC and TD.
+Now we will see
+how Critic is used to train Actors.
+Remember the last time when
+we talked about Actors?
+We talk about how to train an Actor.
+You interact the Actor with the environment
+and get some reward.
+Then you get a bunch of pairs of
+observation and action.
+Then you evaluate
+how good is action a1 at s1
+and get a score of A1.
+We called A1
+the Cumulative Reward.
+A student asked last week,
+"Doesn't cumulative reward
+need to do normalization?"
+It needs to do normalization.
+So,
+we subtract b as normalization.
+But what should the value of b be?
+It's hard to say.
+A reasonable way to
+set the value of b,
+is to set it to Vθ(S).
+Suppose now you have trained a Critic.
+Based on these training data,
+you can also train a Critic.
+After you trained a Critic,
+give it a step
+and it will generate a score.
+Then you take this score as b.
+You treat this score as b.
+So G1' needs to subtract Vθ(s1),
+G2' needs to subtract Vθ(s2),
+and so on.
+Okay, the next question is
+why subtracting V is a reasonable choice?
+Let me explain this
+on the next slide.
+Now,
+we already know
+how good the sa pair is,
+which is represented by At.
+We define A
+as G' - Vθ(st).
+Okay, let’s take a look at Vθ(st)
+and what it means.
+What's the meaning of Vθ(st)?
+Vθ(st) is the reward we're getting
+after seeing the scene st,
+and it is actually an expected value.
+The reason it's an expected value is that
+if we continue playing the game after seeing some scene,
+the reward we get would be different every time
+since the game contains randomness.
+So, Vθ(st) is actually an expected value.
+Now,
+the actor might not execute
+action at
+after seeing scene st.
+Why is that?
+Why won't it necessarily execute action at?
+Don’t forget that the actor itself contains randomness.
+During training,
+we even encourage the actors to be random.
+So, the actor
+won't necessarily execute the same action
+when seeing the same scene.
+The output of the actor
+is actually a probability distribution.
+It is a probability distribution
+in the action space.
+It also gives each action a score.
+When we sample actions based on the scores,
+some actions have a high probability of being sampled
+and some have a low probability of being sampled.
+However, every action sampled
+does not need to be the same.
+So, there are many possibilities
+after seeing st,
+and we get different cumulative rewards,
+or discounted cumulative rewards
+if the discount is involved.
+For now,
+we'll omit the matter of discount
+since everyone knows what I mean by that.
+In the slides,
+the prime symbol was not added.
+But it's fine as long as
+you get what I mean by that.
+Then, we get Vθ(st)
+by averaging these possible results.
+This is the meaning of Vθ(st).
+Okay, what is the meaning of Gt'?
+Gt' is the cumulative reward we'll get
+after executing at
+when seeing the scene
+st.
+So, after we execute at,
+we continue playing the game.
+Down the road, we get a reward,
+which is Gt'.
+What does it mean if At is greater than 0?
+If At is greater than 0, it means that
+Gt' is greater than Vθ(st).
+At this point, it means that
+this action is better
+than the action we sampled randomly.
+When we get Gt',
+we're certain that at was executed.
+When we're calculating Vθ(st) during st,
+we weren't sure which action would be executed.
+So, when we executed action at,
+the reward we got
+was greater than the reward obtained by randomly executing an action.
+So, when At is greater than 0,
+it means that at is better than a randomly executed action,
+indicating at is a good action.
+So, we give it an At greater than 0.
+On the other hand, what does it mean if At is less than 0?
+When At is less than 0,
+it means that the reward we get from executing at
+is lower than the average reward.
+The action you took randomly,
+which was sampled from
+a probability distribution,
+resulted in a higher expected value for the cumulative reward
+than the action at.
+If that is the case, at is a bad action.
+So At should be negative.
+This is very intuitive, right?
+Now you understand why we should subtract Vθ(St) from Gt'.
+But isn't this formula
+a little bit strange?
+Gt' is the result of a particular sample.
+It is the result
+of executing
+At.
+But Vθ(St) is the average over
+many different paths.
+Does it make sense to
+subtract the average from a sample's result?
+Maybe this sample is unfortunately very bad.
+Shouldn't we subtract average values from values?
+This idea leads to the last version
+we are going to talk about in this class.
+We get reward rt after executing At
+and advance to the next screen stage S(t+1).
+Then, we take account of
+all the actions you can make
+after this stage.
+Take the average of the
+all the cumulative rewards afterwards.
+This is simply Vθ(S(t+1)).
+You have to play a lot of games
+to obtain this value.
+But it doesn't matter.
+If you've trained a good Critic,
+then you can
+directly use Vθ(St+1)
+as the expectation value
+of the cumulative reward
+if you play the game
+from this stage.
+Adding rt to that number,
+you obtain
+the expected reward
+given that you take action at
+at stage St.
+We already know that
+the reward is rt for the action at.
+Given that we took this action
+the expected reward after this
+is simply Vθ(St+1).
+So,
+rt plus Vθ(St+1)
+equals to the expected reward
+of taking at at St.
+Then, we have to subtract
+the average reward from it.
+So we replace G' with rt+Vθ(St+1)
+and subtract Vθ(St) from it.
+This formula
+measures
+how much better it is
+to take
+this action at
+than to
+make a completely random action
+at this stage,
+which is sampled randomly
+from the distribution.
+If rt+Vθ(St+1) is larger,
+at is better
+than average.
+If rt+Vθ(St+1) is less than Vθ(St),
+at is worse than average.
+It’s worse than
+a random sample from the distribution.
+This is the well known
+and commonly used method
+called Advantage Actor-Critic.
+In this method,
+At
+is equal to
+rt+Vθ(St+1)-Vθ(St).
+That's it.
+Here is a little trick
+to train an Actor-Critic model.
+You might also use this technique in your homework.
+What is this technique?
+The actor is a network.
+The critic is also a network.
+The input of the actor
+is a game screen.
+The output is the score of each action.
+The input of the critic is a game screen.
+The output is a number
+representing the cumulative reward you will get.
+There are two networks here.
+Their inputs are the same.
+So these two networks
+should have some parameters that can be shared,
+especially if your input is very complicated.
+For example, the game screen.
+The previous layers should all need to be CNN.
+The CNNs needed to understand the game screen
+are almost the same.
+So, the actor and the critic
+can share the previous layers.
+When you are doing it today,
+you will often design your Actor-Critic like this.
+The actor and the critic
+share most of the networks.
+In the end, output different things.
+If output actions,
+it is the actor.
+If output a scalar,
+it is the critic.
+Okay, this is a little trick to train an Actor-Critic model.
+What I said today
+is not all of reinforcement learning.
+In reinforcement learning,
+there is another sharp approach,
+which is to use the Critic directly.
+That is, use the Critic
+to decide what kind of action you want to use.
+The most well-known of them is
+Deep Q Network (DQN).
+But we won’t talk about DQN in detail here.
+If you want to know more about DQN,
+you can refer to the video of past lessons.
+That DQN has a lot of variations.
+Here is a very well-known paper
+called Rainbow.
+In this paper, the author tried multiple variations of DQN.
+They tried seven kinds of variations and then put them together.
+Since there are seven kinds of variations,
+it is called the rainbow.
+The author called its method Rainbow.
+I list this paper here for your reference.
+If you want to know
+how to do every little trick in the Rainbow,
+you can see the class video.
+In the past courses,
+every little trick in Rainbow
+is detailed.
+Okay.
+It comes to an end here.
+Let's first see if any classmates have problems.
+Okay, let me answer your classmates’ questions.
+A classmate said that
+S_a is not necessarily followed by S_b.
+If so, what to do?
+This is a good question.
+S_a is not necessarily followed by S_b.
+So this question
+in the case that we saw just
+can not be solved.
+Because the example
+with only 8 episodes,
+S_a will be followed by S_b.
+So, we did not observe other possibilities,
+and we can’t deal with this problem.
+So this tells us that
+when doing reinforcement learning,
+sampling is very important.
+The final performance
+of your reinforcement learning
+is much related to
+how good is your sampling.
+So reinforcement learning
+is a matter of chance.
+You can experience it in your homework.
+The result of your sample
+has a very big impact on
+your final training result.
+Next question.
+Does each V
+need to correspond to a fixed sequence of environmental occurrences?
+Hey, let me talk about it first.
+Wang Dahua is actually a teaching assistant.
+This is not his real name.
+The student Wang Dahua is a teaching assistant.
+Does each V
+need to correspond to a fixed sequence of environmental occurrences?
+I'm not quite sure about your problem.
+But I'll try to answer it.
+For every V, it will not be fixed.
+It does not correspond to a fixed order of occurrence of the environment.
+That is V(S).
+If your game has randomness,
+then V actually represents an expectation.
+What it wants to calculate is
+given a certain observation
+or a certain game screen,
+the expectation of the average value of the cumulative reward
+you'll get.
+If your game has randomness,
+V represents the expectation.
+After you see a certain game screen,
+what will happen next
+is not necessarily the same.
+But we average all the possibilities
+and take their expected value.
+This is what V stands for.
+The S that appears in the back isn't fixed.
+How to apply the formula to it?
+Okay, I think I have answered it.
+The observation that appears later
+is indeed not fixed.
+If there are some conditions
+that you don't observe the observation,
+then you really can’t train.
+Oh.
+A classmate asks about
+taking V as the strength of ordinary people.
+If surpassing it, it is good.
+Otherwise, it is bad.
+Right, it is.
+V is the average strength.
+Surpassing V is good.
+Where do I know this distribution?
+I think your distribution means
+the actor's distribution, right?
+We say
+the distribution of the action.
+The action is sampled
+from a certain distribution.
+What is this distribution?
+That distribution is like this.
+Your actor is like a classifier.
+Then, you throw S into
+every step.
+Oh, it's not every step.
+Every action will have a score.
+Then, you apply the softmax function
+on the score
+and do normalization.
+It becomes a probability.
+Then, do sampling based on the probability.
+This is the meaning of
+the actor is sampled
+from a distribution.

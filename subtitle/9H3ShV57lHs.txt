@@ -1,0 +1,747 @@
+Okay, for the last part about RL,
+what I want to share with you is that
+if we don’t
+even have a reward,
+what can we do about it?
+In the previous course,
+we have the reward.
+It’s just that sometimes the reward is very sparse.
+So you have to do Reward Shaping.
+But suppose
+you don’t even have the reward,
+what should you do?
+Why sometimes don't we have the reward?
+Actually, things like reward
+often only exist in some more artificial environments.
+For example, in the game,
+it is especially easy to define.
+In the game,
+there is a scoreboard.
+So it’s very easy for you to define
+what kind of behavior is good,
+what kind of behavior is bad,
+how good is a certain behavior,
+or how bad a certain behavior is in the game.
+But in the real environment,
+Defining the reward
+may be very difficult.
+Suppose you want to use the RL method
+to learn a self-driving car, to learn to walk on the road,
+then what kind of reward
+will you get
+and what to do on the road?
+If it is courteous to pedestrians,
+just give it 100 points?
+Or 1000 points?
+If it runs the red light,
+should we subtract 50 points?
+Or 50,000 points?
+You don't know how to define the reward
+of something like this.
+So in a
+real environment,
+sometimes we don’t know how to define
+such things as rewards.
+And sometimes,
+you may say,
+although we don’t know how to set the reward,
+we can still rely on human wisdom
+to come up with some rewards
+to guide the machine.
+Isn't the Reward Shaping we just talked about
+a really good example?
+We design some rewards by ourselves
+and let the machine to learning.
+But sometimes when you design the reward to teach the machine,
+the machine may behave very strangely
+if you didn’t design it carefully.
+We now give a more extreme example.
+There is a movie
+called "I, Robot".
+In the film,
+of course, this is the future world,
+there are a lot of robots.
+The behavior of those robots
+must meet three principles.
+These three principles are:
+First, a robot may not injure a human being or, through inaction,
+allow a human being to come to harm.
+Second, a robot must obey the orders given it
+by human beings except where
+such orders would conflict with the First Law.
+Third, a robot must protect its own existence as long as such protection
+does not conflict with the First or Second Laws.
+So you can imagine that
+these three laws,
+these three rules,
+show that
+if a robot does not violate these three rules,
+it gets a positive reward.
+If it violates these three rules,
+it gets a very negative reward.
+Then with these three rules,
+the robots
+develop by themselves
+and learn by themselves,
+But in the end,
+the robots learn something unexpected.
+Without violating these three rules,
+the way to get the maximum reward
+is to imprison human beings
+because humans will hurt each other.
+So humans should be imprisoned
+to avoid them hurting each other.
+In this way, the robots can get the highest reward.
+This example tells us that
+only defining reward is not enough.
+Machines may learn something unexpected
+and have unexpected behavior.
+Of course, the movie "I, Robot" is an extreme case.
+An even more possible example is that
+suppose you train the machine to,
+for example, collecting plates.
+This is an example I have seen in the paper.
+There are a lot of papers
+trying to use Reinforcement Learning
+to train the robotic arm.
+Suppose you want to train the robot
+to put the plate in a fixed position;
+after putting the plate in a specific place,
+it will get a positive reward.
+This is the reward that you defined.
+Then you use Reinforcement Learning
+and find that the robot put the plates in the true position
+but throwing them vigorously,
+and the plates were broken.
+That’s because you didn’t tell the robot that
+it can't break the plate.
+So
+you find that
+if you didn't tell the robot not to break the plates,
+in order to achieve the goal,
+the robot might break the plates.
+At this time, you can just add an additional reward,
+which is negative 100, when the plates are broken.
+But the problem is that
+the plates are broken.
+It's too late.
+So sometimes,
+human-defined rewards
+are not always the best.
+So what can we do?
+Without reward,
+how to train an agent to interact with the environment?
+In this situation,
+to let the machine interact with the environment,
+there is a method
+called Imitation Learning.
+In Imitation Learning,
+we assume that
+the actor can still interact with the environment,
+but it won’t get rewards from the environment.
+The environment will still send an observation to the actor.
+The actor will still respond.
+The environment will still provide different observations
+which depend on the actor's response.
+But there is no reward.
+How can I learn without reward?
+Although there is no reward,
+we still have another thing.
+This thing
+is the demonstration of the expert.
+We find a lot of experts,
+usually humans.
+We find a lot of humans
+to interact with this environment.
+Record the interactions between humans and the environment.
+These records are
+examples of expert.
+They are the demonstrations of experts.
+We call these expert demonstrations
+τ^.
+We use this ^ this superscript
+to represent the demonstration of the human expert.
+The agent
+has to learn from
+these demonstrations and
+the interaction with the environment.
+It might be a bit unintuitive.
+What are the demonstrations of the human experts?
+Suppose you want to
+teach a machine to drive a self-driving car.
+The driving records of human drives
+are the demonstrations of experts.
+The driving record of the human driver can tell the machine that
+you should
+turn the steering wheel at this intersection.
+It is the demonstration of human export.
+Or you want to
+ask the machine to do certain actions,
+such as pouring water, draining dishes.
+You may first pull the mechanical arm to demonstrate once.
+Grabbing the robotic arm
+is the demonstration
+of the human expert,
+τ^.
+Imitation Learning is
+to learn from τ^
+and learn from the interaction
+with the environment.
+Some students might think that
+this problem sounds simple.
+Isn't it a supervised learning problem?
+We can treat it as
+a problem of supervised learning.
+Suppose we want to train a self-driving car
+and we have records of the drivers.
+You have a record that
+people will take a certain action
+when seeing the picture of the road.
+For example, he will step on the brakes
+or the accelerator.
+If we have lots of records,
+why not using supervised learning
+to train an agent?
+You already have
+the information given by humans.
+The best behavior is a1^
+when seeing picture s1.
+The best behavior is a2^
+when seeing picture s2.
+If you already have this kind of training data,
+ask the machine to
+imitate human behavior.
+The machine see si
+and outputs ai.
+You have to make its action ai as close to
+human action ai^ as possible.
+Let the machine imitate human behavior.
+When you have
+these demonstrations of exports,
+this is a way to do it.
+This approach
+is called behavior cloning.
+It is to copy human behavior.
+But what kind of problems might be caused by
+just letting machines cloning human behavior?
+One possible problem is that
+the observation by
+the humans and the machines
+maybe be different.
+What does that mean?
+For example,
+suppose we want machine learning to learn how to drive a car,
+then it should learn from the behavior of the human experts.
+When a human expert is making a right turn,
+it can be done easily.
+No car accident happened,
+no reckless driver on the road.
+Every expert can make a right turn smoothly.
+Hence, for the machine,
+No failure has ever been seen.
+It has never seen a car running into an accident.
+If it has never seen a car running into an accident,
+then there is no such data
+in the training dataset.
+Therefore, it will not be able to know
+what to do when the car is about to have an accident.
+Since all experts are so professional
+that they will never let the car get close to the wall,
+no mistake can ever be made.
+Hence, the machine will not learn
+what to do under the circumstance
+that humans don’t normally experience.
+This is the first potential problem.
+The second problem that Behavior Cloning may encounter is that
+although humans may be very powerful at driving,
+maybe not every behavior
+needs to be imitated by the machine.
+Maybe some behaviors need to be imitated
+but others are the characteristics of human beings
+that need not be imitated.
+However,
+the machine can not distinguish between them.
+It can only replicate all the behaviors of humans.
+What does it mean to replicate all the behaviors?
+Here's the example.
+The following is a video from The Big Bang Theory
+regarding a machine that
+completely replicates the teacher’s behavior.
+Take a look at it.
+What's this?
+That's what you did.
+I assumed, as in a number of languages,
+That the gesture was part of the phrase.
+Well, it's not.
+Why am i supposed to know that?
+as the teacher, it your obligation.
+To separate your personal idiosyncrasies
+from the subject matter.
+You know,
+I'm really glad you decided to learn mandarin.
+Why?
+Once you're fluent.
+You'll have a billion more people to annoy
+instead of me.
+Okay,
+we just saw one
+example of Behavior Cloning
+For the machine,
+it’s just like Sheldon, the one dress in green.
+It learns whatever
+the teacher demonstrates.
+The machine can't distinguish
+what should be learned and what should not.
+If the machine
+just takes exactly the same action as its teacher does,
+there may not be a problem.
+Because it takes exactly the same action as its teacher does,
+and it will result in the same thing as the teacher does.
+Although there may be some redundant behaviors,
+it's still acceptable.
+However, there is an even worse situation,
+which is that the ability of machines
+might be limited.
+Today, the machine may not be able to imitate the teacher's behavior completely.
+It could only choose a part of the behavior
+to imitate.
+It's like the following scenario.
+There is someone, who wants to be like Jobs,
+and then he goes to see Jobs' Biography.
+He lists all the characteristics
+of Jobs inside Jobs' Biography;
+for example, 20 characteristics are listed,
+including creative,
+grumpy,
+slovenly, etc.
+But, he feels that
+these characteristics are too many.
+He decides only to imitate one characteristic
+because of his limited ability.
+He only imitates one characteristic.
+It might be good if he chooses to be creative,
+but maybe he chose a slovenly one,
+which is useless.
+So, we assume that the ability of the machine is limited,
+behavior cloning
+might result in even larger problems.
+So, what should we do?
+There is another technique
+called Inverse Reinforcement Learning.
+Okay! I will pause here to see if any classmates have problems.
+Okay! A classmate just asked a question.
+How about we use the machine to define rewards?
+That's right.
+Next, Inverse Reinforcement Learning
+is to let the machine define the reward by itself.
+How should we do it?
+We first look at the original Reinforcement Learning.
+How does it work?
+The original Reinforcement Learning is like below.
+We have rewards
+and the environment,
+and then
+we use RL's algorithm
+to interact with the environment and the reward
+to learn an Actor.
+But, now
+we don't have the reward anymore.
+We only have the demonstrations from experts.
+What we are going to do now
+is called
+"Algorithm of Inverse Reinforcement Learning."
+It is the inverse of the original Reinforcement Learning.
+It does not
+learn from reward;
+instead, it is learning from experts' demonstrations
+and the environment
+to back infer what reward should look like,
+which means the reward function here
+is learned.
+After learning a reward function,
+you can directly use the general Reinforcement Learning
+to train your Actor.
+So, in Inverse Reinforcement Learning,
+our concept is that
+originally we don't know the reward function,
+but we back infer what reward function should look like
+from the demonstrations of experts.
+With the reward function,
+we can train another optimal Actor
+to learn.
+So far,
+maybe someone will have some doubts.
+This reward function has learned;
+will it be too simple?
+Is it possible that we have no way to learn
+a very complicated reward function?
+Because, after all, the reward function is learned.
+Maybe we can only learn a simpler
+reward function.
+But a simple reward function
+does not mean
+that the Actor who learns from this reward function
+is simple.
+For example,
+for a human being,
+maybe a human's reward
+is very simple.
+Maybe there is only one reward function for human beings,
+that is, survival.
+Whether it's true or not
+is a matter of opinion.
+Suppose the reward function of human beings is only
+to survive.
+But even with only survival in mind,
+human behaviors are ever-changing.
+So a simple reward function
+doesn’t mean you will derive a simple Actor.
+It is possible to have a simple reward function,
+but the Actor is
+still complicated.
+This is Inverse Reinforcement Learning.
+What is the
+basic concept of inverse reinforcement learning?
+How to find the reward function?
+The most basic concept here is
+that teacher's behavior
+is the best.
+But I want to emphasize the so-called best
+does not mean
+you have to completely imitate the teacher's behavior.
+Rather, you assume the teacher’s behavior
+can get the highest reward.
+The assumption that the teacher's behavior
+can get the highest reward
+and completely imitating the teacher's behavior
+is not equivalent.
+Maybe after we finish explaining this algorithm,
+you will be more clear about what I mean.
+OK.
+We have an Actor.
+It doesn't know anything in the beginning.
+And then,
+in every iteration,
+this Actor will interact with the environment
+and learn to collect its own trajectories.
+Then,
+we define a reward function.
+How is this Reward function defined?
+The condition
+of this reward function is
+that the reward
+received from the teacher's behavior
+must be higher than the student's behavior.
+The teacher also interacts with the environment.
+We get a bunch of teacher's demonstrations.
+We get a bunch of teacher's trajectories.
+When you use the learned reward function to
+calculate the teacher’s trajectory...
+The battery is a bit dead.
+Let me plug it in.
+Ok, I'm charging it.
+Okay, we are going to set a reward function.
+We want to set a reward function
+that would
+give a higher score
+when assessing the teacher’s trajectory
+and give a lower score
+when assessing the actor’s trajectory.
+After that,
+we would update the actor.
+We would retrain the actor
+and update
+the parameters of the actor
+to maximize the reward.
+What's next?
+We just repeat this process.
+We get new actors
+that have new trajectories
+and update the reward function again
+so that the reward function
+would give a higher score to the teacher
+and a lower score to the actor.
+Then,
+the actor tries to
+think of a way to maximize the reward function.
+Repeat this cycle
+and we will get a reward function.
+This is
+the reward function we learned
+using inverse reinforcement learning.
+Okay, if you didn't quite get
+the algorithm just now,
+here's the visualization for
+inverse reinforcement learning,
+or IRL
+for short.
+Now,
+we use the symbol T^
+to represent the expert's demonstration.
+The interaction between the actor and the environment
+is written as T.
+Next, we set the reward function.
+The reward function
+would give T^,
+which is the expert’s demonstration, a higher score,
+and give T,
+which is the actor's trajectory, a lower score.
+After we obtain R,
+we go back and train the actor
+to maximize the reward function.
+How do we train the actor
+to maximize the reward function that we've just learned?
+Here, we have to use
+the method of reinforcement learning.
+Next,
+we have a new actor,
+and it has new behaviors.
+However, these new behaviors
+still have to get a lower score than the teacher.
+We will update the reward function
+and keep the teacher's scores higher
+than the actor's.
+We repeat this cycle
+over and over again.
+Eventually,
+the reward function can be learned.
+Doesn't the whole framework
+look a bit familiar to you?
+We can think of the actor
+as the generator
+inside a generative adversarial network,
+or GAN for short.
+Similarly, we can think of the reward function
+as the generator discriminator in GAN.
+Let’s quickly review the framework of GAN.
+First,
+there is a generator
+that generates bad pictures.
+Then there is a discriminator
+trying to find a way to give high scores to real pictures
+and low scores to those generated by the generator.
+Then there is an interacting process.
+The generator
+will find a way to fool the discriminator
+with better pictures.
+Then, the discriminator will update its parameters
+to recognize
+the difference between
+true pictures and generated pictures.
+So the two parts
+will update their parameters
+repeatedly.
+So,
+Inverse Reinforcement Learning and GAN
+are basically the same things.
+We just changed
+the name of the generator and the discriminator.
+The actor makes some actions.
+Then you should find a reward function
+that gives the Expert's Trajectories high scores
+while giving the actor's Trajectories low scores.
+In the next iteration,
+the actor
+tries to achieve high scores
+under this reward function,
+so it makes new actions.
+The Reward Function will be updated again
+to give the Expert a high score
+and give the Actor a low score.
+So the Reward Function
+corresponds to the Discriminator,
+and the Actor corresponds to the Generator.
+So,
+GAN and IRL,
+Inverse Reinforcement Learning,
+are very similar.
+They seem to utilize
+the same framework
+from different perspectives.
+Methods like
+IRL
+are often used to train robotic arms.
+How does it look like
+training
+a robotic arm
+reinforcement learning
+in the past?
+Let's take a look at a short video taken from
+"The Big Bang Theory".
+Hey, Is food here?
+Woo, What's that?
+That, dear lady,
+Is the Wolowitz Programmable Hand,
+designed for extravehicular repairs
+on the International Space Station.
+Oh, cool.
+Ask me to pass the soy sauce.
+Oh, does that come up much on the space station?
+Mostly with Asian and Jewish astronauts.
+All right, Pass the soy sauce.
+Coming up.
+So how's work?
+Oh, it's not bad.
+Kind of hungry.
+Yeah, we all are.
+Just wait.
+You realize, Penny,
+that the technology that went into this arm
+will one day make unskilled food servers
+such as yourself obsolete.
+Really?
+They're going to make a robot
+that spits on your hamburger?
+I thought you broke up with her.
+Why is she here?
+OK, here we go.
+Passing the soy sauce.
+Put out your hand.
+Oh, That's amazing.
+I wouldn't say amazing.
+At best, it's a modest leap forward
+from the basic technology
+that gave us Country Bear Jamboree.
+This video wants to tell everyone that
+you want to use the programming method
+to control a robotic arm,
+as human beings,
+we can stretch our arms easily
+to do something.
+But if you want to program such a simple behavior,
+if you want to write a program
+to control every joint of the robotic arm
+to perform certain specified actions,
+it is not easy.
+This time,
+you can use a technology
+called Inverse Reinforcement Learning.
+You can show it to the machine.
+Demonstrate the behavior you want it to do,
+and see if it can learn the behavior
+from the demonstration.
+The following result
+is using one of the technologies
+of Inverse Reinforcement Learning.
+Is it a bit stuck on my side?
+I'll leave and join again.
+Okay, let's continue.
+Okay, let's play this video.
+It teaches the machine to put plates.
+Demonstrate it first.
+Here we will demonstrate it 20 times.
+This is a demonstration.
+This is to teach the machine to pour things.
+This one is also demonstrated 20 times.
+Well, this video is to tell everyone
+we may use the demonstration method in the future
+to teach the machine.
+In fact,
+if you want to teach some behaviors to the robotic arm,
+there is a more fashionable way now.
+What about this more fashionable approach?
+You directly give the machine a picture,
+then let the machine
+do the behavior in this picture.
+We won’t go into details about this part.
+I just listed an article here.
+There are a NIPS paper
+and an ICML paper for your reference.
+The basic concept is to
+give the machine a picture
+and tell it
+to achieve this goal.
+Then the machine will figure out its way to achieve the goal.
+How to train the machine to have this ability
+to sees a picture
+and then know how to reach the goal?
+This training process is also very interesting.
+This training process is that
+the machine will create its own goals.
+In its heart,
+it imagines some pictures
+and then
+thinks of a way to achieve these pictures.
+This is like the following thing.
+Someone told you that
+you have to get a Ph.D..
+If you want to get a Ph.D.,
+you will find a way
+to get this Ph.D.
+What's the process in the middle?
+We do not know.
+You have to figure out your way.
+But how to train yourself
+to get a Ph.D.?
+You will set some goals for yourself first.
+For example, if you first set that
+I want to be a Youtuber.
+Then,
+you do something.
+Then, you become a YouTuber.
+Now, you know that
+you have the ability to achieve goals.
+Then, you set
+other various goals
+and try to achieve them.
+By doing so, you can develop your ability to achieve your goals.
+If someone tells you that
+your goal now is to get a Ph.D.,
+you will know how to get a Ph.D.
+Oh my god.
+Tp do promotion here,
+I am also a bit pathetic.
+I really can't take it anymore.
+Okay, the part about RL
+probably just stops here.
+The part of RL
+stops here.
+Let's see if any students have questions to ask.
+Some students said that the sound is a little weird.
+I don’t know.
+I don’t know if it’s the laptop problem.
+I believe it is not a problem with the Internet.
+The network should be fast.
+Yes.
+So wait a minute.
+Wait a minute. I will let the computer
+rest for a while.
+Maybe it will be better.
+OK.
+A classmate asks a question.
+If you use methods like IRL,
+is there no way to find a better way than humans?
+Is there a way to make the machine better than humans?
+Hey, I think this is a good question.
+When using IRL,
+we have to notice that
+machines do not completely imitate human behavior.
+So the solution of the machine
+and the solution for people
+are not necessarily the same.
+So
+today,
+if we want the machine
+to get better results than humans,
+I think one possible way is
+to use IRL first.
+Let IRL acquire a reward function.
+Then put additional restrictions
+on the reward function.
+For example,
+the examples we just saw.
+You demonstrated to the machine today.
+Then, the machine can learn a reward function.
+It knows
+what you want it to do now is
+placing the plate.
+We can now add a new reward to tell it
+to place the plate as fast as possible.
+If you put the plates quickly,
+you will also
+get an extra reward.
+Then, maybe there is a chance for the machine to learn
+what humans can't do
+when demonstrating.
+So I think
+IRL still has a chance to do better than humans.

@@ -120,36 +120,164 @@
 </details>
 
 <details>
-<summary>362. [ML 2021 (English version)] Lecture 30: Introduction of Reinforcement Learning (RL) (3/5)</summary><br>
+<summary>362. [2021-06-11] [ML 2021 (English version)] Lecture 30: Introduction of Reinforcement Learning (RL) (3/5)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Cf-WkM-Xef0" target="_blank">
     <img src="https://img.youtube.com/vi/Cf-WkM-Xef0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章整理：深度強化學習中的策略.gradient descent 方法
 
+## 核心主題
+本文主要探討深度強化學習中策略.gradient descent方法的核心思想及其應用，特別是其在多個具體算法（如DQN和Rainbow DQN）中的實現與優化。
+
+---
+
+## 主要觀念
+
+1. **策略.gradient descent的基本原理**  
+   - 策略.gradient descent是一種通過梯度下降方法來最優化策略的方法，旨在最大化累積獎勵。
+   - 通過將策略表示為神經網絡，並利用環境反饋來更新網絡參數，從而實現策略的迭代改進。
+
+2. **與值函數方法的結合**  
+   - 策略.gradient descent通常與值函數（V(s)）相結合，其中值函數表徵在某一狀態下平均累積獎勵的期望。
+   - 如果策略產生的獎勵超過值函數的期望值，則表明策略表現優異；否則需進行調整。
+
+3. **_sampling的重要性**  
+   - 總體來看，強化學習的效果高度依賴於樣本的質量和多寡。良好的sampling能有效提高算法的訓練效果。
+
+---
+
+## 問題原因
+
+1. **環境不確定性**  
+   - 在某些情況下，後續狀態（S_b）並非總是跟隨先前列車狀態（S_a），這導致傳統方法難以有效學習。
+
+2. **過於依賴固定序列**  
+   - 若算法過度依賴固定的環境序列來訓練值函數，將限制其在多樣化環境中的適應能力。
+
+---
+
+## 解決方法
+
+1. **強調sampling的關鍵作用**  
+   - 確保足夠多且多樣化的樣本被收集，以提高值函數估計的準確性。  
+   - 在實踐中，可通過增加 episodic 的數量或使用經驗重放（Experience Replay）技術來優化 sampling。
+
+2. **利用期望值進行策略評估**  
+   - 值函數V(s)被定義為在狀態s下平均累積獎勵的期望。即使環境存在 randomness，仍可通過.expectation的計算來指導策略的改進。
+
+3. **.actor 為概率分佈的實現**  
+   - 將.actor 看作一個概率分髮器，其輸出經過.softmax normalization後用於_sampling actions。這使得策略具有探索性與利用性的平衡。
+
+---
+
+## 優化方式
+
+1. **多樣化的sampling策略**  
+   - 使用經驗重放等技術來增加樣本的多樣性，從而提高算法的泛化能力。
+
+2. **複合算法的集成**  
+   - 如Rainbow DQN，通過整合七種不同的DQN變體（如Double DQN、 Dueling DQN等），顯著提升了算法的性能和穩定性。
+
+3. **深度網絡的結構優化**  
+   - 選擇適合task的網絡架構，並 tunes hyperparameters（例如學習率、批量大小等）以進一步提升訓練效果。
+
+---
+
+## 結論
+
+策略.gradient descent方法為深度強化學習提供了一種有效的框架。通過結合值函數和.actor ，該方法能在不確定性和複雜性並存的環境中實現高效的學習與決策。未來的研究可圍繞更優化的sampling技術、網絡架構的設計以及多智能體協作等方面進一步展開，以應對更具挑戰性的應用場景。
 </details>
 
 <details>
-<summary>363. [ML 2021 (English version)] Lecture 32: Introduction of Reinforcement Learning (RL) (5/5)</summary><br>
+<summary>363. [2021-06-11] [ML 2021 (English version)] Lecture 32: Introduction of Reinforcement Learning (RL) (5/5)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=9H3ShV57lHs" target="_blank">
     <img src="https://img.youtube.com/vi/9H3ShV57lHs/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 小節歸納
 
+#### 核心主題
+- 強化學習（Reinforcement Learning, RL）在機器人控制和自動化行為中的應用。
+- 使用 imitation learning 和 inverse reinforcement learning (IRL) 方法來教導機器完成特定任務。
+- 探討機器能否超越人類能力的可能。
+
+#### 主要觀念
+1. **imitation learning**：通過示範行為讓機器學習並重現該行為。
+2. **inverse reinforcement learning (IRL)**：從示範中推斷.reward function，使機器理解目標和獎勵結構。
+3. **_reward function_**：定義任務的獎勵標準，指導機器完成特定目標。
+4. **自主目標設置**：機器可以自創目標並探索實現方法。
+
+#### 問題原因
+- 傷害 imitation learning 的限制在於示範行為可能不完美或不易於重現。
+- IRL 方法需要明確的.reward function，否則易受示範者偏好偏差影響。
+- 傷害機器依賴人類示範，缺乏自主學習和改進能力。
+
+#### 解決方法
+1. **使用 IRL 獲取.reward function**：通過示範行為推斷.reward function，使機器理解目標。
+2. **增加額外限制條件**：在已有的.reward function 中添加新條件，如速度要求，以激勵機器優化性能。
+3. **自主目標設置**：允許機器自定目標並探索實現方法，提升學習能力。
+
+#### 確優化方式
+1. **改進 IRL 框架**：通過強化學習和多樣化的示範數據來提高.reward function 的準確性。
+2. **結合其他算法**：將 IRL 與深度學習、圖像識別等技術結合，提升機器的綜合能力。
+3. **人機協作優化**：人類提供示範和指導，機器自主探索和改進，實現最佳性能。
+
+#### 結論
+- 強化學習和 IRL 方法具有潛力教導機器完成複雜任務。
+- 機器在特定條件下可以超越人類能力，但需藉助額外的.reward function 和限制條件。
+- 未來研究應注重提升 IRL 的 robustness 和 generalization 能力，並探索人機協作的新模式。
 </details>
 
 <details>
-<summary>364. 【機器學習2021】神經網路壓縮 (Network Compression) (二) - 從各種不同的面向來壓縮神經網路</summary><br>
+<summary>364. [2021-06-11] 【機器學習2021】神經網路壓縮 (Network Compression) (二) - 從各種不同的面向來壓縮神經網路</summary><br>
 
 <a href="https://www.youtube.com/watch?v=xrlbLPaq_Og" target="_blank">
     <img src="https://img.youtube.com/vi/xrlbLPaq_Og/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理：網絡壓縮技術研究與應用
 
+## 核心主題
+- 網絡壓縮（Network Compression）旨在降低深度學習模型的計算複雜度和存儲需求，使其在資源受限的環境中更有效地運行。
+
+## 主要觀念
+1. **網絡架構設計**：通過設計高效的網絡結構來降低模型大小。
+2. **知識蒸餾（Knowledge Distillation）**：利用.teacher model. 的知識來提升.student model. 的性能。
+3. **網絡剪枝（Network Pruning）**：刪除網絡中冗餘的神經元或連接，以簡化模型。
+4. **參數量化（Parameter Quantization）**：將模型權重表示為低精度數據，進一步壓縮模型大小。
+
+## 問題原因
+- 深度學習模型通常需要大量的計算資源和存儲空間，限制了其在移動設備等資源有限環境中的應用。
+- 大規模模型的計算成本高昂，影響其實用性和可-scalability.
+
+## 解決方法
+1. **網絡架構設計**：
+   - 引入更深思熟慮的網絡結構，如.MobileNet, EfficientNet. 等，以平衡性能和效率。
+   - 使用分層結構或模塊化設計，提高計算效率。
+
+2. **知識蒸餾**：
+   - 利用高性能教師模型指導學生模型的訓練，使.student model. 在保持教師模型性能的前提下規模更小、效率更高。
+
+3. **網絡剪枝**：
+   - 啊倫基式剪枝：通過訓練後刪除冗餘神經元或連接。
+   - 應用剪枝技術後，可配合微調進一步提升模型性能。
+
+4. **參數量化**：
+   - 對模型權重進行低精度量化（如使用8位整數），在損失少量精度的前提下大幅降低存儲需求。
+
+## 優化方式
+- 多種壓縮技術可以結合使用，以實現更高效的網絡壓縮效果。
+  - 例如，在完成知識蒸餾後進一步應用網絡剪枝和參數量化。
+
+## 結論
+- 網絡壓縮技術為深度學習模型在移動設備和其他資源受限環境中的應用提供了有效的解決方案。
+- 隨著研究的深入，未來將開發出更多高效的網絡壓縮方法，進一步推動人工智能技術的落地與應用。
 </details>
 
 <details>

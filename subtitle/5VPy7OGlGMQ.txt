@@ -1,0 +1,554 @@
+Okay, let's start the class.
+We are going to talk about
+the global explanation.
+What is a global explanation?
+What we talked about in the previous class is a local explanation.
+That is, given the machine a photo,
+and the machine
+will tell us why it thinks there is a cat
+in the photo.
+The global explanation is not targeted at
+a specific photo to analyze.
+Rather than examing the model we have trained
+and found out that
+according to this model,
+what does a cat look like.
+What does a cat look like
+according to the network?
+For example,
+suppose you have a trained
+convolutional neural network
+to be examed.
+You know that
+there are many filters
+and convolution layers
+in a convolutional neural network
+Inside the convolutional layer
+are a bunch of filters.
+Then you take a picture as the input
+for the convolutional layer.
+What is its output?
+Its output is a feature map,
+and each filter is a metric.
+Now, suppose
+we have a picture
+as the input to this convolutional neural network.
+We represent the picture as a capital X.
+Because the picture
+can be represented by a matrix.
+We use the capital X
+to represent the matrix formed by this picture.
+When inputting the picture to the network,
+you will find out that
+the feature map in a certain filter,
+for example, the filter 1
+has relatively large values.
+What does that imply?
+That might imply that
+there are many features in image X
+that is in charge of the filter 1.
+There are many patterns in this image
+that the filter 1 is responsible for detecting.
+When the filter 1 sees these patterns,
+the output value of the feature map
+has a larger value.
+However, what we are going to do is the global explanation.
+That is, we don’t have the image X,
+and we are not targeting any specific picture for analysis.
+We want to know
+what kind of patterns
+that the filter 1 interests.
+How to do it?
+We can create a picture.
+It is not any specific picture
+in our database.
+The machine finds it
+out by itself.
+We are going to create a picture
+that contains the patterns that the filter 1 can detect.
+By looking at the content in this picture,
+we can know what patterns the filter 1
+is responsible for.
+How to find this picture?
+We assume that each element
+in this feature map of the filter 1
+is called aij.
+The feature map of the filter 1 is a matrix.
+We use aij to represent
+each element in the matrix.
+What we have to do now is to find a picture X
+that is not in the database.
+We treat this X
+as an unknown variable.
+Treat X as trainable parameters.
+Our goal is to find a picture
+so that the feature map we get
+by feeding this picture into the filter,
+has the values in the feature map, which is aij
+to be the larger
+the better.
+We need to find an X
+that the sum of aij,
+the output of the filter 1,
+has a largest possible value.
+We use X* to represent
+the optimal X we find.
+It is not any specific picture in the database.
+We treat X as an unknown variable,
+or a learnable parameters,
+to find out this X*.
+and feed the X* into the network that is trained beforehand.
+The convolutional layer of this network
+outputs the values ​​of these features.
+The value in the feature map it outputs
+will be as large as possible.
+How to solve this problem?
+You will use a method similar to gradient descent.
+As we are going to maximize something,
+it’s not gradient descent.
+Rather, it is gradient ascent.
+Its principle is the same as gradient descent.
+OK, after finding out the X*,
+we can observe this X*
+to what kind of features X* has.
+We can also know that
+why X* can maximize the value of this filter map,
+and know what kind of pattern
+the filter 1 detects.
+Here is the result of an actual operation.
+We use the MNIST dataset.
+MNIST is a dataset of handwritten digit numbers.
+We use MNIST to train a classifier.
+Give it a picture for this classifier.
+It will judge which number it is from one to nine in this picture.
+After training this classifier,
+we will take a look at the filter
+in the second layer of the convolutional layer.
+Then we find the corresponding X* for each filter.
+So now, every picture below
+is an X*,
+where each picture corresponds to a filter.
+So you can imagine that
+the first image is the pattern that
+the filter 1 wants to detect,
+and the second image
+is the pattern that the filter 2 wants to detect,
+and so on,
+Okay, from these patterns,
+what can we find?
+We can find
+what the second convolutional
+wants to do
+is indeed to detect some basic patterns.
+For example, something like strokes.
+From these images, you can see that
+some of the pattern here wants to detect
+the horizontal lines.
+And this filter
+wants to detect oblique lines,
+this filter
+wants to detect the pattern of straight lines.
+Each filter
+has the pattern it wants to detect.
+You know that since we are now doing handwritten number recognition,
+the numbers here are made up of a bunch of strokes.
+So the job of each filter in convolutiona layers
+is to detect a certain stroke,
+and this phenomenon is very reasonable.
+Okay, so then you might think that
+what if we are not looking at a certain filter,
+but to see the output of the final image classifier.
+Can it?
+What kind of phenomena will we observe?
+Considering the output of
+this image classifier,
+we try to find a picture X to
+make the score of a certain category higher.
+Because we are doing the number recognition now,
+y consists of
+ten values,
+corresponding to 0~9.
+We choose a certain number.
+For example, if you choose 1,
+then you want to find a picture,
+which makes the score of class one
+at the output of the classifier as higher as possible.
+If you use this method,
+What phenomenon can you observe?
+Can you see the numbers of zero to nine?
+After you actually do it, you will find that
+you can't.
+This is the result you may receive.
+For example,
+this X*,
+can make this image classifier
+have the highest score on class zero.
+This picture can make your classifier
+get the highest score on class one,
+on class two,
+on class three,
+and so on.
+You will find that you actually observed
+a bunch of noise.
+You can't see the numbers at all.
+From these results,
+you might think it's amazing,
+if you don't know the
+Adversarial Attack.
+Here, the machine sees a bunch of noise.
+Does it belief it sees numbers?
+How could it be so stupid?
+But we have taught Adversarial Attack,
+I guess you won’t be too astonished.
+When we were doing Adversarial Attack,
+we already told you that
+you can let the machine see all kinds of objects
+by adding some strange noise on the picture
+which is invisible to human eyes.
+So for the same reason,
+the machine
+doesn’t need to see a picture that really looks like the number 0
+to classify it as the number 0.
+If you give the machine some messy noise,
+the machine can also classify it as 0,
+with also a high confidence score.
+Actually, if you use this method,
+which tries to find a picture
+that maximize the certain output
+for a certain category,
+and you want to
+see what this machine imagine
+of what an object
+of the certain category looks like,
+it may not be that easy.
+Like today's example,
+the example of handwritten number recognition.
+You are just looking for
+an image that maximizes the confidence score
+of a certain class.
+If you simply do this,
+you will only find lots of noises.
+What is the correct way to do it?
+Supposed we want what we see today
+is a number that is more like people’s imagination,
+what should I do?
+When you are solving this optimization problem,
+you have to add more constraints.
+For example,
+We have some imagination about this number.
+We already know what the numbers might look like.
+We can add the limitations we want
+to this optimization process.
+For example,
+We are not looking for an X that
+maximizes the score of yi,
+but to find an X
+that makes the scores of yi and R(X) greater at the same time.
+What does this R(X) mean?
+This R(X) is to measure how similar
+this X is to a real number.
+For example,
+the numbers are made up of strokes.
+So, a number doesn’t have so many colors
+in the whole image.
+Plus, though the image size is big,
+there are only a few strokes in it.
+So in the whole image,
+there are not that many places with colors.
+We can treat this as a constraint.
+Just put the constraint
+into the process of finding X
+during the optimization.
+We hope to find a X that
+are more like numbers.
+If you add some additional constraints,
+for example,
+we want the white dots to be fewer.
+In this constraint.
+it hopes that the white dots are as few as possible.
+Suppose we add a constraint
+that makes the white dots as few as possible,
+the result we see will be like this.
+It still doesn't look like a number.
+But, if you look closely at the white dots,
+it do look like something.
+For example, this looks like 6.
+This looks like 8.
+If you want to really get
+something much like a number.
+Or suppose you want to get the results like what's in the literature.
+Many people in the literature will say that
+he uses some method like a global explanation
+to infer what an animal looks like
+in an image classifier.
+For example, if you look at the following document,
+it tells you that
+it has an image classifier.
+It uses the method we just mentioned.
+It can infer
+what this red-crowned crane looks like
+in the image classifier
+or what a beetle looks like.
+Looking at these pictures,
+they are really similar to red-crowned cranes.
+You can see that
+there's a bird.
+There is a red-crowned crane.
+It has a foot in the water.
+You can really see the beetles
+in these pictures.
+But to get a picture like this
+is not as easy as you think.
+If you look at this document carefully,
+you will find that
+to get these pictures.
+You have to add a lot of constraints.
+You have to add a lot of constraints
+based on your understanding of images
+and what an object should look like.
+It also needs a lot of hyperparameter tuning.
+You know, when we solve the optimization problem,
+we also need to tune the hyperparameters
+like learning rate.
+So after putting lots of constraints
+and tuning a bunch of parameters,
+you can get this result.
+So this result
+can't be made easily.
+If you want to see a very clear picture,
+with the global explanation method just mentioned,
+here is a trick that uses the generator.
+You train an image generator.
+You have a bunch of training data,
+which is a bunch of images.
+You take this bunch of images
+to train an image generator.
+For example, you can use GAN.
+You can use VAE.
+We have taught GAN,
+though we have not taught VAE.
+Anyway, what VAE does
+is to train an image generator,
+whose input of image
+is a low-dimensional vector,
+sampled from the Gaussian distribution.
+The low-dimensional vector is called "z."
+After passing it into the Image Generator,
+Its output is a picture "X."
+We use "G" to represent this Image Generator.
+For the output picture "X",
+we can write it as "X = G(z)."
+How should we use this Image Generator
+to help us infer back to
+a certain category that the image classifier imagined?
+For example, for a certain cat,
+what would the cat category,
+or dog category it imagines look like?
+You can connect this Image Generator
+and this Image classifier together.
+The input of this Image Generator is a "z",
+and the output of it is a picture.
+Then, for this Image classifier,
+we use this picture as the input,
+and then it outputs the results of the classification.
+In the previous slides,
+We claimed that we are looking for an "X"
+to let a certain dimension in "y",
+which is a certain category,
+get the highest possible confidence score.
+Then, we call this "X" as "X⋆."
+Then, we just saw that, by doing this,
+you can't achieve good results generally.
+Now, with Image Generator,
+the method is different.
+We are not looking for "X" now,
+but we are looking for a "z."
+We are looking for a "z,"
+that generates "X" through an Image Generator.
+Then, we throw this "X" into the Image classifier
+to generate "y."
+We hope that the certain category that "y" corresponds to,
+to get the highest possible score.
+We are looking for a "z"
+to produces "X",
+and to generate "y".
+We expect the bigger the "yi" is, the better the results will be.
+Then, this "z", which can make "yi" the bigger, the better,
+is call "z⋆."
+After finding out this "z⋆",
+we throw this "z⋆" into "G",
+which is the Generator,
+to see what the image "X⋆" it generates looks like.
+Okay! What does "X⋆" look like?
+Suppose you want to
+produce an image
+with the highest confidence score for ants.
+These are the photos that came out.
+They are great, right?
+I can immediately see
+that this is an ant.
+Let's do this again for volcanoes.
+We generated a bunch of volcano pictures
+and picked out those pictures with a high score
+with a classifier.
+Here are the images.
+These images look like volcanoes indeed.
+You might think that
+this whole idea
+is little bit unreasonable.
+If the picture you found,
+for example, the ant or the volcano picture
+is different from what you have imagined,
+you will blame the explanation method.
+You would say that the explanation method is good
+only if the picture is in line with your imagination,
+even if the machine is forced to do so.
+Perhaps these picture in fact look like noises
+to the machine.
+Maybe the number it imagined
+looked like noise to us.
+But we are unwilling to agree with this fact.
+That's why we invent new methods and force the macihine
+to produce a picture that looks more decent.
+The recent Explainable AI technology
+often does things like this.
+We don't actually care about
+what the machine actually thinks,
+even though we don’t know what the machine actually thinks.
+We only want results for explanation to be
+the results that people will be pleased to look at.
+After doing that,
+you tell everyone that this is what the machine thinks.
+Then your boss, your customer
+will be very happy after listening to your results.
+Recent explainable AI techniques tend to do this.
+Okay, we have talked about
+two mainstream techniques
+of Explainable AI,
+which are Local Explanation
+and Global Explanation.
+There are many
+other techniques
+for Explainable AI, though.
+For example,
+you can use a relatively simple model
+to imitate the behavior of a complex model.
+If the simple model can imitate well enough,
+you analyze that simple model.
+Maybe we can know
+what the more complicated model is doing.
+For example,
+you have a neural network.
+Because it is a black box,
+if you throw a bunch of x in,
+say, a bunch of pictures,
+it will give us the classification results,
+but we can’t figure out its decision-making process
+because a neural network by itself is very complicated.
+However, we can generate a simpler model,
+a more analyzable model,
+like a linear model.
+to interpret the results.
+We train this linear model to
+imitate the behavior of the neural network.
+When the neural network is given x1 to xN,
+it outputs y1 to yN.
+We ask this linear model when
+given x1 to xN,
+it also has to output
+the same y1 to yN as the black box.
+We ask this linear model to
+imitate the behavior of the black box.
+If the linear model
+can successfully imitate the behavior of the black box,
+we can then analyze what the linear model does
+and it will be easier to do analysis.
+After the analysis,
+maybe we can know
+what this black box is doing.
+Of course, there may be lots of questions here.
+For example,
+Can a linear model
+imitate the behavior of a black box?
+We talked about it in the first lecture.
+There are many problems that only neural networks can do,
+while a linear model can’t.
+So what the black box can do
+may not be able to be done by a linear model.
+That's the truth.
+In this series of work,
+there is a particularly well-known one called
+Local Interpretable Model-Agnostic Explanations.
+Its abbreviation is LIME.
+This method
+didn't claim to use
+a linear model to imitate all the behaviors of the black box.
+it tells you right in the name that
+it is local interpretable.
+The linear model only needs to imitate a small part
+of this black box.
+Because the capabilities of linear models are limited ,
+it is impossible to imitate the behavior of the entire neural network.
+But maybe if we let it imitate the behavior of a small area,
+we can interpret what happened in that small area.
+That's a classic method
+called LIME.
+If you want to know what LIME is,
+you can watch the video below.
+We won’t go into the details for now.
+We also have homework
+related to LIME.
+It is up to you
+to read some paper by yourself
+and get a feeling of what LIME is.
+Okay, so that part
+was an introduction to explainable machine learning.
+Let's see
+if there's any student asking questions online.
+So,
+I can see everyone's questions.
+Hold on.
+Someone asked
+if it would be better if we add a class that represents "none of the above"
+and try to minimalize the probability of that option.
+Let me try to understand your question.
+Suppose we've trained an image classifier,
+and it's a classifier for digits.
+Your question is that
+if we add one more option to the classifier,
+and that option represents
+the input we passed in
+wasn't a digit at all,
+would the result be any better?
+I have never done a similar experiment.
+In practice, if we're using the MNIST dataset,
+there may be a small problem
+because every image in that dataset is a digit.
+Every image that we're dealing with is a digit.
+On the other hand,
+suppose we actually collected
+some images that are not digits
+and added another category that
+represents "not a digit".
+Now, what would happen
+if we input an image
+and require the classifier to believe
+the input image is a digit while trying to minimize
+the probability of the "not a digit" category.
+I haven't actually tried,
+so I can't come up with a good answer at once.
+But, judging from the success rate
+of adversarial attacks nowadays,
+I think it's still very possible
+to find an image
+that doesn't look like a digit,
+but the network thinks it’s a digit,
+and the probability of "not a digit" is low.
+I have never tried it before.
+You can try it yourself
+and see how it turns out
+if you're interested.
+Okay, is there any question?
+I know that the live stream is not exactly real-time.
+There may be few minutes of delay
+between you and me.

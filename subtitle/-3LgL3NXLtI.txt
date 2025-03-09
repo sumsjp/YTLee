@@ -1,0 +1,676 @@
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心 http://ai.ntu.edu.tw/
+作業 3-3，我們要講的是什麼呢？
+我們要講的是 Unsupervised conditional generation
+conditional generation
+我們上周已經講過了， 就是 machine 輸入一個東西，然後輸出一個東西
+這個就是 conditional generation
+那我們在作業 3-2 的時候
+大家也做過 conditional generation， 但我們之前做的 conditional generation 是 supervised
+舉例來說在作業 3-2 裡面，我們是收集了很多 image
+這些 image 都有它對應的文字
+你才能夠 train 一個 conditional generation 吃文字，output image
+這邊我們想要討論的是，conditional generation 這件事情
+能不能夠做到 unsupervised
+其實今天你可以看到很多的例子
+conditional generation 它可以是 unsupervised
+舉例來說
+它可以是 unsupervised
+舉例來說，假設你有一個 domain x 的 image， 它們是 real photo，是風景照
+你有 domain y 的 image，它門是梵谷的畫作
+那妳可以 learn 一個 generator，給它一張real 的 image
+它 output 的 image 看起來就像是梵谷的畫作
+而你在 training 的時候
+你並不需要 labeled data
+一般我們要 train 這種 generator
+如果是 supervised conditional generation， 你需要 label 告訴它說
+看到這樣子的 input，應該有什麼樣的 output
+input 紅髮這個句子
+那 output 就是一個紅頭髮的角色到底長什麼樣子
+但是今天假設你是要做這種比較類似風格轉換的 task
+你是要把一張風景照
+轉成梵谷的畫作
+你可以收集到一堆風景照
+你可以收集到一堆梵谷的畫作
+但是你其實收集不到它們之間的 link
+因為假設你收集一張風景照，是日月潭
+梵谷沒有去過日月潭，所以他畫作裡面，也沒有日月潭
+所以你也根本就沒有辦法 label 這種 link
+所以今天我們要討論的問題就是，有沒有辦法做到 unsupervised conditional generation
+只有兩堆 data，machine 自己學到說
+怎麼從其中一堆轉到另外一堆
+那其實這樣的技術，有很多的應用
+不是只能夠用在影像上
+雖然你今天在文獻上看到的多數 application，都是影像
+但是在語音或文字上
+你當然也是可以做類似的事情的
+那之後我們會舉一些例子
+那 conditional generation，到底要怎麼做呢？
+這個 unsupervised conditional generation
+我 surveyed 一下文獻，我認為大致上可分為兩大類的作法
+第一大類的做法是直接轉
+什麼意思，直接 learn 一個 generator
+input x domain 的東西
+想辦法轉成 y domain 的東西
+那等一下我們會講說， 這樣子的 generator 到底要怎麼 learn 出來
+那在經驗上啊
+如果你今天要用這種 direct transformation 的方法
+你的 input output 沒有辦法真的差太多
+今天這個 generator 你給它一個 input
+output 它通常只能夠小改而已
+如果是影像的話，它通常能夠改的是
+顏色啊，質地啊，所以如果是那種畫風轉換
+真實的圖片，轉成梵谷的畫作的風格
+這個是比較有可能用第一個方法來實踐
+那今天假設你要轉的 input 跟 output
+差距很大，它們不是只有在顏色
+紋理上面的轉換的話
+那你就要用到第二個方法
+第二個方法是這樣，假設你今天要做的是
+這個不是真正的例子
+今天的技術做不到這個程度就是了
+那這個怎麼做呢？
+如果今天你的 input 跟 output，差距很大
+比如說你要把真人轉成動畫人物
+那真人跟動畫人物就是不像
+它不是你改改顏色，或改改紋理
+就可以從真人轉成動畫人物的
+那怎麼辦，你先 learn 一個 encoder
+比如說第一個 encoder 做的事情
+就是吃一張人臉的圖
+然後它把人臉的特徵抽出來
+它把這張臉的特徵抽出來，比如說
+這是男的，這是有戴眼鏡的
+接下來你生一個 decoder
+這個 decoder 它畫出來的就是動畫的人物
+它根據你 input 的人臉特徵
+比如說是男的，有戴眼鏡的，去生出一個對應的角色
+如果你 input output 真的差很多的時候
+你就可以做這件事
+那知道作業 3 就是一個 bonus 嘛
+那根據過去的經驗會有非常多人做真人的臉轉動畫人物
+很多人會做這個，但是過去通常比較多人是用 cycle GAN 做
+結果都還還蠻失敗的，因為動畫人物的臉，就是跟真人臉不像啊
+你如果要做動畫人物，轉真人的臉
+你可以考慮一下第二個做法做起來看看會不會比較好一點
+那先來講第一個做法
+第一個做法是怎麼做的呢？
+第一個做法是說，我們要 learn 一個 generator
+這個 generator input x domain 的東西，要轉成 y domain 的東西
+那我們現在 x domain 的東西有一堆
+y domain 的東西有一堆，但是合起來的 pair 沒有
+我們沒有它們中間的 link
+那 generator 怎麼知道
+給一個 x domain 的東西，要 output 什麼樣 y domain 的東西呢？
+用 supervised learning 當然沒有沒有問題，但現在是 unsupervised
+generator 怎麼知道怎麼產生 y domain 的東西呢？
+這個時候你就需要一個 y domain 的 discriminator
+這個 discriminator 做的事情是
+他看過很多 y domain 的 image
+所以給他一張 image
+它可以鑑別說這張 image 是 x domain 的 image， 還是 y domain 的 image
+接下來 discriminator 要做的事情
+就是說給他一張image，它會判斷說是 x domain 還是 y domain
+接下來 generator 要做的事情就是
+想辦法去騙過 discriminator
+如果 generator 可以產生一張 image
+去騙過 discriminator
+那 generator 產生出來的 image，就會像是一張 y domain 的 image
+如果 y domain 現在是梵谷的畫作
+generator 產生出來的 output 就會像是梵谷的畫作
+因為 discriminator 知道梵谷的畫作，長得是什麼樣子
+但是現在的問題是說
+generator 可以產生像是梵谷畫作的東西
+但完全可以產生一個跟 input 無關的東西
+舉例來說
+它可能就學到說，它畫這張自畫像
+就可以騙過 discriminator
+因為這張自畫像，確實很像是梵谷畫的
+但是這張自畫像跟輸入的圖片
+完全沒有任何半毛錢的關係，這個就不是我們要的
+所以我們今天不是要讓 generator 騙過 discriminator 就好
+同時我們希望 generator 不只要騙過 discriminator
+generator 的輸入和輸出是必須有一定程度的關係的
+那這一件事情
+怎麼做呢？
+那在文獻上，就有不同的做法
+我們等一下會講道 cycle GAN，這是最知名的作法
+那其實有一個最簡單的做法就是，無視這個問題
+直接做下去，事實上有人試過
+直接做下去，也做得起來
+舉例來說，你在做那個 cycle GAN 的時候
+你會看到很多人做那個馬轉斑馬，斑馬轉馬
+那 cycle GAN 有個 cycle consistency 的 loss 我們等一下會講到
+那事實上，拔掉那個 cycle consistency 的 loss
+你還是可以把馬轉成斑馬，還是 work
+所以今天的一個可能性是
+無視這個問題
+直接就 learn 一個 generator，一個 discriminator
+看看 work 不 work
+為什麼這樣子有機會可以 work 呢？
+因為 generator 的 input 跟 output
+其實不會差太多
+就假設你的 generator 沒有很深
+那 input 總不會你 input 這個圖片，然後 output一個梵谷的自畫像吧
+這未免差太多了
+所以今天其實 generator
+如果你沒有特別要求它的話
+它其實喜歡 input 就跟 output 差不多
+所以你給他這張圖片
+它其實不太想要改太多，它希望
+改一點點就騙過 discriminator 就好，它不想要改太多
+所以今天你直接 learn 一個這樣的 generator
+這樣的 discriminator，不加額外的 constrain
+其實也是會 work 的，你可以自己試試看
+那在下面這個文獻裡面，他就嘗試說
+如果今天 generator 比較 shallow
+比較淺，所以它 input 跟 output 會特別像
+那這個時候，你就不需要做額外的 constrain， 就可以把這個 generator learn 起來
+那如果你今天 generator 很深
+如果你 generator 很 deep，有很多層，那他就真的可以讓 input output
+非常不一樣，這個時候，你就需要做一些額外的處理
+免得讓 input 跟 output 變成完全不一樣的 image
+這是第一個方法，第一個方法就是不要管它
+第二個方法是這樣，你去拿一個 pre-trained 好的 network，比如說 VGG 之類的
+拿一個 pre trained 好的 network，接下來你把這個 generator 的 input 跟 output
+通通都丟給這個 pre trained 好的 network
+然後得到比如說 output 一個 embedded ***
+接下來你在 train 的時候， generator 一方面會想要騙過 discriminator
+讓它 output 的 image 看起來像是梵谷的畫作
+但是同時呢，這個 generator 它還有另外一個任務
+它會希望這個 pre trained 的 model
+他們 embedded**** 的 output 不要差太多
+那這樣的好處就是，因為這兩個 vector 沒有差太多
+所以代表說，這張圖跟這張圖
+就不會差太多
+generator 的 input 跟 output 就不會差太多
+這個是第二個做法
+第三個做法
+就是大家所熟知的 cycle GAN，在 cycle GAN 裡面呢
+你要 train 一個 x domain 和 y domain 的 generator
+你同時 train 一個 y domain 到 x domain 的 generator
+y domain 到 x domain 的 generator 它的目的是什麼呢？
+它的目的是說，給他一張 y domain 的圖
+接下來 input 一張風景畫
+第一個 generator 把它轉成 y domain 的圖
+接下來第二個generator 要把 y domain 的圖， 還原回來一模一樣的圖
+因為現在除了要騙過 discriminator 以外
+generator 得到了一個新的任務，要讓 input 跟 output 越像越好
+為了要讓 input 跟 output 越像越好
+你就不可以在中間產生一個完全無關的圖
+如果你在這邊產生一個梵谷的自畫像
+第二個 generator 就無法從梵谷的自畫像還原成原來的風景畫
+因為它已經完全不知道原來的輸入是什麼了
+所以這張圖片，必須要保留有原來輸入的資訊
+那這樣第二個 generator 才可以根據這張圖片
+轉回原來的 image
+這個就是 cycle GAN
+那這樣 input 跟 output 越接近越好
+input 一張 image 轉換以後要能夠轉得回來
+這個兩次轉換要轉得回來這件事情
+就叫做 cycle consistency
+那 cycle GAN 你可以做雙向的
+所謂雙向的意思是說
+本來有 x domain 轉 y domain，y domain 轉 x domain
+現在你再 train 另外一個 task
+把 y domain 的圖丟進來
+然後把它轉成 x domain 的圖，
+同時你要有一個 discriminator 確保說
+今天這個 generator 它 output 的圖像是 x domain 的
+接下來再把 x domain 的圖轉回原來 y domain 的圖
+一樣希望 input 跟 output 越接近越好
+這邊你就可以同時去 train，這邊有一個 generator
+這邊是第二個 generator
+有兩個 discriminator
+你就會把這兩個 generator
+這兩個 discriminator，一起去 train
+這個就是 cycle GAN
+那其實 cycle GAN，現在還是有一些問題是沒有解決的
+cycle GAN 的一個問題就是
+今年的 NIPS 有一篇 paper 叫做 cycle GAN: a master of stenography
+stenography 是什麼呢？
+stenography 是隱寫術
+就是說 cycle GAN 會把 input 的東西藏起來
+然後在 output 的 時候，再把它呈現出
+什麼意思呢？
+那個 paper 裡面就舉一個例子，它說這是 input
+這個要做的事情是把這個真實的空拍照
+轉成這個看起來像是衛星的圖
+那這個 input 是這張圖片
+然後第一個 generator 把它轉成這樣
+然後第二個 generator 可以把它還原
+那你發現說這個 input 跟 output 是蠻像的
+舉例來說，這個屋頂上有些黑點
+在 reconstruct 回來之後，還是有些黑點
+但神奇的地方是，中間的 image，它是沒有黑點的
+那 machine 怎麼知道說，這個屋頂應該是要有黑點的呢？
+就 input 是有黑點的，那沒有問題
+output 也是有黑點的，但是中間的產物
+居然是沒有黑點的
+如果你只看到這一張圖
+對第二個 generator 來說， 如果你只看到這一張圖，屋頂上是沒有黑點的
+你是怎麼知道上面應該要產生黑點的
+所以有一個可能是
+今天cycle GAN
+雖然有 cycle consistency 的 loss
+強迫你 input 跟 output 要越像越好
+但是 generator 它有 很強的能力把資訊藏在人看不出來的地方
+也就是說這些你要怎麼如何 reconstruct 這張 image 的資訊
+可能是藏在這張 image 裡面
+它可能用非常非常小的數值
+藏在 image 裡面，讓你看不出來這樣
+也許這個屋頂上仍然是有黑點的，只是你看不出來而已
+那如果是這樣子的情況，如果今天 cycle GAN 會藏資訊
+那就失去 cycle consistency 的意義了， 因為 cycle consistency 的意義就是
+第一個 generator output 的 image 跟 input 不要差太多
+但如果今天 generator 很擅長藏資訊
+然後再自己解回來
+那這個 output 的 image 就有可能 跟這個 input 的 image 差距很大了
+那這個就是一個尚待研究的問題， 也就是 cycle consistency
+不一定有用，machine 可能會自己學到一些方法去
+避開 cycle consistency 帶給你的 constrain
+那在文獻上呢
+除了 cycle GAN 以外， 你可能還看到其他的 GAN 比如說， dual GAN
+Disco GAN
+這 3 個東西有什麼不同呢？
+就是沒有什麼不同這樣子，就不同的人
+居然在幾乎同樣的時間
+提出一樣的方法
+然後 submit 到不同的 conference 這樣
+這個類似的想法真的是很神奇，就大家想的
+方法都差不多，你自己去仔細看看，這些方法
+其實就跟 cycle GAN 是一樣的
+那現在還有一招
+叫做 star GAN，star GAN 是什麼呢？
+star GAN 是說，我們在做 cycle GAN 的時候
+你只能夠把 x domain 轉成 y domain
+但有時候你會有一個需求是
+你有多個 domain，你要用多個 domain 互轉
+比如說你有 4 個 domain
+你要在 4 個 domain 間互轉
+那這樣理論上呢，你就要學出
+D 4 取 2 個 transformation 的 network
+才能在 4 個 domain 間互轉
+star GAN 它做的事情是
+它只 learn 了一個 generator
+但就可以在多個 domain 間互轉
+那我們這邊就很快地來，這個你可能
+在作業上也用不上， 不過還是跟大家很快地講一下 starGAN
+那如果你有細節的問題的話，你再去 check 一下那個 paper
+那在 star GAN 裡面是怎麼樣呢？
+在 starGAN 裡面你要 learn 一個 discriminator
+這個 discriminator 它會做兩件事
+首先給他一張 image
+它要鑑別說這張 image 是 real 還是 fake 的
+再來呢
+它要去鑑別這一張 image
+它來自於哪一個 domain
+剛剛說，你可能有 4 個 domain
+它就問說，它來自於這 4 個 domain 的哪一個
+在 star GAN 裡面
+你只需要 learn 一個 generator 就好
+這個 generator 它的 input 是一張圖片
+跟你目標的 domain
+就是你要把這張 input 的 image
+轉成哪一個 domain
+它要有一個目標的 domain
+然後它根據這個 image
+根據這個目標的 domain，就把新的 image 生成出來
+接下來再把這個同樣的 image
+丟給同一個 generator
+把這一張被 generated 出來的 image，丟給同一個 generator
+然後再告訴它說
+現在原來 input 的 image 是哪一個 domain
+然後再用這個 generator 合回另外一張圖片
+那你要希望這邊的 input 跟這邊的 output
+越接近越好
+那這個東西就是 cycle consistency 的 loss 嘛
+我們剛剛在講 cycle GAN 的時候說，input 一張 image
+你要還原回一模一樣的 image
+經過兩次轉換以後，還原回一模一樣的 image
+那對這個 generator 來說，做的事情是一樣的
+告訴它說你把 input image 轉成 target domain， 它就轉了
+接下來再告訴 generator 說，給你這張轉出來的 image
+再給你原來的 domain，你要轉回一模一樣的 image
+那等一下我們會看一個比較具體的例子， 你可能會比較了解
+那這個 discriminator 做的事情就是要確認說這張轉出來的 image 到底
+對不對
+那要確認兩件事，第一件事是，這張轉出來的 image
+看起來有沒有真實
+再來就是，這張轉出來的 image
+它是不是我們要的 target domain
+然後 generator 就要去想辦法騙過 discriminator
+這邊是一個比較 realistic 的例子
+這些圖都是從 paper 從裡面截出來的，就 paper 的圖
+它實在是畫做得太好了，所以我就沒有重做了這樣子
+這個 star GAN 做的事情是什麼呢？
+就是你有一個 discriminator
+這個 discriminator 吃一張 image
+它首先要判斷它是 real 還是 fake 的
+同時它要判斷說
+這一個 image 來自於哪一個 domain
+事實上在原始的 paper 裡面
+它的 domain 並不是說就是 5 個 domain
+而是每個 domain 都有一組編碼
+這樣大家了解我的意思嗎？它並不是只有一個 domain
+而是說，你可以說我要一個黑頭髮的角色
+要一個男性的角色
+要一個年輕的角色，這樣子叫做一個 domain
+所以它 domain 可以有很多個，不是只有數個而已
+所以今天是說給它這張 image
+這張 image 屬於哪個 domain 呢？這邊編碼是 00101
+它就是一個褐色頭髮，然後年輕的角色
+那這個 discriminator 要學到說，看到這張圖片
+必須要知道說，它是褐色頭髮，是年輕的
+那怎麼確認這個 generator 呢？
+你在確認這個 generator 的時候，就是
+你跟 generator 說，input 這張圖片
+我們想把它轉 domain，10011，10011 是什麼呢？
+黑色頭髮，男性，然後年輕，所以就把這張圖片
+轉成一個黑色頭髮
+它本來是棕色頭髮嘛，轉成黑色頭髮
+接下來，再把這個黑色頭髮圖片
+也丟回原來的 generator，然後跟他說現在要轉 00101
+00101 是什麼呢？
+棕色頭髮，年輕的角色，所以它就把這個角色
+轉回棕色的頭髮
+那你希望 input 跟 output 的圖片，越接近越好
+這個是 cycle consistency 的 loss
+接下來你要用 discriminator 去確保說這個 output 的 image
+一方面它是 realistic
+另外一方面，如果你今天 output 的 image，你希望 output 10011
+也就是黑頭髮男性，年輕的角色，這個 discriminator
+看到這張圖片，必須要能夠判斷出
+它是 10011
+是一個黑頭髮，男性，年輕的角色
+這個呢，就是 star GAN
+下一張圖舉的例子，也是
+一模一樣，就是這邊有一個人，它是生氣的 domain
+然後今天目標就是要把它轉成
+笑口常開的 domain
+好 discriminator 要確認說不只這張圖片看起來要真實，而且要看起來像是笑口常開
+然後今天這個 generator 說把這張圖片再轉回生氣的樣子\
+那希望 input 跟 output 越接近越好
+這個是 star GAN
+那第二個做法呢，第二個做法是
+我們剛才有講過說，我們就是要 learn 一個 encoder
+然後把一張input 的 圖片
+轉到某一個 latent 的 space
+然後再從 latent space 把它轉回來
+那你用這個技術，可以做到比較大的轉換
+現在我們要講 unsupervised conditional generation 的第二個做法是這樣
+第二個做法是說
+我們現在要把 image project 到一個
+假設我們現在要 input 是一個 image 的話
+我們把 input 的 object
+投影到某一個 latent 的 space
+再用 decoder 把它合回來
+那假設你今天有兩個 domain 一個是人的 domain
+真人人物頭像的 domain，一個是動畫人物的 domain
+那你今天想要在這兩個 domain 間做互相轉換的話， 那怎麼辦呢？
+你今天呢，需要一個 x domain 的 encoder
+看到一張真人的頭像，就把它的特徵抽出來
+有一個 y domain 的 encoder
+看到真人的頭像
+就把它特徵抽出來，那 x domain 的 encoder 跟 y domain 的 encoder，他們可能是
+不一樣的，參數可能是不一樣的
+因為畢竟人臉和動畫人物的臉還是有一些差別
+所以這兩個 network 不見得是一樣的 network
+那你有一個 x domain 的 encoder 吃這個 image， 它會抽出它的 attribute
+那所謂的 attribute 就是一個 latent 的 vector，就你 input 一張 image
+encoder 的 output 就是一個 latent 的 vector
+你 input 一張image
+這個 encoder y 的 output 就是一個 latent 的 vector
+接下來把這個 latent 的 vector，丟到 decoder 裡面
+如果丟到 x domain 的 decoder， 它產生出來的就是真實人物的人臉
+如果是丟到 y domain 的 decoder， 它產生出來就是 2 次元人物的人臉
+這是我們希望最後可以達到的結果是
+你給他一張真人的人臉
+透過 x domain 的 encoder
+抽出 latent 的 representation
+這個 latent 的 representation
+它是一個 vector
+但我們期待說這個 vector 的每一個 dimension
+就代表了 input 的這張圖片的某種特徵
+有沒有戴眼鏡，是什麼性別，等等
+那接下來你用 y domain 的 decoder
+吃這個 vector
+根據這個 vector 裡面所表示的人臉的特徵
+合出一張 y domain 的圖，我們希望做到這一件事
+但是實際上如果我們今天有 x domain 跟 y domain 之間的對應關係
+要做到這件事非常容易，因為就是一個 supervised learning 的問題
+但是現在我們是一個 unsupervised learning 的問題
+只有 x domain 的 image，跟 y domain 的 image， 他們是分開的
+那怎麼 train 這些 encoder 跟這些 decoder 呢？
+那也可以這樣 train，這個 encoder x
+跟decoder x 合起來，組成一個 auto encoder
+input 一張 x domain 的圖
+讓它 reconstruct 回原來 x domain 的圖
+y domain 的 encoder 跟 y domain 的 decoder， 組成一個 auto encoder
+input 一個 y domain 的圖
+reconstruct 回原來 y domain 的圖
+那我們知道這兩個 auto encoder 在 train 的時候
+它們都是要 minimize reconstruction error
+用這樣的方法，你確實可以得到
+2 個 encoder，2 個 decoder
+但是這樣會造成的問題是
+這兩個 encoder，這兩個 decoder 之間
+是沒有任何關聯的
+這邊你還可以多做一件事情是
+你可以把 discriminator 加進來
+你可以 train 一個 x domain 的 discriminator
+強迫 decoder 的 output 看起來像是 x domain 的圖
+因為我們知道說
+假設如果你只 learn auto encoder
+你只去 minimize reconstruction error
+decoder output 的 image 會很模糊
+那你如果不要讓你 decoder output 的 image 模糊
+那你就會想要加一個 discriminator
+那這個 discriminator 呢
+它就是吃這一張 image
+然後鑑別它是不是 x domain 的圖
+有一個 y domain 的 discriminator，它吃到一張 image
+鑑別它是不是 y domain 的圖
+這樣你會強迫你的 x domain 的 decoder 跟 y domain 的 decoder
+它們 output 的 image 都比較 realistic
+你會發現說，這個 encoder 加這個 decoder， 加這個 discriminator，它們 3 個合起來
+其實就是一個 VAE GAN
+對不對，我們上一堂可有講一個東西叫做 VAE GAN
+它可以看做是強化 VAE
+或者可以看做是用 GAN 強化 VAE， 也可以看做 VAE來強化 GAN，都可以
+所以這個encoder 這個 decoder，加這個 discriminator 合起來
+是一個 VAE GAN
+這個 encoder 加這個 decoder，加這個 discriminator 合起來
+它是另外一個 VAE GAN
+但是因為這兩個 VAE GAN 他們的 training 是完全分開的，完全各自獨立的
+所以你實際上 train 完以後，你會發現
+他們的 latent space 可能意思是不一樣的
+也就是說你今天丟這張人臉進去
+變成一個 vector
+你把這個 vector 丟到這張圖片裡面
+搞不好它產生的就是一個截然不同的圖片
+因為今天這兩組 auto encoder
+它是分開 train 的
+也許上面這組 auto encoder
+是用這個 latent vector 的第一維代表性別
+第二維代表有沒有戴眼鏡
+下面這個是用第三維代表性別
+第四維有沒有戴眼鏡
+如果是這樣子的話，你就做不起來， 因為你 input 這張 image
+它變成一個 vector，再解回來的時候
+它會產生不一樣的圖片
+也就是說今天 x 這一群 encoder 跟 decoder
+還有 y 這一群 encoder 跟 decoder
+它們用的 language 是不一樣的， 它們說的語言是不一樣的
+所以 encoder 吐出一個東西
+x domain 的 encoder 吐出一個東西， 要叫 y domain 的 decoder 吃下去
+它 output 並不會跟 x domain encoder 的 input 有任何的關聯性
+接下來的問題就是
+怎麼解決這件事？
+所以在文獻上，就會有各式各樣的解法
+一個常見的解法是
+你讓這個 encoder 跟 decoder， 不同 domain 的 encoder 跟 decoder
+他們的參數是被 tie 在一起的
+就我們知道說 encoder 有好幾個 hidden layer
+x domain encoder 有好幾個 hidden layer， y domain encoder 也有好幾個 hidden layer
+那你希望他們最後的幾個 hidden layer
+參數是共用的，他們共用同一組參數
+那可能前面幾個 layer 是不一樣的
+但最後的幾個 layer，必須是共用的
+否則有兩個 decoder，不同 domain 的 decoder， 它們前面幾個 layer 是共用的
+後面幾個 layer 是不一樣
+那這樣的好處是什麼？
+這樣的好處是說
+因為他們最後幾個 hidden layer 是共用的
+也許因為透過最後幾個 hidden layer 是共用這件事
+會讓這兩個 encoder 把 image 壓到同樣的 latent space 的時候
+他們的 latent space 是同一個 latent space
+他們的 latent space 會用同樣的 dimension
+來表示同樣的人臉特徵
+那這樣的技術，被用在 couple GAN
+跟 UNIT 裡面
+那像這種 share 參數的 task，它最極端的狀況就是
+這兩個 encoder 共用同一組參數，就是同一個 encoder
+只是在使用的時候吃一個 flag，代表說
+現在要 encoder 的 image 是來自於 x domain
+還是來自於 y domain
+所以大家知道意思嗎？就是說，同一個 encoder
+然後但是 input 給它 x domain image 的時候， 你要順便給它一個數值，比如說 1
+然後 input y domain image 的時候， 你給它另外一個數值，比如說 -1
+讓他知道說現在 encode 的是 x domain 還是 y domain 的 image
+如果你今天要 share 參數的話
+最極端的狀況就是這樣
+最極端的狀況是兩個 encoder 他們參數完全一樣
+只是給它們不同的 input flag
+讓它們知道現在以後的 image
+不是在同一個 domain 上，是不同的 domain
+這個是第一招，還有很多滿坑滿谷的招式
+比如說有一個就是加一個 domain 的 discriminator
+那這個概念跟我們剛才在前一堂課講過的 domain adversarial training 是一樣的，其實是一樣的
+它的概念是這樣子
+原來 x domain 跟 y domain 都是自己搞自己的東西
+但我們現在再加一個 domain discriminator， 這個 domain discriminator 要做的事情是
+給他這個 latent 的 vector
+它去判斷說這個 vector 是來自於 x domain 的 image
+還是來自於 y domain 的 image
+這個 domain discriminator，要判斷說這個 x
+這個 vector 呢
+它是從 x domain 的 image 來的
+還是從 y domain 的 image 來的
+然後你的這兩個 encoder
+x domain encoder 跟 y domain encoder，他們的工作
+就是想要去騙過這個 domain 的 discriminator
+讓 domain 的 discriminator
+沒辦法憑藉這個 vector 就判斷說
+它是來自於 x domain 還是來自於 y domain
+如果今天domain 的 discriminator
+無法判斷說這個 vector 是來自於 x domain 和 y domain
+這樣意味著什麼呢？意味著說，今天
+這個 domain 的 image
+跟這個 domain 的 image
+它們都變成 code 的時候
+他們的 distribution 都是一樣的
+它們的 distribution 是一樣的
+那我們今天可以假設說，假設比如說
+因為它們的 distribution 是一樣的
+也許我們就可以期待同樣的維度
+就代表了同樣的意思，舉例來說
+假設真人的照片男女比例是 1:1
+動畫人物的照片，男女比例也是 1:1， 但是實際上不是這樣子，我們就假設是 1:1
+因為男女的比例都是 1:1
+最後如果你要讓兩個 domain 的 feature， 它的 distribution 一樣
+那你就要用同一個維度
+來存這個男女比例是 1:1 的 feature
+如果是性別都用第一維來存
+這樣他們的 distribution 才會變得一樣
+所以假設你今天的這兩個 domain
+他們的 attribute 的 distribution 是一樣的
+比如說，男女的比例是一樣的
+有戴眼鏡跟沒戴眼鏡的比例是一樣的，長髮短髮，比例是一樣的
+那你也許期待說，透過 domain discriminator
+強迫這兩個 domain 的 embedding latent feature 要是一樣的時候
+那它們就會用同樣的 dimension
+來表示同樣的事情，來表示同樣的 characteristic
+那這個是一招，還有其他的招數
+舉例來說，你也可以用 cycle 的 consistency
+怎麼做呢？把這張 image，透過 x encoder 變成 code
+再透過 y 的 decoder 把它解回來
+然後把這張 image
+再丟給 y domain 的 encoder
+再透過 x domain 的 decoder
+把它解回來
+然後希望 input 跟 output 越接近越好
+那這個就是 cycle consistency
+那如果把這個技術來跟 cycle GAN 來做比較的話
+我們剛剛說 cycle GAN 就是有兩個 transformation 的 network
+那你的 encoder， xx domain 的 encoder
+加 y domain 的 decoder，他們合起來
+就是從 x domain 轉到 y domain
+然後你這邊有一個 discriminator
+確定說這個 image 看起來像不像是 y domain 的 image
+接下來，你再從這邊進來
+把這張 image，透過 y domain 的 encoder 跟 xx domain 的 decoder，轉回
+原來的 image，那你希望 input 的 image
+跟 output 的 image，越接近越好
+這個跟 cycle GAN 的 training 其實就是一模一樣的
+只是原來在 cycle GAN 裡面，我們說
+從 x domain 到 y domain generator 就是一個 network
+我們沒有把它特別切成 encoder 跟 decoder，只是在這邊，我們會把它切成
+把 x domain 到 y domain 的 network 切成說
+它有一個 x domain 的 encoder
+它有一個 y domain 的 decoder
+從 y domain 到 x domain 的 network，我們說它有一個 y domain 的 encoder
+它有一個 x domain 的 decoder，network 的架構
+不太一樣，然後中間的那個 latent space 是 shared
+但是實際上它們是 training 的 criteria，其實就是一樣的
+那像這樣的技術，就用在 Combo GAN 裡面
+就是有各式各樣的 GAN，這世界上有各式各樣的 GAN
+那還有一個叫做 semantic consistency
+semantic consistency 是這樣，你把一張圖片
+丟進來，然後把它變成 code
+然後接下來，你在把這個 code 用 y domain 的 decoder 把它合回來
+再把 y domain 的 image 丟到 y domain 的 encoder， 再把它合回來，那你希望
+透過 x domain encoder 的 encode
+跟 y domain encoder 的 encode， 他們的這個 code，要越接近越好
+那這樣的好處是說， 我們本來在做 cycle consistency 的時候
+你算的是這張 image
+跟這張 image，算是兩個 image 之間的 similarity
+那如果是 image 和 image 之間的 similarity
+你通常算的是 pixel wise 的 similarity
+你不用考慮 semantic，你看它們表象上像不像
+那如果是在這個 latent 的 space 上面考慮的話
+那你就是算它們的 semantic 像不像
+你算它們的 latent 的 code 像不像
+意思就是說你在算它們的 semantic 像不像
+這個技術可以用在 XGAN 裡面
+就有一個 X GAN，這個東西看起來很像 X
+所以你也可以叫它X GAN
+那其實也可以做到 voice conversion
+voice conversion 是什麼呢？
+voice conversion 就是把 A 的聲音，轉成 B 的 聲音
+那這個技術一點都不稀奇， 20 年前阿笠博士就已經做過了
+所以這技術，並沒有什麼稀奇的
+但是過去在阿笠博士的時代是怎麼做的呢？
+過去的 voice conversion
+要做的話，你就是要收集兩個人的聲音， 假如你要把 A 的聲音，轉成 B 的聲音
+你就要把 A 找來念 50 句話，B 找來也念 50 句話
+讓它們念一樣的句子， A 說 How are you，B 也說 How are you，A 說 Good morning，B 就說 Good morning
+接下來怎麼做？你完全可以想像怎麼做
+learn 一個 model，比如說sequence to sequence model 或是什麼其他的
+吃一個 A 的聲音，然後轉成 B 的聲音
+就結束了，這就是一個 supervised learning problem，對不對
+但這樣的技術，有很大的缺陷
+舉例來說，假如你想要把你的聲音轉成新垣結衣的聲音
+那你就要把新垣結衣請來跟你念一樣的 50 句的句子
+而且我們就算退一萬步說，你真的請到新垣結衣好了
+她其實也不會說中文，所以她沒辦法跟你念同樣的句子
+所以怎麼辦，我們需要用 GAN 的技術
+就我們用今天學到的那些技術
+你就可以在兩堆聲音間，作互轉
+就你只需要收集 speaker A 的聲音
+再收集 speaker B 的聲音
+他們兩個甚至可以說的就是不同的語言
+一個說中文，一個說英文
+用我們剛才講的第二個方法
+做下去，你就可以看看說
+你能不能夠把 A 的聲音轉成 B 的聲音
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心 http://aintu.tw

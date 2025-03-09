@@ -294,10 +294,10 @@ def create_readme_doc(max_idx, latest_date, batch_size=100):
 
 """
     # 反向計算範圍
-    start_batch = (max_idx - 1) // batch_size  # 最大的批次編號
+    end_batch = (max_idx - 1) // batch_size  # 最大的批次編號
     
     # 從大到小遍歷
-    for i in range(0, start_batch+1):
+    for i in range(0, end_batch+1):
         start_idx = i * batch_size + 1
         end_idx = min((i + 1) * batch_size, max_idx)
         content += f"- [{start_idx:04d}~{end_idx:04d}](docs/{i:02d}-index.md)\n"

@@ -862,14 +862,39 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
 </details>
 
 <details>
-<summary>76. Deep Learning Theory 2-5: Geometry of Loss Surfaces (Empirical)</summary><br>
+<summary>76. [2018-03-24] Deep Learning Theory 2-5: Geometry of Loss Surfaces (Empirical)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=XysGHdNOTbg" target="_blank">
     <img src="https://img.youtube.com/vi/XysGHdNOTbg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章整理：深度學習模型訓練中的動態行為分析
 
+#### 1. 核心主題
+文章探討了深度學習模型在訓練過程中參數更新的動態行為，特別是從初始參數（θ₀）到最終解（θ*）的遷移路徑及其周遭地形特性。
+
+#### 2. 主要觀念
+- **參數遷移路徑**：在高維空間中，模型訓練通常不會沿直線遷移到達目標點，而是呈現出曲折、迂迴的路徑。
+- **局部最小值的存在性**：實驗表明，在某些情況下，可能存在局部最小值，但很難觀察到大量崎嶇地形特徵。
+- **解析度與地形結構**：高解析度分析顯示，訓練路徑周圍存在一些高低起伏，暗示局部最小值的可能性。
+
+#### 3. 問題原因
+- **高維空間的複雜性**：深度學習模型參數維度高，導致地形結構不易直接觀察。
+- **遷移路徑的不規則性**：遷移路徑受到_optimizer_算法（如梯度下降）的影響，可能避開某些崎嶇地形。
+
+#### 4. 解決方法
+- **一維分析**：通過投影到某一維度來觀察遷移路徑的平坦性。
+- **殘差分析**：引入殘差概念，衡量訓練路徑與目標路徑的偏差。
+- **多維度分析**：研究不同初始化條件下的遷移路徑及其地形特徵。
+
+#### 5. 優化方式
+- **高解析度分析**：提高解析度以更清晰地觀察地形結構。
+- **多網絡深度研究**：探索更深的網絡是否會顯現更多崎嶇地形特徵。
+
+#### 6. 結論
+- 深度學習模型訓練路徑通常平坦，局部最小值不易被發現。
+- 初步證據表明，某些情況下可能存在局部最小值，但需更高解析度或更深網絡進一步研究。
 </details>
 
 <details>
@@ -884,25 +909,108 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
 </details>
 
 <details>
-<summary>78. Deep Learning Theory 3-2: Indicator of Generalization</summary><br>
+<summary>78. [2018-03-24] Deep Learning Theory 3-2: Indicator of Generalization</summary><br>
 
 <a href="https://www.youtube.com/watch?v=pivB5jEBOQw" target="_blank">
     <img src="https://img.youtube.com/vi/pivB5jEBOQw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理
 
+## 核心主題
+文章探討了深度學習中批量大小（batch size）與模型泛化能力（generalization）之間的關係，特別是通過模型參數空間中的平坦度（flatness）和尖銳度（sharpness）來解釋這一現象。
+
+## 主要觀念
+1. **Batch Size的影響**：較大的批量大小可能導致模型在參數空間中找到更尖銳的局部最小值（sharp minima），而較小的批量則傾向於找到更平坦的局部最小值（flat minima）。
+2. **平坦度與泛化能力**：較平坦的局部最小值通常對應更好的泛化性能，因爲它們對參數的小變化不太敏感，從而減少了過擬合的風險。
+3. **尖銳度與過擬合**：較尖銳的局部最小值可能更容易導致模型過擬合訓練數據，從而降低其在測試數據上的表現。
+
+## 問題原因
+1. **Batch Size的選擇**：不當選擇批量大小可能導致模型在優化過程中陷入不理想的局部最小值，影響泛化能力。
+2. **Sharpness與Generalization的關係**：傳統觀點認爲平坦的局部最小值更有利於泛化，但 recent research（如文章中提到的倒數第二篇論文）對此提出質疑，指出尖銳的局部最小值也可能具有良好的泛化性能。
+
+## 解決方法
+1. **調整Batch Size**：通過適當選擇批量大小，可以在優化過程中找到更平坦的局部最小值，從而提高模型的泛化能力。
+2. **Entropy SGD方法**：引入如Entropy SGD等優化算法，旨在引導模型在訓練過程中趨向於尋找更平坦的局部最小值。
+
+## 結論
+1. **Batch Size的重要性**：批量大小的選擇對模型的最終性能有顯著影響，需謹慎選擇以平衡訓練效率與泛化能力。
+2. **Sharpness與Generalization的再審視**：現有研究表明，尖銳的局部最小值也可能具備良好的泛化能力，因此未來的研究需要重新評估平坦度和尖銳度在泛化中的作用。
+
+## 參考文獻
+1. 分析過擬合與不過擬網絡差異的文章。
+2. 探討批量大小、尖銳度與泛化能力關係的論文。
+3. 提出Entropy SGD方法的文獻。
+4. 比較各種指標的綜述文章。
+5. 題爲「Sharp Minima Can Generalize for Deep Networks」的研究。
+
+---
+
+以上整理基於文章內容，突出了核心主題、主要觀點、問題根源、解決方案及結論，並引用了相關文獻以支持論述。
 </details>
 
 <details>
-<summary>79. GAN Lecture 4 (2018): Basic Theory</summary><br>
+<summary>79. [2018-05-11] GAN Lecture 4 (2018): Basic Theory</summary><br>
 
 <a href="https://www.youtube.com/watch?v=DMA4MrNieWo" target="_blank">
     <img src="https://img.youtube.com/vi/DMA4MrNieWo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 一、核心主題
 
+- **GAN 的基本概念**：生成 adversarial networks (GANs) 是一種深度學習模型，由生成器和判別器兩個神經網絡組成，用於學習數據的分布並生成新的樣本。
+
+### 二、主要觀念
+
+1. **Ian Goodfellow 的觀點**：
+   - **核心思想**：GAN 的核心在於衡量兩種數據分佈（實際數據分佈和生成器生成的數據分佈）之間的散度（Divergence），判別器的作用是評估生成數據與真實數據的差異。
+   - **判別器的功能**：判別器用於計算兩個數據分佈之間的散度，並在訓練過程中逐步優化以最小化這種散度。
+
+2. **Yann LeCun 的觀點**：
+   - **核心思想**：GAN 中的判別器用於評價生成樣本的好壞，即用於衡量生成樣本是否接近真實數據分布。
+   - **判別器的功能**：判別器不僅用於訓練階段評估生成器的性能，還可以用作後續任務（如分類）的分類器。
+
+### 三、問題原因
+
+- **Ian Goodfellow 的觀點可能存在的問題**：
+  - 在實際訓練中，判別器通常不會完全崩潰或失去 discrimination capability，這與 Ian 見解中所描述的判別器最終會「壞掉」的情況不符。
+  - 判別器在訓練過程中保留前一階段的參數用於下一階段 training，這在Ian的模型假設下似乎缺乏合理性的解釋。
+
+- **Yann LeCun 的觀點存在的問題**：
+  - 將判別器直接用作分類器可能忽略了一些GAN訓練中的復雜性，例如生成器和判別器之間的相互作用可能影響判別器的最終表現。
+
+### 四、解決方法
+
+1. **Ian Goodfellow 観點下的解決方案**：
+   - 確保在訓練過程中適當平衡生成器和判別器的更新步驟，以防止判別器過於強大或崩潰。
+   - 使用穩定的散度指標（如Wasserstein距離）來衡量數據分佈的差異。
+
+2. **Yann LeCun 観點下的解決方案**：
+   - 在GAN訓練結束後，利用已經訓練好的判別器作為預訓練模型，直接用於其他分類任務。
+   - 確保在GAN訓練過程中保留判別器的有用特性，使其既能評價生成樣本 quality，又能反映數據分布。
+
+### 五、優化方式
+
+1. **Ian Goodfellow 観點下的優化**：
+   - 使用 gradient penalty 等技術來穩定判別器的梯度，避免其過於陡峭或平坦。
+   - 在GAN訓練中引入多種指標（如FID score）來全面評估生成數據的質量。
+
+2. **Yann LeCun 観點下的優化**：
+   - 在GAN訓練過程中整合過去生成器生成的樣本，用以豐富判別器的訓練數據，提升其性能。
+   - 適當調整判別器和生成器的訓練比例，確保兩者協調工作。
+
+### 六、結論
+
+- **Ian Goodfellow 観點的局限性**：
+  - 儘管Ian的理論提供了GAN的基本框架，但在實際訓練中判別器並未完全崩潰，這表明其散度衡量假設可能存在不足。
+
+- **Yann LeCun 観點的有效性**：
+  - LeCun的觀點更側重於判別器在後續應用中的價值，這與許多研究者在實際操作中將判別器用作分類器的做法相契合。
+  
+- **綜合見解**：
+  GAN 的具體實現和效果可能介於Ian 和 Yann 的兩種觀點之間。判別器的最終作用既包括衡量數據分佈散度，也包括評估生成樣本 quality。在實際訓練中，應該根據具體任務需求和經驗來調整GAN的訓練策略。
 </details>
 
 <details>

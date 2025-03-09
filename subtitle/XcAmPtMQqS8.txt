@@ -1,0 +1,1380 @@
+Okay, let's start the class.
+Last week,
+we talked about the WGAN.
+We also mentioned that, actually,
+if you want to implement a WGAN
+There are lots of ways.
+The best way
+to implement the WGAN so far
+is to use the Spectral Normalization.
+Many people abbreviate this to SNGAN.
+SN means Spectral Normalization.
+Okay, although there is already a WGAN,
+it does not mean that
+GAN can be trained easily.
+GAN is still famous for being difficult to be trained.
+Why is it difficult to train a GAN?
+It stems from the property of GAN.
+Let’s think about Discriminator and Generator
+What do they do in the training time?
+What Discriminator does is to
+distinguish the real pictures and the generated ones,
+which is the fake pictures.
+This is what Discriminator does.
+And what Generator does is to
+produce fake pictures that can successfully fool the Discriminator
+In fact, these two networks,
+the Generator and the Discriminator,
+grow together and
+help each other along the way.
+If one of them stop the training for some reason,
+the other one will stop the training too
+and will start to get worse.
+Then the training process of GAN fails.
+So,
+if you do not train a Discriminator
+that is still not well-optimized,
+which means that your Discriminator can't tell the difference between the real and the generated picture.
+Then,
+for the Generator,
+it loses its training target.
+Accordingly, the Generator can no longer improve its performance.
+Once the Generator can't improve anymore,
+discriminator will also stop there.
+Once Generator can't improve anymore,
+it can't produce more realistic pictures.
+Then Discriminator has no way to improve too.
+So,
+when you are training Discriminator and Generator,
+as long as one of them no longer improves,
+the other one will stop afterwards.
+However, you have trained lots of networks so far.
+Can you guarantee that the loss will get lower and lower with more training steps?
+You can't, right?
+When you train a network,
+Chances are that you need to adjust the Hyperparameter to get desirable performance.
+As for the case of Discriminator and Generator,
+the process of their interaction is automatically done
+during training.
+We can't adjust the Hyperparameter
+when we are still training Discriminator.
+So what we can do is to pray.
+Pary that the loss of Discriminator can get lower every step.
+Once it doesn’t get lower,
+the whole training process is very likely to fail.
+And the process of Discriminator and Generator that
+reinforce each other might stop
+So when we train a Generator
+and a Discriminator,
+they have to compete with each other with similar level of competence.
+If only any one of them gave up this game,
+the other person will not be able to continue.
+So the training process of GAN is still not an easy task.
+It is a very important and forward-looking technology.
+Some people might think that
+please don't put a network that is extremely hard to train in the homework.
+However,
+I still think it is an important cut-edge technology.
+Accordingly, we should still
+give everyone a chance
+to access the most cut-edge technology.
+You can at least experience that
+it is not easy to train a GAN.
+Of course, on the other hand,
+there are many people doing research in GAN.
+So you can find lots of programs or codes on the Internet.
+From this poing of view, it's not as difficult as you think.
+But training a GAN is still not an easy task.
+Well, you can find a lot of tips for GAN on the Internet.
+However, are all of them useful?
+You never know.
+Here are some tips for training GAN.
+These are for your reference.
+Okay, the most challenaging task for GAN,
+in fact, is to use GAN to generate texts.
+In other words, it is the most challenaging
+if you want to use GAN to generate a paragraph of texts.
+Why is it the most challenaging to use GAN
+to generate a paragraph of text?
+We know that
+if you want to generate a paragraph of text.
+Then you might need a Sequence to Sequence model.
+You have a decoder.
+This Decoder will generate a paragraph of text.
+Then the Sequence to Sequence model is our Generator.
+This is the decoder when we talked about the Transformer before.
+As for now,
+it plays the role of Generator of the GAN.
+It is responsible for producing what we want it to produce.
+For example, a paragraph of text.
+Then you may wonder what is the difference between this and the original GAN trained on images?
+There may be no difference between them from the high-level perspective of algorithm.
+In the original process, when you train a Discriminator that reads texts,
+the Discriminator reads a text in and judges whether it is a real text or a fake text produced by the machine.
+The generator is trying to fool the Discriminator
+by generating real-like texts.
+You need to adjust the parameter of your generator to make discriminator
+think that the picture the generator produced is real.
+But what is the difficulty here?
+The difficulty here is that
+If you want to use gradient descent
+to train your decoder and
+to let the score which discriminator output become higher,
+you will find that you can't do it.
+Why can't you do it?
+We know that
+gradient is related to
+how much an objective is affected
+when a specific parameter changes.
+Let's think about that
+suppose we change the parameters of decoder,
+which means that when the parameter of decoder has a little change,
+how much impact will the output of discriminator in the end be influenced?
+If the parameter of decoder has a small change,
+the output distribution will also have a small change.
+Because this change of parameter is small,
+it will not influence the biggest token.
+What is the token?
+I know that the concept of token
+may be abstractive to you.
+If we go detail about the concept of token,
+we can think that a token is the basic unit in this sequence.
+And tokens are defined by human.
+Suppose we generate a chinese sentence,
+we generate one character every time.
+We can think that a character is a token we defined.
+Suppose you are dealing with a english task,
+every time you produce an english letter.
+Then, a letter is the token you defined.
+Suppose you
+produce an english word every time,
+every english words are
+separated by blanks,
+In this case, a word is the token you defined.
+So the definition of token
+is decided by you.
+It depends on you to decide
+the basic unit of a sentence you generated.
+Ok, so today,
+when this distribution has only minor changes,
+the token with the highest score is still unchanged.
+As your distribution has only minor changes,
+the token with the highest score is the same.
+For discriminator,
+The score which it outputs
+is exactly the same,
+so the output score will not change.
+Then, you will find that
+when the parameters of decoder change a little,
+the output of discriminator is unchanged.
+Then, you have no way to calculate the gradient.
+You simply can't do gradient descent.
+Some students might say that
+is it because the max operator makes it impossible to do gradient descent?
+But we know that max pooling is an component in the convolution neural network,
+how can it still do gradient descent?
+This question is left to you to think about
+Why we
+can’t do gradient descent here with max operators
+but max pooling can do gradient decent?
+Okay, but even if we can’t do gradient descent here,
+we do not need to afraid of this phenomenon.
+Do you remember what we talked about last week?
+When we encountered the problem of not being able to use the gradient descent for training,
+we can consider it as a problem of reinforcement learning.
+So we can just use the methods in the reinforcement learning and solve this problem in a hard way.
+So you can indeed use the method in the reinforcement learning
+to train your generator.
+When you want to generate a sequence,
+you can use the method of reinforcement learning
+to train your generator.
+But what problems will happen to this?
+Reinforcement learning is famous for the difficulty during training.
+GAN is also famous for its training difficulty.
+When we combine GAN and reinforcement learning,
+boom! it double the difficulty of training.
+It will become very hard to train such model.
+So using GAN to generate a paragraph of text
+used to be considered
+as a big problem.
+So for a long time,
+no one can train a generator successfully.
+No one can use GAN
+to train a generator successfully.
+When training a generator to generate text,
+normally, you need to do pretraining first.
+Actually we will talk about pretraining soon.
+If you don’t know what pretraining is now,
+It doesn't matter.
+Anyway, you couldn’t use normal methods in the past to
+let GAN generate a text sequence.
+Until there is a paper called ScrachGAN
+Its title is just to show off to you that
+it can train language GAN from scrach.
+From scrach means that we do not pretrain the model first.
+So it can directly start from random initialized parameters
+to train its generator.
+Then, we let the generator generate text.
+How does it do it?
+The most important thing is
+to tune a lot of hyperparameters and
+plus a lot of tips.
+Then, you can imagine
+that this is Google’s Paper.
+After it tune a lot of hyperparameters,
+it add a lot of tips here.
+For example,
+This horizontal axis is their major.
+This is called FED.
+This one is used in text scenario.
+We won't talk about it today.
+It is not important.
+In short, the lower the value is, the better the peformance is.
+At the beginning of the training, there must be a technology called SeqGAN-Step,
+which is necessary for training the model.
+Then, a big batch size is also necessary for training GAN.
+How large?
+Usually in thousands.
+You can't do this by yourself at home.
+Do regularization on the discriminator,
+pre-train the embeddings,
+and change the algorithm of reinforcement learning,
+and you can get the ScratchGAN.
+You can train GAN from scratch this way
+and use it to generate sequences.
+Okay, today we only discuss
+parts of GAN.
+If you want to learn the full version,
+I leave a link here for your reference.
+Actually, generative models
+not only consist of GAN,
+there are more.
+For example, VAE.
+For example, FLOW-Based Model.
+I also list the links to the videos of those models here
+for your reference.
+I want to emphasize
+that the videos provided do not mean
+you have to
+watch these videos
+to be able to learn the next lectures.
+There are so many things to learn in machine learning.
+So,
+if you don't have much time,
+the only thing you really need to attend to
+is what I said in class.
+The lecture is self-contained.
+It is consistent.
+As long as you attend every class,
+you should be able to
+understand the following lectures.
+In class,
+I will put some links to other videos.
+These are extra information for you.
+If you are really interested,
+you can conduct more in-depth research.
+So why don't we talk more about it?
+Because of the design of this class.
+The content of this course
+is designed to be practical.
+It is practice-oriented.
+Suppose you want to train a generator.
+You want the machine to produce something.
+You have many ways
+like GAN,
+VAE,
+or FLOW-Based Model.
+Here we choose to teach you GAN.
+So, in the future,
+if someone asks you to
+train a generative model,
+you know how to train it.
+If you want to have an in-depth study,
+you can study VAE and FLOW-Based Model.
+Someone might ask,
+"Why choose GAN?"
+"Why not choose other models?"
+The most intuitive
+and the most direct reason is,
+GAN's performance is better.
+If you want to produce very good pictures,
+you need to use GAN.
+Usually, the results of
+VAE or FLOW-Based Model
+is of lower quality compared to GAN.
+You usually
+have to work hard,
+do a lot of parameter tuning,
+use a bunch of tips,
+only to get results similar to GAN in the end.
+So GAN usually
+has better results.
+Then you might say,
+"GAN is harder to train."
+or "GAN may be harder to train,
+would VAE or FLOW be easier to train?"
+Well,
+If you have experience in VAE or FLOW,
+they are not easier to train, to be honest.
+You might think
+GAN looks mysterious
+judging by its formula.
+There is a discriminator and a generator
+and they have to interact.
+While FLOW-Based Model and VAE
+are more like
+training a general model directly.
+They have a very clear objective.
+But when you actually start training,
+you'll realize they are not so easy to be successfully trained.
+There are many terms in their objective.
+There are many terms in their loss.
+You have to balance everything to
+have good results.
+But it’s very difficult to strike a balance between them.
+I think training them is at lease
+not easier than training GAN.
+So we choose GAN here
+as the generative model to
+introduce in our class.
+As for other models,
+you can,
+if you are interested,
+look into them by yourself.
+Okay, so far,
+maybe some classmates would wonder,
+why do we need to
+propose some new ways
+to be generative.
+If our goal is to
+input a Gaussian random variable, that is,
+input a Gaussian
+and sample vectors from
+these Gaussian random variables,
+and turn it into a picture,
+can't we use
+supervised learning to do it?
+How?
+I have a bunch of pictures.
+I take out these pictures
+and assign every picture a vector,
+which is sampled from the Gaussian distribution.
+Next,
+use supervised learning to train them
+and it's over.
+Understand?
+You train a network.
+In this network,
+you already said this picture
+is assigned this vector.
+This picture is assigned this vector.
+Train a network,
+input a vector,
+and the output is its corresponding picture.
+Take the corresponding picture as your training target,
+train it and it's over.
+Can we do this?
+Yes.
+There is such generative models.
+The difficulty is that
+if you put
+a random vector here,
+the results of training will be bad.
+You may not train your model this way.
+So, what to do?
+You need some special methods.
+to arrange these vectors.
+As for what kind of special methods,
+i will also put the link of two reference papers here.
+Everyone found out that this is not a very old paper.
+For example, the paper "Gradient Original Network"
+is published last year,
+last July 20.
+These are relatively new papers and methods,
+I will put the link here for your reference.
+Okay, what we are going to talk about
+is the evaluation of GAN.
+How?
+How to judge
+whether the generator we have trained
+is good or not?
+It is not easy to evaluate the quality
+of a generator.
+The most intuitive way
+is finding someone to check.
+If you want to know that
+the pictures generated by the generator
+look like an animated character,
+you can find someone to look at.
+Maybe it's over.
+Actually, for a long time,
+especially when people were just starting to study
+techniques like generative models,
+there is no good measurement.
+At that time, the quality of the generator
+was evaluated by human eyes,
+and then the authors claimed how powerful their work was
+by just putting a few pictures at the end of the paper.
+and said "Hey, look at these pictures."
+"I think it is better than the results
+of the current literature."
+"Awesome!"
+"This should be state-of-the-art."
+It's over.
+The GAN-related paper in the early years
+has no numbers.
+There is no measurement in the whole paper.
+No Accuracy.
+It just put a few pictures to tell you
+this should be better than previous articles.
+It's over.
+You know this is not acceptable.
+There are many problems
+if we fully judged the results by human eyes.
+For example, not objective,
+or instable, and so on.
+Is there a more objective
+and automatic method
+to measure the quality of a generator?
+For some specific tasks,
+there are ways to design such methods.
+For example,
+in homework 6, we just want everyone
+to generate the avatars of the two-dimensional characters.
+There is an evaluation standard in the homework.
+We run a face detection system for animated characters
+and then look at the number of detected faces
+of animated characters in the pictures you provided.
+If you provide 1000 pictures
+with 900 detected faces,
+and the other one provides 1000 pictures
+with 300 detected faces,
+then the generator of the results
+with 900 detected faces
+is relatively good.
+But this is the design for homework 6.
+What if it’s a normal case?
+Let's not be limited to our homework.
+In the normal cases,
+I train a generator,
+which doesn’t necessarily generate animated characters.
+Because it generates other things,
+it can generate cats,
+or generate dogs,
+or generate zebras and so on.
+How do we know
+whether it is good?
+There is a way.
+Run an image classification system.
+Input the pictures generated by your GAN
+to the image classification system,
+See the result.
+The input of the image classification system is a picture,
+and we called it y.
+What about the output?
+The output is a probability distribution,
+which is called P (c│y).
+P (c│y) is a probability distribution.
+The more concentrated
+this probability distribution is,
+the better the generated picture is.
+Although we don’t know what is inside
+the generated pictures,
+we don't know if it is a cat or a dog, or a zebra.
+We don't know what it is.
+But if we input it to an image classification system,
+and the result of its outputs,
+as well as the distribution, is very concentrated,
+it means that the image classification system
+is pretty sure
+what it saw.
+It's pretty sure it saw the dog.
+It's pretty sure it saw a zebra.
+It means that
+the picture you generated
+may be close to the real picture.
+That’s why the image classification system can recognize it.
+If the generated picture is neither fish nor fowl
+or I don't even know what animal it is,
+the image classification system will be very confused,
+and thereby the probability distribution
+will be very flat,
+very evenly distributed.
+If it is evenly distributed,
+it means your GAN
+and the generated pictures
+may be strange,
+so the image classification system can’t recognize it.
+Okay, so this is based on the image classification system
+to judge the quality of the generated pictures.
+This is a possible approach.
+But this approach is not enough.
+What's the problem with this approach?
+With this approach,
+the evaluation method
+will be fooled by a method
+called Mode Collapse.
+What is Mode Collapse?
+Mode collapse means
+when you are training GAN,
+sometimes you encounter
+a special situation.
+Suppose these blue stars
+are the distribution of the real data.
+The red star is your GAN,
+your generative model's
+distribution.
+You will find that the pictures
+generative model outputs are
+just those few pictures.
+They're just those pictures.
+If you take out one picture,
+you may think that it does a good job.
+But if letting it produce a few more, it will show the bad things.
+You'll discover that
+it is bluffing.
+It turns out that only those pictures will be generated.
+The following is an example of mode collapse.
+Last week we said that
+I trained a generator
+that would produce the two-dimensional character.
+When training to the end,
+I found that it became such a situation.
+This face was getting more and more,
+more and more.
+And it also had different hair colors.
+This hair color was more reddish.
+This hair color was more yellow.
+It's getting more and more.
+In the end, it's all this face.
+This is the phenomenon called mode collapse.
+Why does mode collapse happen?
+Intuitively, it’s easy to understand.
+You can think of it
+as a blind spot of a discriminator.
+When the generator learns to generate this kind of picture,
+it finds that
+it can always fool the discriminator with it.
+The discriminator can’t tell
+whether the picture like this is fake.
+This is a blind spot of the discriminator.
+The generator hits this blind spot,
+and mode collapse occurs.
+How to avoid
+mode collapse?
+I think there is no good enough answers yet.
+For example,
+Last week we show
+the results of BEGAN.
+It will produce the result of a tennis dog.
+It was done by Google.
+It exhaustively tuned the parameters.
+But even it did that,
+it found that, eventually,
+it still had no way to really avoid
+mode collapse.
+In the end, BEGAN
+still has mode collapse.
+How does the paper on BEGAN solve this problem?
+It's actually really easy.
+When the model is training generator,
+I will save the training point along the way.
+Before mode collapse,
+I stop training.
+I just train to mode collapse
+and take out the previous model and use it.
+Then it's finished.
+So even if it’s Google's exhaustive search of parameters,
+there is still no way to completely solve
+the problem with mode collapse.
+For the problem of mode collapse,
+at least you know this problem exists.
+You can see that this situation is possible.
+When your generator always generates this face,
+you won't say that your generator
+is a good generator.
+You know that something happened
+so that your generator is not very good.
+But there is another
+problem that is harder to detect.
+It's still a bit like mode collapse.
+It's called mode dropping.
+Mode dropping means that
+your real data distribution may look like this,
+but your generated data is
+only a part of the real data.
+If you just look at the generated data,
+you might think it's pretty good.
+And for the distribution,
+its diversity is enough.
+But you don’t know for the real data.
+The diversity of the real data
+may actually be bigger.
+Let me give you an example.
+Ok,
+here is a real example.
+There is a student
+that trains the GAN to generate a human face.
+At a certain iteration,
+its generator generates these faces.
+You would think that
+there's no problem.
+And the diversity of faces is enough.
+There are men and women
+looking left
+and looking right.
+It has all kinds of faces.
+Okay, this is the generator at the T_th iteration.
+You don't think
+there's a problem with its diversity.
+But if you look at the next iteration,
+the picture generated by the generator looks like this.
+Do you find the problem?
+There is a problem with its skin tone.
+So before,
+there is no problem with men or women.
+But its skin tone is pale.
+The skin tone here is yellowish.
+If you don't handle it well,
+people will think there is racial discrimination in your generator.
+So the problem of mode dropping is actually
+not easy to detect.
+In fact, today,
+these very good GANs, such as
+BEGAN,
+Progress GAN,
+even these good GANs can generate very real faces,
+but is there any problem with mode dropping?
+Yes.
+If you see many
+faces generated by GAN.
+You will find that
+although they're very real,
+But it always seems to
+have only a few faces.
+It has a unique feature.
+After you see many samples, you will feel that
+these faces seem to be generated.
+So maybe today, the problem of mode dropping
+is still not fundamentally solved.
+We will need to measure
+whether the images
+produced by the generator
+have enough diversity.
+How do we do that?
+In the past,
+there is a method based on Image Classification.
+Suppose you have 1000 pictures
+produced by the generator,
+just throw them into
+some image classification system,
+and see which classes they are classified into.
+Thus,
+every picture
+gives us a distribution.
+Take the average over all distributions,
+and observe how the final distribution looks like.
+If the average distribution is compact,
+it means that the diversity is not enough.
+If all the pictures you threw in
+are classified as Class 2
+by your classification machine,
+this means that
+all the pictures probably look almost the same,
+which also means that
+the diversity is not enough.
+On the other hand,
+if the distributions
+of the generated pictures
+thrown into the Image Classifier
+are very different,
+then the pictures
+should not be classified into the same category
+and the average distribution
+should be relatively flat.
+What does this mean?
+This means that
+the diversity is probably enough.
+But if you think carefully,
+if we use an image classifier
+to evaluate the generator's diversity,
+then diversity and quality seem to be conflicting with each other.
+Previously, when we were talking about Quality,
+I said:
+"The more concentrated, the higher the quality."
+But to achieve greater diversity,
+the distribution should be flat.
+The flatter the distribution is, the greater the diversity will be.
+The answer to this contradiction is that
+quality and diversity are evaluated with respect to different things.
+Quality is evaluated on pictures one by one.
+If the quality is good, the distribution obtained by
+throwing ONE picture into the machine should be concentrated.
+But the diversity is evaluated on a set of pictures.
+If the average of
+the image classifier's distributions is flat,
+then the diversity
+is good.
+If the average
+is relatively flat...
+Sorry, there are two averages here (flat and average are similar in Chinese).
+Hopefully you know what I mean.
+Anyway, the flatter the average is,
+the greater the diversity will be.
+There was a criterion that was used very often in the past
+called Inception Score.
+Its abbreviation is IS.
+The inception score,
+as its name suggests,
+is calculated
+with the aid of a special type of CNN
+called the Inception Network.
+How is it actually calculated?
+The process is simple.
+Calculate the quality with the Inception Network.
+If the quality is high
+and the diversity is large,
+then the Inception Score will be greater.
+But we are not going to
+use Inception Score in our homework.
+Why not?
+Think carefully.
+If you throw the anime characters produced by yourself
+into the Inception Net,
+all the outputs might be "faces".
+You generator may have achieved a big Diversity
+by producing different hair colors
+or different eye colors.
+But for the Inception Network,
+all of them are simply faces.
+Therefore the Diversity under this criterion may be small.
+So Inception Score may not be applicable
+to our homework.
+In our homework,
+we used a different evaluation measure:
+Fréchet Inception Distance.
+The abbreviation of this measure
+is FID.
+What is this?
+First, throw the images
+into the Inception Net.
+If you let the image
+pass through the Inception Net completely,
+then you will receive a classification output
+"human faces"
+which is obviously unable to distinguish between pictures.
+So we should not use that result.
+Instead, we are going to make use of
+the output of the Hidden Layer
+before it enters the Softmax layer.
+We will use the output vector,
+which might be a several-thousand-dimensional vector,
+to represent
+an image.
+Because we picked out the output vector
+from the hidden layer
+but not the classification result,
+vectors that are going to be classified as faces
+can still differ slightly.
+The vectors might contain informations
+such as hair style, skin color,
+and so on.
+That's why we will not use the final category of the pictures.
+Every image is now represented
+by a vector,
+which is the Hidden Layer's output.
+On this page,
+the red dots
+are the vectors obtained by
+giving real pictures
+to the Inception Network.
+In reality, the vectors' dimensions
+are very high.
+For simplicity, let's assume that
+they can be put on a two-dimensional plane.
+What about the blue dots?
+The blue dot represents
+the pictures
+produced by your own generator.
+Throw them into the Inception Network,
+take out the vector before the Softmax layer,
+and draw them on the plane.
+Suppose it looks like this.
+Now let's assume that
+both the distributions of
+real pictures and generated pictures
+are Gaussian distributions.
+Then, we calculate the Fréchet distance
+between the two Gaussian distributions.
+That's it.
+As for what Fréchet distance is,
+you can read it up yourself if you're interested.
+The judging system for the homework
+will handle that for you anyway.
+Alright,
+since it is a distance,
+we want the value for it
+to be as small as possible.
+The smaller the distance,
+the better the quality of the generated image,
+since that implies the two sets of images are close to each other.
+You might still have a lot of questions in your mind right now.
+For example,
+you might question if it's fine to treat it as a Gaussian distribution
+when it doesn't quite seem like one.
+Well yes, this method does indeed have its flaws.
+Or, you might wonder
+if we want to get the distribution of your network accurately,
+wouldn't we need to generate a lot of samples to achieve that?
+However, that does require quite a bit of computation.
+It's also an inevitable problem when doing FID.
+That's the reason why
+we won't only focus on FID
+and nothing else.
+If we only focus on FID,
+the results would be quite bizarre.
+The reason is that
+we assumed the distribution of the output to be a Gaussian distribution,
+which in reality it was not.
+Is it weird to assume it
+to be a Gaussian distribution?
+Yes, it is a bit weird.
+That's why we use FID
+alongside the number of anime avatars detected
+as the indicators.
+When we use these two indicators
+at the same time, we can achieve
+a more reasonable and a more precise result.
+So, FID is one of the more commonly used measurement.
+There is a paper called
+"Are GANs Created Equal? A Large-Scale Study."
+It is a paper published by Google,
+in which are the implementations of a variety of different GANs.
+Here is a list
+of the various GANs they have implemented.
+There are all kinds of GANs.
+Each GAN
+has a slightly different objective during training,
+as well as a different loss.
+I won't go into the details about
+different kinds of GANs.
+Next, they tested all the GANs
+using different random seeds every time.
+After running it many times,
+here's the result.
+The following graph
+represents the results they got
+on four different datasets.
+The horizontal axis represents different GANs.
+As for the value on the vertical axis,
+the smaller it is, the better it is.
+Wait, it is supposed to be
+"FID".
+I think I wrote it into FIT.
+I'm sorry, this is supposed to be FID,
+not FIT.
+This is the FID score,
+and the smaller, the better.
+You can see that
+every item here
+is a distribution
+instead of a value.
+Why is that?
+Since they ran the tests with random seeds,
+the results would be a bit different every time.
+That's why the collection of results is a distribution instead of a value.
+Among the methods used, all are using GANs except one.
+One of the methods uses a VAE.
+We can see that
+the method that uses VAE is more stable
+when compared to the methods that used GANs.
+Different random seeds used in training VAE
+didn't make much differences.
+The GAN method, on the contrary,
+got affected seriously by different random seeds.
+You can clearly see that
+the difference in performance
+between VAE and GAN
+is substantial.
+While GAN can produce far better results than VAE,
+we can see that different GANs
+seem to perform similarly.
+That's why
+the name of this paper is "Are GANs Created Equal?".
+The various GANs do seem to perform similarly.
+This kind of conclusion makes for a clickbait
+that claims
+all GANs are almost the same
+and any research related to GANs is just a waste of time.
+Well, that's not quite the case in reality.
+If you read that paper carefully
+you would find out that
+every GAN listed there used the same network architecture
+in their experiments.
+All they did was
+tune the learning rate and random seed by brute force.
+The network architecture is still the same one.
+So, we still don't know
+if some network architectures
+actually favor
+certain kinds of GAN,
+or if certain kinds of GAN
+perform more stably
+using different network architectures.
+For example, if we look at
+the original paper that proposed WGAN,
+it claimed that its network architecture could be designed without much thoughts.
+One could design a 100-layer generator,
+which is totally unnecessary,
+and the model was still able to be trained successfully.
+So, maybe WGAN performs more stably
+when using a different network architecture.
+Perhaps different random seeds
+won't affect the stability too much.
+We have no idea,
+and this paper doesn't give a clear answer neither.
+Okay, in fact, those measures we just mentioned
+didn't completely solve
+the evaluation problem of GANs.
+What else is left?
+Imagine this.
+Assume this is the real data.
+For some unknown reasons,
+you trained a generator
+that generates images
+exactly like the ones in the real data.
+So, if you don’t know what the real data looks like,
+and you just look at the output of this Generator,
+you will feel great.
+It did a great job.
+The calculated FID
+must be very small.
+But, the question is: is this what we want?
+If the pictures it generates are the same as those
+training data in the database.
+Why don't we directly sample images
+from the training data?
+The training data is in your hands.
+Why do we need to train a Generator?
+Training Generator is actually because we want it to generate
+new pictures!
+In the dataset,
+those faces are not in the training data.
+If there is an exact same face in the training data,
+we may directly use the face in the training data,
+and there is no need to use GAN.
+So, sometimes your GAN generates very good results.
+Maybe, in your homework,
+FID is very low.
+The face recognition system also gives you a high score,
+but it may not be a good GAN.
+The problem like this
+is not measurable in our homework.
+But, it is a problem.
+How do we solve it?
+You may say that
+we compare
+the pictures generated by our Generator
+and the real data by similarity
+to see if it's the same.
+If many pictures are the same, it means that
+Generator just memorizes the training data.
+It's not very powerful.
+But, if I ask another question that
+assuming what your Generator learned
+is left-right reversing all the pictures in the training data,
+then, it also doesn’t do anything at all.
+Assuming what it learned
+is left-right flipping on all the pictures in the training data.
+Then, you will feel that,
+well, it looks great,
+but it doesn't do anything at all.
+Hence, merely using similarity as the comparing measure
+is not enough.
+So, the evaluation of GAN
+is very difficult.
+Even how to evaluate
+the performance of Generator
+is open research topic.
+If you are interested,
+here is a related article.
+There are more than 20 kinds of
+Generator's evaluation methods
+for you information.
+Okay! What's next?
+We are going to talk about Conditional Generation.
+Maybe, after we talk about the conditional generation,
+we could take a break.
+Then, the next section is for the TAs to talk a little bit about the homework on GAN.
+Okay, what is Conditional Generation?
+So far, for the Generator we have talked about,
+its input is just a random distribution.
+Then, it may not be very useful.
+What we want to advance further now is
+to manipulate the output of Generator.
+We give it a Condition "x",
+and let it generate "y" based on "x" and "z."
+For such Conditional Generation,
+what kinds of applications are there?
+For example, you can generate pictures from texts.
+If you want to generate pictures from texts,
+it is actually a Supervised Learning problem.
+You need some labeled data.
+You need to collect some pictures.
+You need to collect some human faces.
+Then, these human faces must have text descriptions
+to tell us that
+this one is red eyes,
+this is black hair,
+this is yellow hair,
+this one is dark circle, and so on.
+It could tell us like this.
+We need this kinds of labeled data like this
+to train this Conditional Generation.
+So, in tasks like Text-to-image,
+our "x" is a paragraph of text.
+Then, you might ask that
+how do we input a paragraph of text to Generator?
+You should ask this question to yourself.
+You can do whatever you want.
+We used RNN to read it through
+to get a vector.
+Then we threw it to Generator.
+Maybe, today, you can throw it to
+the Encoder of this Transformer
+to average these output vectors of the Encoder,
+and then you could throw it into the Generator.
+Anyway,
+you can use whatever methods you want,
+as long as, the Generator can read a paragraph of text.
+Okay! Then, you expect that you input "Red Eyes",
+and then
+the machine can draw a character with red eyes.
+But, the characters drawn are different every time.
+What kind of character it drawn
+depends on
+what kind of "z" you sampled.
+If you sampled a different "z",
+the drawn characters would be different,
+and have the same red eyes.
+This is what Text-to-image wants to do.
+Can it really be possible to do something like this?
+Yes, it can.
+There was this homework in the past,
+but not in this semester.
+There was this kind of homework in the past.
+We just input a red hair.
+This is the result from the previous TAs.
+We input a red hair
+and green eyes,
+and then the result is like this.
+It generates all kinds of characters with red hair and green eyes.
+We input blue hair and red eyes,
+and then it generates all kinds of characters with blue hair and red eyes.
+You realize that,
+sometimes, machine makes mistakes.
+For example, here is a different color pupil.
+Although we want to draw red eyes,
+it thinks that it would be acceptable by drawing a red eye
+and a blue eye.
+How do we make Conditional GAN?
+Our current Generator has two inputs.
+One is sampled from Normal Distribution
+"Z",
+and the other is "x",
+which is a paragraph of text.
+Our Generator will generate a picture "y."
+Then, we need a Discriminator.
+If we follow what we have learned in the past,
+Discriminator
+takes a picture y as input
+and output a value.
+This value represents how much
+the input picture looks like a real picture.
+It is a real picture
+or generated by a machine.
+How to train this Discriminator?
+If you see a real picture,
+just output 1.
+If you see a generated picture,
+just output 0.
+You can train Discriminator,
+and then train Discriminator and Generator repeatedly.
+Maybe you could successfully train a Generator.
+But in this way,
+it couldn't really solve the problem of Conditional GAN.
+Why?
+Because if we only train Discriminator,
+and this Discriminator only takes y as input,
+what Generator will learn is
+how to generate a very clear pciture that
+can fool the Discriminator.
+It will produce clear pictures
+but the picture isn't correlated to the input.
+Because for Generator,
+it only needs to generate clear pictures
+then it can fool Discriminator.
+Why does it need to care about the input text description?
+Your Discriminator doesn’t consider the input text,
+so it doesn’t need to care about the input descriptions.
+No matter what text you enter,
+just ignore this x.
+Anyway, it just generate a picture,
+and it's over if it can fool Discriminator.
+But this is obviously not what we want.
+So in Conditional GAN,
+you have to make a different design.
+Your Discriminator doesn’t just input pictures,
+it also has to take input Condition x.
+For your Discriminator,
+it takes y as input,
+as well as x as input,
+and then generate a value.
+Then this value can not be assessed by only check if y is good or not.
+If it only generate a good picture,
+then it isn't good enough.
+Discriminator still won't give high scores,
+if it only generate a good picture.
+Under what circumstances will Discriminator give high scores?
+Not only should the picture be better,
+but the picture must also
+correlate to the x,
+which is the input text description.
+The picture must correlate to the input description,
+and then Discriminator will give high scores.
+How to train such a Discriminator?
+You will need text and image paired data.
+So Conditional GAN
+in general
+need this paired data.
+It needs labeled data
+and paired data.
+With these paired data,
+then you can tell your Discriminator:
+if you see these real paired data,
+just give it 1 point.
+If it sees Red Eyes,
+hmm, I don't know why it is look like this here.
+But it doesn't matter.
+Anyway, I didn’t put anything special on my side.
+Just a less important pictures.
+Maybe for images with Red Eyes and the pictures generated by the machine
+discriminator will output 0 point.
+Then keep training.
+Then you can make
+Conditional GAN.
+But in practice,
+it's not good enough.
+If we just use
+the positive samples
+and the negative samples
+to train such a discriminator.
+usually it is not enough.
+that this situation is good
+Simply telling Discriminator that "this is a good situation" and
+"this is a bad situation" is not enough for yielding good results.
+You should also add a bad situation meaning that
+it has generated a good picture
+but the picture is not correlated to the text description.
+So a common solution is
+deliberately pair the text with
+wrong pictures to produce new data
+and tell your Discriminator
+if you see this situation,
+you have to say it's bad.
+Using this kind of data,
+you could train the Discriminator well.
+Then let Generator and Discriminator
+training repeatedly.
+You will get good results in the end.
+This is Conditional GAN.
+So in the current example, it usually
+generates a picture given a text description.
+The applications of Conditional GAN
+is not only generating a picture given an input text,
+but also generating a new picture
+given an input picture.
+There are also many applications
+about generating a picutre given another picture.
+For example,
+give it a design plan of a house,
+then let your Generator directly generate the house.
+Give it a black and white picture,
+and let it paint with color.
+Give it a sketch map,
+and let it turn it into a real.
+Give it a daytime picture,
+and make it generate the picture at night.
+Sometimes,for example, you will give it
+a foggy picture,
+and make it generate a picture without fog
+by removing the fog.
+So,
+in addition to generating pictures given input texts,
+you can also input images to Conditional GAN to generate images.
+The name of this kind of applications
+is called Image Translation.
+Someone also called it Pix2pix.
+This Pix is ​​Pixel.
+It's the abbreviation of pixel.
+So it’s called Pix2pix.
+Ok, how do you implement it?
+There is no difference from
+generating a picture given an input text.
+Now it’s just generating images from images.
+Replace the text part with an image.
+Of course in the same way,
+to make such a Generator.
+to generate a picture.
+input a picture to generate a picture.
+Of course you can use the Supervised Learning.
+In the literature, you will find that
+if you use the method of Supervised Learning
+you can't get very good results.
+Usually, the result of a generator that uses some pictures as the input
+and trained by supervised learning
+may look like this.
+This is the input of your generator,
+and this is the output of your generator.
+You will find that it is very vague.
+Why?
+Maybe it is because
+the same input may
+correspond to different output pictures.
+Just like the example we've mentioned
+at the beginning of this class,
+the elf may turn left
+or turn right
+at the same corner.
+As the result,
+they learn to turn left and turn right simultaneously.
+In the image-to-image case,
+it's the same.
+For a given picture,
+there are several different possible outputs.
+What generator learns
+is to average different outputs,
+which results in a vague picture.
+So at this moment, we need to use GAN to train.
+You need to add a discriminator.
+The input of the discriminator is a picture
+and a condition,
+then it will output the result after checking
+whether the condition and the picture
+match or not.
+This is the output of GAN
+from the paper in the upper right corner.
+You will find that
+if you use GAN only,
+there's a small problem.
+Though the pictures it produces are real,
+however,
+it is way too over-imaginative.
+It will generate something that
+the real pictures do not have.
+For example,
+This is a house,
+but there is nothing in the upper left corner.
+However,
+it adds something like a chimney or a window there.
+Empirically, if you want to have the best result,
+you should use GAN and supervised learning
+at the same time.
+Using them simultaneously
+can usually yield the best results.
+By "simultaneously" I mean
+when you train a generator,
+on the one hand, it is going to fool the discriminator,
+and on the other hand,
+it wants to generate a picture
+which is similar to the real pictures.
+It does both at the same time.
+This often produces the best results.
+Conditional GAN ​​still has many applications.
+Here is an interesting application.
+Given an short audio
+as the input,
+and
+GAN will generate a corresponding picture.
+What does that mean?
+For example, listen to a dog barking
+and hope GAN can output a dog.
+I just said that Conditional GAN ​​needs
+the label information;
+it needs paired information.
+The sound and the picture are paired in the data.
+Actually, it's not that difficult to collect them
+because you can collect a lot of videos easily.
+There are both images and sound in the video.
+Then you know,
+this frame of image
+corresponds to this audio.
+This frame of picture
+is paired with this audio.
+The picture of this frame corresponds to this.
+After collecting them,
+you can train a Conditional GAN.
+Listen,
+and let it imagine
+what does it looks like.
+Okay, this is made by a student in our laboratory.
+This is a demo.
+Let machine listen to this audio clip.
+It sounds a bit like the sound of a broken TV.
+What does the machine think it heard?
+The Machine felt that
+it heard a creek
+or a waterfall.
+We listen to another audio clip.
+The machine felt it heard a speedboat in the ocean.
+Yet I am a little worried that
+maybe the machine have not really learned
+the relationship between the sound and the picture.
+Maybe it merely
+saves the pictures that have been seen in the training data.
+So, I decided to turn up the volume.
+Listen and see how it turns out.
+So we turn up the volume.
+Be careful it gets really loud next.
+Okay then the voice gets louder and louder.
+You will find that
+There are more and more splashes in this stream.
+It becomes Nicaragua Falls
+from a creek.
+The same for the speedboat example.
+Just make the speedboat's voice louder.
+Listen and see what happens.
+When the sound is getting louder and louder,
+you will find that there are more and more splashes besides the speedboat.
+It seems that the speedboat is driving faster and faster.
+But I have to admit that
+there are specially selected results.
+Most of the time,
+the output of the generator
+is like this.
+It's incomprehensible.
+We give it a piano sound,
+then it seems to want to draw a piano.
+But not very clear.
+We give it a barking sound,
+it seems that generator wants to draw an animal
+but it doesn't know what to draw.
+This is the result of sound to image.
+Recently, the most amazing application of Conditional GAN
+is to make pictures alive.
+We know in Harry Potter,
+The portraits are live and
+they can talk.
+Samsung
+made a similar application
+with GAN.
+Given a picture,
+for example, the portrait of Mona Lisa,
+then you can make Mona Lisa speak.
+This is one of the applications of Conditional GAN.
+I put the paper link here.
+Okay,
+we can take a break first.
+We'll be back in ten minutes.
+After this,
+teaching assistants will announce homework 6.

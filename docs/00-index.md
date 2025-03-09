@@ -1,23 +1,103 @@
 <details>
-<summary>50. ML Lecture 0-1: Introduction of  Machine Learning</summary><br>
+<summary>50. [2017-09-29] ML Lecture 0-1: Introduction of  Machine Learning</summary><br>
 
 <a href="https://www.youtube.com/watch?v=CXgbekl66jc" target="_blank">
     <img src="https://img.youtube.com/vi/CXgbekl66jc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理
 
+## 核心主題
+- 人工智慧中的機器學習技術及其分類與應用。
+
+## 主要觀念
+1. **機器學習的基本分類**：
+   - 監督式學習（Supervised Learning）
+   - 半監督式學習（Semi-Supervised Learning）
+   - 遷移學習（Transfer Learning）
+   - 無監督式學習（Unsupervised Learning）
+   - 強化學習（Reinforcement Learning）
+
+2. **任務類型**：
+   - 回歸（Regression）
+   - 分類（Classification）
+   - 結構化學習（Structured Learning）
+
+3. **強化學習的特性與應用**：
+   - 強化學習用於無法使用監督式學習的情境，例如自學對弈。
+   - 強化學習需要一個互動環境來進行.reward-based learning.
+
+4. **不同學習情境下的任務解決**：
+   - 根據可用資料類型（如棋譜資料）選擇適合的學習方法。
+
+## 問題原因
+- 在某些情境下，缺乏足夠的監督資料或教師信號，限制了監督式學習的效果。
+- 部分任務 complexities 超出了傳統分類與回歸框架的能力範圍，需要結構化學習或其他方法來處理。
+
+## 解決方法
+1. 根據可用資料類型選擇適合的機器學習方法：
+   - 監督式學習：當有大量標籤資料時。
+   - 強化學習：在互動環境中，缺乏明確教師信號的情況下。
+   
+2. 結合多種學習方法提升性能：
+   - 使用棋譜進行監督式學習初學，再利用強化學習進一步優化。
+
+## 優化方式
+- 根據具體任務需求與資料特性，靈活選擇並結合不同的機器學習方法。
+- 在缺乏足夠監督資料時，可以考慮使用半監督式、遷移式或無監督式學習來補充。
+
+## 結論
+- 機器學習技術的分類與應用需根據具體情境與資料特性來選擇合適的方法。
+- 強化學習雖看似潮，但其適用場景是有明確互動.reward-based learning的情境。
+- 不同學習方法有其優缺點，合理選擇與結合可提升任務解決效果。
 </details>
 
 <details>
-<summary>49. ML Lecture 1: Regression - Demo</summary><br>
+<summary>49. [2017-09-21] ML Lecture 1: Regression - Demo</summary><br>
 
 <a href="https://www.youtube.com/watch?v=1UqCjFQiiy0" target="_blank">
     <img src="https://img.youtube.com/vi/1UqCjFQiiy0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 小節歸納
 
+#### 核心主題  
+- 探討在回歸模型中使用梯度下降法（Gradient Descent）進行參數優化的過程及其挑戰。
+
+#### 主要觀念  
+1. 回歸模型的基本形式：\( y = b + w \cdot x \)，其中 \( b \) 和 \( w \) 是需要優化的參數。
+2. 梯度下降法的基本原理：通過計算損失函數對參數的偏導數，逐步更新參數以最小化損失。
+3. 損失函數的可視化：二維平面上的顏色表示不同的參數組合對應的損失值，最低點即爲最優解。
+
+#### 問題原因  
+1. 初始學習率（Learning Rate）設置不當導致梯度下降過程中的問題：
+   - 學習率過小：迭代次數過多，仍無法接近最優解。
+   - 學習率過大：參數更新過程中出現劇烈震蕩或發散，偏離最優解。
+
+#### 解決方法  
+1. 調整學習率大小：
+   - 適當增大初始學習率，以加快收斂速度。
+   - 避免過度調大學習率導致的發散問題。
+
+#### 優化方式  
+1. 引入自適應學習率調整方法（AdaGrad）：
+   - 對每個參數 \( b \) 和 \( w \) 分別設置不同的學習率，使其能夠以不同的速率更新。
+   - 通過動態調整學習率，使優化過程更加穩定和高效。
+
+#### 結論  
+- 梯度下降法在簡單回歸模型中的應用展示了參數初始化和學習率選擇的重要性。
+- 對於複雜模型（如深度神經網絡），參數數量龐大且關係複雜，傳統的固定學習率難以滿足優化需求。
+- 引入自適應優化算法（如AdaGrad、Adam等）是解決大規模參數優化問題的有效途徑。
+
+### 關鍵字  
+1. 梯度下降法（Gradient Descent）
+2. 回歸模型
+3. 學習率（Learning Rate）
+4. 最佳化（Optimization）
+5. 自適應學習率調整（AdaGrad）
+6. 參數更新
 </details>
 
 <details>
@@ -32,14 +112,40 @@
 </details>
 
 <details>
-<summary>47. ML Lecture 3-3: Gradient Descent (Demo by Minecraft)</summary><br>
+<summary>47. [2017-09-21] ML Lecture 3-3: Gradient Descent (Demo by Minecraft)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=wzPAInDF_gI" target="_blank">
     <img src="https://img.youtube.com/vi/wzPAInDF_gI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+===== 文章結構 =====
 
+1. 核心主題  
+	- 探討在使用梯度下降（Gradient Descent）方法更新參數時，損失值不降反升的原因。  
+
+2. 主要觀念  
+	- 梯度下降法的基本原理是通過計算損失函數的梯度，沿負梯度方向調整參數以最小化損失。  
+	- 在 Minecraft 遊戲中，利用梯度下降尋找坑洞最低點的過程可類比爲優化問題。  
+
+3. 問題原因  
+	- 梯度估計不準確：在實際計算中，梯度可能受到噪聲或模型複雜性的影響，導致方向判斷錯誤。  
+	- 局部極小值或鞍點：梯度下降可能陷入局部最優解，而非全局最優解。  
+	- 學習率不當：步長過大可能導致越過最低點，甚至震蕩；步長過小則收斂緩慢。  
+
+4. 解決方法  
+	- 使用更精確的梯度估計方法（如小批量梯度下降或Adam優化器）。  
+	- 調整學習率以平衡收斂速度與穩定性。  
+	- 利用動量法或Nesterov加速.gradient等技術改善收斂路徑。  
+
+5. 優化方式  
+	- 採用自適應學習率方法（如AdaGrad、RMSprop），根據參數梯度歷史自動調整步長。  
+	- 結合正則化技術（L1/L2 regularization）防止過擬合，提升模型泛化能力。  
+	- 使用早停法（Early Stopping）監控驗證集損失，避免過度優化。  
+
+6. 結論  
+	- 梯度下降方法在實際應用中可能因多種因素導致損失值不降反增。  
+	- 通過優化梯度計算、調整學習策略及結合其他技術，可有效改善算法性能。
 </details>
 
 <details>

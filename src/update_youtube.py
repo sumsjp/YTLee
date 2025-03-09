@@ -350,7 +350,7 @@ def create_doc(df):
 
         # 取得最新日期
         latest_date = df['date'].iloc[-1]
-        create_readme_doc(max_idx, latest_date)
+        create_readme_doc(max_idx, latest_date, batch_size)
         
     except Exception as e:
         logger.error(f"處理文件時發生錯誤：{str(e)}")

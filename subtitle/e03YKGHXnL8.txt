@@ -1,0 +1,878 @@
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心 http://ai.ntu.edu.tw/
+那我們從這邊繼續
+好我們剛剛講到，複習一下剛剛講過的東西
+我們複習了
+前面李宏毅老師講過的一些比較有名的算法
+裡面包括最常用的兩個，就是 HGD with momentum
+還有 adam 這兩個算法
+然後這兩個算法優點跟缺點有什麼
+HGD 通常他比較穩
+然後收斂的比較好
+但是 adam 他算的比較快
+所以我們一般在做的時候也都是以這兩個 optimizer 為主
+接下來我們介紹了一些做法可能來修正他們的一些問題
+希望他們可以改進這兩個算法，讓他們互相向對方學習
+那這些裡面有包括 adabound、包括 AMSGrad
+這兩個算法是改善 adam 的算法
+那他們在想的是，因為你的 learning rate 有可能會太大或者是太小
+那他們用一些方法來避免掉這樣的情況
+讓 adam 在最後比較穩一點
+不然如果你一下 learning rate 一下太大一下太小，那 adam 最後收斂的時候就會不穩
+他們覺得這可能是 adam 比 HGDM 不穩的原因
+那我們介紹了一些在 HGDM 上調整 learning rate 的方法
+那裡面有 Cyclic LR
+然後也有最後的 one cycle LR
+那這些都是希望去透過一個人工的方式來訂出一個調整 learning rate 的方法
+讓 HGDM 可以收斂的比較快
+不用在那邊慢慢的等他收斂
+好那我們剛剛講到最後的 one cycle LR
+他其實是由三個部分組成的
+第一個部分是 warm-up 然後再來 annealing 還有最後的 fine-tuning
+那我們就想到，那 adam 需要這個東西嗎
+就是我們需不需要一開始先減低 adam 的 learning rate，後來再增加他
+結果是，會這樣問結論一點是當然需要嘛
+那為什麼需要？有人可能會想說
+Adam 一開始不就已經做了 adaptive learning rate 嗎
+那為什麼我們還需要去調整這個東西
+原因是這樣的
+因為這是在實際做實驗做出來的，在一個機器翻譯的實驗做出來的結果
+那你就可以看到這幾張圖的縱軸是 iterration
+然後橫軸是
+是 gradient 的 distribution
+那一開始看起來 gradient distribution 都是有點像是 gaussian
+然後最後這邊有一堆幾乎沒有 gradient 的 parameter
+好那再把它放大一點來看
+我們突然發現前面幾個 time step 好像
+它的分布跟人家不大一樣
+然後那為什麼他們的分佈會跟人家不大一樣呢
+原因是這樣，因為你一開始剛開始訓練的時候
+你的 initialization 的時候，你不知道你 initial 在哪個地方
+所以一開始的幾個 time step 他有可能 gradient 會很亂
+再加上你一開始的時候，因為你那個底下的分母
+他的估計可能不會估計得很準，因為那個 EMA， square of gradient 的估計
+他一定是你在做了愈多 time step 以後
+他的估計才會愈來愈準
+所以一開始那個 learning rate 的估計不準
+所以他有可能會一下走太多一下走太少
+所以他整體來說就不穩嘛
+那不穩的話他的 gradient 當然也會分佈的比較亂一點
+所以這就是為什麼我們需要 warm-up 的原因
+那右邊這張圖可以看到如果 adam 做了 warm-up 以後
+他其實前面幾個 time step 他 gradient 分佈很亂的情形就會被改善
+因為他就不會一開始一下子跳太多這樣子
+好那至於 adam 你要怎麼做 warm-up
+其實有蠻多實際上的做法，就是你直接訂一個曲線
+可能是一個，等一下我開一下我的簡報筆
+你就直接訂一個曲線，通常是訂一個像這樣的曲線
+就是一開始 linear 增加然後最後慢慢減少的曲線
+這是工程上蠻常用到的做法
+可能在我自己做研究的時候
+我在訓練 tacotron，訓練語音生成的模型，我自己就會做這樣的事情
+然後前面的這個 linear increase 的可能是四千步之類的，四千個 update
+然後後來就慢慢減少
+就有 exponential decay 這樣
+好那這個東西
+我們通常會用幾千步的 warm-up
+但他這邊他說其實他大概只有在前十個 step 會有 gradient distortion 的情況發生
+那他這裡有一個作者提出了另一種 warm-up 的方法
+我們來看一下他是怎麼做 warm-up 的
+好我們現在先看，這個是 adam update 的方式
+然後我們這邊就 focus 在這個 v 上面
+就是他在 adapted gradient 的估計上面
+因為 m 的方面就跟 momentum 是一樣的
+所以我們要比較 momentum 跟 adam 的差別
+我們就只比較 adaptive learning rate 的部分
+好那
+我們一開始 gradient 如果估計很亂的話
+那我們下面的這個 vt 的估計
+也會不穩定
+所以他 learning rate scheduling 也會不穩定
+一下走太大步，一下走太小步
+那如果畫圖畫起來是這樣子
+你一開始可能
+就是他可以直接順順的下來
+但他走太大步他就會在這邊震動很厲害
+所以你的 gradient 就會，gradient 方向會很亂
+然後大小也會很亂
+所以你的 learning rate 的這個東西
+他整個估計的東西就會不大穩定
+那我們應該要怎麼做呢
+我們應該在你還不確定這個估計好不好的時候
+你就走小步一點
+走小步一點不一定會往好的方向收斂
+但是走小步一點至少你可以確定一件事
+你走一小步的時候，gradient 的變化不會差太多
+所以他一開始這個東西的估計可以比較穩定
+因為你現在沒有辦法期望你的 model 在前十步就收斂到一個很好的值
+但是你最少可以給他一個最低的期望，就是你不要暴走
+就你不要暴走
+這邊他的作者就想說，一開始你要估計這個 v 的時候
+一開始他會很糊
+那要怎麼做呢
+首先他先訂出了一個 ρt
+這個 ρt 其實就是前面有稍微提過的那個 EMA 他 effective 的 memory size
+那我們前面直接用 1/(1-β) 來代表
+那這邊他用了一個比較更準確的估計
+就是可以估一層這個東西
+那 β 無限大，不是 β
+ρ 無限大，就是說最大的 memory size，也就是說
+你到達 t 趨近無限大的時候
+這個 effective 的 memory size
+那他為什麼要訂這兩個東西呢？原因就是因為
+原因是因為他訂了 ρt 跟這個無限大以後
+他可以有助於他來估計這個 rt
+這個 rt 是什麼東西呢
+這個 rt 其實是在近似 vt 分之一的 variance 分之 v 無限大分之一的 variance
+那為什麼要估計這個東西呢
+首先先注意一件事情
+當你的 vt 的 variance 愈大的時候
+你的 1/vt 的 variance 也會愈大
+所以當你的這個 variance 愈大的時候
+你的 r 應該就會愈小
+那我們回來想剛剛這件事情
+你的 variance 愈大的時候表示現在風向很亂
+所以你應該要走小步一點
+variance 小的時候那就表示你現在在一個穩定的區域
+所以你就可以走大步一點
+所以這個時候這個 r 其實就可以直接把它乘在 learning rate 上面
+幫助他來決定現在要走大步還走小步
+那你可能會想說
+這邊這個 ρ 只 depend on t 還有 β 就是 adam 參數
+然後這個 r 又只 depend on ρ
+那為什麼跟實際上你算出來的 gradient 沒有關係呢
+原因是因為，這個作者假設你的 gradient
+是從某個 distribution 可以想像成
+從一個 gaussian 裡面去 sample 出來的
+所以他都是隨機 sample 出來的
+所以這個時候你的這個 r 去 approximate 這個 variance
+其實就只會跟你的 t 有關係
+跟你總共 sample 了幾次有關係
+那還有一個問題呢
+就是這邊這個 r，你看這裡面，根號裡面的東西
+他只有在 ρ 大於四的時候
+這個 r 的估計才會是準的
+才是，這個根號才可以開
+所以當你的 ρt 小於四的時候，這個估計不能用
+所以這個作者他就說
+那你 ρt 小於四的時候，既然你沒辦法這樣估計
+那就算了
+那我們就一開始先用 SGDM
+那等到時間到了
+ρt 大於四以後
+那再來用他提出的這個 RAdam
+也就是在你的 adaptive learning rate 前面
+乘上這個 warm-up 的 r
+這個 r 畫出來
+跟 t 畫出來的曲線就是長這樣
+這個其實就是他 warm-up learning rate 的一個曲線這樣
+然後會隨著時間增加
+那我們就是看到這邊會想一下
+比較一下 RAdam 跟 SWATS
+為什麼他們要做一樣的 optimization
+但他們的事情是有點反過來的感覺
+SWATS 是一開始用 SGDM
+然後最後用 a
+一開始用 adam，最後用 SGDM
+RAdam 是一開始用
+SGDM，後面用 ADAM 這樣
+好那我們要先討論一下，為什麼這兩個演算法分別是想解決什麼問題
+那 RAdam 他要解決的問題是你的
+gradient 一開始他的 variance 很大
+所以你的 adaptive learning rate 不準
+所以他就幫 adaptive learning rate 乘上一個 r
+讓 variance 大的時候，他走小步一點
+好那 SWATS 他要做的事情呢
+他是因為他覺得 adam 就是快
+然後 SGDM 就是比較穩
+所以他一開始就用 Adam來加速
+r 後面就用 SGDM
+那他們做的方法，RAdam 就像剛剛講的
+他乘上了一個 warm-up learning rate，就是這個 r
+來讓這整個 optimization 的過程中
+他的 gradient distortion 不會這麼嚴重
+那 SWATS 就是直接把兩個 combine 起來
+先做 Adam 再做 SGDM
+那至於他們為什麼要做這個 switch 呢
+SWATS 的部分他做這個 switch 的原因就是因為他覺得這個 SGDM
+可以 converge 到比較好的值
+所以他是為了 convergence 來做這個東西
+那 RAdam 他做這個 switch 其實跟
+他要 converge 這件事沒有關係
+他要做這個的原因只是因為
+他的這個 r 的估計，這個 warm-up learning rate 的估計
+在某個 time step 之前
+就是 ρt 小於 4 的時候
+這個估計是不能用的
+所以他就想了個折衷方法
+既然這個估計還不能用，那我還不能做 Adam
+那我就先做 SGDM
+先用 SGDM 來做 update 這樣
+所以他切換的點就是
+你的那個估計出來的 r
+是可以用以後，ρ 大於 4 以後他可以用
+那他就切換成 adam
+然後 SWATS 切換的點就是
+他訂了一些標準來說 adam 到某個階段快收斂了，就換 SGDM
+所以他們兩個其實有本質上的不一樣
+RAdam 把從 SGDM 切到 Adam 的原因
+是因為他一開始沒有辦法用 adam
+的 warm-up learning rate 的估計
+所以是個折衷的做法
+那 SWATS 從 adam 切到 SGDM 的原因是因為他想要追求可以 converge 到更好的值這樣
+好那接下來來講下一個演算法
+這個跟前幾個演算法的概念比較不一樣一點
+這個是去年提出來的
+這個也是的 Hinton 團隊裡面提出來的
+我補充一下前面的 SGD with momentum
+還有 adagrad
+還有 RMSprop
+其實都是 Hinton 的團隊提出來的
+那 Hinton 就是整個地球上面最早提倡 deep learning 的人之一
+所以在最近這幾年 deep learning 比較紅以後
+其實就是一個蠻重量級的學者
+那有人說他是 deep learning 之父這樣
+好那這個 lookahead 是 Hinton 的團隊提出來的
+那先注意一下
+他這邊並不是像前面的演算法一樣
+他就是
+一個 optimizer
+他其實可以把他想像他是一個 optimizer 的 wrapper
+wrapper 不是唱 rap 的那個
+他的意思就是說
+你的 optimizer 可以在外面再包上一層東西
+所以不管是你的 adam 還是你的 SGDM
+還是剛才講到任何一個 AMSGrad 或者是 RAdam
+他都可以包上這個東西
+那這個東西要怎麼用
+其實你可以把他想像成他就是
+走一走以後，每走幾步以後，會檢查一下
+看一下我們現在走的方向 o 不 ok
+然後再走幾步後再檢查一下
+現在走的 o 不 ok
+所以這個 lookahead 他的 paper 的 title其實就寫了這句話
+就是 k step forward, 1 step back
+就是說他每走 k 步往前，他就會退一步回來
+來看看我們剛剛走的方向 o 不 ok
+那如果寫成演算法的話其實就是這個樣子
+一開始你現在整個 model
+他有兩組 weight
+其中一組 weight 是用來 explore 的
+θ 這組 weight 他是用來 explore 的
+也就是這邊這個藍色的線
+紅色的 weight 是 model 真正要的
+他就是比較穩的 weight
+然後他叫這個 θ 叫做 fast weight
+然後這個 φ 叫做 slow weight
+好那一開始他有一個 outer loop，他有一個 inner loop
+那你 outer loop 裡面，你一開始把這個 fat weight
+initialize 成 slow weight 的值就是在這個藍色的點
+接下來在你的 inner loop 裡面
+你把這個 fast weight
+用某個 optimizer，這個 optimizer 可以是 SGD 可以是 Adam
+可以是 AMSGrad，可以是任何東西
+那這裡就沒什麼好講的，就是做幾步 optimization
+然後這個 k 可以自己設這樣
+所以你現在做 optimization 以後你就是
+你是從這邊開始
+所以你就是走到這邊來
+那你做完這個 optimization 以後
+你走了 k 步以後
+你就暫停下來
+然後這個時候你做一件事情
+你把你的 θtk 就是你最後停的這個點的 fast weight
+去減掉你開始的那個點
+因為開始的點就是在這邊 θt0
+減掉你開始的點
+然後乘上一個 α
+然後再加上開始的那個點
+所以意思就是說你在這個點
+跟 fast weight 最終的點
+中間取一個 interpolation
+所以你從這邊走到這邊以後
+你把這個點跟這個點做一個 interpolation
+他們的中間點，把它 assign 到新的 surface 上面
+所以他做的事情其實就是他在 fast weight 走了 k 步以後
+然後他把這些拆掉，他說等下我們剛剛走的那些都不算
+我現在再回到這個點
+然後我再開始繼續走
+所以繼續走以後，下一個 time step 就從這個點開始
+他可能就會這樣走
+然後 fast weight 走到一個點以後又停下來說
+我在跟我的出發點做 interpolation
+然後取中間點再繼續往下走這樣
+那如果有一些有看過一些比較進階課程的人可能
+會覺得這個東西跟我們剛剛提到的 memo
+memo 就是剛剛說到你
+一個 model 可以學好幾個任務
+然後讓他可以很快的適應新的任務的那個演算法
+那這個東西其實跟
+memo 系列的一個演算法叫 reptile 很像
+好那
+這裡面有一些參數嘛，第一個是這個 k，第二個是這個 α
+那這篇的作者他 propose 的是說這個 α
+調的值其實你怎麼調都不會差太多
+你只要不要調一下很極端的值，他的效果就不會太差這樣
+好那
+再來這個 optimizer 也可以是任何一個 optimizer
+比如說有一個去年年底放到 FastAI 的 上面的 optimizer 叫 ranger
+他其實就是把 RAdam 加上 Lookahead
+然後提出來的新的 optimizer 這樣
+好那再來看一下他的實驗結果
+好那這個是在訓練後期的時候出現的情況
+你的藍色的是 fast weight 的 update
+然後綠色的是 slow weight 的 update
+所以你可以看到在你訓練後期幾乎要收斂的時候
+其實你的 fast weight 基本上都是在出，就是他每次都愈來愈差
+但是如果你不用 Lookahead 的話
+他其實他可能就會往下掉下去
+但是因為你用了 Lookahead
+然後 slow weight 其實他的特性就是他很穩定
+他不會很容易暴衝
+所以你的 fast weight 雖然都在出，但你的 slow weight 可以穩住
+好那
+為什麼要做這個 1 step back
+其實他就是在避免掉
+你去做太危險的 interpolation
+也就是說你可能進到了一個很深的峽谷裡面
+然後你走不出來
+他其實，因為你的 slow weight 他比較穩定
+好為什麼這個東西可能會得到一個比較好的結果
+你可以想像說如果你現在 fast weight 走到了一個很崎嶇的地方
+裡面一個很深的峽谷
+通常這種峽谷就像我們剛剛說的
+他可能 generalization 的效果不會太好
+我們通常希望他走到一個比較平坦的 minimum
+他比較有可以在 testing set 或 validation set
+上面有比較好的 generalization
+所以我們希望他走到一個比較平坦的 minimum
+那在很深的峽谷裡會發生什麼事
+你把 fast weight 跟 slow weight 做一個 interpolation
+可能他們兩個的結果數據都不錯
+但是做了一個 interpolation 以後
+得到新的 step 的這個 slow weight
+他的結果就會很爛
+所以你做了這個 1 step back，其實他可以避免掉你去到一個太崎嶇的峽谷的地方
+所以他可以儘量保持你在一個比較平坦的區域
+所以他可能會比較有效地做到 generalization 這樣
+也就是像下面這個圖片裡面做的
+他的 testing accuracy 不會因為你去做到
+fast weight 移動到太危險的地方就掉下去
+好這是 lookahead
+好那接下來我們
+在講的這個東西跟前面的東西沒有太大的關係
+那這個東西其實是一個蠻久以前就被提出來的一個演算法
+好那我們現在回到最早講 momentum 的時候
+我們一開始是說 momentum 就是球從這個地方滾下來
+但他到平地的時候，他也可以保持一個移動的方向
+繼續往下滾
+好那我們現在那個
+我們現在討論另一個方向
+如果我從這邊開始走會發生什麼事
+我從這樣走過來走過來走過來
+首先我從這裡開始走
+gradient 方向往這邊
+所以他往這裡走
+他走到這個點以後
+那個紅色的 gradient 就會是 0
+他就會跟這顆球說停下來
+但綠色，不要看下面的綠色箭頭
+因為這張圖是宏毅老師的投影片上面截下來的
+所以這張圖片我沒有辦法修改
+所以我們不要理下面的箭頭
+下面自己想像他 momentum 會怎麼走
+我的 momentum 應該會往左邊走嘛
+所以 gradient 叫他停下來，但是 momentum 就會說讓我看看
+他想要再 explore 一下，所以他會繼續往這邊走
+繼續往這邊走以後
+他可能 momentum 夠大
+所以他雖然這裡 gradient 是微微往右邊
+但還是會繼續往這邊走
+那最後他就會衝到這個上面
+但這個上面明顯是一個比較差的點嘛
+那
+到這裡紅色的還是會跟他說停下來
+但 gradient 還是說讓我看看
+那到這個比較差一點以後
+這個時候 momentum 發現不對了
+因為這裡是一個明顯比較差的點
+然後他就會跟 gradient 說你不行你要先講啊
+這時候 gradient 就會說什麼
+就是他就會說 gradient 在這裏早就已經跟你講了
+但是他怎麼會知道這裡會這麼慘
+對因為沒有人會知道，你沒有走之前沒有人會知道
+所以，現在我們要講的這個算法
+他其實就是一個通靈的演算法
+他要先預測到未來
+然後知道這邊很慘
+所以他就不能過去那邊這樣
+好
+那這個東西其實是很久以前被提出來的
+是 1983 年被提出來的
+然後提出了這個 Nesterov
+他其實是專門做數學 optimization 的一個大師
+算近代做 optimization 最有名的一個數學大師之一
+那這個 1983 年被提出來，那個時候其實
+深度學習根本就還沒紅起來
+所以這個東西其實不是提出來要做 deep learning 用的
+他是做一個 generalized 的 optimization
+那這個東西我們把它叫做 nesterov accelerated gradient
+或者簡稱叫 NAG
+那這個 NAG 他其實就把原本的 SGDM
+做了一些修改
+你的 SGDM 是你的 θ 減掉一個 momentum
+然後這個 momentum 是前一個 time step 的 momentum
+再加上現在這個 time step 的 gradient
+然後這編的正負號稍微跟前面講 momentum 的地方做了點修改
+為了配合那個之後講的 paper 裡面他用的記號
+所以這兩個負號有調換過
+但結果上是一樣的
+好
+那做了這個東西
+那我現在要怎麼做一個通靈的算法就是
+我要直接看到未來呢
+我現在我一樣減掉這個 m
+但這個 m 我有一些修改
+我把它變成我前一個 time step 的 momentum
+再加上
+這個特殊點的 gradient 值
+這個特殊點是什麼東西
+他把 θt-0 減掉前一個 time step 的 momentum
+就是你上一個 time step 移動的量
+因為 mt 是這一個 time step 的移動量
+所以 mt-1 就是上一個 time step 移動的量
+那為什麼要去減掉這一個東西
+其實他是在預測，他就是想在這個點的時候
+就預測到下一個點
+他移動會移動到一個 gradient 是怎麼樣的地方
+所以這邊這個 gradient
+其實就是他在預測下一個 time step 的時候他會移動到怎麼樣的一個地方
+但是你做到這邊
+你可能會想到
+你可能會覺得，第一個是說
+這個東西會等於 mt 嗎，當然不會等於 mt
+但是因為你現在你還不知道你這個 time step 要怎麼走
+所以你就先用前一個 time step 的 momentum 來代替
+就是想說來大概估計一下
+那再來你會想到的第二件事是說
+這樣我不就要去，就是要 maintain
+在你做深度學習的時候，你要 maintain 兩份的 model 的 parameter
+因為你第一份是這邊
+你要把 θt-1
+減掉一個東西以後，去算他的 gradient
+但是你原本的 θt-1 也不能丟掉
+因為你等下還要做 update
+所以你這邊減掉以後，要先複製一份 parameter
+然後算 gradient 以後
+然後得到 mt，然後把原本 parameter 減掉 mt
+那你需要兩份 parameter
+那但是再來我們可以做一些 magic
+我們做一些 magic，可以讓他不需要 maintain 兩份 parameter 這樣
+然後這邊的數學會比較多一點
+就是先給大家心理準備
+如果不想看數學也可以直接跳掉看結果沒關係
+好那首先
+這個東西是我們剛剛那條公式嘛
+然後我們現在令一個新的 θt'
+我們令這個東西叫做 θt-λmt
+好
+那 θt' 等於 θt-λmt
+因為這個 θt 等於 θt-mt
+所以把這項展開
+就會變成下面這行
+好那接著再做一件事情
+我把這個 mt 再展開
+mt 就是下面這條式子展開
+所以這行再展開以後
+就變成再下面這行算式
+那這行算式你看到這個東西
+你就想到一個熟悉的定義
+θt' 不就等於 θt-λmt
+所以這個其實就是 (θt-1)‘
+所以你就會得到這行算式
+好那我們這邊其實還有一件事情
+就是我們把 θt-1，這裡有個 θt-1 減掉 λmt-1
+然後這個東西我們也幫他改寫成 θt-1'
+好所以我們的 update 就變成這兩個東西
+我現在不要對 θ 做 update
+因為這個東西對任何一個 time step 其實都是成立的
+所以你原本這個 update 的公式其實你可以把他改寫成另一個公式
+就是這個東西 θt' = 這個東西
+好
+那你現在要做 update 的參數突然間就變成 θt，突然你的參數就變成 θt' 這樣
+那這個 λmt 的定義其實跟前面一樣就是這個東西
+然後因為你現在，我現在就不要管 θt
+我所有東西都用 θ' 來代替
+所以裡面這個東西我把它改成 θt'
+所以我最後的 update 的公式就變成下面這兩行
+那我們，到這邊我們可以仔細看一下，其實我們就不需要再多 maintain 一份 parameter 了
+因為我把這個 time step 的 θ
+讓他去算他的 gradient，然後這邊也是他的 gradient
+然後再加上之前的 momentum
+會得到現在的 momentum
+然後把這個東西再減掉以後就會得到這個東西
+所以我其實就可以不需要多 maintain 一份參數了
+好那
+做到這邊我們就會得到 NAG 的 update 的公式
+其實跟前面 SGDM 的公式長得非常像
+唯一的差別只在他多減了一項這個東西
+不然這個 mt 跟 SGDM 的 mt 其實是一樣的東西
+所以他多減掉了一個 gradient
+好可以比較一下，我們一樣這裡都有個 θt-1
+然後要減掉這個東西
+再減掉這個東西，這個東西跟他這個 mt 是一樣的
+所以只差在這個地方
+好那我們
+SGDM 其實也可以用另一個方法把它來改寫
+就是我直接把這個 θt 改寫成這樣
+因為 mt = λmt-1
+加上這個東西
+所以
+我直接把這個 mt 帶上來
+所以我就變成這樣一個 update 的公式
+好那這兩條公式差在哪裡
+這兩條公式的差別就是，仔細看一下
+這項跟這項一樣
+唯一的差別就是你把前一個 time step
+SGDM 裡面是用前一個 time step 的 mt
+就是
+那在 NAG 裡面他用了現在這個 time step 的 mt
+所以你有兩種看法可以來看這個 NAG 的演算法
+第一個看法是說你在後面多減掉一項這個
+SGDM 後面多減掉一項這個
+或者是你也可以等加成
+把他看成，這個 mt 把現在的 mt 換成未來的 mt
+因為這個 mt 其實是需要你這個 time step 的 gradient 才可以得到
+所以其實你把 mt 往前移一個 time step
+就可以從 SGDM 變成 NAG
+好那這個東西其實就是一個超前部署的概念
+好接下來要回到我們的主題
+就是講 Adam 系列的演算法
+我們要講的這個演算法叫做 Nadam
+他其實就是把 NAG 的概念用到了 Adam 上面
+我們剛剛最後的結論是什麼
+你要把 SGDM 變成 Adam 你只需要做一件事情
+就是把 mt 超前部署一個 time step
+所以他原本 SGDM 的 mt
+你可以把他展開成這樣
+這個東西，mt hat 前面有一個分母嘛
+這個東西就是之前說的，要放至前幾個 time step mt 太小的東西
+好那裡面是 mt 的公式，就是前一個 time step 的 mt 加上 gradient 的 interpolation
+好這個東西把他拆開就變成這兩項
+好這兩項，這一項只跟 gradient 有關係
+所以其實就對應到這項
+就對應到這項
+那另一項只跟 mt 有關係
+所以就是這一項
+好那你 Adam 裡面的這項
+我如果要把他超前部署一個 time step
+其實就等於你把這項換成這樣
+你把下面的 t 變成 t+1
+把上面的 mt-1 變成 mt
+就沒有，就結束了這樣
+好
+所以他全部要做的就是這件事情
+他只改一個地方，就是把這裡改掉
+然後其他的定義都跟 Adam 一模一樣
+所以這個東西就是 NAdam
+好那
+講了那麼多 optimizers
+就是其實
+到最後我們還是沒有說
+哪一個 optimizer 比較好
+但是我們先問自己一件事情就是
+我們講了那麼多其實你真的知道你的 optimizer 在做什麼事情嗎
+你的 optimizer 可能比你想像中的還要複雜
+但你自己不知道
+好我們講到這個是大概 2016 年左右發生一件事情
+就是當大家用 Adam 用得很開心的時候其實都沒有人注意到
+你的套件裡的 Adam 可能寫錯了這樣
+對而且這個東西過了一兩年以後才有人發現
+好那
+我們做 optimization 的時候常常會加上一個 L2 regularization 對不對
+我們會把全部的 θ 取一個的平方
+然後再乘上一個 weight
+就希望你的 θ 不要太大
+因為你 θ 大的時候，就像李宏毅老師上課講過的，他可能會變成
+對應到一個比較崎嶇的 low surface
+所以他 generalization 的效果不會太好
+好那
+我們的 loss 就等於 L2 regularization 的 loss
+就會等於原本的 loss 加上這個 regularization term
+這裡打錯了，應該是 regularization
+這邊打錯了這樣
+接下來我們的 SGD 的情況下這個會怎麼做
+這個東西微分很簡單嘛，就把 2 放下來，所以就變成
+2γ 乘上這個東西
+所以 SGD 的時候就等於你最後
+如果這個 γ 是 1/2 的話
+這裡應該要寫 1/2γ 才對
+這邊寫錯了這樣
+好那把 2 放下來以後
+就等於你的 θ 減掉原本的 gradient 以後
+再減掉一個 γ 乘上一個 θ
+所以這個東西為什麼可以讓你的 θ 不要太大，因為他最後會再減掉這個東西
+這邊我應該要加一個絕對值
+我這邊加
+誒沒事，是別人沒有加錯這樣
+對好那
+他就等於把你的每一個 time step 裡面
+除了做一個正常，這段是一個正常的 SGD 以外
+還有額外再減掉一個他的自己的 weight
+然後這項我們通常叫他 weight decay
+因為他想要他的 weight 不要太大
+好那如果 SGDM 的時候我們要怎麼做
+我們的公式變成這樣嘛
+等於 θt-1 減掉
+這個 momentum 然後再減掉
+這一整串叫做 gradient
+這一整串就是 gradient
+就是這邊這個 gradient
+好那我們的 mt 的累積方式
+也變成這個樣子
+那到這裡我們就想到一件事情
+那我們在做 momentum 的時候，我們應該要只算
+這個主項的 gradient
+還是我們應該要把後面這個 regularization term 的 gradient 也算進去呢
+所以我們應不應該要加上這項
+這就是我們的問題
+還是我們只要原本的這項就好了
+好那 Adam 的方面也是
+我們應該要，不管我們在算 mt、在算 momentum 或者在算 adaptive learning rate 的分母的時候
+我們應不應該要把這個東西加上去
+還是我們只要用原本的 gradient 就好了呢
+那這個東西其實是一個沒有標準答案的東西
+但這篇作者做出了一個結論
+他說你把那個東西拿掉比較好
+拿掉相當於什麼事情呢
+相當於你在做 optimization 的時候
+你的 mt 跟 vt 這個東西是不會受到 regularization 的影響的
+但是你要怎麼去做 regularization 的效果
+你就是最後再把它剪掉一個 weight decay term
+所以這樣他最後還是
+有達到 regularization 的效果
+但是這個東西不會進到 mt 跟 vt 裡面
+那這個做法，就是你先算完 m 跟 v 以後
+最後再減掉一個 weight decay 項，這個做法我們叫 weight decay
+然後原本的，如果原本把
+這一項也融入到 m 跟 t 的計算裡面
+我們就叫他 L2 regularization
+好那我們在傳統，這個東西是 2017 年被丟到 arXiv 上面的一篇 paper
+所以我們在 2014~2017 年之間，我們所有的套件其實用的都是 L2 regularization
+但是 2017 年這篇 paper 提出來
+他說他實驗的結果，你用 weight decay 的效果會比較好
+然後所以就得到了這兩個東西，叫 AdamW 還有 SGDW
+好
+這兩個演算法可能是我們今天講得所有演算法裡面第一個你在
+一些重要的 implementation 上會被用到的演算法
+前面不管是 MAdam，不管是 AMSGrad
+或者是像剛剛講到的 Loodahead
+他其實都還沒有很豐富的實戰經驗
+都是某一篇 paper propose 出來
+然後可能研究 optimization 的人會研究它
+但是 practitioner 就是像你在 train bert、在 train transformer
+在 train bigGAN
+他們這些人其實不會去考慮這個算法
+但是 AdamW 這個 optimizer 他有一個蠻重要的應用
+就是如果有在做
+NLP 研究的同學
+有可能會使用過 huggingface 上面 pre-train 的 bert 系列的
+還有 bert 系列的 model
+就是目前應該是 pytorch 版本裡面最多人使用的 pretrained bert
+那他裡面用的 optimizer 其實就是這個 AdamW
+所以這應該是今天講到整個的
+整堂課裡面你可能最需要記的演算法這樣
+好那我們今天主要的課程其實
+到這邊已經快要結束了
+那我們最後會再提一些有可能會對你的 optimization 有幫助的一些事情
+第一個我們這部分，就是這一頁的這三個東西
+都是跟你要增加 model 的隨機性有關係
+shuffling 就是你的 data 輸入的時候你不要照順序輸入
+你要每次換一下他的順序，然後你的 mini bench 每次要重新切這樣
+讓不同的 data 可以混在同一個 mini bench
+所以他算出的 gradient 方向會比較有變化
+那 dropout，雖然 dropout 一般是
+傳統解釋上是去鼓勵每一個 neuron
+都去學到有意義的資訊
+因為 dropout 就是說你在 training 的時候
+有一些 neuron 的輸出會被 mute 掉
+所以他鼓勵每一個 neuron 都去學到有用的資訊
+這樣某些 neuron 被 mute 掉的時候
+他就可以有其他 neuron 頂上來
+但實際上我們在 optimization 的時候，也可以把 dropout 視為一個增加隨機性的方法
+所以我們也可以把他廣義的
+把它想成去增加隨機性
+那最後一個 gradient noise，gradient noise 其實就是
+你算完 gradient 以後，你把它加上一個 gaussian noise
+那這個 gaussian noise 會隨著 t 變大，這個 noise 會愈來愈小
+那也就是說你在最後接近收斂的時候
+你就不要加太大的 noise 這樣
+那這是一篇 2015 年的 paper
+那這幾個做法其實都是在做同一件事
+他在鼓勵你的 model 去做 exploration
+去增加 model 的隨機性
+所以他可以做比較多的探索
+所以他覺得這樣就可以得到一個比較好的結果這樣
+等一下
+這堂課到目前爲止有人有問題嗎
+剛剛講的那幾個算法，像 NAdam 還有 RAdam 還有 Lookahead
+還有最後講的那個 AdamW 還有 SGDWM
+好如果沒有人有問題的話，那我們就繼續講這樣
+好
+那接下來還有其他一些招數
+就是這些是跟你的 learning rate 調整有關的招數
+第一個就是剛剛講過很多的 warm-up
+一開始 learning rate 比較小，等到你的訓練穩定後，再把 learning rate 慢慢調大
+然後再來是個很類似的 setting
+這個叫 curriculum learning
+這個是 2009 年被提出來的，這個時候其實 deep learning 還沒有紅
+那個時候最紅的機器學習演算法應該是 support vector machine 這樣對
+那這個做法其實他就是說一開始你的 model 還很弱的時候
+你先用比較簡單的 data，譬如說你用沒有雜訊的聲音去訓練他
+然後等到你的 model 慢慢夠強以後
+你才去用比較困難的 data 去訓練他
+那為什麼要這樣做呢
+原因是第一個剛剛講的，你 model 弱的時候，你用太難的 data 去訓練他
+它揠苗助長，反而不會有好的結果
+那另一個原因是因為你一開始
+在你的學習開始的時候
+他會決定整個 model 的大方向走向
+然後到後面你的 learning rate 愈來愈小後
+他就變成在一個固定的範圍，他可能掉到某一個那個 local minimum 附近
+所以他就會在某一個固定的範圍裡面
+那他的想法是說
+你的 clean data 他應該像是所有 data 的平均值這個概念
+所以你一開始是用比較靠近平均的 data
+去訓練 model
+所以你可以先找到一片還不錯的 local minimum
+那這個 local minimum 可能是比較 generalize 的
+那之後你再用比較困難的 data
+然後再到這片 local minimum 附近去找到一個最好的點
+這樣他就不會去掉到一個太狹窄的山谷裡面
+因為你一開始用的簡單的 data
+會決定出一片大概的區域
+所以這片大概的區域裡面都不會太差這個樣子
+好那最後就是 fine-tuning
+fine-tuning 就是說你可以用一些人家 pre-train 好的 model
+比如說網路上可以找到 pre-train 的
+pre-train 的 bert 這些東西
+那這些東西其實是如果要做研究的話是滿有用的
+因為你不可能每次要做研究都重新 train 一個
+重新 train 一個 bert
+那你可能光 train 這個 bert，等到你開始做研究可能就一兩個月過去了
+而且也很浪費資源
+就是有人統計過
+那個你 train 一個 bert 會產生多少二氧化碳
+其實那些大型拋棄式、幾十 g 的 model 其實他們碳排放量都很驚人
+所以在這樣的情況下其實就鼓勵說
+我們可以用人家 train 好的東西
+不用每次都自己重新做
+避免大家一直重複做一樣的事情
+有點像是你站在巨人的肩膀上這個概念
+那這幾個招，這幾個 training 我們把它用一句話整理的話
+其實就是你對你的 model 要有耐性
+一開始先從簡單的，或者先從 update 不要太多的方法開始做
+然後到最後再去做 fine-tuning 這樣
+好那再來還有一些做法
+就是可能像 normalization，那 normalization 這三年左右提出來的方法跟海一樣多
+那這邊就不會一一細講
+好那再來就是像 regularization
+剛剛講過的 regularization
+他也是可以避免你的 model 學到一些太極端的問題這樣
+好那我們今天的課其實差不多就到這邊結束
+好那我們複習一下今天學過的東西
+首先我們有一堆 SGD type 的演算法
+還有一堆比較像 Adam 的演算法
+首先 SGD 這邊最基本的兩個就是 SGD 跟 SGDM
+那 Adam 這隊就是 adaptive learning rate 這隊
+他有李宏毅老師之前教過的 Adagrad、RMSProp、Adam
+那接下來如果把這兩個東西結合呢
+就會得到 SWATS
+那你要怎麼把 Adam 改善成讓他跟 SGD 的差距不要這麼明顯
+因為 SGD 他通常 converge 比較好然後訓練比較穩定
+那再來這兩個做法他就是對 Adam learning rate 做一些限制
+讓他不要出現太大或太小的 learning rate
+所以他就不會有不穩定的情況
+那就是 AMSGrad 跟 AdaBound
+他們處理的是極端的 learning rate 的狀況
+那接下來 SGD 你要怎麼讓他去找到比較好的 learning rate 讓他的 training 可以快一點呢
+那這邊就是你可以用一些 learning rate scheduling 的方法
+包括剛剛講到的那些 cyclic LR 或者是 one-cycle LR 這些事情
+好但是今天雖然講到這個是講在 SGD 上面
+其實這些 learning rate scheduling 其實也可以用在 Adam 或其他任何 optimization 演算法
+只要他有個 learning rate parameter，你就可以用 learning rate scheduling 的方式去調整他
+好那再來
+你的 Adam 要怎麼做 learning rate scheduling 呢
+其實像你的 RAdam 他其實也像是 learning rate scheduling 的一個模式
+他一開始那個 r 比較小，然後後來隨著你的 gradient variance 的估計愈來愈小以後
+那個 r 就會變大
+好那
+接下來如果你把你的動量 momentum 改成那個 Nesterov of Momentum 的話
+那我們的 SGDM 就會變成 NAG
+accelerative gradient
+那把這個東西用到 Adam 上面就會得到 MAdam
+那接下來我們 Adam 還有哪裡有問題呢
+我們剛剛講到我們有個跟 L2 regularization 有關的東西
+是我們之前在 Adam regularization 上面沒有人注意到的
+但是做了一些修正以後就會得到 SGDW 還有 AdamW
+那最後還有一個
+就是萬能的 optimization rapper
+就是 Lookahead
+這些上面的所有東西都可以跟 Lookahead 做結合這樣
+好那
+這裡怎麼沒有改到，原本要寫 what we learn today 的
+好那我們今天學到什麼
+SGDM 這系列的演算法通常他比較慢
+然後 Adam 通常比較快
+但是 SGDM 通常 converge 比較好
+Adam 有可能會不 converge 這樣
+然後 SGDM 通常他比較穩然後 Adam 就不大穩定這個樣子
+然後 SGD 他比較不會遇到 generalization 的問題
+就是他在 testing set 上的表現不會跟 training set 差太多
+那 Adam 可能就會有一個明顯的落差
+那再來是給大家如果要實際訓練 model 的話的一些建議
+首先什麼情況下你需要用到 SGDM
+第一個是 CV 領域通常都是用 SGDM
+那我們通常都可以找到一些結果就是 Adam 跟 SGDM 在做 CV 上會有明顯的落差
+那就可能包括像影像分類或者 segmentation 或者 detection 這些都算
+好那如果你在做 NLP 就是自然語言處理的話
+其實大部分都會選擇用 Adam
+包括你要做 QA 可能也要打或者是 translation 或者是 summary
+這些跟文字處理有關係的通常都會用 Adam
+接著如果你要做語音生成的話，通常也會用 Adam
+然後你要訓練 GAN 的話通常也會用 Adam 來訓練
+那可能還有一些其他領域但我不是特別熟悉，所以我這邊就沒有舉出來這樣
+還有一個通常在做 reinforcement learning 的時候也會用 Adam 來訓練
+但是我也有看過用 SGDM 來訓練，所以這部分可能不是這麼肯定
+好那這堂課講了兩個小時講了那麼久
+那有沒有一個 optimizer 是萬能的或是宇宙 optimizer 呢
+答案是當然沒有，不然我們就不用在這邊做研究了
+我們只要把 model 丟下去然後 optimizer 放下去，然後吃個午餐回來就可以得到一個宇宙 model
+那就不用做這麼多研究了
+好所以我們在訓練一個神經網路模型的時候
+基本上還是套我前一頁的那些標準去選擇
+接下來就是多嘗試多調整，然後基本上我們會使用的 optimizer 就是一些比較常見的 optimizer
+像是 SGDM，像是 Adam
+或者是最後提到的 AdamW、SGDWM 這些 optimizer
+那如果你想測試一些比較冷門或者是研究型的 optimizer
+當然也是可以，但可能相對來說沒有那麼多人試過所以有可能會遇到一些問題這樣
+但是通常你在做研究的時候，你的模型訓練出來都不是 optimizer 的問題
+optimizer 通常只能在你訓練的起來的情況下再提升一點 improvement
+但是如果你是訓練不起來或者是有一段明顯的差距的話
+通常是你 data 不好或者是你的架構不好
+或者是你訓練的技巧不好，但是這些東西通常都不是你換一個 optimizer 就能夠解決的
+因為沒有一個 optimizer 是萬能的
+他可以幫你做好任何一件事情，包括 learning rate scheduling 或者是我們剛剛提到的任何事情
+所以通常這些細節都還是要手動去調整的
+那最後就是放一個今天這堂課程可能大家來之前會以為我們今天可以學到一個新的 optimizer
+然後就可以把 Adam 丟去垃圾桶
+好那這是還沒來之前覺得今天會學到的事情
+但是我們最後事實上學到的事情就是我們又把從垃圾桶裡面把 Adam 撿回來這個樣子
+所以以後大家寫作業還是乖乖用 Adam 慢慢尻
+好那今天就上到這邊
+最後這幾頁是一些 reference
+好今天的課程就到這邊結束
+那有沒有人有問題的
+那如果沒有人有問題的話課程就到這邊結束，我等下會把投影片放到 Facebook 社團上面
+那有問題的話也可以在社團那邊留言問一下這樣
+好那今天就到這邊，大家午安
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心 http://ai.ntu.edu.tw/

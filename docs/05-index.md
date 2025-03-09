@@ -834,7 +834,7 @@
 </details>
 
 <details>
-<summary>292. [INTERSPEECH 2020] Defense for Black-box Attacks on Anti-spoofing Models by Self-Supervised Learning</summary><br>
+<summary>292. [2020-11-03] [INTERSPEECH 2020] Defense for Black-box Attacks on Anti-spoofing Models by Self-Supervised Learning</summary><br>
 
 <a href="https://www.youtube.com/watch?v=k81atCYWpzg" target="_blank">
     <img src="https://img.youtube.com/vi/k81atCYWpzg/maxresdefault.jpg" 
@@ -843,11 +843,54 @@
 
 # [INTERSPEECH 2020] Defense for Black-box Attacks on Anti-spoofing Models by Self-Supervised Learning
 
+### 核心主題  
+- **研究目標**：提出一種基於自監督學習的方法，用於防止反轉攻擊（adversarial attacks）對ASV（Automatic Speaker Verification）反spoofing模型的效果。  
+- **核心問題**：現有的反spoofing模型在面對黑盒攻擊時容易被繞過，尤其是在添加通用噪音（universal noise）的情況下。  
 
+---
+
+### 主要觀念  
+1. **自監督學習**：提出使用一種名為Monkey J的自監督學習模型作為深度濾波器，用於削弱反轉噪音。  
+2. **通用噪音攻擊**：黑盒攻擊者在不知道目標模型內部結構的情況下，通過添加通用噪音來繞過防護機制。  
+3. **特徵表示的重要性**：自監督學習模型提取的高級特徵能有效防止通用攻擊範例的傳播。  
+
+---
+
+### 問題原因  
+- 現有方法中，簡單的濾波器（如均值濾波器、高斯濾波器）只能在一定程度上削弱噪音，但面對強大的反轉攻擊時效果有限。  
+- 黑盒攻擊者可以利用通用噪音繞過傳統防護機制。  
+
+---
+
+### 解決方法  
+1. **提出Monkey J模型**：基於自監督學習 pretrained 的深度濾波器，在反spoofing模型之前插入，用以削弱反轉噪音。  
+2. **模型結構**：Monkey J作為固定參數的前置模塊，提取高級特徵供反spoofing模型使用。  
+3. **防護機制**：在推理階段，先通過Monkey J削弱 noises，再進行反spoofing判斷。  
+
+---
+
+### 優化方式  
+1. **預訓練的重要性**：Monkey J需在大型數據集上進行充分的pretraining，以獲得有效的特徵提取能力。  
+2. **結構固定性**：Monkey J的參數在防護階段保持不變，避免引入額外的可學習參數，確保模型穩定性。  
+
+---
+
+### 實驗結果  
+- **數據集**：使用ASVspoof 2019 Challenge的訓練集和測試集進行實驗。  
+- **攻擊方法**：採用PGD（Projected Gradient Descent）和FGSM（Fast Gradient Sign Method）兩種常見的黑盒攻擊方式。  
+- **對比模型**：包括基線模型（Male Spectrogram）、均值濾波器、高斯濾波器等。  
+- **結果展示**：Monkey J-based Defender在所有攻擊場景下均表現出色，防禦效果顯著優於其他方法，尤其是在噪音強度增大的情況下。  
+
+---
+
+### 結論  
+1. 自監督學習模型提取的高級特徵能有效防止通用攻擊範例的傳播。  
+2. Monkey J作為深度濾波器，在黑盒攻擊防禦中具有顯著優勢，且結構簡單、效果穩定。  
+3. 預訓練是提升模型防護能力的關鍵步驟。
 </details>
 
 <details>
-<summary>293. ML Lecture 21-1: Recurrent Neural Network (Part I) English version</summary><br>
+<summary>293. [2021-02-17] ML Lecture 21-1: Recurrent Neural Network (Part I) English version</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Jjy6ER0bHv8" target="_blank">
     <img src="https://img.youtube.com/vi/Jjy6ER0bHv8/maxresdefault.jpg" 
@@ -856,11 +899,53 @@
 
 # ML Lecture 21-1: Recurrent Neural Network (Part I) English version
 
+# 文章整理：LSTM 在序列數據處理中的應用與優化
 
+## 核心主題
+- **長短期記憶網絡 (LSTM)**：一種用於處理序列數據的特殊 Recurrent Neural Network (RNN)，用來解決傳統 RNN 的長期依賴問題。
+
+## 主要觀念
+1. **傳統 RNN 的局限性**：
+   - 長期依賴問題： traditional RNN 在處理長序列數據時，梯度消失或爆炸現象嚴重，影響模型學習能力。
+   
+2. **LSTM 的創新結構**：
+   - **門控機制 (Gates)**：包括輸入門、forget 門和輸出門。這些門控結構能有選擇地允許信息流過，控制長期記憶的保留與更新。
+   - **セル狀構造 (Cell Structure)**：包含忘れゲート、入力ゲート、出力ゲート，每個門控使用sigmoid激活函數來決定信息流量。
+
+3. **LSTM 的計算流程**：
+   - 每個時間步中，門控結構根據當前輸入和先前狀態來控制信息的存儲與刪除。
+   - 輸出結果不僅依賴於當前輸入，還考慮到之前的隱藏狀態。
+
+## 問題原因
+- **梯度消失/爆炸**：傳統 RNN 在訓練長序列數據時，梯度在反向傳播過程中迅速衰減或放大，影響模型學習。
+- **信息選擇性不足**： traditional RNN 不能有效控制哪些信息應該被保留或遺忘。
+
+## 解決方法
+1. **門控結構引入**：
+   - **輸入門 (Input Gate)**：決定當前 timestep 的新信息有多少應該存儲在記憶中。
+   - **forget 門 (Forget Gate)**：控制之前長期記憶中有多少應該被保留或刪除。
+   - **輸出門 (Output Gate)**：控制記憶中的信息有多少應該作為輸出傳遞到下一 timestep。
+
+2. **多層堆疊 LSTM**：
+   - 通過多個 LSTM 層的串接，增強模型捕捉複雜序列模式的能力。
+   - 每一層的輸出作為下一個層的 입력，進一步提取高級特徵。
+
+## 優化方式
+- **Gated Recurrent Unit (GRU)**：
+  - GRU 結合了 LSTM 的主要思想，但結構更簡單，只包含更新門和重置門。
+  - 參數較少，計算效率更高，且在某些任務上性能與 LSTM 相當。
+
+## 應用實踐
+- **Keras 支持**：
+  - Keras 等深度學習框架提供現成的 LSTM 層，方便開發者輕鬆實現。
+  - 使用者可通過簡單的 API 調用 LSTM，無需深入理解內部複雜結構。
+
+## 結論
+LSTM 作為一種有效的序列模型，在多種應用場景中展現了優越性能。其門控結構有效解決了傳統 RNN 的長期依賴問題，而 GRU 等變體則在保持性能的同時降低了計算成本。現代深度學習框架進一步降低了使用門檻，使得 LSTM 成為處理序列數據的標準選擇。
 </details>
 
 <details>
-<summary>294. 【機器學習2021】預測本頻道觀看人數 (上) - 機器學習基本概念簡介</summary><br>
+<summary>294. [2021-02-26] 【機器學習2021】預測本頻道觀看人數 (上) - 機器學習基本概念簡介</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Ye018rCVvOo" target="_blank">
     <img src="https://img.youtube.com/vi/Ye018rCVvOo/maxresdefault.jpg" 
@@ -869,7 +954,56 @@
 
 # 【機器學習2021】預測本頻道觀看人數 (上) - 機器學習基本概念簡介
 
+### 核心主題
+- **預測模型的建立與優化**：探討如何基於歷史數據建立有效的預測模型，並通過調整模型結構來提升預測準確性。
 
+### 主要觀念
+1. **初始模型結構**：
+   - 原始模型為一元線性回歸模型，形式為 \( y = b + w_1 x_1 \)，其中 \( x_1 \) 表示前一天的觀看人次。
+   - 該模型在訓練資料上的誤差（loss）為0.58k，在未見資料上的表現為0.58k。
+
+2. **數據週期性分析**：
+   - 觀察到數據存在七天週期性，即每七天後的觀看人次會重現類似模式。
+   - 為了捕捉此週期性，提出考慮前七天的歷史數據作為模型輸入。
+
+3. **多變量線性模型**：
+   - 引入多個lags（延遲），將模型改為 \( y = b + w_1 x_1 + w_2 x_2 + \dots + w_7 x_7 \)，其中 \( x_i \) 表示前i天的觀看人次。
+   - 經訓練後，該模型在訓練資料上的loss降低至0.38k，在未見資料上的表現為0.49k。
+
+4. **模型擴展**：
+   - 考慮更多的lags（如28天和56天），以進一步捕捉更長期的數據模式。
+   - 28天模型在訓練資料上的loss為0.33k，在未見資料上為0.46k；56天模型則分別為0.32k和0.46k。
+
+### 問題原因
+- **初始模型局限性**：一元線性回歸未能充分捕捉數據的週期性特徵，導致預測精度不足。
+- **信息利用不夠充分**：未充分考慮多天歷史數據，限制了模型的學習能力。
+
+### 解決方法
+1. **引入lags**：
+   - 考慮前七天、28天和56天的 historical data 作為模型輸入，以提升模型的信息利用率。
+
+2. **選擇適當模型結構**：
+   - 使用多變量線性回歸模型，將多個lags納入模型訓練中，使模型能更充分地學習數據模式。
+
+3. **優化模型參數**：
+   - 通過_gradient descent_ 方法，最佳化模型的權重（weights）和截距（bias），以最小化預測誤差。
+
+### 優化方式
+1. **LAGS 的選擇**：
+   - 測試不同lags數量（如7天、28天、56天）對模型性能的影響，並選擇最佳lags數量。
+
+2. **模型結構調整**：
+   - 確定是否需要引入更高lags的數據，以進一步提升預測精度。
+
+3. **性能評估**：
+   - 使用訓練資料和未見資料分別評估模型性能，確保模型在不同數據集上的穩定性。
+
+### 結論
+- ** effectiveness of多lags模型**：考慮前七天、28天和56天的歷史數據能有效降低預測誤差，在未見資料上表現尤為明顯。
+- **模型結構的重要性**：適當增加lags數量可以提升模型的表現在訓練資料上，但在未見資料上的效果受到限制。
+- **未來研究方向**：
+   - 探索更 advanced 的模型結構（如非線性模型）以進一步提升預測精度。
+   - 研究其他可能影響觀看人次的因素，並納入模型中。
 </details>
 
 <details>

@@ -1,0 +1,679 @@
+Recurrent neural network RNN hello everyone let's start the class
+Okay let's talk about the recurrent neural network
+The recurrent neural network can actually do what we talked about in the previous class
+Sequence labeling in the end we'll talk about
+The difference between them
+The example we are going to give a slot filling we know that
+AI customer service is very popular now
+For instance AI ticket booking systems these customer services are ticket booking systems
+Wood often used slot filling so what does slot filling refer to
+Slot filling refers to for example if someone tells your booking system
+I would like to arrive Taipei on November 2nd then your system should automatically know that
+There are some slots in itself for example
+In the booking system there should be a slot named destination
+And another slot name time of arrival your system needs to automatically know
+The slot every word listed here belongs
+Your system should know that Taipei belongs to the destination slot
+And it should also know that November 2nd belongs to this lot of time of arrival
+As for the other words they don't belong to any slot
+How do we solve this problem
+Actually for this problem
+Of course you can also use a feed-forward neural network to solve it
+In other words all stack one
+Feed-forward neural network and its input is a word
+For example if you turn type A into a vector and throw it into this neural network
+If you want to throw a word into a neural network you must first transform it
+Into a vector
+How do we represent a word using a vector
+There are too many ways to do it in the most naive way
+Is 1 of n encoding I think we don't need to elaborate this more
+Of course you could use word Vector to represent a word
+Or if there are also some
+Methods Beyond one of ending coding for example
+Sometimes if you only use one of n encoding to describe a word you will encounter some problems
+Since there are so many words you may have never seen before
+You will need to add one more Dimension to the one event in coding
+This Dimension represents other and all the words not in our dictionary
+Will be classified into other
+For example Gandalf is not in our dictionary
+So it is classified as other
+Or
+Sauron is not in this dictionary so it is also classified into this vector
+You can also use the letters of a certain vocabulary to express
+It's better if you use the engram of the letter of a word to represent that vector
+You won't have a problem where some words are not in the dictionary
+For example you have a word called Apple
+In the word Apple app appears in it
+PPL appears and ple appears
+In this Vector the dimension corresponding to app is one
+The dimensions corresponding to PPL and player one in the others are 0
+Anyway
+Suppose we can represent a word as a vector
+Then you can throw this Vector into a feed-forward network as a result you will hope that your
+Output is a probability distribution in the slot filling tasks
+This probability distribution represents the probability of which slots does
+The input word belongs for example
+The probability that Taipei belongs to the destination in the probability that Taipei belongs to the time of departure
+Archer etcetera
+However this alone is not enough for feed-forward Network
+To solve this problem why suppose a user says
+Arrive Taipei on November 2nd
+Arrive is other Taipei is destination on his other
+November and second are all time but if another
+User said leave Taipei on November 2nd then Taipei this time
+Should be place of departure it should be place of departure rather than destination
+But for the neural network when the input is the same thing
+The output should be the same thing when you input the word Taipei
+Either the output has the highest probability of being a destination
+Our place of departure
+Only one of them can have the highest probability
+You can't make it sometimes departure has the highest probability and sometimes destination has the highest problem
+Ability
+So what should we do
+At this time we hope that our neural network has memory
+Suppose the neural network has memory
+It remembers that before it had seen this red Taipei
+It has already seen the word arrive
+And it remembers that before it had seen this green Taipei
+It has already seen the word leave it can produce different output
+Based on the context of a paragraph So if we let our neural network
+If the neural network has memory it can solve the problem of inputting the same word
+But there are different outputs
+Okay this kind of neural network with memory
+Is called recurrent neural network
+It's abbreviation is RNN in the recurrent neural network
+Every time our hidden lair
+Everytime the neuron in our hidden layer produces output
+The outputs will all be stored in memory
+Here we use blue squares to represent the memory
+When there are outputs from the neurons in these hidden layers
+They will be stored in these blue squares next time
+When there are inputs these hidden lair
+These neurons will not only considered
+The input X1 and X2 it will also consider
+The values in these memories
+For the RNN aside from X1 and X2
+The value stored in memory A1 and A2 will also affect the output
+For a better understanding I will give an example directly
+Assume that all the way to the network on the graph R1
+And all neurons have no bias value
+We also assume that all activation functions are linear
+This way the calculations won't be too complicated
+Now suppose our input is a sequence
+Are input is 1 1 1 1 2 2
+Then we input the sequence 1 1 1 1 2 2
+Into this recurrent neural network
+What will happen
+First of all before you start to
+Use this recurrent neural network
+You have to give the memory initial values
+You have to give the memory
+Before putting anything in it you have to give it initial values
+For instance we assume that the values in memory are zero before putting anything in it
+Now we input the first input one one
+What will happen next
+For this neuron
+In addition to receiving input 1 1
+It also received 000 from the memory and because we said that all the weights are one
+So the output is too and this neurons output is also to
+What's next
+Next because all the weights are one
+The outputs of the red neurons are for
+When we input 1:1 the outputs r44
+Then recurrent neural network will store
+The outputs of the green neurons to the memory
+As a result
+The value in the memory is updated to to this too will be written to memory this too will be written to memory
+The values in the memory or updated to 2
+After that
+We will in put one in one what will the green neurons output be this time
+It has four inputs
+One one and two two then the weights are all one so you add 2 + 2 + 1 + 1
+And the results are 6
+Lastly
+The outputs of red neurons are 6 + 6 equal 12 so when the inputs R11
+When you input 114 the second time the outputs are 1212
+So for recurrent neural network
+Even if you input the same thing even if you give it exactly the same input
+In this case it is 1 + 1
+Even if you give it exactly the same input it will be one in one in this case it's outputs maybe different
+Because the values in the memory are different
+What about the original values the outputs of the green neurons are 6 and 6
+B6 and 6 will be stored into the memory and they will be stored into the memory
+SO2 will be updated and become 6
+Next our inputs are
+2 and 2 assuming the inputs R22 Evergreen neurons here
+Will consider for inputs 2 + 2 + 6 + 6
+So what is 6 + 6 + 2 + 2 the answer is 16
+The outputs of the red neurons R32
+So when inputs are too into the outputs R32
+When using recurrent neural network one very important thing is
+The sequence of the input
+Is not independent when recurrent neural network is considering it
+If you change the order of the input sequence arbitrarily for example move to into to the top
+The output will be completely different
+There for recurrent neural network
+Will consider the order of the input sequence
+If we want to use recurrent neural network to solve the problem of slot filling
+It would look like this one user said arrive Taipei on November 2nd
+Then arrive becomes a vector and we throw it into the neural network
+The output of the Hidden layer of neural network is written here is a 1
+This A1 is the output of a row of neurons so it is actually a vector
+Then we generate y1 based on this a one
+This y1 is the probability of Which slot arrive belongs
+Then A1 will be stored in the memory
+And then Taipei will become the input
+Then this hidden layer would consider both the input Taipei
+And A1 which is stored in the memory to get a 2
+Then we generate Y2 according to a 2
+Y2 is the probability of Which slot Taipei belongs
+This process will be repeated again and again we then store a 2 in the memory and throw on into
+To the RNN
+The hidden Lair will consider both the vector of the word on
+And 8 to which is stored in memory to get a 3in generate Y3 according to a three
+It represents the probability of Which slot on belongs
+A little reminder here is
+That someone may say there are three networks here after seeing this picture
+However this is not three networks this is the same network
+Being used 3 times at 3 different time.
+I use the same color to represent the same way here on purpose
+The same weight is represented by the same color
+I hope you can see it
+So after we have memory
+The problem of inputting the same word but hoping for different outputs
+Could be solved now for example if we both enter the word Taipei
+Because the red Taipei is after leave and the green Taipei is after arrive
+And believe and arrived have different vectors so the outputs of the Hidden Lair will be different
+As a result the values in the memory will be different
+Although the X twos are exactly the same but the values in the memory are different
+So the outputs of the Hidden Lair will be different the final outputs will also be different
+Okay this is the basic concept of recurrent neural network
+Of course you can arbitrarily design the architecture of recurrent neural network
+Certainly it can be deep
+We just saw that recurrent neural network has only one hidden layer
+It can surely be a deep recurrent neural network
+For example after we input X1 it can pass through one hidden layer and then pass through a second hidden Lane
+Where
+Let it pass through many hidden layers finally we get to the final output
+All the outputs of each hidden layer will be stored in the memory
+And at the next period of time every hidden lair
+Will read the value stored in the memory before
+It will read the value stored in the memory before and finally get
+The final output this process continues you can stack as many layers
+As you want
+The recurrent neural network has different kinds of variance what we have just talked about
+Is called Elman network if we save the value of the Hidden lair
+For now and use it next time
+Then this is called Elman Network the other one is
+Call Jordan network Jordan network stores the output value of the entire network
+Then it will use this value of output at the next point of time
+It stores the value of the final output in the memory
+The legend says that Jordan network can have a better performance
+Because
+The hidden Lair here has no Target
+So it's hard to control what kind of hidden information it will learn
+And what kind of things it put into memory but this why it has a Target so we can have a better understanding
+I want we put in the memory
+Also recurrent neural network can be bi-directional
+What does this mean
+We just saw that in recurrent neural network
+If you input a sentence it will read from the beginning
+Till the end of the sentence assume that we use xt2 represent every word in the sentence
+It will read XT first then XT + 1 then x t + 2
+However it's reading Direction can in fact be reversed
+You can read XT plus-2 first then x t + 1
+Then XT
+You can train to forward recurrent neural network
+And a backward recurrent neural network at the same time
+Then take out the hidden layers
+From the to recurrent neural networks
+And connect them to an output layer
+To get the final y
+So you throw the output of the forward Network when XT was the input
+And the output of backward Network when XT was the input
+To the output layer
+And generate Whitey and then generate Whitey + 1 y t + 2 and so on
+The benefit of using bi-directional RNN is that
+When the network yield output it considers a broader range
+If you only have a forward Network
+When generating Y T & Y T + 1
+Your network has only seen depart from x 1 to x t + 1
+But if we use bidirectional RNN
+When Whitey + 1 is generated your network not only considers
+All the inputs from x 1 to x t plus one but also the inputs from the end of the sentence
+2xt + 1
+Your network now does consider the entire input sequence
+Suppose you are doing slot filling task
+Your network is equivalent to considering the entire sentence before deciding what the slot of each word should be
+It will have better performance than the one which just considers half of the sentence
+The recurrent neural network we just talked about is actually just
+The simplest version of recurrent neural network
+That's actually just the simplest version
+The memory we just talked about is the simplest
+That is we can store the value in memory at any time
+And read the value from memory at any time
+But the more commonly used memory now is
+Call the long short term memory
+The abbreviation of this long short-term memory is lstm
+This long short-term memory is more complicated this long short term memory has three gates
+Considering outside world when the other parts of the neural network
+When the output of a neuron wants to be written into the memory cell
+It must pass through a gate input gate first
+Only when the input gate is about to be opened
+Can you write the value into the memory cell
+If it is locked up
+There is no way to write the value into it from the other neurons
+As for whether the input gate is open or closed
+This is learned by neural network itself
+So it can learn when to open the input gate
+And went to close the input gate by itself
+What about the output
+There is also an output gate in the output place this output gate will decide
+Whether other neurons can read the value from the memory or not
+When the output gate is closed there is no way to read the value
+Only when the output gate is opened can the value be red
+This is the same as the input gate when the output gate is opener
+Close just learned by the network itself
+There is a third gate called forget gate
+Forget gate decides that
+When to forget the things
+That were Remembered in the past
+ORD to format the memory
+When does forget gate formats the value stored in memory
+Or to retain the stored-value
+Is learned by the network itself
+The whole lstm have 4 inputs
+In one output what are these four input
+When is the value you want to store it in the memory cell
+But it may not be able to be stored which depends on the input gate that decides whether to let this information pass through
+And the signal that controls the input gate
+And the signal that controls the output gate in the signal controls the forget gate
+Sewing lstm cell
+Has 4 inputs but it will only generate one output
+There is a trivia here
+Where do you think the dash should be placed
+I put it here on the slide but it doesn't mean that my slide is right
+I might just suddenly find that I made a mistake and want to revise it
+If you think this dashed should be placed between long and short
+Raise your hands
+No
+If you think it should be placed between shortened term raise your hand
+Okay put your hand down yes it should be placed between shortened term sometimes I see someone
+Put it between long and short
+In fact this doesn't make sense
+It should be placed between shortened term
+Because it is actually a short-term memory
+It is just a relatively long short term memory
+So according to this literal meaning it is a relatively long short term memory
+Because the recurrent neural network we mentioned previously
+Its memory would be cleaned
+At each moment
+As long as a new input comes in every time
+Recurrent neural network will wash out the memory so this short-term is very short
+It only remembers things from the previous time point
+But if it is a long short term memory it can remember
+Longer memory as long as forget gate does not decide to format the memory
+Its value can be stored
+Okay what about the memory cell
+If you look at its formulation more closely it looks like this
+This is the input from the outside that needs to be stored into the cell
+And this is the input gate
+This is the forget gate this is the output gate
+Let's suppose that the input to be stored in the cell is called Z
+The signal that controls the input gate is called Z
+This so-called signal that controls the input gate is actually a scalar
+Is also a value
+We will talk about where this value comes from later
+Anyway there is a value here
+Which is regarded as the input of this cell and this forget gate
+There is one value ZF that controls it and there is a value zero that controls the output gate
+After synthesizing these things you will finally get an output
+Right here
+Okay Suppose there is a value already stored the cell
+Before in putting these four values
+Which called C
+Nelk suppose you want to input
+The input value called Z
+The three gates are controlled by zdf 0 respectively
+What will output a look like
+We put D through an activation function
+Get Jeezy then passes through
+Another activation function gept FZ
+Over here
+The activation function at the z z fzo pass-through
+Usually we choose sigmoid function its meaning is that
+The output value of sigmoid function is between 0 to 1 and this value
+Represents how much the gate is opened if the output of f
+The output of the activation function is one which means that the gate is now in an open state
+On the contrary it means that the gate is closed
+Next we multiply G-Eazy by the value of this input gate FZ
+That is Jeezy* FZ
+What about the ZF of this forget gate
+The ZF signal is also passed through the sigmoid activation function
+To get fvf then
+We multiplied fvf
+By the value C stored in memory
+To get C* fvf
+Then add C Astros get the F2 Jeezy Astros Gap Z
+Add these two together to get C
+C is the new value stored in memory
+The value stored in the new memory is seeso
+According to the calculations so far we can find that this aphids econtrols Jeezy
+Deciding whether value can be inputted or not because when FZ equals 0
+Then Jeezy* Z is equal to 0 as if there is no input
+Is that Z is equal to 1 then gz is directly used as input
+Linda's fvf is to decide whether we should
+Wash out the value stored in memory assuming fzf is 1
+Assuming fzf is 1
+That is when the forget gate is open
+When forget gate is open
+See will pass through it directly which is equivalent to
+Remembering the value stored before if fvf equals 0
+That is when the forget gate is closed
+Now zero is X the value of c those values stored in the memory becomes zero
+Then add these two values together
+We add up these two values and write it to memory to get C
+The switch of the forget gate is opposite to our intuitive thoughts
+When the forget gate is opened it represents remembering
+When it is closed it means forgetting
+So I think it's name is a bit weird maybe it shouldn't be called forget gate
+Anyway it's customary to call it forget gate
+Well past the see-through age to get HC
+Next there is an output gate here
+This output gate is controlled by Zo
+And get a physio by passing through f
+If F 0 is 1 then we will
+Multiply fgo by HC
+If fgo is 1 it means
+HC can pass this output gate
+If F 0 is 0
+It means that the output will become 0 which means the value stored in memory
+Cannot be passed through output gate in to be red
+Maybe you still don't understand it very well so later I plan to make a manual lstm
+I have never seen Manuel lstm anywhere else
+So you can think that I made this slide for a long time
+Let's talk about the example we want to give first
+Our example is like this
+In the network there is only one lstm cell
+Are inputs are all three dimensional vectors outputs are all one dimensional vectors
+What is the relationship between these three dimensional vectors in the value in the output in the memory
+This relationship is like
+Support that
+When the value of the second dimension x 2 is 1
+The value of X1 will be written to memory
+When X2 is 1 the value of X1 will be stored in memory
+Assuming that the value of X2 is -1
+Memory will be reset
+The value stored in memory will be forgotten
+Assuming that x 3 is equal to 1
+You will open the output gate and you can see the output
+So
+Suppose we originally stored the value in memory is 0
+When one is here
+When x 2 equals 1/3 will be stored in memory
+The value obtained here becomes 3
+Then one appears again here
+So4 will be stored in memory so we get 7
+X 3 equals one so 7 will be output
+There is a minus one here
+Which will wash out the value in memory so if you see -1 the value at the next time point will become zero
+Then when you c16 will be stored in so the value you get is 6
+Here one is the output so the value obtained is 6
+Then let's do the calculation
+This is a memory cell and lstm memory cell
+We know there are four inputs and in the memory cell of lstm
+All these four inputs are scalar
+Where did these four input scalars come from
+These four scalars are the result obtained from the three dimensional vectors we input
+After the linear transform you just multiply these three vectors by these three values + bias
+You can get the input here
+Then these three values
+Multiply them by three weights and add bias to get the input
+And so on
+As for these input values X1 X2 X3
+Which value should be multiplied and what should be the value of bias
+It is learned through training data and gradient descent
+We are just assuming that we already know what these values are
+Then I use these inputs to get the output
+Let's do the calculations but before the calculations
+According to its input according to these parameters
+Let's analyze the results we might get you can see here
+X 1 is x 1 everything else is X 0 so
+Here we just use X1 is the input then we look at the input gate
+It is X2* 100
+Bias is -10 that is to say when x 2 has no value
+Because the bias is -10 the input gate is usually closed
+If bias is -10 then after activation function
+Which is sigmoid hear its value will be close to zero
+Hence the input gate is closed
+Then if X2 has a value it will be greater than the bias of -10
+For example if X2 is one it will be larger than the bias
+At this time the input will be a large positive number
+The input gate is then opened
+What about the forget gate
+Forget Gators usually open you will find that since its biases 10
+It is usually open therefore it always remembers things
+Only when x 2 as a large negative value it will overwhelm the bias 10 and close the forget gate
+What about the output gate
+The output gate is usually closed because it's bias has a large negative number
+If x 3 has a large positive input value
+You can overwhelm the bias and turn on the output gate
+So let's walk through this framework with some inputs
+We assume that G and H are both linear for the convenience of computation
+Suppose the initial value stored in the memory is zero
+Okay let's enter the first Vector 310
+What will happen to input Vector 3103 is X one so the value entered here is 3
+Then One X 100 - 10 so the input gate here is approximately equal to one
+So it is open
+1 * 3 the value obtained after passing the input gate is 3
+What about forget gate the input Vector is 310
+Since the input Vector is 310 the forget gate is open
+Multiply 0 by 1 and add 3 so the forget gate is opened
+There is no value in it
+So it has no effect then 0 * 1 + 3 so the value in the memory becomes 3
+Next we look at the output gate the input Vector is 310
+So the output gate is still closed 3 cannot pass so the output is 0
+Okay for the next input Vector 410
+The input is still for
+Then this 410 will open the input gate
+Forget gate will also be open
+As the forget gate is opened the value stored in the memory is 3 * 1 + 4 which equals to 7
+The output gate is still closed
+So the output of the entire memory is still zero
+Then what will happen for the next input Vector 200
+Now the input becomes too
+What will happen to this input gate
+The input to the activation function is -10
+So the result is closed 200 * 2 equals to 0
+The input to is there for blocked by the input gate what about the forget gate
+When we feed 200 in to forget gate the input for the activation function is 10
+So the forget gate is still open then 7 * 1 + 0
+It turns out that the value in the memory does not change which is still 7
+Then these 7 cannot be output because the output gate is still closed
+So the output is still 0
+Okay next input Vector is 101
+What will happen to input Vector 101 the input here is still one
+The input gate is closed what about the forget gate
+So the forget gate is still the same at this time it is opened
+So the value stored in the memory remains unchanged
+What about the output gate
+When you input 101
+You will open the output gate in the input of the activation function becomes 90
+After passing activation function we get one
+Then one time 7 equals to 7
+So it will output a value from the memory
+The value 7 in the memory will be read out
+Finally let's try 310
+This tree is red in his input
+The input gate will be closed
+What about the forget gate
+Because this value is -1 the input for Activation function of the forget gate is -90
+The activation output is zero
+So the value stored in memory will be cleared
+The value stored in the memory will be multiplied by the output of the forget gate and become zero
+As for the output gate it is still closed at this time but it does not matter if it is turned on or not because the value
+Are you in the memory is zero anyway
+Then the value it reads out is also zero
+This is the whole process of the algorithm
+Now you may wonder that
+This is very different from the neural network we saw before
+What kind of relationship does it have with the original neural network
+You can think of it this way
+There's a lot of neurons in our original neural network
+We will multiply the input by different weights
+Then treat them as the input for different neurons
+Also every neuron is a function
+Which takes in a scalar and outputs another scaler
+But what about the lstm
+You can think of the memory cell of the lstm is a neuron
+So if we want to use an lstm Network today
+What you have to do is to just replace a simple neuron
+With the lstm cell
+And the current input X1 X2 will be X different ways
+As different inputs to lstm
+That is to say
+Suppose we now have only two neurons in this hidden layer
+That is there are only two lstms but in fact you will have more than two neurons
+You may have to say 1000 neuron in 1000 lstm memory cells
+Now Suppose there are only two lstms than X1 X2 are X a set of weights
+To control the output gate of the first lstm
+Again multiply it by another set of weights to control the input gate of the first lstm
+And multiply it by another set of weights to serve as the input of the first lstm and multiply it by another
+Set of Weights is the input of lstm forget gate
+The second lstm follows the same process X1 X2 or x a set of way
+Ways to control its output and similarly
+For the output gate for the input gate for the input for the forget gate
+Now we just mentioned that lstm has four inputs and one output
+And for an lstm the 4 inputs are all different
+The four inputs for the first lstm are all different in
+The four inputs for the second lstm are all different
+In the original neural network
+A neuron has only one input in one output in lstm it needs for input
+To produce an output
+Just like some machines it only needs one power cord to run the machine
+For lstm it requires for power cords to run the lstm machine
+As lstm needs for input and the four inputs are all different
+The number of parameters lstm needs is
+Assuming the network of lstm has the same number of neuron
+As in the original neural network the number of parameters lstm needs
+Will be four times that of a normal neural network
+From this picture you can clearly see that
+The general neural network only needs this part of the parameters to generate the input for a neuron
+But lstm also needs to control three other Gates so it needs four times the parameters
+But in this way you may still have no idea how
+This is related to the recurrent neural network
+This picture does not seem to look like a recurrent neural network we have just learned
+So we have to draw another picture to show it
+Suppose we now have a whole row of lstm cell
+In this row of lstm cell in each of their memory
+There is a scalar stored in each lstm cell
+Concatenating all the scalars together
+We will get a vector ct1
+Each of the scalar stored in a single memory cell
+Represents a dimension in the vector ct1
+Now at time t
+Input a vector XT
+This Vector is first get through a linear transform
+Which we multiply it by a matrix to become another Vector Z
+You multiply x t by a matrix to become Z
+Lindsay is also a vector then what does the Z Vector represent
+What about each dimension of this Vector Z
+Each dimension of Z this Vector manipulates
+The input of each lstm
+So the dimension of Z is exactly
+The number of memory cell
+Then the first dimension of Z controls the input for the first cell the 2nd Dimension controls the second cell
+And so on
+Hope you all know what I mean
+Okay this XT will be multiplied by another transform
+To get Zi
+And this VI Cruz Dimension is also the same as the number of cells
+Each dimension of Zi
+Will control a memory cell for example the first dimension of zi controls
+The input gate of the first cell the 2nd Dimension controls the input gate of the second cell
+And the last Dimension controls the input gate of the last cell
+What about the forget gate in the output gate
+It's the same as before
+Multiply XT by a transform to get zfzf will control each forget gate
+XT is multiplied by another transform to get Zozo will control the output gate of each cell
+Okay so we multiply XT by four different transforms
+To get four different vectors and the dimensions of these four vectors
+Are exactly the same as the number of cells
+The four vectors combined will control
+The operation of these memory cells
+Okay we know that a memory cell looks like this
+And the inputs are ZZ IV fgo
+Notice that these 4zr actually vectors
+The value sent into the cell is actually just a dimension of each vector
+Since the input of each cell comes from different dimension of the vector
+Their input values will be different
+However all cells can be computed together
+How is it
+We say that they should be multiplied by the value of
+Zi passing through an activation function
+So we first pass the eye through the activation function in X with z
+Notice that the multiplication here is the element wise multiplication
+This VF must also get through
+The activation function of the forget gate
+It's X the value in the cell
+It is X the original value in the memory cell
+Then next add these two values together
+You just at the multiplication results of z i n z
+With the multiplication results of zfn ct1
+Add them up
+Okay for the output gate 0 is passed through the activation function and is
+Then multiplied with the result of the addition before
+And get the final output YT
+The result of the addition at this time
+Is the value stored in the memory which is CT
+Then this process will be repeated at the next time stamp
+At the next timestamp input x t + 1
+Then you multiply Z by the input gate
+You multiply the forget gate with the value stored in the memory
+Then add this value to this value and multiply it by the value of the output gate
+Then get the output at the next time Point like this then you may think that this is already very complicated if
+If you make a slideshow yourself it will obviously take a long long time
+However this is not the final version of lstm
+This is just a simplified version
+What would a real lstm do
+It will send the output here to the next timestamp
+It will make the output of this hidden layer is the input at the next time stamp
+In other words both the input at the next time stamp and
+The output age of the previous timestamp affects the computation of these Gates
+In fact not only that people also add another things called people
+What is the people th people is to send also the value in the memory cell
+To the next timestamp so when manipulating the four Gates of lstm
+You consider acts h&c at the same time
+You combine these three vectors and multiply them by four different transforms to get these four different vectors
+To control the lstm
+Usually lstm does not have only one layer
+Now it's coming to stack five or six layers
+So it looks like this
+And everyone who saw this for the first time
+His reaction is like this what have I just seen
+As far as I remember the author of the sequence to sequence model which is
+Proposed by Google brain once gave a talk to me
+He said that at the first time he saw lstm his reaction was exactly the same as this picture
+It is far too complicated it will not work everyone I know feels that this will not work
+At the first time they see lstm
+But it is actually quite standard now
+So when someone tells you that
+They saw the problem with RNN don't ask him why don't you use lstm
+Because he actually uses lstm now when you say you are using RNN
+You are actually referring to using the lstm
+So this is actually quite standard
+Actually Cara supports lstm so even if you don't understand the complicated things we have just said
+You can just type in the four letters lstm in Keras
+Then it's over
+Care is actually supports three kinds of recurrent neural networks one is lstm
+When is Gru
+Gru as a slightly simplified version of lstm it only has two gates
+Compared to lstm it has one less gate but the performance is comparable to that of lstm and because
+Does of having 1/3 less parameters
+It can prevent overfitting to some extent
+If you want to use the simplest RNN we talked about at the beginning of this lesson
+You have to explicitly tell Keras that you want to use the simple RNN
+Then I think we can stop here today
+Thank you National Taiwan University Artificial Intelligence Center Ministry of Science and
+Ology joint Research Center for artificial intelligence technology and full-scale Healthcare HTTP code
+://into. TW

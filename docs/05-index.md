@@ -680,7 +680,7 @@
 </details>
 
 <details>
-<summary>289. [INTERSPEECH 2020] DARTS-ASR: Differentiable Architecture Search for Multilingual Speech Recognition</summary><br>
+<summary>289. [2020-11-03] [INTERSPEECH 2020] DARTS-ASR: Differentiable Architecture Search for Multilingual Speech Recognition</summary><br>
 
 <a href="https://www.youtube.com/watch?v=rztqT8RXyuI" target="_blank">
     <img src="https://img.youtube.com/vi/rztqT8RXyuI/maxresdefault.jpg" 
@@ -689,11 +689,50 @@
 
 # [INTERSPEECH 2020] DARTS-ASR: Differentiable Architecture Search for Multilingual Speech Recognition
 
+# 文章整理：基於可微架構搜索的語音識別模型優化研究
 
+## 核心主題
+- 探討將可微架構搜索（Differential Architecture Search, DAR）應用於語音識別（ASR）任務中的有效性和優勢。
+- 研究如何通過多語言預訓練和適應策略，提升語音識別模型在單語和多語環境下的性能。
+
+## 主要觀念
+1. **可微架構搜索**：一種通過端到端優化自動尋找最優網絡結構的方法，適用於語音識別任務。
+2. **多語言語音識別**：探討共享 acoustic 模型在多種語言間的可行性及其優勢。
+3. **模型適應策略**：研究如何通過參數調整和架構微調，提升預訓練模型在目標語言上的性能。
+
+## 問題原因
+- 傳統固定架構的語音識別模型難以有效處理多種語言及其複雜的 acoustic 特性。
+- 缺乏有效的多語言共享機制，導致模型泛化能力有限。
+
+## 解決方法
+1. **可微架構搜索**：
+   - 通過 DAR 方法自動搜索最優網絡結構，取代人工設計固定架構。
+   - 在單語和多語環境下分別進行架構搜索，驗證其通用性。
+2. **多語言預訓練與適應**：
+   - 預先在多種源語言上訓練共享 acoustic 模型。
+   - 通過三種適應策略（僅參數調整、參數與架構聯合微調、剪枝架構）優化模型在目標語言上的性能。
+
+## 優化方式
+1. **架構搜索結果分析**：
+   - 單語環境下，不同語言的最優架構存在差異，但淺層結構中標準卷積爲主。
+   - 多語環境下，較大的 kernel size 卷積和深度可分離卷積在深層架構中更爲普遍。
+
+2. **適應策略優化**：
+   - 參數與架構聯合微調能顯著提升性能，同時保持較低的計算成本。
+   - 架構剪枝在減少計算開銷的同時，僅造成輕微性能下降。
+
+## 結論
+- 可微架構搜索方法能在單語和多語語音識別任務中提供優於傳統固定架構的性能。
+- 多語言預訓練有助於發現適用於廣泛語言的通用 acoustic 模型。
+- 未來工作可將 DAR 方法與其他 ASR 技術（如元學習）結合，探索更大規模模型和更多任務的應用。
+
+---
+
+以上整理基於文章內容，結構清晰地歸納了核心主題、主要觀念、問題原因、解決方法、優化方式及結論。
 </details>
 
 <details>
-<summary>290. [INTERSPEECH 2020] SpeechBERT: Model for End-to-end Spoken Question Answering</summary><br>
+<summary>290. [2020-11-03] [INTERSPEECH 2020] SpeechBERT: Model for End-to-end Spoken Question Answering</summary><br>
 
 <a href="https://www.youtube.com/watch?v=7mf7nSh8dGE" target="_blank">
     <img src="https://img.youtube.com/vi/7mf7nSh8dGE/maxresdefault.jpg" 
@@ -702,11 +741,58 @@
 
 # [INTERSPEECH 2020] SpeechBERT: Model for End-to-end Spoken Question Answering
 
+### 小節整理：端到端spoken question answering模型的研究與實現
 
+#### 1. 核心主題
+- **核心主題**：開發一種端到端（end-to-end）的spoken question answering系統，直接從音頻信號中進行問題解答，避免傳統管道式方法的局限性。
+
+#### 2. 主要觀念
+- **信息獲取限制**：
+  - 文本中的信息有限，大量信息隱藏在語音中。
+  - 舊有管道式方法依賴高精度的文字轉錄（ASR），易受錯誤影響。
+  
+- **端到端模型優勢**：
+  - 直接處理音頻信號，跳過傳統的文本轉錄步驟。
+  - 更好地利用語音信息，提升在高錯誤率下的性能。
+
+#### 3. 問題原因
+- **管道式方法的局限性**：
+  - 高ASR錯誤率導致模型性能下降。
+  - 認識錯誤會影響最終答案的準確性。
+
+#### 4. 解決方法
+- **提出Speech-BIR架構**：
+  - 將文本基礎的BIR模型改進為語音版本，名為Speech-BIR。
+  - 端到端訓練：直接從音頻信號中提取特徵並進行問題解答。
+  
+- **實現細節**：
+  - 使用ground truth transcription進行模型訓練。
+  - 測試階段使用ASR轉錄，模擬實際應用環境。
+
+#### 5. 優化方式
+- **預訓練與微調**：
+  - 在音頻數據上進行預訓練，提升模型的語音理解能力。
+  
+- **世界邊界分割**：
+  - 使用.ALIGNMENT技術提取世界邊界信息，進行音頻分割，降低ASR錯誤影響。
+
+#### 6. 結論
+- **性能優勢**：
+  - 在低錯誤率場景下，Speech-BIR性能接近傳統管道式方法。
+  - 在高錯誤率場景下（>40%），Speech-BIR表現明顯優於管道式方法。
+
+- **實驗結果**：
+  - 在spoken Squad數據集上，Speech-BIR在更困難的子集上取得了顯著提升。
+  - 結合文本BIR模型進行聯合訓練，進一步提升了性能。
+
+#### 7. 未來方向
+- **改進ASR錯誤處理**：探索更 robust 的方法來應對高錯誤率場景。
+- **多模態融合**：將語音和文本信息有機結合，進一步提升模型性能。
+- **擴展應用場景**：將此技術應用於更多實際問題中，如客服系統、智能音箱等。
 </details>
 
 <details>
-<summary>291. [INTERSPEECH 2020] Understanding Self-Attention of Self-Supervised Audio Transformers</summary><br>
+<summary>291. [2020-11-03] [INTERSPEECH 2020] Understanding Self-Attention of Self-Supervised Audio Transformers</summary><br>
 
 <a href="https://www.youtube.com/watch?v=RJq_B416V1Q" target="_blank">
     <img src="https://img.youtube.com/vi/RJq_B416V1Q/maxresdefault.jpg" 
@@ -715,7 +801,36 @@
 
 # [INTERSPEECH 2020] Understanding Self-Attention of Self-Supervised Audio Transformers
 
+# The Role and Importance of Self-Attention in Continuous Input Reconstruction: An Empirical Study
 
+## 小節整理
+
+### 1. 核心主題  
+- 探討自注意力機制（Self-Attention）在連續輸入重建任務中的作用和重要性。  
+- 分析不同類型的注意力頭（Attention Heads）對下遊任務的影響。  
+
+### 2. 主要觀念  
+- 自注意力機制能夠捕捉序列中的全局信息，並在重建任務中表現出強大的能力。  
+- 注意力頭可以分爲三類：** diagonal, vertical, 和 global**，每種類型在處理不同類型的信息時具有不同的作用。  
+
+### 3. 問題原因  
+- 不同類型的注意力頭對下遊任務的重要性存在差異。  
+- 部分注意力頭可能對模型性能貢獻較小甚至產生負面影響。  
+
+### 4. 解決方法  
+- 提出一種基於注意力頭重要性的評估指標：** globalness, verticality, 和 diagonality**，用於量化不同類型注意力頭的貢獻。  
+- 通過逐步剪枝（Pruning）實驗，驗證不同類型注意力頭對下遊任務的影響程度。  
+
+### 5. 優化方式  
+- **Diagonal Attention Heads**: 對音素分類任務至關重要，其剪枝會導致性能顯著下降。  
+- **Vertical Attention Heads**: 主要影響說話人識別任務，但可能對音素分類任務產生負面影響。  
+- **Global Attention Heads**: 對整體表示質量貢獻較小，可適當剪枝以優化性能。  
+
+### 6. 結論  
+- 自注意力機制在連續輸入重建任務中表現出強大的能力。  
+- **Diagonal Attention Heads** 是核心，對音素分類和說話人識別均至關重要。  
+- 可通過剪枝去除超過50%的冗餘注意力頭（尤其是Global類型），在不影響說話人身份的前提下提升音素分類性能。  
+- 未來研究可進一步探索注意力頭的多樣性與模型壓縮的可能性。
 </details>
 
 <details>

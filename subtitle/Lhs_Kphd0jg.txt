@@ -1,0 +1,267 @@
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心http://ai.ntu.edu.tw/
+修圖的例子，先來看一個 demo 這個 demo 是這樣，右邊有很多的 bar
+把這個 bar 調整一下以後
+這些相片裡面的臉就會換
+這 NVIDIA 做的
+這個是變禿頭
+再反過來就是頭髮會變多
+變黑頭髮
+變金頭髮
+然後戴眼鏡
+變男的
+反過來就是變女的
+這個是出現鬍子
+讓大家笑了
+反過來就生氣了
+藍皮膚是嗎
+就年輕 有一個 attractive
+變白這樣子
+變小鼻子 就自己調一下
+你說有變藍皮膚嗎 我沒有發現
+我有時候再仔細看看有沒有變藍皮膚
+接下來就講一下這個東西是怎麼做的
+這個就是以後可以拿來自動修圖就是了
+這怎麼做的？我們知道假設 train 一個人臉的 generator
+會 input 一個 random vector 然後就 output 一個人臉 這作業大家 3-1 的時候已經有做了
+在一開始講 GAN 的時候跟大家說過 input vector 的每一個 dimension 其實可能對應了某一種類的特徵
+只是問題是我們並不知道每一個 dimension 對應的特徵是甚麼
+現在要講的是怎麼去反推出現在 input 的這個 vector 每一個 dimension 它對應的特徵是甚麼
+現在的問題是這個樣子
+你其實可以收集到大量的 image
+你可以收集到這些 image 的 label label 說這張 image 裡面的人
+是金頭髮的、是男的
+是年輕的等等
+你可以得到 image，你也可以得到 image 的特徵 你也可以得到 image 的 label
+但現在的問題是會搞不清楚這張 image 它到底應該是由甚麼 vector 所生成的
+假設你可以知道生成這張 image 的 vector 長甚麼樣子
+你就可以知道 vector 跟 label 之間的關係
+因為現在有 image，然後有 image 的 label
+你有 image 跟它特徵的 label
+假設可以知道某一張 image 它可以用什麼樣的 random vector 丟到 generator 就可以產生這張 image
+你就可以把這個 vector 跟 label 的特徵把它 link 起來
+現在的問題就是給你一張 image
+你其實並不知道什麼樣的 random vector 可以產生這張 image
+所以這邊要做的第一件事情是
+假設已經 train 好一個 generator
+這個 generator 給一個 vector z 它可以產生一個 image x
+這邊要做的事情是去做一個逆向的工程
+去反推說如果給你一張現成的 image 什麼樣的 z 可以生成這張現成的 image
+做一個逆向的工程
+怎麼做呢？
+這邊的做法是再 learn 另外一個 encoder
+再 learn 一個 encoder，這個 encoder 跟這個 generator 合起來 就是一個 Autoencoder
+在 train 這個 Autoencoder 的時候 input 一張 image x
+它把這個 x 壓成一個 vector z
+希望把 z 丟到 generator 以後它 output 的是原來那張 image
+在 train 的過程中
+generator 的參數是固定不動的 generator 是事先已經訓練好的就放在那邊
+我們要做一個逆向工程猜出 假設 generator 產生某一張 image x 的時候
+應該 input 什麼樣的 z 要作一個反向的工程
+這個怎麼做？就是 learn 一個 encoder
+然後在 train 的時候給 encoder 一張 image
+它把這個 image 變成一個 code z
+再把 z 丟到 generator 裡面讓它產生一張 image x
+希望 input 跟 output 的 image 越接近越好
+在 train 的時候要記得這個 generator 是不動的
+因為我們是要對 generator 做逆向的工程
+我們是要反推它用什麼樣的 z 可以產生什麼樣的 x
+所以這個 generator 是不動的 我們只 train encoder 就是了
+在實作上，這個 encoder 因為它跟 discriminator 很像
+所以可以拿 discriminator 的參數來初始化 encoder 的參數，總之這是一個實驗的細節就是了
+接下來假設做了剛才那件事以後就得到一個 encoder
+encoder 做的事情就是給一張 image 它會告訴你這個 image 可以用什麼樣的 vector 來生成
+用什麼樣的 vector 可以生成這張 image
+因為現在你就把 database 裡面的 image 都倒出來
+然後反推出他們的 vector
+就是這個 vector 可以生成這張圖
+這個 vector 生這張圖
+然後我們知道這些 image 他們的特徵是知道的
+這些是短髮的人臉
+這些是長髮的人臉
+把短髮的人臉它的 code 推出來
+再平均就得到一個短髮的人臉的代表
+把這個長髮的人臉的 code 都平均就得到長髮人臉的代表
+再把他們相減就知道在這個 code space 上面做什麼樣的變化，就可以把短髮的臉變成長髮的臉
+你把短髮的臉加上這個向量 z long 它就會變成長髮
+所以這個就講一下 z long 怎麼來
+你就把長髮的 image x 它的 code 都找出來
+把 x 丟到 encoder 裡面，把它 code 都找出來
+然後變平均得到這個 z
+把這個不是長髮的，短髮的 code 都找出來平均 得到這個點，這兩個點相減，就得到 z long 這個向量
+接下來在生成 image 的時候
+給你一張短髮，你怎麼把它變長髮呢？
+給你一張短髮 image x，你把 x 這張 image 丟到 encoder 裡面得到它的 code
+再加上 z long 得到新的 vector z'
+再把 z' 丟到 generator 裡面就可以產生一張長髮的圖 就這樣子
+所以剛才的 NVIDIA 的 demo 裡面
+它做的事情就是它不是做各種的調整
+它可以變黑頭髮
+變男的、變年輕的，它就只是找出黑頭髮的 vector 長甚麼樣子
+年輕的 vector 長甚麼樣子
+是男的 vector 長甚麼樣子
+給他任何一張 image，它就是把那張 image 變成 code
+再把那個 code 加上你要的特徵的 vector
+然後變成新的 vector 再丟到 generator
+就可以產生新的圖了
+剛才那個 demo 就是這樣做
+那這邊還有另外一個 demo
+這個 demo 是一個智能的 Photoshop
+我突然發現沒有聲音不過沒有聲音你應該還是看得懂
+其實還有另外一個版本
+你發現不同的人幾乎在同樣的時間做差不多的事情
+有另外一個版本的智能的 Photoshop
+這是改人臉
+接下來就講這種智能的 Photoshop 是怎麼做的
+講一下它的作法，這個怎麼做呢
+這個做法是這樣，首先 train 一個 GAN train 一個 generator
+這個 generator train 好以後
+這個 generator 你從它的 latent space 隨便 sample 一個點
+output 它都會產生一個 假設 train 的時候是用商品的圖來 train
+那你在 latent space 上面、在 z 的 space 上面 隨便 sample 一個 vector
+丟到 generator 裡面它就 output 一個商品
+你拿不同位子做 sample 會 output 出不同商品
+這個地方 sample 就 output 一個袋子 這個地方 sample 就 output 一個鞋子
+那接下來剛才不是看到智能的 Photoshop 給一張圖片
+然後在這個圖片上面稍微做一點修改
+結果就會產生一個新的商品
+這件事情是怎麼做的？
+這個做法大概是這個樣子
+先把這張圖片反推出它在 code space 上面的哪一個位子
+然後接下來在 code space 上面做一下小小的移動
+希望產生一張新的圖片
+這張新的圖片一方面跟原來的圖片夠像
+一方面它跟原來的圖片夠像 新的圖片跟原來的圖片夠像
+但同時又要滿足使用者給的指示
+比如使用者說這個地方是紅色的
+所以產生出來的圖片在這個地方是紅色的
+但它仍然是一件 T-shirt
+假設 GAN train 的夠好的話
+只要在 code space 上做 sample 你在這 code space 上做一些移動
+你的 output 仍然會是一個商品
+假設 GAN train 的夠好的話
+在這 code space 上做 sample
+output 出來的每個東西都是商品，只是有不同的特徵
+所以你已經推出這張 image 對應的 code 就在這個地方
+你把它小小的移動一下
+就可以產生一張新的圖
+然後這張新的圖要符合使用者給你的 constrain
+接下來實際上怎麼做的呢？
+實際上會遇到的第一個問題就是要給一張 image
+你要反推它原來的 code 長甚麼樣子
+怎麼做到這件事？有很多不同的做法
+舉例來說一個可行的做法是你把它當作是一個 optimization 的 problem 來解
+你就在這個 code space 上面想要找到一個 vector z*
+這個 z* 可以產生所有的 image X^T
+所以要解的是這樣一個 optimization problem
+要找一個 z，把這個 z 丟到 generator 以後產生一張 image
+這個 G(z) 代表一張產生出來的 image
+產生出來的 image 要跟原來的圖片 X^T 越接近越好
+L 是一個 Loss Function，它代表的是要衡量這個 G(z) 這張圖片跟 X^T 之間的差距
+至於怎麼衡量他們之間的差距有很多不同的方法 比如說你用 Pixel-wise 的方法
+直接衡量 G(z) 這張圖片跟 X^T 的 L1 或 L2 的 loss
+也有人會說它是用 Perception Loss
+所謂 Perception Loss 是拿一個 pretrain 好的 classifier 出來
+這個 pretrain 好的 classifier 就吃這張圖片得到一個 embedding
+再吃 X^T 得到一個 embedding
+希望 G(z) 根據 pretrain 的 classifier 比如說 VGG 得到 embedding，跟 X^T 得到 embedding
+他們越接近越好
+找一個 z，這個 z 丟到 generator 以後
+它跟你目標的圖片 X^T 越接近越好
+就得到了 z*，這是一個方法
+解這個問題可以用 Gradient Descent 來解
+第二個方法就是我們剛才在講前一個 demo 的時候用的方法
+learn 一個 encoder，這個 encoder 要把一張 image 變成一個 code z
+這個 z 丟到 generator 要產生回原來的 image
+這是個 Autoencoder，你希望 input 跟 output 越接近越好
+還有一個方法，就是把第一個方法跟第二個方法做結合
+怎麼做結合？因為第一個方法要用 Gradient Descent
+Gradient Descent 可能會遇到一個問題就是 Local Minimum 的問題
+所以在不同的地方做 initialization 給 z 不同的 initialization 找出來的結果是不一樣的
+你先用方法 2 得到一個 z
+用方法 2 得到的 z 當作方法 1 的 initialization
+再去 fine tune 你的結果 可能得到的結果會是最好的
+總之有不同方法可以從 x 反推 z
+你可以從 x 反推 z 以後
+接下來要解另外一個 optimization problem
+這個 optimization problem 是要找一個 z
+這個 z 可以做到甚麼事情？
+這個 z 一方面，你把 z 丟到 generator 產生一張 image 以後
+這個 image 要符合人下的 constrain
+人下的 constrain 舉例來說這個地方要是紅色的
+這個 U 代表有沒有符合 constrain
+那至於甚麼樣叫做符合 constrain 這個就要自己去定義
+這個寫智能 Photoshop 的 developer 要自己去定義
+你用 G(z) 產生一張 image
+接下來用 U 這個 function 去算這張 image 有沒有符合人定的 constrain
+這是第一個要 minimize 的東西
+第二個要 minimize 的東西是你希望新找出來的 z
+跟原來的 z，假設原來是一隻鞋子
+原來這隻鞋子，你反推出它的 z 就是 z0
+你希望做一下修改以後，新的 z 跟原來的 z0 越接近越好
+因為你不希望本來是一張鞋子
+然後你畫一筆希望變紅色的鞋子 但它變成一件衣服
+不希望這個樣子，你希望它仍然是一隻鞋子
+所以希望新的 vector z 跟舊的 z0 他們越接近越好
+最後還可以多加一個 constrain 這個 constrain 是來自於 discriminator
+discriminator 會看你把 z 丟到 generator 裡面再產生出來的 image 丟到 D 裡面
+把 generator output 再丟到 discriminator 裡面
+discriminator 去 check 這個結果是好還是不好
+你要找一個 z 同時滿足這三個條件
+你要找一個 z 它產生出來的 image 符合使用者下的 constrain
+你要找一個 z 它跟原來的 z 不要差太多
+因為你希望 generate 出來的東西跟原來的東西仍然是同個類型的
+希望找一個 z 它可以騙過 discriminator
+discriminator 覺得你產生出來的結果是好的
+就解這樣一個 optimization problem 可能用 Gradient Descent 來解
+就找到一個 z*
+這個就可以做到剛才講的智能的 Photoshop
+就是這個做出來的
+GAN 在影像上還有很多其他的應用 比如說它可以做 Super-resolution
+我想你完全可以想像怎麼做 Super-resolution 它就是一個 Conditional GAN 的 problem
+input 模糊的圖 output 就是清晰的圖
+在作業 3-2 我們做過 input 文字 output 圖 現在只是 input 不是文字，input 是模糊的圖
+output 是清晰的圖就結束了
+要 train 的時候要蒐集很多模糊的圖跟清晰的圖的 pair
+要蒐集這種 pair 很簡單，就把清晰的圖故意弄模糊就行了
+實作就是這麼做
+清晰的圖弄模糊比較容易，模糊弄清晰比較難
+這個是文獻上的結果
+這個是還滿知名的圖，如果你有看過 GAN 的介紹 通常都會引用這組圖
+這個是傳統的、不是用 network 的方法得到的結果
+產生出來的圖是比較模糊的
+這個是用 network 的方法產生出來的圖
+這個是原圖，這個沒有用 GAN
+這個有用 GAN，這是用 GAN 產生出來的圖
+你會發現如果用 network 雖然比較清楚
+但是在一些細節的地方，比如說衣領的地方
+這個頭飾的地方還是有些模糊的
+但是如果看這個 GAN 的結果的話
+在衣領和頭飾的地方，花紋都是滿清楚的
+有趣的地方你發現衣領的花紋雖然清楚
+但衣領的花紋跟原圖的花紋其實不一樣
+頭飾的花紋跟原圖的花紋是不一樣
+機器自己創造出清晰的花紋 反正能騙過 discriminator 就好
+未必要跟原來的花紋是一樣的
+這是 image 的 Super-resolution
+現在還會做的一個事情是 Image Completion
+Image Completion 就是給一張圖片
+然後它某個地方挖空
+機器自己把挖空的地方補上去
+這個怎麼做？這個就是 Conditional GAN
+就是給機器一張有挖空的圖
+它 output 一張填進去的圖就結束了
+怎麼產生這樣的 training data？它非常容易產生
+就找一堆圖片，中間故意挖空就得到這種 training data pair
+然後就結束了
+這個是這樣，就是它可以把圖片補回去
+假設是 previous approach，也就是前人的做法結果是怎樣
+把涼亭的柱子挖掉，柱子就不見了就變成樹一樣
+它的方法就好很多
+把人塗掉
+就沒有人了
+不戴眼鏡
+其實就這樣子
+你說他怎麼知道這邊應該有頭髮
+GAN learn 出來就是這個樣子
+大多數人都是有頭髮的，GAN learn 出來就覺得那邊應該是要有頭髮
+臺灣大學人工智慧中心 科技部人工智慧技術暨全幅健康照護聯合研究中心 http://aintu.tw

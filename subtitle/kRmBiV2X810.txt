@@ -1,0 +1,1168 @@
+Okay, we stopped here last week.
+Okay so far,
+what we are talking about in class
+is kind of white box attack.
+What does it mean?
+It means that we have to calculate the gradient.
+We need to calculate the gradient when doing FGSM.
+When calculating the gradient,
+we need to know the parameters of the model.
+After knowing the parameters of the model,
+we can calculate the gradient,
+and add the noise to the image.
+This kind of attack which the parameters of the model are known
+is called white box attack.
+In Chinese, sometimes we call it bai xiang gong ji.
+The bai xiang is an animation.
+This is bai xiang, but it is not very important
+It's not important, don't care about me.
+You might think that,
+because we needs to know the parameters of the network to apply this attack,
+this attack is not that threatful.
+The reason is that for general online service,
+of course, what you attack is others' model,
+which is a general online service.
+The parameters of the model
+are unknown for you.
+So attacking an online service
+may not be easy.
+In fact, if we want to
+prevent our model from being attacked by others,
+we just don't put our own model
+on the Internet,
+and open for everyone.
+Maybe our model will be safe if we do that.
+But is it really true?
+Attacks without knowing the model parameters
+are called black box attack.
+Is a black box attack possible?
+Black box attack is possible.
+How to do a black box attack?
+Until now,
+when we are attacking,
+we need to calculate the gradient.
+The parameters of the model are needed when we calculate the gradient.
+So how does the black box attack work?
+Black box attack is done like this.
+In our homework, which the TA just announced,
+we perform black box attack.
+Suppose there is a model on the Internet.
+You can't get this model.
+You don't know what its parameters are.
+This is actually the model on JudgeBoi.
+You don’t know which model is used by TA.
+You don't know what its parameters are.
+Then what should we do?
+Assuming that you know which kind of training data
+is used to train this network,
+then you can train a proxy network.
+In the other words, you train a network
+and use this network to imitate the network which we want to attack.
+If the network we want to attack and our proxy network
+are trained with the same training data,
+maybe they will be similar in a certain degree.
+If the proxy network and the network we want to attack
+are similar in a certain degree,
+then we only need to attack the proxy network.
+Maybe use this attacked image as input,
+and pass it through the network with unknown parameters,
+the attack will still succeed.
+This is actually what we do in our homework.
+So in the homework,
+you will use a trained image recognition model
+from somewhere.
+This is your proxy network.
+On your own machine,
+you attack your own network on Colab,
+send it to JudgeBoi,
+and check whether this attack succeeds.
+Someone might ask that
+what can i do if I don’t have any training data.
+I don’t even know the model I want to attack
+is trained on what kind of training data.
+In the homework, we know it is CIFAR-10.
+The model we want to attack
+is trained on CIFAR-10.
+So you can just use one
+model that is trained on CIFAR-10,
+You may be able to attack successfully.
+But what if we don’t have any training data?
+This is not completely unsolvable.
+How to solve it?
+Assuming that this is the image recognition model you want to attack,
+you could just pass a bunch of pictures through it,
+and see what it will output.
+Even if the online service doesn’t tell you
+the parameters of the network,
+You can always input some images
+and see what it outputs.
+And using the paired data of input and output
+to train a model,
+you may be able to train a similar model,
+and attack it as a proxy network
+Is this kind of black box attack easy to achieve?
+It's quite easy to achieve.
+You will find that in your homework,
+the black box attack is actually very easy to succeed.
+This is the result in the previous paper.
+There are 5 different networks,
+which are ResNet-152, ResNet-101,
+ResNet-50, VGG-16 and GoogLeNet.
+There are 5 networks in total.
+Okay, this column
+represents the networks to be attacked.
+There are 5 networks to be attacked in total.
+Then this row
+represents 5 proxy networks.
+On the diagonal,
+it represents that the proxy network
+and the network to be attacked
+are exactly the same.
+So, this situation is not a black box attack.
+The values on the diagonal are white box attacks.
+If you take ResNet-152 as a proxy network,
+it attacks
+the same network.
+That is easy to succeed.
+The number here is the accuracy,
+the accuracy of the attacked model.
+So, the value is the lower the better.
+Lower accuracy
+means your attack is more successful.
+You are on the attacking side now.
+You are not responsible for training the model.
+You are the attacker.
+The lower accuracy
+means your attack is more successful.
+You find the values on the diagonal,
+which are white box attacks.
+The success rate of this attack is 100%.
+That is, the accuracy of the model is 0%.
+Your attack will always succeed.
+But what if it’s outside the diagonal,
+which is for the black box attack?
+For example, you use ResNet-101 as a proxy network
+to attack ResNet-152,
+the accuracy is 19%.
+Or, you use ResNet-152 as a proxy network
+to attack ResNet-50,
+the accuracy you get is 18%.
+The values outside the diagonal are for the black box attacks.
+You will find that the accuracies of the black box attacks
+are higher than that of white box attacks.
+But in fact, these accuracies are also very low.
+Their accuracies are less than 50%.
+That is, black box attacks also have a certain possibility of success.
+But in fact, the black box attack
+is easier to succeed in non-targeted attacks.
+It is hard to succeed in targeted attacks.
+Assuming that you use a proxy network
+and you want to turn a dog into a rabbit.
+If you input attacked image
+to the model you want to attack,
+you can make it misrecognized.
+You might let the machine recognize anything rather than a dog,
+but it’s harder to specify it to become a rabbit.
+So, during the black box attack,
+the targeted attack is more difficult to succeed.
+while the non-targeted attack is still very easy to succeed.
+What to do if you want to increase
+the success rate of black box attacks?
+The TA also talked about
+a tip to pass the strong baseline.
+Ensemble's network.
+What about this ensemble network?
+The column of this table
+represents the network to be attacked.
+What does each row mean?
+You will find the name of each model
+and put a minus sign.
+What does it mean?
+That means
+we now put these 5 models together
+but remove ResNet-152.
+We are looking for an attacking image
+that can attack all models except for ResNet-152.
+Let’s assume that we don’t have ResNet-152 on hand
+but we have ResNet-101, ResNet-50,
+VGG-16, and GoogLeNet.
+Find an image that attacks successfully
+for these 4 networks,
+and see what happens on ResNet-152.
+In this picture,
+the below table
+is different from the above table.
+For the below table,
+Off-diagonal places are for white box attacks.
+Did you find that the model accuracies
+in off-diagonal become 0%?
+As I just said,
+white box attacks are very easy to succeed.
+The values on the diagonal are for black box attacks.
+So this means that we want to attack ResNet-152
+but we don't use ResNet-152.
+This is to attack ResNet-101
+but not use ResNet-101.
+We use the other 4 networks.
+The values on the diagonal are for the black box attacks.
+You can find that when you do ensemble,
+that is, when you use multiple networks at the same time,
+you can find an attack image
+that successfully fools multiple known networks
+and also fools a black box network that you don't know the parameters.
+It is very easy to succeed.
+You see the accuracies on the diagonal.
+Most of them are less than 10%.
+Okay, this is a black box attack.
+You will find out this attack
+is very easy to succeed.
+Why?
+Why even in the scenario of black box attacks,
+your attack image for network A
+can be successful on network B?
+In fact, this is still
+an unsolved mystery.
+There is still a lot of space for research.
+The following is a conclusion that many people believe.
+There is an experiment here that looks like this.
+The origin of this graph
+represents a picture of a clownfish.
+This one is Nemo.
+It's a clownfish called Nemo.
+The place of Nemo in this picture is here.
+What is the horizontal and the vertical axis?
+They are moving this picture in two different directions.
+A picture is a very high-dimensional vector.
+Move this high-dimensional vector in different direction.
+The horizontal axis is moving in a certain direction.
+The vertical axis is moving in another direction.
+What about the horizontal axis and the vertical axis here?
+What direction do they represent?
+The horizontal axis here is on the VGG-16,
+whose direction can attack successfully.
+The vertical axis is a random direction.
+You will realize that although this horizontal axis
+allows VGG-16 to attack successfully,
+on other networks such as
+ResNet-50, ResNet-101,
+ResNet-152 and GoogLeNet above,
+it looks like this.
+Later on, I realize that they have great similarities.
+The dark blue area between them is quite similar.
+What is this dark blue area?
+It is
+the range of pictures that will be recognized as clownfish.
+In other words, if you take a picture of this clownfish
+and add noise to it,
+and then you take this high-dimensional vector
+to move in this direction in a high-dimensional space,
+basically, network will still feel that
+it's a picture of a clownfish.
+For every network,
+as long as it moves in this direction,
+which is a random direction,
+it basically will be considered as clownfish.
+But, if it moves in the direction
+that can successfully attack VGG-16,
+basically, other networks
+seem to have quite high possibility to be attacked successfully.
+You realize, in the category of clownfish,
+the direction of the successful attack
+is very narrow.
+As long as you take this high-dimensional vector,
+which represents this picture, to move a bit,
+it will fall out of the area,
+where it is recognized as a clownfish.
+It will fall out of the area,
+where it is recognized as a clownfish,
+and it will be recognized as other categories.
+For every network,
+it seems that this attack direction
+could give quite similar impact on different networks.
+So, there is more than one paper,
+which is believing, for attacking,
+in like this.
+You can know from the title of this article.
+It says that
+"Adversarial example are not bugs;
+they are features."
+So, a group of people is advocating that
+the reason of the success of attack
+is from your data,
+but not from the model.
+The results of training from different models
+look pretty similar,
+and the situation that the attack will succeed
+is not only for Deep Learning,
+but also for linear network
+and SVM.
+So, maybe, the main reason why the attack could succeed so easily
+may not come from the model,
+and it may come from the data.
+Why does machine misclassify one object
+as another object by these small noises?
+Because the features in the data
+may be just like this.
+With limited data,
+this is the conclusion that the machine could learn.
+So, maybe, the reason why Adversarial Attack could succeed
+is owing to the problem of the data.
+When we have enough data,
+maybe, there is a chance to avoid Adversarial Attack.
+But, this is just one of all opinions.
+Not everyone agrees with it.
+Just a certain group of people
+agree with this point of view.
+Maybe, a few years later, when you come to take the same course again,
+I may give you a different conclusion.
+Here, I'm just telling you that
+there is a group of people who believe that
+data is the flaw that makes the attack successful.
+Okay! For the attack's signal,
+we hope it as small as possible.
+How small can it be?
+In the literature, someone successfully made the One Pixel Attack.
+The so-called One Pixel Attack means that
+you can only modify one pixel in the picture.
+For example, in this picture,
+they modified a pixel.
+The changes in pixel are framed.
+They frame it, frame it and frame it.
+They hope it, through changing a pixel in the picture,
+to make it misclassified by the image recognition system.
+But, actually, if you see from this picture,
+where this is the black part,
+representing the correct result
+of this image recognition before attack,
+and the blue part, representing the result of this image recognition after attack,
+you will realize that
+One Pixel Attack still has some limitations.
+Its attack is not
+really successful. Why?
+For example, this is a teapot.
+It is a teapot.
+We do One Pixel Attack in this place.
+The color of a certain pixel has been changed.
+The machine recognizes teapot as Joystick.
+What is Joystick? The joystick is a controller to play TV or computer game.
+Then, you will realize that
+this mistake is actually quite reasonable
+and not as ridiculous as what we mentioned at the beginning
+like a cat to a starfish and a cat to a keyboard.
+It is quite reasonable of this mistake.
+So, it feels like this attack
+is not very powerful.
+This is about One Pixel Attack.
+In fact, there is an even much crazy attack method
+called Universal Adversarial Attack.
+What does Universal's Attack mean?
+So far
+every picture is customized.
+You have 200
+There are 200 pictures in the assignment
+200 pictures
+You will find different Attack Signals individually
+Then someone asked
+is it possible to use a signal
+to successfully attacked all the pictures
+Because you say
+each picture must have a different signal,
+if you want to hack a certain surveillance system today
+that you want to make the identification of a surveillance system wrong.
+Then you may need to really
+hack into that surveillance system.
+Every time receiving a different image
+you have to customize and find an attack signal.
+Then the amount of calculation may be very large.
+If Universal Attack succeeds
+actually you just need to stick this signal
+to the lens of this camera.
+Then if this signal,
+this Attacked Signal is very strong.
+Just add this Attacked Signal.
+No matter what kind of image, it can be attacked successfully.
+You just need to put this Signal directly on the camera
+Stick to the camera
+Then this camera is directly broken
+No matter what it sees, it will recognize erroneously.
+Is it possible for Universal Attack to succeed?
+You can take a look at this paper.
+Universal Attack is possible to succeed.
+In this paper they found a Noise.
+They found an attack signal.
+This attack Signal
+added to so many different pictures
+can make the image recognition system recognize erroneously.
+So far
+the examples we give are all images.
+Someone might think that
+only the images have the problem of being attacked
+and other type of data
+would be less likely to have this kind of problem.
+Not really. Other types of data have similar problems.
+Take voice as an example.
+Everyone knows that people do Defect now.
+Someone will use speech synthesis
+or use voice conversion technology
+to simulate the voice of some people
+and to achieve the effect of fraud.
+In order to detect this Defect condition
+there is another on going series of studies
+about detecting synthesized sound.
+Today, although the speech synthesis system
+can often synthesize a fake voice
+, but for these fake voices
+there is still a very high possibility
+that can be detected by a machine.
+These synthesized signals
+still has a fixed pattern
+compared with real sound signals.
+There is still a certain degree of difference
+that human can’t distinguish, but the machine can catch.
+But the systems that can detect synthesized audio
+which can detect a sound signal
+is synthetic or not
+would be easily attacked.
+The following is a real example
+Let's play a synthesized voice.
+This is a synthesized voice.
+Anyone can distinguish this is a synthesized voice
+This voice is deliberately synthesized with flaw.
+If today speech synthesis system can synthesize sound
+that people can’t tell whether it’s synthesized or not
+, the previous one is obviously bad.
+So you use this to detect whether it is from a speech synthesis system.
+It can tell you correctly that
+this sound signal is obviously synthesized.
+Okay, but if we were to
+add a little bit of noise in the sound signal
+it sounds like this.
+You might ask
+where is the difference between this new sound with noise
+and the original one.
+The human ears can't tell the difference between them at all.
+The noise is very very small
+No one can tell
+the difference between these two audio signals.
+And after adding this small noise to this sound signal
+it doesn’t sound better.
+But the same system that detects synthesized voice
+would feel that the sound is real
+instead of synthesized.
+Ok, what I just gave is an example of voice.
+Will the text be attacked too?
+Text will also be attacked.
+In the homework,
+one of the task is to do Question Answering.
+Let machine read an article,
+ask machine a question
+and see if it can give you the right answer.
+Then there was a paper found out that
+after adding "Why How Because To Kill American People"
+at the end of all articles
+, no matter what question you ask it later
+its answer is "To Kill American People".
+So you can do Adversarial Attack on the text
+and directly let this QA system
+always answer "To Kill American People".
+So no matter what kind of modality it is,
+it is likely to be successfully attacked.
+Okay so far
+our attacks all happen in a virtual world.
+All happen in the digital world.
+After you load an image into the computer
+you add the noise.
+And is it possible for the attack
+to happen in the real world?
+Is it possible to happen in a three-dimensional world?
+For example, there are many face recognition systems.
+If you are going to launch an attack in the digital world,
+then you have to hack into the face recognition system.
+When someone request for this service
+add noise to the face image.
+By doing so, you can fool the face recognition system.
+Is it possible to use this attack
+or add this noise to the three-dimensional world?
+Is it possible to add it to the three-dimensional world?
+Is it possible that someone puts a specific makeup on the face
+and fool the face recognition system?
+This is possible
+It’s more difficult to put on makeup
+You know that if you sweat on makeup, you may lose your makeup.
+So makeup may not be a particularly good method.
+Someone discovered that it is possible to make magical glasses.
+After wearing the magic glasses,
+you can fool the face recognition system.
+The glasses don't look anything special.
+It is colorful and
+looks very trendy.
+When the man on the left wears these glasses,
+the facial recognition system will think
+he is the celebrity on the right.
+I don’t know who is this celebrity.
+It doesn't matter.
+I'm not too familiar with the three-dimensional world.
+I don't know who she is.
+If you read this paper carefully,
+you will find that they have considered
+a lot of problems in the physical world.
+First, in the physical world,
+we can look at something
+from multiple angles.
+In the past, some people thought that
+Adversarial Attack might not be that dangerous
+Why? For one piece of the image,
+you need to add a certain noise
+to make this image misclassified.
+But in the real world,
+you can look at the same object from multiple angles
+Maybe the noise can fool the system at some angles,
+but there is no way to fool
+the image recognition system at all angles.
+But this paper has considered this point of view.
+It is not from a certain angle that
+he is recognized as the celebrity on the right.
+Looking at this person
+Looking at this person with glasses from various angles,
+he will be recognized as the celebrity on the right.
+You won’t be too surprised now.
+I just told you that
+Universal Attack is possible to succeed.
+You may find a certain kind of noise.
+This attack is successful.
+No matter what angle you look at this person from
+after wearing the glasses.
+It is the first part considered the physical world.
+We are going to consider the second characteristic in the physical world.
+The author has taken
+the limited resolution of your camera
+into consideration.
+So if the signal you add
+to the glasses is very small.
+For example, if you only add a very small spot,
+it may be impossible for your camera to resolve.
+Or the neighboring pixels
+have a very large color change.
+Maybe the camera can’t catch it at all
+in a situation like this
+So the author of the paper has taken
+the limit of the resolution capabilities of cameras
+into consideration.
+The third characteristic in the physical world is...
+Can we produce
+these kind of glasses?
+They have considered that
+some colors may look different
+on the computer and in the real world.
+Maybe you want to print
+some colors in the physical world,
+and there will be
+some color deviation.
+They have considered that
+when printing the glasses,
+not to use those
+will have some deviation after printing.
+Pick some colors that won’t deviate after printing.
+You can read through this paper carefully.
+It considers many problems
+that will face
+when attacking in the real world.
+That's, to attack the digital world from
+the three-dimensional space.
+Unfortunately, not only the face recognition system will be attacked.
+We know that there will be many self-driving cars in the future.
+Self-driving cars will need to do traffic sign recognition.
+Of course there are also attacks on the traffic sign recognition system.
+There is a paper telling us that
+you can put some stickers
+on this STOP Sign.
+After putting on these stickers,
+the traffic sign recognition system will
+view STOP Sign as
+the speed limit of 45 kilometers
+no matter what angle you look at the sign.
+It turns into another
+traffic sign instead of stopping.
+But someone
+Some people would think that
+maybe putting this kind of stickers on traffic sign is too ostentatious.
+Everyone knows you are going to attack
+when putting a sticker on the street sign.
+It might be cleared the next day.
+It is too obvious.
+So someone created
+another attack method
+that is relatively insidious.
+It is done by stretching the digit 3
+on the number 35, which is the speed limit.
+If you weren't informed about this,
+you'd probably think that
+that's just how the font looks like.
+But, when the digit 3
+is stretched out specifically,
+the sign becomes
+a speed limit of 85 mph
+to the sign recognition system.
+This is done by a software security company in the United States,
+and they released a demo video.
+In that video,
+the experiment was done using a Tesla,
+which has a sign recognition system.
+They had someone else hold a sign that's supposed to be
+a speed limit of 35 mph.
+However, the sign was attacked
+by having the 3 in 35
+stretched out a bit.
+Normally, Tesla's car would see a speed limit of 35 mph,
+so its speed cannot exceed 35 mph.
+However,
+for this case,
+the sign it saw had a speed limit of 85 mph,
+allowing it to speed up.
+This is what the demo looks like.
+As we can see,
+Shivangi is holding up our adversarial
+35 miles per hour speed limit sign
+with a small piece of black tape
+as the only modification.
+We start the car moving forwards,
+and the Mobileye camera
+immediately incorrectly identifies
+as an 85 mile an hour speed ​​limit sign.
+Now, we engage traffic-aware cruise control.
+And with our feet entirely
+off the gas and brake pedals,
+the Tesla begins to accelerate to 85 mph.
+We cut it short at approximately 50 mph
+for safety reasons.
+So, attacks like this
+are feasible
+even in the physical world.
+There are actually many more
+types of attacks.
+Just a little peek at the malice of mankind.
+There is another kind of attack
+called adversarial reprogramming.
+What does it mean?
+It infects the image recognition system
+with a zombie-like parasite
+and makes it do things against the host's will.
+For example,
+in the game The Last Of Us,
+after people got infected by the Cordyceps Brain Infection,
+they still had the ability to move around,
+but they started to attack other people,
+doing actions against their own wills.
+That's adversarial reprogramming.
+Okay, on the bottom right corner is the paper
+about adversarial reprogramming.
+How did they do it?
+What they wanted to achieve was
+creating a square recognition system
+that counts how many squares there are in an image,
+which ranges from 1 to 10.
+However, they didn't want to train their own model.
+Instead, they wanted to parasitize
+on a model pre-trained on Imagenet.
+The model pre-trained on Imagenet
+was capable of classifying
+ordinary animals or items.
+Then,
+they hoped that
+when they input an image
+that has two squares in it,
+the model pre-trained on Imagenet should predict it as
+a goldfish.
+If there are 3 squares in it,
+it should see a white shark.
+If there are 4 squares in it,
+it should see a tiger shark.
+So on and so forth.
+This way, they can manipulate this model
+pre-trained on Imagenet
+to do things that it wasn't trained for.
+How should they do it?
+They had to put the image with the squares
+in the center and on top of the noise.
+So, this is an image of 4 squares,
+and we hope the model pre-trained on Imagenet
+would output tiger shark.
+This is an image of 10 squares,
+and we hope the model pre-trained on Imagenet
+would output ostrich.
+Then, we pad the image
+with some noise.
+Now, when we pass the image
+to the image classifier,
+it should fall under your control
+and do things that it wasn't trained to do.
+That's adversarial reprogramming.
+Ok, there is one more
+method of attacking,
+and it is quite an impressive showcase of human malice.
+It's about opening a backdoor to the model.
+So far,
+our attacks were only launched during the testing phase.
+However, is it possible to attack during the training phase?
+For example,
+suppose we want this image of a fish
+to be misidentified,
+and the image classifier
+should misclassify it as a dog.
+So far,
+we attack the model
+by adding some noise
+after the model was done training.
+But is it possible that attack
+begins from the training time?
+Is it possible that
+someone adds a picture to your training data?
+This picture looks okay and
+it is no problem with its labeling.
+It's not the case that
+it adds a lot of pictures of fish,
+then mark the pictures of fish as dogs.
+This kind of attack would not work
+because someone will check your training data and
+they will know that there is a problem with this training data.
+When you launch an attack during the training phase,
+the picture you want to add is a normal picture
+and its labeling is also normal.
+Everything looks okay
+but after you use this kind of data to train a model,
+the model will misclassify this picture as dog.
+Is it possible to do something like this?
+Is it possible that attack
+starts from the training stage?
+You can look at the reference in the upper right corner.
+It seems possible that
+it may add some special data in the training data.
+The special data which human seems well is actually harmable.
+After the training stage,
+the model has been opened a back door and
+it will misclassify picture in the testing phase.
+And it will only misclassify a certain picture.
+There is no problem with other pictures
+so you will not feel that your model
+doing something wrong after training.
+Until someone takes this picture to attack your model,
+you will find that this model is poisoned.
+The model has been opened the back door during training
+and it is surprised that the malice of humans is powerful.
+We can think that
+assume this kind of attack is likely to succeed,
+you have to be very careful when you download public dataset from the internet in the future.
+For example,
+nowadays everyone may train the face recognition system and
+the face recognition system is really used in the broad.
+Suppose we use a public dataset to train the face recognition system,
+this public dataset is free
+and it is also the most large-scale training dataset
+for face-recognition task in the world,
+And everyone is happy to download it for training a good face-recognition system.
+However, there is one poisoned picture
+among the dataset
+but everyone cannot classified that it is harmable.
+After training model on this dataset,
+the model also achieve higher accuracy
+on face recognition task,
+but the model
+have actually been opened a back door.
+Once We
+input the poison picture to this face recognition system,
+it will open the back door.
+So you have to be careful about the public dataset available on the internet.
+Maybe there is something weird in the dataset.
+If you can really succeed in
+opening the back door in the future,
+this is a very big problem.
+However, you can take a look at this article.
+It seems that there are still some restrictions
+for the method of back door to be succeed.
+Not just any model or
+any training method
+can be attacked successfully.
+So far,
+we have talked about various attack methods
+and then we want to talk about defense methods.
+And how to defense?
+The method of defense can be roughly divided into two categories.
+One is passive defense, the other
+one is active defense.
+How to do passive defense?
+First,
+your model is freezed.
+We do not tune the model itself.
+But we add a shield in front of the model
+or we add a filter.
+We look forward to deceiving network by
+adding with the signal of attack.
+But this filter
+can reduce the power of the signal of attack.
+When the image passes this filter,
+normal pictures are unlikely to be affected.
+However, the picture with the signal of attack
+will lose the power of attack after passing the filter.
+So your network will not misclassify picture by the attack signal
+Then someone will ask the question that
+What kind of filter to make to achieve the effect of shield?
+What kind of filter
+can block your attack signal?
+Actually, you do not need to think about this problem too complicated.
+It is a very simple approach.
+What to do is just blurring the picture a little bit
+and it may be able to achieve a very good defense effect.
+For example,
+we have just
+seen it before.
+We saw this picture last time.
+After adding a little noise,
+the image recognition system thinks that it is a keyboard.
+Now we slightly blur this picture.
+You can clearly feel that the picture on the right
+is a little fuzzy
+but not very much.
+You can still see that there is a cat in this picture.
+After we made a little blurring
+and throw it into the same image recognition system,
+you will find that
+the recognition result becomes correct.
+Originally it is a keyboard.
+Now it becomes a tiger cat.
+So blurring
+can effectively
+block the adversarial attack.
+Why?
+Because you can think that
+this adversarial attack,
+its signal,
+there is only a signal of a certain kind of attack in a certain direction
+that can succeed.
+Not just a random sample or noise
+can attack successfully.
+We have seen that
+randomly sampling a noise
+will not achieve the effect of an attack.
+So the attack was successful.
+A signal that will make the attack successful
+is very special.
+When you add blurring,
+the signal of successful attack changes.
+Then it loses the power of the attack.
+But it has little effect on the original picture.
+You blur the original picture a bit.
+In fact, it will not affect the result of image recognition.
+Of course, this blurring method
+also has some side effects.
+For example, for a picture that was not attacked at all,
+the machine knows that it is a tiger cat.
+But after we blur it a little bit,
+the result is still correct,
+but its confidence score drops.
+After the picture becomes blurred,
+the machine is uncertain
+about what it sees.
+So for the method of blurring like this,
+you can't overdo it too much.
+If you overdo it,
+it will cause some side effects,
+causing your original normal image
+to be recognized incorrectly.
+In fact, for passive defense methods like this,
+there are many similar practices.
+In addition to blurring,
+there are other more elaborate methods.
+For example,
+there are a series of practices that
+compress the image directly.
+Then unzip it again.
+You know that
+after saving a picture as a JPEG file,
+it will be distorted.
+Maybe the distortion
+can make the attacked picture
+lose the power of its attack.
+It can let the signal of attack
+be not so harmful.
+So there is a series of practices that
+compress the image in some way.
+If this compression is distorted,
+the signal of the possible attack will be more affected.
+So you can protect your model.
+There is another way that is
+based on the generator method.
+Ok, in the homework,
+everyone has trained a generator.
+There is a series of ways that given a picture,
+this picture may have been attacked
+or not.
+Let's make our generator
+generate a picture exactly the same as the input.
+That is, reproduce the input picture
+with the generator.
+It reproduced the picture.
+Then you might ask that
+in the homework,
+our generator will only generate some pictures randomly.
+You can’t control what it generates.
+There are ways to control what the generator generates.
+This is not the focus of today.
+I will leave the literature here for your reference.
+In short, for the generator,
+we have a way to control its output.
+We ask the generator to output a picture.
+The closer between this picture and the input picture,
+the better.
+Then you can think about it.
+Suppose someone attacks this picture.
+A tiny noise is added to it that people can’t see.
+For the generator,
+when it's training,
+it has never seen these noises.
+It may not reproduce
+these very small noises.
+Then these tiny noises are gone.
+The pictures generated by the generator are free of noise.
+You can achieve the defensive effect.
+Ok, but this kind of passive defense.
+This kind of passive defense
+has a very big weakness.
+Although when we were talking just now.
+Although when we were talking about blurring,
+we said blurring was very effective.
+But for this method of blurring,
+as long as others know that you will do this,
+it loses its effectiveness immediately.
+Why?
+You can treat blurring
+as the first layer of the network.
+So blurring
+is equivalent to adding an extra layer in front of the network.
+So if someone knows you add this extra layer
+in front of your network,
+he can put this extra layer in the attacking process
+and generate a signal that
+can bypass the blurring defense.
+So passive defense like this
+is powerful and not so powerful.
+It's powerful
+because if people don’t know you use this trick,
+and it is very effective.
+Once they know what tricks you use,
+this kind of passive defense method
+will lose its effectiveness in an instant.
+So what can we do?
+There is another way to strengthen passive defense,
+which is to introduce randomness.
+How to do it?
+Well,
+to prevent others from guessing your next move,
+the best way is that you don’t even know what your next move is.
+This is the concept of deceiving oneself before deceiving the enemy.
+When you are defending,
+you use a variety of defensive methods.
+For example, in this paper, they said
+we just need to make some small changes
+to the picture we input
+to block the attack signal.
+But the way we modify the image cannot be known by others.
+As soon as the others know,
+he can break through your defense.
+So how to do it?
+We don’t know how the picture will be changed either.
+After a picture is inputted,
+you might enlarge it,
+shrink it,
+or arbitrarily change its size.
+Then,
+you paste this picture
+on a gray background,
+but the position is also random.
+You don't know
+where you would put this picture in advance.
+Lastly, you take the image to the image recognition system.
+Maybe through this random defense,
+there is a way to
+block other people's attacks.
+But this random defense is also problematic.
+Think about it,
+if others know the distribution of your randomness,
+it is still possible for him to break through this defense.
+And as we said before,
+universal attacks are possible.
+If the possibilities of your various randomization are already known,
+others only need to use universal attacks,
+that is, to find an attack signal that can break
+all the pictures' modifications,
+randomization
+can still be broken.
+Okay, what we just talked about was passive defense.
+There is also proactive defense.
+Proactive defense means
+that when we are training the model,
+it is necessary to train a model that is less likely to be compromised
+from the beginning.
+We must train a robust model from the beginning.
+A model that is less likely to be compromised.
+This type of training is called Adversarial Training.
+How does this adversarial training work?
+You have some training data,
+this is the same as any normal training.
+You have images,
+we use x here to denote them.
+Images have labels denoted by ŷ.
+Then,
+we use our training data to train a model.
+During training...
+During the training phase,
+you attack this model.
+You take all the training data
+from x1 to xN,
+add some signal to
+make these pictures offensive.
+The image after the attack
+are called x tilde.
+You attack every picture,
+from x1 to xN,
+in the training set.
+After the attack,
+you put the correct label
+on these offensive pictures.
+For example, after you change x1 to x1 tilde,
+your machine will misclassify the picture.
+Originally a picture of a cat,
+it may be classified as a keyboard.
+But now you take the picture that was misclassified as the keyboard
+and relabel it as a cat.
+Because you already know that x1
+is a cat,
+so even if it becomes x tilde,
+even when the image recognition system
+that you trained
+labels differently,
+you still know what the original label was.
+You just get the original correct label back.
+So now you have created a new training set
+called x′.
+In the new training set,
+every piece of data has been attacked.
+From the original x1 to XN,
+to x1 tilde to XN tilde.
+But your label
+from ŷ1 to here...
+Oh, I found something wrong here.
+This should not be ŷy.
+This should be ŷN.
+The index
+should be N.
+So there are two y sequences here.
+Those two
+are the same.
+Then, put X and X~ together,
+and use all of these data
+to train the model again.
+So the idea of Adversarial Training is:
+Train a model first,
+and examine whether
+there are any loopholes.
+Find the loophole,
+and try to generate data
+to fix it.
+Keep doing this procedure
+again and again.
+This is the main concept of Adversarial Training.
+In fact,
+this method can also be regarded as some kind of
+Data Augmentation,
+because we produced additional pictures
+X~.
+Adding these pictures to the training set
+is equivalent to
+doing Data Augmentation.
+So some people use Adversarial Training
+merely as a data augmentation method.
+This method is not only useful
+when your model may be attacked;
+even if no one will attack your model,
+you can still use this method
+to generate more training data.
+It can also make your model
+less possible to suffer from
+Overfitting.
+So even if no one wants to attack your model,
+you can use Adversarial Training
+to strengthen your model
+and avoid overfitting.
+Also,
+it is worth mentioning that
+this augmentation process
+can be done repeatedly.
+You can keep generating new pictures
+and re-train the model if you want.
+Keep finding
+the shortcomings of your model
+and fix it
+until you are satisfied.
+But Adversarial Training
+suffers from a serious problem.
+It may not be able to defend against new attacking algorithms.
+Suppose we used Algorithm ABCD
+to generate X~.
+If some attacker used
+algorithm F to attack your model,
+the attacker will probably still succeed.
+If the method which is actually used to attack your model
+was not considered during the training phase,
+Adversarial Training
+might fail to defend against the new algorithm.
+Therefore, Adversarial Training
+is not a perfect defending method.
+Another big problem for
+Adversarial Training
+is that
+the training process requires large computational resources.
+Think about it.
+Originally,
+all the work is done
+after one training phase.
+But if you are doing adversarial training,
+you have to spend time
+generating X~.
+The size of X~
+is the same as X.
+If the size of X is 1 million,
+then the size of X~ is also 1 million.
+So the generating step
+consumes a large amount of time.
+Therefore,
+people usually avoid doing Adversarial Training
+when the Dataset is large.
+So Adversarial Training
+is a computation-demanding method.
+To overcome this issue,
+someone invented a method called
+Adversarial Training For Free.
+We won't go into details here.
+There are some ways that can achieve
+the same results as Adversarial Training
+but does not require that much computational resources.
+As for what the method actually is,
+I will put some reference here.
+In these links,
+you can read about how to do
+adversarial training for free.
+So far,
+I told you guys that
+attacking is very easy.
+Black box attacks
+are also possible.
+Then I introduced several classic defense methods.
+Currently,
+both attacking and defensing methods
+are still evolving.
+Lots of new methods
+of both sides
+are still being proposed
+on international conferences recently.
+No one knows which side is going to win finally.
+This is the current situation of this subject.

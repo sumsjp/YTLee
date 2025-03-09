@@ -200,36 +200,156 @@
 </details>
 
 <details>
-<summary>440. 【生成式AI導論 2024】第17講：有關影像的生成式AI (上) — AI 如何產生圖片和影片 (Sora 背後可能用的原理)</summary><br>
+<summary>440. [2024-06-01] 【生成式AI導論 2024】第17講：有關影像的生成式AI (上) — AI 如何產生圖片和影片 (Sora 背後可能用的原理)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=5H2bVEmYDNg" target="_blank">
     <img src="https://img.youtube.com/vi/5H2bVEmYDNg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理：文字生影片的生成式AI技術
 
+## 核心主題
+- 探討生成式人工智能（AI）在將文本轉化爲視頻的應用與技術。
+- 重點介紹解決生成過程中計算複雜度高的優化方法。
+
+## 主要觀念
+1. **生成式模型在影像生成中的應用**
+   - 利用生成式AI模型，如擴散模型等，將文本轉化爲動態影像。
+2. **多階段生成策略**
+   - 將視頻生成過程分解爲多個步驟，每個步驟專注特定任務，形成流水線。
+
+## 問題原因
+1. **計算複雜度高**
+   - 生成高質量、長時序的視頻需要處理大量數據和參數，導致計算資源消耗巨大。
+2. **模型能力限制**
+   - 單一模型難以同時滿足高分辨率、高速率和長時序的多維要求。
+
+## 解決方法
+1. **分階段生成策略**
+   - 將視頻生成分爲多個階段，逐步提升幀率和分辨率：
+     1. 初始階段：低幀率、低分辨率。
+     2. 後續階段：逐步提高幀率和分辨率。
+2. **模塊化模型設計**
+   - 使用多個專用模型分別處理不同任務，例如：
+     1. 提升幀率的內插模型。
+     2. 提升分辨率的上採樣模型。
+
+## 優化方式
+1. **多模odule流水線**
+   - 每個module專注特定任務，減少計算負擔：
+     1. Module 1：生成低幀率、低分辨率視頻。
+     2. Module 2：提升幀率至目標幀數。
+     3. Module 3：逐步提高分辨率至高清。
+2. **條件式生成**
+   - 後續模型基於前一階段輸出進行優化，確保內容連貫性。
+
+## 結論
+- 多階段生成策略有效降低了視頻生成的計算複雜度。
+- 模塊化設計提高了模型效率和生成質量。
+- 該方法爲實現高質量、長時序的文本到視頻轉換提供了可行路徑。
 </details>
 
 <details>
-<summary>439. GPT-4o 背後可能的語音技術猜測</summary><br>
+<summary>439. [2024-05-19] GPT-4o 背後可能的語音技術猜測</summary><br>
 
 <a href="https://www.youtube.com/watch?v=CgQ3lUOpXgc" target="_blank">
     <img src="https://img.youtube.com/vi/CgQ3lUOpXgc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 小節一：核心主題  
+- 文章圍繞語音版語言模型的核心能力展開，強調其在多模態交互中的聽、說、看三項主要功能。  
 
+### 小節二：主要觀念  
+1. 語音版語言模型的三大頻道：  
+   - **聽的頻道**：負責接收並處理外界聲音訊息。  
+   - **說的頻道**：用於模型生成語音輸出。  
+   - **看的 channelId**：專注於視覺輸入的處理與理解。  
+
+2. 模型的同步交互能力：  
+   - 能夠在聽、說、看三者之間實現同步，並根據多源信息進行綜合判斷與反應。  
+
+### 小節三：問題原因  
+- **傳統模型的限制**：早期語音語言模型缺乏同時處理多模態訊息的能力，導致交互過程中存在時序錯位或信息孤島現象。  
+- **同步能力不足**：未能有效整合聽、說、看三者的實時信息，影響了自然_LANGUAGE_MODELING和互動體驗。  
+
+### 小節四：解決方法  
+1. 多頻道架構的設計：  
+   - 引入Dialogue GSLM模型，將聽、說分為兩個獨立頻道，確保信息處理的同步性與專精性。  
+
+2. 視覺信道的整合：  
+   - 在多模態交互中引入視覺 channelId，使模型能夠根據外部影像進行實時反應。  
+
+3. 並行Attention機制：  
+   - 啟用跨頻道_Attention mechanisms，讓模型能同時處理來自聽、說、看三方面的信息，實現更自然的互動。  
+
+### 小節五：優化方式  
+1. 模型架構的進一步改進：  
+   - 採用更高效的並行計算結構，提升多模態信息處理的速度與精度。  
+
+2. 跨頻道數據同步技術：  
+   - 確保聽、說、看三者在時間與空間上的協調一致，避免信息錯位。  
+
+3. 測試與反覆優化：  
+   - 通過多場景實驗，持續優化模型在不同環境下的表現，提升其普適性與 robustness。  
+
+### 小節六：結論  
+- 語音版語言模型的聽、說、看三項能力同步交互是未來發展的重要方向，能夠極大地提升人機交互的自然度與智能水平。  
+- 相關技術的突破將進一步推動多模態AI系統的實用化，為各行各業帶來更多創新機會。
 </details>
 
 <details>
-<summary>438. 【生成式AI導論 2024】第16講：可以加速所有語言模型生成速度的神奇外掛 — Speculative Decoding</summary><br>
+<summary>438. [2024-05-18] 【生成式AI導論 2024】第16講：可以加速所有語言模型生成速度的神奇外掛 — Speculative Decoding</summary><br>
 
 <a href="https://www.youtube.com/watch?v=MAbGgsWKrg8" target="_blank">
     <img src="https://img.youtube.com/vi/MAbGgsWKrg8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 核心主題  
+Speculative Decoding：一種利用預言家來加速語言模型輸出的新技術。  
 
+### 主要觀念  
+1. **Speculative Decoding**  
+   - 通過引入一個或多個「預言家」（Oracle），預先判斷.language model的下一Token輸出，進而提高生成速度。  
+   - 預言家可以是快速但可能低.accuracy的模型或算法，用於提前生成(Token)供主語言模型參考。
+
+2. **Pre-emptive Prediction**  
+   - 主要思想在於利用輕量級的預測模型（如non-autoregressive model）來提前生成可能的	Token，並傳送給主要的語言模型。  
+
+3. **Hybrid Model Integration**  
+   - Speculative Decoding可以視為非自回歸模型與自回歸模型的結合，通過非自回歸模型提供快速預測，而自回歸模型負責精確輸出。  
+
+### 問題原因  
+1. **Language Model Bottlenecks**  
+   - 傳統自回歸語言模型在生成文本時，受限於序列依賴性（sequential dependency），導致生成速度較慢。  
+
+2. **Computational Limitations**  
+   - 大型語言模型的計算資源消耗高，影響實時生成效率。  
+
+### 解決方法  
+1. **Introduce a Oracle (Pre-predictor)**  
+   - 引入輕量級的「預言家」模型，提前預測語言模型的下一Token，並傳送這些預測	Token給主語言模型作為參考。  
+
+2. **Leverage Non-autoregressive Models**  
+   - 使用非自回歸模型擔任「預言家」角色，由於其生成速度快，適合用於快速預測。  
+
+3. **Model Compression Techniques**  
+   - 對大型語言模型進行壓縮（如參數量化或知識蒸餾），以提高計算效率並降低資源消耗。  
+
+### 優化方式  
+1. **Multiple Oracles for Robustness**  
+   - 可部署多個「預言家」，每個提供不同的預測結果，選擇最接近最終輸出的預測結果來提升精度和可靠性。  
+
+2. **Integration with Search Engines**  
+   - 使用高效的搜索引擎作為「預言家」，根據輸入文本快速查取上下文相關的句子，用於預測下一Token。  
+
+3. **Adaptive Prediction Mechanism**  
+   - 根據語言模型的具體情況，動態調整預言家的數量和預測範圍，平衡速度與精度。  
+
+### 結論  
+Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家」來加速語言模型的生成過程，實現了在不大幅改動原有模型的前提下，顯著提升生成效率。此方法適用於多種類型的語言模型，具有廣泛的應用潛力。
 </details>
 
 <details>

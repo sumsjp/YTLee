@@ -1,0 +1,785 @@
+Okay, what's in the following course?
+I want to talk about Life Long Learning.
+What is Life Long Learning?
+If you google Life Long Learning,
+the one you are most likely to find
+is not related to Machine Learning.
+Life Long Learning,
+from its literal interpretation,
+you can know that Life Long Learning refers to
+life-long learning.
+That is to live and learn.
+So if you use Life Long Learning as the keyword
+and google it,
+what you usually find is the one about human.
+Life Long Learning for human.
+How do humans live and learn?
+Although the topic that everyone is paying attention to today
+is more about Life Long Learning of human,
+however, in fact, the machine also needs to do Life Long Learning.
+The method machines do Life Long Learning
+is very close to the human imagination of AI.
+Before taking this course,
+before learning
+any machine learning contents,
+maybe your imagination of AI looks like this.
+We first teach the machine to do a certain thing,
+for example, learn to do speech recognition,
+and then it will do speech recognition.
+Next, you teach it the second task,
+image recognition,
+and then it will do image recognition.
+Then you teach it to do the third task,
+maybe a translation, and then it will be able
+to do image recognition plus voice recognition plus translation.
+You continue teaching it new skills.
+After it learns millions and tens of millions of skills,
+It becomes Skynet,
+and it can rule human.
+Most of us think about AI is that
+AI can continuously learn new tasks,
+and, finally, getting better and better,
+to the point that humans can’t reach.
+The goal of this idea is
+Life Long Learning.
+Life Long Learning is
+often abbreviated to three L.
+LLL.
+Triple L.
+Not LoL but LLL.
+Life Long Learning has
+many other fancy names.
+For example, some people call it Continuous Learning.
+Some people call it Never Ending Learning.
+Sounds very fancy, right?
+There is a less fashionable name,
+Incremental Learning.
+Ok, you might want to say.
+The goal of Life Long Learning is too ambitious.
+I didn't want to make Skynet.
+What does Life Long Learning mean to me?
+In the real Application,
+Life Long Learning is also useful.
+For example,
+You developed a certain model in the laboratory.
+You collect some information in the lab.
+Train with these materials.
+Train a model.
+After the model goes online,
+it will get feedback from the user.
+We hope that
+collecting information can become an automatic cycle.
+New data will be collected after our model is online.
+New information can let us update
+the parameters of our model.
+After the parameters of the model are updated,
+you can collect more information.
+After collecting more information,
+the parameters of the model can be updated again.
+Constantly update the parameters of the model,
+our system will become more and more powerful eventually.
+You can think that the old data is the old task.
+The new data,
+which comes from user feedback,
+is a new task.
+In this scenario,
+it can also be seen as a problem of Life Long Learning.
+The machine continuously collects data online,
+and uses it to update model.
+It is a Life Long Learning problem.
+What are the difficulties of Life Long Learning?
+Don’t we just let the machine keep collecting new data
+and update its parameters
+to achieve Life Long Leraning?
+Why Life Long Learning
+is a topic worth studying?
+Here is a simple example.
+It will tell you what is the difficulty of Life Long Learning?
+Suppose
+we now have two tasks.
+The first task is to recognize handwritten numbers.
+Give it a very noisy image,
+the machine has to recognize it as zero.
+Task two is also handwritten number recognition.
+But it is a relatively simple task.
+There is no noise in your image.
+We want the machine to learn these two tasks.
+So far, someone might say that
+they are not two tasks.
+They should be considered as a single task in different domains.
+It’s okay if you think like this.
+You can also think them as a same task in different domains.
+But actually,
+here,
+I know that
+when I said that we want the machine to learn a series of tasks,
+you may think that
+let the machine learn speech recognition first,
+then image recognition,
+and then translation.
+But in fact, Life Long Learning
+has not reached that level yet.
+In the papers of Life Long Learning,
+the so-called different tasks
+are much like this example.
+They are like a task in different domains
+instead of different tasks.
+But here,
+We treat them as different tasks.
+Even if these tasks are very similar,
+when you are doing Life Long Learning,
+you may have following problems.
+We will see them here.
+I have already
+trained a very simple network.
+It has only three layers.
+Fifty neurons per layer.
+First it learns on task one.
+After it finish learning,
+the result we got is like this.
+90% accuracy on task one.
+Even if it haven’t learned task 2 yet,
+task 2 has already got a 96% accuracy.
+The result of this transfer is very good.
+Being able to solve task 1,
+in fact, it can also solve task 2.
+OK, once the task is learned,
+we let the same model continue learn on task 2.
+Saying "continue" here means that
+when we are learning task 2,
+we don't let the machine learn from scratch.
+We don't let the machine train from
+random initialized parameters.
+We use the model that has been trained on task 1,
+and then
+use it to continuously train on task 2.
+Please pay attention.
+We use the same model to continuously train on the data from task 2.
+What will happen when we use the same model that has been trained on task 1
+to train on the second task?
+This is the result.
+The accuracy of task 2 becomes higher.
+Because it already gets 96% without seeing the data of task 2,
+it will no doubt become better if it sees the data of task 2.
+Becomes 97%.
+The bad thing is that
+the machine forgets how to do task 1.
+It had a 90% accuracy on the original task.
+After learning task 2,
+it became only 80% correct on task 1.
+It forgets the skills it has learned in the past.
+Someone might think
+it is not weird.
+The network is small.
+You ask it to learn task 2,
+and task 1 is learned in the past.
+The network's capacity
+is limited.
+It has limited brain capacity,
+so it forgets task 1 after finishing learning task 2.
+In another experiment,
+we put the data of
+task 1 and task 2 together.
+What will happen?
+Suppose we put the data of task 1 and task 2 together
+and train the network.
+The result looks like this.
+It get 89% correct on task 1
+and 98% correct on task 2.
+For this network architecture,
+it can learn task 1 and task 2 together.
+Although it only has
+fifty Neurons per layer,
+it is enough to get
+this accuracy on task 1 and task 2.
+We don't know why it will fail
+if not learning task 1 and task 2 together.
+That is, the network learns task 1 and then learns task 2.
+When learning task 2,
+it forgets what it has learned in task 1.
+The network has enough capacity to learn two tasks.
+But when you make it learn sequentially,
+it can’t remember old tasks.
+Okay, let me see if any classmates have questions?
+Some students asked if the teacher is broadcasting live at home.
+The answer is yes.
+I broadcast the live broadcast at home.
+OK,
+let's continue.
+The example I just gave is
+an example of image recognition.
+I'll give another
+example of natural language processing.
+The situation we just saw
+is not a special case.
+It is a common phenomenon.
+This example is QA,
+Question Answering.
+Which is our homework 7.
+In homework 7,
+you make your machine read an document
+and ask it a question,
+and then it can answer the question.
+We are not using the data of homework 7.
+There is a simpler QA task.
+This QA task is called bAbi,
+usually pronounced babi.
+bAbi is a very early QA task
+when people just started to study QA.
+When people just want to use
+deep learning to solve QA tasks,
+people think QA
+was too difficult.
+We felt very difficult
+solving QA tasks with the neural network,
+or deep learning.
+So Facebook
+first defined twenty simple QA tasks.
+They are called bAbi.
+These QA tasks are not real QA tasks.
+If you compare
+bAbi and homework 7,
+you will find homework 7 is
+much harder than bAbi.
+Articles in bAbi are generated using certain rules
+They are all generated using some
+fixed sentence templates.
+The Questions are also generated with the fixed sentence templates
+So bAbi is a very simple task.
+In fact, it looks like this.
+Mary gave the cake to Fred
+Fred gave the cake to Bill
+Bill gave the milk to Jeff
+And ask you, who gave the cake to Fred?
+The answer is Mary
+It's so easy.
+In the fifteenth task, it says.
+Sheep are afraid of wolves
+Cats are afraid of dogs
+The mouse are afraid of the cats
+If Gertrud is a sheep,
+then what is it afraid of?
+It's afraid of wolves
+See? Piece of cake!
+As for such a simple question,
+you might feel that
+it won't be a problem for you.
+Our network can even solve homework seven.
+There is no way it can fail to answer such a simple question.
+However, serveral years ago,
+people were really shocked at
+making the model able to answer these easy questions.
+Okay, what we need to do next is
+to make the machine learn these twenty QA tasks sequentially.
+A general way to use bAbi is to consider
+all the tasks as a training set,
+having the machine learn twenty tasks at the same time.
+another way is to train a model for each task respectively,
+so each of the models has its own skill.
+Here, what I want to do is
+to place the twenty tasks in a row and
+sequentially train the model from the first task
+to the twentieth task.
+See if it can learn all the twenty tasks.
+Here's the result.
+Just look at the correct rate of task five.
+The vertical axis here
+is the correct rate.
+And the horizontal axis here
+is the process of learning all the tasks.
+From the previous example,
+we already know that task five is really simple.
+Alright, we let the machine learn task one
+and then task two,
+task three
+and task four.
+After learning these tasks,
+you can find that,
+for all the timestamp,
+The accuracy for task five is always 0
+During the learning of tasks one to four,
+the accuracy of task five is always 0.
+There is nothing to be suprised
+since it hasn't learned task five yet.
+Thus, it doesn’t know how to solve task five.
+The machine is not to blame for the failure.
+How about the situation
+after learning task five?
+What will happen?
+After learning task five
+the accuracy rise to 100%.
+That is because the model has seen the content of task five
+and the model thus knows how to solve the same task.
+The accuracy becomes 100%
+However, if we continue to learn the remaining tasks,
+what will happen?
+The accuracy plummets!
+When the machine finishes learning task six,
+the accuracy of the model on task five returns to 0%
+After learning task seven, the accuracy of the model on task five is also 0%.
+Once the model learn a new task,
+the old tasks will be forgotten immediately.
+Then, you might think that
+maybe it's because the machine just doesn't have the capability
+of learning a few more tasks.
+In fact, it's not.
+The picture on the left just now shows the accuracy of task 5.
+We let the machine learn these 20 tasks sequentially.
+If we combine all the data of these 20 tasks together,
+what will it happen if the machine learns 20 tasks at the same time?
+The picture on the right is the result of the machine learning 20 tasks simultaneously.
+The vertical axis here
+is not the accuracy of a certain task,
+but the accuracy corresponding to 1.
+The accuracy corresponding to 1 represents
+the accuracy of the first task,
+the accuracy of the second task,
+the accuracy of the third task,
+and so on till the accuracy of the 20th task.
+You realize that when the machine learns 20 tasks at the same time,
+of course, some tasks are difficult.
+for example, the machine could not learn the 19th task.
+But, it's possible for the machine to learn multiple tasks at the same time.
+There are several tasks where machines can get very high accuracy,
+but this is the situation of learning all tasks at the same time.
+When you let the machine learn them sequentially,
+it will learn the new things and forget the old things.
+The experiment on the right tells us that
+machines can learn multiple tasks, obviously,
+but, when you let it learn task one by one,
+it just refuses to learn multiple tasks.
+It has the capability to master multiple tasks, but it refuses to do so.
+It's not that it can't do it.
+It's that it doesn't want to do, but not it can't do.
+So, you will realize that,
+when the machine learns multiple tasks sequentially,
+it's like a person with a hole in his head.
+It's like the person on the left.
+When the new task comes in,
+the old thing comes out.
+It will never learn multiple skills.
+This situation is called "Catastrophic Forgetting."
+In front of "Forgetting",
+we purposely add the adjective, "Catastrophic",
+because "Forgetting"
+will also happen in humans.
+So, it's not surprising that "Forgetting" happens in machines.
+But, the degree of "Forgetting" is too much in machines.
+Basically, it couldn’t learn new skills.
+So, for this kind of "Forgetting", we add the adjective,
+"Catastrophic", in front of it
+to remind us that
+this "Forgetting" is not a normal forgetting,
+but it is a catastrophic forgetting.
+Ok! We have talked so much.
+Next, we will look at
+how to solve the problem of "Catastrophic Forgetting",
+and how to make the machine learn multiple tasks sequentially.
+But, before discussing the techniques,
+you may have a question.
+You may ask that,
+wait a minute,
+Didn't we just see that
+combining all the data of multiple tasks together
+can make the machine learn multiple tasks?
+Combining all the data of multiple tasks together to learn them at the same time
+is called training of multi-task,
+"Multi-Task Training."
+It can make the machine learn multiple tasks.
+For the question of "Life Long Learning",
+what's good for it to be investigated?
+You can think about it.
+We assume that we want to make machine learn
+the 1000th task.
+To prevent the machine from forgetting the previous 999 tasks,
+You must take the data
+of all the previous 999 tasks out,
+and then combine it with the 1000th task,
+which is all the data of these 1000 tasks,
+and train them all together
+in order to make the machine learn
+999 plus 1,
+totally 1000, tasks at the same time.
+But this may be problematic in practice.
+Because if we want the machine to learn the 1000th skill
+and it needs data for the previous 999 tasks,
+that means that the machine needs to
+store all the data it has seen.
+It must save all the data so far.
+However,
+you may not have that much space to
+store the data at all.
+On the other hand,
+computation is also a problem.
+If we need to put the data for 1,000 tasks
+together
+in order to train,
+the training time may be too long.
+The amount of data from the 1000 tasks
+may be too much.
+Your training time may be too long
+and you can’t make the machine learn multiple tasks.
+So if the machine must do
+multi-task learning
+to be able to learn multiple tasks,
+it's like a student taking a new class.
+But before he takes the new class,
+he has to retake all the lessons he has taken in his life
+and read all the textbooks
+he has read again to
+learn new tasks.
+Obviously, this is very inefficient.
+As the number of tasks you have to learn become larger and larger,
+your training time will get longer and longer,
+and you need to store more and more data.
+So although multi-task training
+allows the machine to learn multiple tasks,
+it is not the ultimate solution
+to Life Long Learning.
+In the literature,
+multi-task training is usually
+treated as the upper bound of life long learning.
+If we put all the data together,
+though this is an impractical approach,
+when there are many tasks,
+but it allows the machine to learn multiple tasks.
+So putting all the tasks together for training,
+or multi-task learning,
+is often regarded as
+the upper bound of life long learning.
+It is the result that life long learning cannot surpass.
+So when one is doing research on life long learning,
+the researcher will tend to
+run multi-task training first.
+Find out where the upper bound is,
+then look at life long learning to see
+if he can approximate this upper bound.
+Okay, let's see if any classmates have questions.
+Some students said,
+"Multi-task learning is equivalent to letting the machine review the material.
+Of course the performance is better."
+True. What we have to ask now is
+under the premise that no reviewing is allowed,
+can it remember what it has seen before
+instead of reviewing the old materials every time it's learning something new.
+Some students asked,
+"Is it because its loss is adjusted based on multiple tasks
+that there will be this kind of catastrophic forgetting?"
+You could say so.
+We will explain
+how catastrophic forgetting occurs later.
+Some students said, "Learn separately and ensemble."
+I'll tell you later
+or the next slide will tell you
+what kind of problems there are if it learns separately.
+Some students said,
+"Is it because the model continues to learn
+and change the old parameters to bad ones
+but didn't use the original loss to
+correct it back?"
+Right, right, right.
+We will explain later
+why catastrophic forgetting happens.
+But it's pretty close to
+what this classmate says.
+Okay, let's continue.
+The next slide is about
+why we don't just learn a new model
+for every task.
+Why are we so obsessed with
+the problem of Life Long Learning?
+Why must one model learn multiple tasks?
+Why don't we learn a new model
+for each task?
+If we did
+learn a model for each task separately,
+it is true that the catastrophic forgetting problem would indeed be solved.
+However, here's the first problem we'll encounter.
+Suppose we want the machine to learn
+a lot of skills.
+Something like Skynet, for example.
+Skynet should have millions of skills,
+and after all we can’t have a model for every skill, right?
+With this method, you may not be able to save all the models.
+On the other hand,
+if we were to use different models for different tasks,
+the data between different tasks cannot be shared.
+It won't be able to learn things
+that can't be learned from a single task.
+And if you think about it,
+humans only have one brain,
+yet the brain can learn many different tasks
+and keep on learning new skills.
+We don't need to store every task
+using a separate brain,
+so why can't machines do the same?
+This is the question that Life Long Learning is trying to answer.
+Can one model learn multiple tasks?
+Okay, some of you might say that
+this sounds similar to transfer learning.
+Transfer learning mainly focuses on
+training the machine to do task 1
+and transferring the skill learned in task 1 to task 2.
+Although both Life Long Learning and transfer learning
+make the machine learn multiple tasks,
+their points of focus are different.
+In transfer learning,
+we care about
+whether the skills learned by the machine on the first task
+can be helpful for the second task.
+So, we only care about the performance
+of the second task.
+In Life Long Learning,
+the main focus is
+whether the machine can still perform the first task
+after it has learned
+how to perform the second task.
+So, although Life Long Learning
+and transfer learning
+both involve two tasks,
+the main focus
+of transfer learning is
+how well it can perform the second task,
+while the main focus of Life Long Learning is
+how well it can perform the first task.
+Okay, before talking about the techniques of Life Long Learning,
+let's talk about
+how to evaluate the performance
+of Life Long Learning.
+Of course, before doing Life Long Learning,
+we need to have some tasks
+for the machine to do one by one.
+However,
+if you take a look at the papers about Life Long Learning nowadays,
+the tasks are often
+relatively simple.
+Here's a common setting.
+Task 1 is handwritten digit recognition.
+Task 2 is still handwritten digit recognition.
+However, these images in the second task
+look a bit like
+starry skies.
+What's that all about?
+These are the images we get
+by scrambling the digits
+in a particular pattern.
+So every task
+corresponds to
+a different permutation.
+But shuffling the permutation
+is quite complex.
+You can simply
+rotate the numbers.
+You can create a new task in which images are rotated
+clockwise or counterclockwise by 15 degrees.
+In that case, every image is still a number.
+They only differ by a rotation.
+You can still do Life Long Learning with this kind of easier tasks.
+You can also
+have the machine distinguish 0 from 1 in the first task,
+2 from 3 in the second task,
+4 from 5 in the third task,
+and etc.
+But in this case,
+0 belongs to the first Class,
+1 belongs to the first Class,
+2 belongs to the first Class,
+3 belongs to the second Class,
+4 belongs to the first Class,
+and 5 belongs to the second Class.
+So if you give it
+any odd number smaller than 6,
+either 5 or 3 or 1,
+the machine tells you that
+it belongs to the second class.
+On the other hand,
+0, 2, 4 belongs to the first Class.
+The homework assignment for Life Long Learning
+is multiple choice questions.
+We do provide some code,
+and hopefully you run through all of the code once.
+But this time, we do not ask you to generate good results.
+You have to answer some questions based on the content of the code.
+One of the points-giving questions is:
+How did TA
+define the tasks in the program?
+Oh, here is a question from a student.
+Let me answer it first.
+Is there any method
+that can impose constraints on the neural network,
+while not changing the parameters too much so that it can still remember how to do the old tasks?
+Great.
+This is exactly the commonly used solution
+for Life Long Learning.
+You spoiled it.
+OK. Let's continue
+I told you how to define a task sequence.
+Now we need to know
+how to evaluate
+the quality of a
+Life Long Learning algorithm.
+Here is the answer.
+First,
+you have a sequence of tasks.
+Also, you have a set of randomly initialized parameters.
+Apply these parameters
+on all T tasks.
+Then, you can calculate T accuracies.
+Apply the parameters
+on the casting set of the tasks,
+then you can obtain
+the accuracies.
+Next,
+let the model learn
+the first task.
+After that,
+calculate the accuracy
+of all T tasks again.
+Then you just repeat.
+Learn the second task,
+and calculate accuracies again.
+Do the same for
+all the tasks,
+and calculate the accuracies.
+You end up with a table like this.
+Next, you will use this table
+to judge the performance
+of a Life Long Learning model.
+In this table,
+each value refers to
+the accuracy of the test data for a certain task.
+For each value in this table,
+there are two subscripts, namely i and j.
+The first subscript represents
+the correct rate after training the i-th task.
+The second subscript refers to
+the correct rate on the j-th task.
+For example, R2,1 means that
+the correct rate of task 1
+after learning task 2.
+RT-1,2 means
+the correct rate of task 2
+after learning task T-1.
+So, if we watched the accuracies,
+whose i is greater than j,
+what does that mean?
+i is the later task.
+j is the previous task.
+What we want to know
+is that
+the performance of task i
+after learning with the previous task j.
+Does it forget what it has learned on the past task?
+If we are looking at the R
+whose i is less than j,
+what does that mean?
+It means that we just finished the task i
+and haven't learned task j yet.
+Is it possible that the machine learn by itself without a teacher
+to solve task j?
+What we need to see here is the transferability.
+On new tasks that have not been seen,
+how is the transferability?
+The most common method
+of evaluating a Life Long Learning system
+is to add up all the correct rate in the last row.
+You let your model learn all the tasks sequentially.
+After learning the last tasks,
+you can test all the previous tasks
+and calculate the correct rates.
+The average correct rate means
+the performance of your life long learning method.
+This value (RT,T) may be the highest.
+Because the model just learns on the task T,
+it should perform the best on the task T.
+For the previous tasks,
+your model will gradually forget.
+The first task may have been forgotten miserably
+or completely forgotten.
+Maybe the correct rate is close to zero.
+The second task might be slightly better.
+Its correct rate may be about 1 or 2 %.
+Then average all of these correct rates.
+We can use it to evaluate the quality of a Life Long Learning system.
+This is a common approach.
+There are other evaluation methods.
+There is an evaluation method called Backward Transfer.
+The Backward Transfer
+is to subtract two values.
+RT,1 minus R1,1.
+RT,2 minus R1,2.
+And so on.
+Then add up all the tasks and calculate the average.
+This value is Backward Transfer.
+RT,1 minus R1,1.
+RT,2 minus R1,2.
+What do they mean?
+They mean the difference between
+the correct rate of task 1
+when your model finishes task 1
+and the correct rate of task 1
+after your model finished all the T tasks.
+The memory is still fresh when it finishes task one.
+The correct rate is the highest at this time.
+As there're more and more tasks you learn,
+your correct rate will continue to decrease.
+How much will it decrease?
+So we subtract this two R.
+It can be assessed how serious the level of forgetting is now.
+Because every time the machine sees a new task,
+the old tasks will be forgotten.
+You can think about it.
+RT,1 is usually smaller than R1,1.
+RT,2 is usually smaller than R2,2.
+So if you subtract R1,1 from RT,1,
+subtracting R2,2 from RT,2,
+the value you usually get is negative.
+So the value calculated
+by backward transfer is negative and less than 0.
+If you can propose a
+Life Long Learning method
+that is so great
+that its backward transfer is positive.
+Then, you are very good.
+Because usually, the backward transfer is negative.
+If you say that
+after the machine learns a new task,
+it can also
+do better on the original task one.
+After learning new tasks, it learns how to
+do better on the original task two.
+Then,
+the Life Long Learning you proposed is very powerful.
+General Life Long Learning can’t do this.
+Usually, as long as this value is not too negative,
+it's already very powerful.
+Okay, there is another way of evaluation
+called forward transfer.
+The forward transfer
+usually is not the focus of Life Long Learning.
+The question forward transfer wants to ask is the following.
+I've watched a series of missions today.
+I am a bit stuck.
+I do not know why.
+My mouse is a bit stuck.
+But it doesn't matter.
+Let's see if the classmates have any problems.
+Ok, no one has problems.
+Ok, let's continue.
+Today, the question forward transfer
+want to ask is how much
+the machine has learned
+when only saw tasks
+other than a specific task.
+So when you are doing forward transfer,
+you just subtract RT-1,T from R0,T.
+What does it mean
+to subtract RT-1,T from R0,T?
+It means
+what results your model can learn
+when it only sees tasks T1 to T-1.
+It doesn't see
+the mission T.
+This is forward transfer.
+Okay, next, we are going to see
+the solution of Life Long Learning.

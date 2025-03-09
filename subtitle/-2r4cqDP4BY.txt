@@ -1,0 +1,949 @@
+Okay then let's continue.
+Let's continue.
+Okay, next,
+we are going to talk about three possible solutions to Life Long Learning
+The first solution is
+called Selective Synaptic Plasticity.
+From its name,
+you may not be able to know
+what exactly this method works.
+Synaptic means synapse,
+which is this the connection between nerves
+in our brain.
+This is called a synapse.
+What about Plasticity?
+It means plasticity.
+So in a nutshell,
+what this method does is that
+we only let certain neurons
+in this neural network,
+or some connections between neurons
+to be malleable.
+"Selective" means
+only part of the connection is malleable.
+Some links must be solidified.
+It must not be altered.
+Such method as this is also called
+the Regularization-based method.
+The research of the Regularization-based methods
+in the field of Life Long Learning
+has the most complete development, as far as I'm concerned.
+So we will spend more time
+talking about Selective Synaptic Plasticity.
+What about the other two aspects?
+We will quickly go through them with only one or two pages of slides.
+You will find that the main problems in our homework
+also focus on the methods
+that is related to Regularization-based mentioned above.
+Okay, let's first think about the problem.
+Why will Catastrophic Forgetting
+happen?
+We assume that there are task 1 and task 2.
+For these two tasks,
+we assume that our model has only two parameters.
+θ1 and θ2.
+Of course, a model usually has
+millions or hundreds of millions of parameters.
+But let’s assume there are only two parameters.
+Okay, the two pictures on this slide
+represent the loss function of task 1 and task 2.
+That is, on task 1,
+different values of θ1 and θ2
+will give us different losses,
+as shown in this figure.
+We use color to denote the amount of loss.
+If the color is bluer,
+it means the loss is the bigger .
+If it's more white,
+Oh wait.
+Ah, wrong.
+I'm sorry I just said the opposite.
+The bluer the color is,
+the smaller the loss is.
+The more white the color is,
+the greater the loss is.
+Ok, so the left and the right pictures corresponds to
+task 1 and task 2 respectively,
+which are their error surfaces.
+Okay, let's first train the model on task 1.
+How to train the model for task 1?
+You have to have a randomly initialized parameter.
+We call it θ0.
+Then we will use the gradient descent method to
+adjust the parameters of θ0.
+Then you follow the direction of gradient to
+update the parameters of θ0,
+and get θb.
+Okay, let’s assume that number of updates is enough.
+If you think that the loss has dropped low enough,
+you have finished learning task 1.
+Assuming that the learning of task 1 is completed,
+we get the parameter θb.
+Next, we have to continue to solve task 2.
+You just copy
+the parameters from θb.
+Copy it to the error surface of task 2.
+Pay attention.
+Although the error surface on the left and right are different,
+θb refers to the same set of parameters.
+θb is the parameter trained with task 1.
+We use it for task 2 now.
+We now apply θb to task 2,
+and continue to do training.
+On the task 2,
+we have a different Error Surface.
+According to the Error Surface of the task 2,
+we update our parameters.
+We might move θb to the upper right corner,
+and get θ*.
+θ* is the parameter that has been trained on the task 1
+and then the task 2.
+It is obtained after training these two tasks in order.
+Now we use θ* to represent
+the parameter obtained after training these two tasks in order.
+This θ*,
+in the task 2,
+is at a relatively low position on the Error Surface,
+so its loss is also low.
+It will perform well on the task 2.
+But if you use θ*
+back to the task 1,
+you will find that you can't get a good result,
+because θ* is only good at the task 2.
+It doesn’t necessarily have a low Loss on the task 1.
+That’s why Forgetting happened.
+How to solve this problem of Forgetting?
+For a task,
+maybe there are many different positions,
+or maybe there are many different sets of parameters
+for us to get a low loss.
+For the task 2,
+maybe in this blue oval,
+the performances are good enough.
+Maybe in this blue oval,
+the losses are all low enough.
+If we move θb,
+instead of moving up right,
+but moving left.
+Can the new parameter on the task 1
+avoid Forgetting?
+This is what we will share with you later.
+Okay, how to do it?
+The basic idea is that
+every parameter
+has different importance
+on the previous learned tasks.
+There are some parameters
+which are particularly important for the previous tasks.
+We hope that when we learn on new tasks,
+those old parameters,
+those important parameters,
+won't change a lot.
+The new tasks only change those parameters
+that are not important to the previous task.
+Okay, let's assume that θb
+is the parameter learned from the previous task.
+So θb will perform good on the previous task.
+Then we let θb continue to learn on the second task.
+In Selective Synaptic Plasticity,
+in the method,
+we will give each parameter
+a guard,
+a bodyguard.
+We use b_i to represent the guard.
+For each parameter θi,
+it has a guard b_i.
+The parameter here is
+the weight and the bias of each neuron.
+If your network has
+one million parameters,
+then there are one million b_i.
+The b_i of each parameter are different.
+Each parameter has its own guard.
+What does this guard stand for?
+The guard shows whether this parameter
+is important or not
+for the previous tasks.
+Ok so now,
+on a new task,
+when we update our parameters,
+we will rewrite the Loss Function.
+Original Loss Function
+could be written as L(θ).
+But we will not directly minimize L(θ).
+If we directly minimize L(θ),
+Catastrophic Forgetting will happen.
+So what we have to do
+is to change our Loss Function.
+We have a new Loss Function,
+which is called L'.
+This L' is what we really want to minimize.
+This L'
+is the original loss L added by one more term.
+What is this term?
+This term is that
+we first sum over all i,
+all parameters.
+Then, here θi represents the unknown parameters,
+the parameters that
+we are going to learn.
+"Parameters to be learning" subtract
+"parameters learned from the previous task."
+θ^b_i
+θ superscript b subscript i
+Θb is the model learned from the previous task.
+The subscript i is the i-th parameter.
+We want to make
+θ_i and θ^b_i
+as close as possible.
+So,
+We take the square of the
+result of θ_i subtracted by θ^b_i.
+We will multiply
+a value called b_i in the front.
+This b_i is to
+tell us how strongly
+we want θ_i and θ^b_i
+to be as close as possible.
+If b_i is large,
+we want θ_i to be very close to θ^b_i.
+If b_i is small,
+θ_i doesn't need to be very close to θ^b_i.
+It doesn't matter.
+This L' is what
+we want to optimize.
+There are two terms in L'.
+One is the loss of the original new task,
+and the other is the term that
+make θ_i and θ^b_i as close as possible.
+But be aware,
+we don’t treat
+all parameters equally.
+All parameters do not need to get close equally.
+We only require θ
+to be close to θ^b_i
+in some parameters.
+Some parameters are close, and some parameters are not.
+Which parameters should be close to θ^b_i
+is controlled by b_i.
+If a parameter
+whose b_i is very large,
+it should be
+close to the old parameter.
+Close to the parameters
+learned in the previous task.
+If b_i is equal to 0,
+we don't care about the difference between
+new parameters and previous parameters.
+So what if
+we set b_i to 0?
+If we set the b_i
+of all the parameters to zero.
+What does this mean?
+This means
+we don’t put any restrictions on θ_i.
+There is not any constraint on the parameters.
+All parameters do not have to relate to previously learned parameters.
+In this case, it becomes normal training
+and will have the problem of Catastrophic Forgetting
+Since it is bad to set b_i to zero,
+can we set b_i to a very large value?
+All parameters
+give it a very large b_i
+Forgetting is not a problem anymore.
+But this is
+another extreme called Intransigence.
+The meaning of Intransigence
+is the unwillingness to compromise,
+the unwillingness to give in, and the stubbornness.
+Assuming that
+your b_i is very big,
+the results your learned
+will be very close to θb.
+Your new parameters will be very close to the old ones.
+Your model may not forget
+the old task,
+but it is not good at learning the new tasks
+It cannot learn new tasks well.
+This situation
+is called Intransigence.
+So far,
+let’s see if any students have questions to ask.
+Some students said that
+the sound is still blowing.
+Hope it's a lot better now.
+Hope it is much better now.
+Some students asked
+whether b_i needs to be set manually
+or can be part of the learnable parameters.
+Okay,
+In the literature,
+b_i is defined manually.
+The key technology in the research
+of Life Long Learning
+lies in how we set this b_i.
+Is it okay to learn the b_i term?
+You can imagine that it is inappropriate
+to learn the b_i term in this task.
+What will happen if you let
+the model to learn b_i by itself?
+The b_i term will eventually equal to zero
+since the model wants to make Loss
+as small as possible.
+If you let the model learn b_i by itself,
+then no Life Long Learning can be done,
+leading to b_i being a hyperparameter set manually.
+Here a crucial point emerges is that
+how to find the proper b_i.
+How do we know
+what parameters are important for the old task
+and what is not.
+This is the key point of the research in this domain.
+Here we only tell you the basic concepts
+of deciding b_i.
+Think about it,
+how do you know whether a parameter
+is important to a task?
+Suppose you have trained a model,
+so you already have θ^b.
+Inspect the impact that each parameter in θ^b has
+on this task.
+For example,
+if you make θ^b move along the direction of θ_1
+and find out that
+there aren't many changes to the loss term
+No effect on the loss.
+Thus, we should know
+θ_1 is not very important to task 1
+and a arbitrary value can be assigned.
+Since θ_1 is not very important to task 1,
+θ_1 can be changed arbitrarily
+when learning a new task.
+A smaller value of b_i will be assigned to θ_1,
+that is to say, the value of b_1 will be smaller.
+On the other hand,
+if we move θ^b along the direction θ_2,
+you will find that
+when we change the value of θ_2
+there's a huge impact on the loss term.
+It means that θ_2 is a very important parameter for task 1
+You should not change it easily.
+You have to set the b of θ_2 to be larger.
+You have to set b_2 to be larger.
+And this is
+the basic concept of Selective Synaptic Plasticity
+What will happen if you set a smaller b_1
+and a larger b_2
+when learning task 2?
+Since b_1 is relatively small,
+we can update the model along this direction freely.
+On the other hand,
+since b_2 is relatively large,
+it becomes hard to update the model along this direction.
+Overall, if we set b_1 to be smaller
+and b_2 to be larger,
+then when you update θ^b,
+it won't move in this direction
+but instead in this direction.
+Because we only want the model to update θ_1
+and leave θ_2 alone,
+you may have to change the direction of your gradient.
+Originally, it looks like this.
+Change into this one.
+And get θ*.
+Then use θ* in task 1.
+Since task 2 only update the model along this direction,
+there are only small changes
+to the loss of task 1.
+Hence,
+using the new θ* here
+can prevent the degradation on task 1
+This is a possible way to
+alleviate Catastrophic Forgetting.
+Here I'm going to show you
+a real experimental result from a paper
+The result is from a paper called EWC
+and the link of the paper
+is also on the next page of the lecture slides.
+Please refer to it if you are interested.
+Okay, so what does the figure here say?
+This kind of the figure is very common
+in the paper of Life Long Learing.
+Most of them has a similar figure in thier paper.
+What does the horizontal axis says?
+The horizontal axis represents the process of sequential training.
+On the left of the first dashed line,
+it refers to the training task A.
+Thus, we have three tasks: A, B and C.
+We first train task A,
+then train task B,
+and finally train task C.
+It is the result of training these three tasks sequentially.
+As for the vertical axes, there are three vertical axes.
+The first vertical axis represents the accuracy of task A.
+The second vertical axis represents the accuracy of task B.
+The third vertical axis represents the accuracy of task C.
+By drawing such a picture, you can see that,
+when we learn the three tasks: A, B and C, sequentially,
+for task A, B and C, these 3 tasks,
+how will their accuracy change?
+We first look at the task A.
+We first look at the changes in the task A.
+Okay! We first look at the blue line here.
+What is the blue line here?
+The blue line here indicates the situation where we don't care
+"Catastrophic Forgetting" at all,
+and do normal training,
+which is the case that b_i is always set to 0.
+What happens if b_i is always set to 0?
+You will find out the following.
+Looking at the accuracy of the task A,
+there is no problem in the beginning of learning the task A,
+and the accuracy is high there.
+Next, it starts to learn the task B,
+and the accuracy of the task A drops.
+Next, it starts to learn the task C,
+and the accuracy of the task A drops again.
+It is "Catastrophic Forgetting."
+How about L2?
+L2, this experiment, is under the situation that
+the b_i are all set to 1 for whatever parameters.
+If all the b_i are all set to 1,
+on the task A,
+it actually prevents
+the problem of Catastrophic Forgetting.
+For example, you can look at the green line here.
+It does not drop much in the task B,
+and, in the task C,
+it does not drop much, either.
+When training on the task B,
+the accuracy of the task A
+does not drop much.
+When training on the task C,
+the accuracy of the task A
+does not drop much, either.
+However, always setting b_i to 1
+will give you a new problem,
+which is
+the Intransigence issue we just mentioned.
+We could take a look at
+the learning status of task B and task C.
+For the green line here,
+if b_i is always equal to 1,
+when the model is learning on the task B,
+the accuracy of the task B
+doesn't rise high enough.
+For the second vertical axis here,
+it represents the accuracy of task B.
+Then, here is the situation when learning on the task B.
+When it is learning on the task B,
+it stands to reason that the accuracy of task B should soar,
+but it doesn't.
+The green line here does not soar.
+It can't learn it.
+It can't learn task B,
+and it's even worse when learning task C.
+It just can't learn it.
+The horizontal axis here is the situation when training on the task C.
+The vertical axis here is the accuracy of the task C.
+You find out that the accuracy of the task C
+is not higher than those with other methods,
+which means that the task C can't be learned.
+This is Intransigence.
+So, if you give all the parameters the same regularization,
+it might be too restrictive for your model
+to learn new tasks.
+Okay! What if we give different b_i
+to different parameters?
+Some parameters are with large b_i ,
+while some parameters are with small b_i.
+That is, you only fix certain parameters,
+and make the others flexible.
+Then you could get the red line here.
+For the red line here,
+it performs the best on every task.
+If you look at the task A
+after learning three tasks sequentially,
+the accuracy does not drop.
+If you look at the task B,
+when learning the task B,
+the accuracy only drops a little bit comparing to the blue line,
+and then the task C will never drop again.
+If you look at the task C,
+the accuracy of the task C,
+is a little bit lower,
+comparing to the blue line,
+So, when you fix this b_i,
+there will be some consequences.
+that the new tasks are more difficult to learn.
+But the result is not as miserable as when all b_i are set to 1.
+It’s better than the results
+when b_i are set to 1.
+Okay, in class,
+we didn't really say how b_i is calculated.
+We only talked about the concept.
+In TA's code,
+various methods are implemented to
+calculate b_i.
+What you have to answer in the multiple-choice question is
+how the b_i is obtained in every method.
+You can choose to read literature to
+know how b_i is set.
+You can also choose to read TA's code directly to
+see how b_i is set.
+We list a lot of methods here.
+To name a few,
+EWC,
+SI,
+MAS.
+There is RWalk.
+There is SCP.
+They are arranged
+chronologically.
+From the oldest method
+to the newest method.
+Every method
+has its own characteristics,
+has its own problem it wants to solve,
+and has its own points it considers.
+I leave this for you to discover
+in the homework.
+We won’t talk about this part in the class.
+Because if you are not
+that interested in Life Long Learning,
+going through every method
+will be redundant for you.
+But if you are interested in Life Long Learning,
+take a good look at the multiple-choice questions of the homework,
+you can learn a lot.
+Okay, let's see if any classmates have questions.
+"It seems that b_i
+can be calculated directly."
+Correct.
+b_i is directly calculated.
+But in terms of how is b_i calculated,
+every method is different.
+Each method uses different data.
+Some method
+just uses the model's input,
+while some methods require the input and output.
+In other words, if it’s an image classification problem,
+some methods need only the images in the past tasks
+to calculate b_i.
+Some methods require the images and labels of the past tasks to
+calculate b_i.
+TA will ask you if the method
+uses labels.
+Take a look at TA’s code by yourself to
+see if labels are used.
+A classmate asked,
+"Will the training result differ
+if the order of training tasks is changed?"
+What a brilliant question!
+The simple answer is yes.
+I will give you an example later to demonstrate
+that changing the order of the tasks
+will produce very different results.
+So you will find that
+in these papers
+when they are doing experiments,
+they did not just do one sequence of tasks.
+They will enumerate all possible orders of tasks to do experiments.
+And then take its average.
+That is, suppose you have three tasks.
+You can't just
+finish task ABC,
+get the average,
+and say that its the average
+of your method.
+In these papers,
+the common practice is
+to enumerate all the sequences.
+ABC, CBA, BCA,
+run through it all
+and get the average.
+Only then can the average represent
+how well your Life Long Learning method is.
+Okay.
+This is Regularization-based method.
+Actually, before the regularization-based method,
+there is another early practice
+called GEM,
+Gradient Episodic Memory.
+This method
+is also a very effective one.
+It puts limitations, not on the parameters,
+but on the direction of the gradient update.
+How does GEM work?
+Here's how we do it.
+In task 2,
+we will calculate the gradient of task 2,
+but we have to be careful about
+whether we should follow
+the direction of the gradient calculated in this task
+to update our parameters.
+Before updating the parameters,
+we will go back to the task 1 first
+and calculate
+the direction
+the update would be in
+if we update it in task 1.
+We use the blue arrow
+to represent the update direction
+of parameter θ^b
+in the task 1.
+If the directions
+of θ^b and g are different,
+or in other words,
+their inner product is less than 0,
+what should we do?
+We modify g
+and turn it into g'.
+The criterion of this modification is that
+we hope to find a new g' that
+would have an inner product
+with g^b that is greater than or equal to 0.
+Moreover, g' and g
+can't be too different.
+So, originally,
+if we update in this direction,
+Catastrophic Forgetting may occur.
+But, we deliberately modify the direction of the update
+and change it from g to g'.
+This way, we can alleviate
+the problems caused by Catastrophic Forgetting.
+Now, have you noticed that
+something doesn't add up?
+Is there anything weird about it?
+Think about it.
+How is g^b calculated?
+To get g^b,
+we have to calculate the gradient in the task 1,
+which means we have the data of task 1.
+If we didn't have the data of task 1,
+we would have no way to figure out g^b at all.
+So, one of the disadvantages of the GEM method is that
+it needs to save the information of the past method.
+This deviates a bit
+from what Life Long Learning is trying to pursue.
+Like what we said at the beginning,
+the spirit of Life Long Learning is that
+we don't want to save all the past information.
+If all the past data are saved,
+the data would accumulate
+as time goes by
+and eventually we won’t be able to save all the past data.
+So GEM is a bit contrary
+to the spirit of Life Long Learning.
+Although it stores the past data,
+maybe the problem is not that serious.
+Why's that?
+That's because the GEM method
+only needs to save a very small amount of data.
+The main purpose of g^b
+is to modify the direction of g.
+So, maybe when we're calculating g^b,
+a very large amount of data is not required.
+Just a portion of the data needs to be saved.
+So, what GEM is trying to achieve is to
+avoid Catastrophic Forgetting
+by saving a bit of data.
+That's why GEM seems a bit unfair
+when compared to other methods we just mentioned,
+such as EWC.
+It secretly stores additional data.
+But if you think about it,
+regularization-based methods,
+such as EWC,
+also require additional storage
+to store the old model and b_i.
+So, the regularization-based methods we mentioned earlier
+also need to take up extra space
+to store the old model
+and the value of b_i.
+So, even if GEM
+needs to save some old data,
+as long as the amount of memory occupied by the old data
+is less than the size of b_i and the old model,
+it might still be acceptable.
+That's why GEM is also an acceptable method
+if not too much extra data is stored.
+Next,
+let's quickly go through
+two other methods.
+The first method
+is Additional Neural Resource Allocation.
+That is, we'll change
+the Neural Resource used in every task.
+What does that mean?
+One of the earliest methods
+is called Progressive Neural Networks.
+Its idea is like this.
+You obtain a model
+after finishing the task 1.
+While training on the task 2,
+do not change the old model anymore.
+Create another network,
+whose input
+includes the hidden layer output
+of the previous model.
+So task 2's model can make use of the useful information from task 1
+if there is any,
+but do not change
+the parameters learned from task 1
+anymore.
+Only the additional parameters
+can be modified.
+Similarly, for task 3,
+we add another set of parameters for task 3.
+While training task 3,
+the parameters trained in task 1 and task 2
+are fixed.
+This is a promising solution
+to Catastrophic Forgetting.
+Actually, you won't encounter this problem at all,
+because the old parameters
+are fixed!
+But there is still a problem
+in this method.
+For every task,
+you need extra space
+for the additional neurons.
+Therefore, your model's size
+increases rapidly.
+Eventually,
+you will run out of memory
+if you give
+too many tasks
+to the model.
+The model's size will blow up,
+and that size might be too big
+to fit in your memory resources.
+So Progressive Networks
+does not solve Catastrophic Forgetting completely.
+But when the amount of tasks is not large,
+Progressive Networks
+can still come in handy.
+There is another method called PackNet.
+It is the reverse of Progressive Networks.
+Previously,
+we add neurons
+when a new task comes in.
+But PackNet
+does not do this.
+It creates a relatively large network at the beginning.
+Then,
+we are only allowed to use part of it
+for every task.
+The circles in these pictures
+indicate the parameters of the network.
+For example,
+you are only allowed to use
+the black-border circles for task 1.
+For task 2,
+only the orange circles
+are being trained.
+For task 3,
+the black-border circles and the orange circles
+are fixed,
+while the green circles
+are being trained.
+Now,
+the amount of parameters
+does not increase
+as the number of tasks increase.
+But this method is simply
+dodging the issue of Progressive Networks.
+This method just
+created a larger network,
+and allow you to
+use only part of it
+for every task.
+Then you won't
+suffer from Catastrophic Forgetting.
+But eventually the memory you created for the network
+will still run out.
+That's nothing different from Progressive Network.
+But PackNet
+and Progressive Networks
+can be combined.
+The combining method
+is also a well-known method
+called CPG.
+Compacting, Picking, and Growing.
+It works as the following.
+For our model, you can add new parameters
+and you also only retain some of the parameters
+that can be used for training.
+We won’t go into details of these methods.
+I'll leave it to everyone to study.
+OK.
+Let me see.
+Does any classmate have questions to ask?
+Okay, I think there are no questions.
+Let's continue.
+Okay, then the third approach
+is called Memory Replay.
+The third approach is very intuitive.
+We talked about that
+if we put all the data together,
+there will be no Catastrophic Forgetting problem.
+But we also said that
+we can't save past data.
+Then, we simply train a generative model.
+This generative model
+will generate pseudo-data.
+So, in this method,
+although we can’t save the past data,
+we can still train a Generative model
+to generate data that are similar
+to the past training data.
+In other words,
+We now have training data for the first task.
+We not only train a classifier to solve task 1.
+We train a Generator at the same time.
+It will generate the data of the task 1.
+Next,
+when you are training on the task 2,
+if you only input the data of the task 2 to the machine,
+it may have the problem of Catastrophic Forgetting.
+But, you can't take out the data of task 1.
+What to do then?
+Use the Generator to generate the data of the task 1.
+You use this Generator
+to generate the task 1 data,
+and then use the data to train the classifier of the task 2.
+So, during the training,
+this classifier
+not only sees the data of task 2
+but also sees the data of task 1
+generated by the Generator.
+By using this method,
+you can avoid the Catastrophic Forgetting problem.
+Next,
+you have data for the task 2 again.
+Maybe you will put the generated data
+of the task 2 and the task 1 together.
+Put these pseudo-data together
+to train another Generator.
+This Generator can generate data
+of the task 1 and the task 2 at the same time.
+This process
+can keep going.
+Okay.
+Is this method reasonable?
+Different people have different opinions.
+Because you need to train another Generator.
+This Generator
+will take up some space for sure.
+But if the space
+of this Generator
+is smaller than
+the space of storing data.
+Then maybe this is an effective method.
+In fact, our laboratory
+has also done some studies on Life Long Learning.
+In our experience,
+this method of generating data
+is very effective.
+By using this method of generating data,
+you can often approach
+the upper Bound of Lifelong Learning.
+You can get similar results
+with Multi-Task Learning.
+Next,
+you can think about
+the scenarios of Life Long Learning we just talked about.
+We all assume that
+the required model is the same
+for every task.
+We even force that
+the amount of data
+required by the classifiers
+that we need to train
+are all the same.
+Assuming that the different tasks
+have different numbers of classes,
+is there a way to solve it?
+The first task
+has ten classes.
+The second task
+has 20 classes.
+The third task has 100 classes.
+When you train for a new task,
+you also have to add new classes.
+Is there a way to solve it?
+There is a solution.
+Here are some documents.
+For example, learning without forgetting,
+and LwF,
+and iCaRl,
+which is incremental classifier and representation learning.
+These are the references.
+The teaching assistant
+has put it
+in our homework.
+In the multiple-choice questions of Life Long Learning's homework,
+we also ask everyone
+the questions about these practices.
+If you are interested,
+you can read these papers by yourself.
+Actually,
+the Life Long Learning we are talking about today,
+which is also called continual learning,
+is just a small piece of the research
+in the entire Life Long Learning field.
+It's just one of the situations.
+Actually, Life Long Learning,
+or continual learning,
+has many different situations.
+You can read the literature below.
+It will tell you that
+Life Long Learning has three scenarios.
+What we are talking about today
+is the simplest one
+among the three scenarios.
+It's the easiest one.
+How to solve the remaining two situations that is more challenging?
+What are the other two more challenging situations?
+We left it in the multiple-choice questions.
+You can see
+what the other two scenarios look like by yourself.
+Ok, these are the three research directions
+about Life Long Learning.
+A classmate asked
+"if we change the order of learning the tasks,
+will there be very different results?"
+Yes, there will.
+Let me give you a specific example to explain.
+In the example of Life Long Learning,
+we mentioned at the beginning that
+we let the machine
+learn this kind of noisy picture first.
+Next, it learns about the pictures without noise.
+But on the contrary,
+if you learn the pictures without noise first
+and then learn about noisy pictures,
+what will happen?
+If you let the machine learn the noise-free picture first,
+it has 97% correctness on the task 2.
+However,
+it only has 62% correctness on the task 1.
+It seems that it can solve the classification of pictures without noise.
+But it can't handle noisy pictures.
+But if you further
+let the machine learn the task 1,
+you will find that
+it can do well
+on both tasks.
+At this time,
+there's no problem with Catastrophic Forgetting.
+So it seems that the order of tasks is important.
+In some order,
+there will be problems with forgetting.
+In some order,
+there is no problem with forgetting.
+Finding out what kind of order is good
+and what order
+is effective for learning,
+it's called Curriculum Learning.

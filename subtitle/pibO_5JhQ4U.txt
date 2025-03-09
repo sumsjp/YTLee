@@ -1,0 +1,379 @@
+Ok.
+Next, I want to share a concept with
+everyone called Reward Shaping.
+What is Reward Shaping?
+What we have learned so far is:
+We take our Actors to interact with the environment,
+getting a bunch of rewards.
+After some processing of these rewards,
+we get the score A here.
+With the score A here,
+you can teach your Actor
+what to do and what not to do.
+But in this Reinforcement Learning,
+we are very afraid of encountering a situation
+in which the reward is always 0.
+Assuming that reward is 0 most of the time,
+only with a very low probability,
+you will get a huge reward.
+Then, what should we do?
+Assuming that Reward is almost always 0.
+What does that mean?
+It means that no matter how you calculate this A,
+it is all 0,
+which is the same for every Action.
+No matter what Action is executed,
+the rewards are all 0.
+So there is no difference between executing this Action or executing that Action;
+it is all the same.
+If the reward is almost always 0
+no matter what Action is executed,
+you have no way to train your Actor.
+Talking about this kind of Sparse Reward problem,
+someone may immediately think of
+playing Go, which may be a Sparse Reward problem.
+Because when playing Go,
+every time you play stone on the board,
+you didn't get the reward.
+You did not get Positive or Negative Rewards.
+Only at the end of the game,
+after finishing the last move
+and the game is ended,
+will you get a positive reward when you win,
+or will you get a negative reward when you lose.
+Compared to other tasks,
+the game Go
+is an RL task with rewards.
+For example, suppose today’s task is
+teaching the robotic arm to fasten the screws.
+In the task that teaches the robotic arm to fasten the screws,
+your reasonable definition of Reward is that
+suppose today the robotic arm successfully bolted the screw;
+it gets a Positive Reward;
+if it doesn't,
+the reward is 0.
+In the beginning, in your robotic arm,
+the parameters of the Actor are random,
+so it just waved casually in the air.
+No matter how it waves, the reward is always 0.
+It's not like playing Go.
+At least you can have a positive or negative reward
+when you finish the game.
+In the robotic arm case,
+you ask the robotic arm to fasten the screws.
+Unless it happens to pick up a screw by coincidence,
+bolt it,
+and it gets a positive reward.
+Otherwise, no matter what it does,
+the rewards are 0.
+What should we have to do when we encounter this situation?
+One solution is that
+we try to provide some additional rewards
+to help our agent to learn.
+In other words, in addition to the original reward,
+which is the reward
+we want our Agent to maximize,
+we also define some additional rewards.
+We define these additional rewards
+to help our agent learn.
+This method
+that we define additional rewards
+to help the agent learn
+is called Reward Shaping.
+You know that
+people are very good at reward shaping.
+For example,
+this technique reminds me of a story in the Lotus Sutra.
+This story comes from
+a chapter of Lotus Sutra.
+A leader is leading
+a group of people to find the treasure.
+The treasure is five hundred Yushun away.
+I forget how long Yushun is.
+You just treat it as a very long distance.
+Just view this like
+5 million kilometers away.
+This group of people walked halfway.
+They felt tired
+and didn’t want to go any further.
+Everyone just sat on the ground and wailed.
+The leader saw that everyone didn't want to go any further,
+so he told everyone that
+there is a five-star hotel 10 kilometers ahead.
+Everyone can go to rest.
+When everyone saw the five-star hotel,
+they were happy and went to rest.
+The hotel disappeared the next morning.
+The team leader said that
+the hotel was made by his magic.
+The leader has magical power.
+The hotel made by magic
+was to encourage everyone to keep going,
+lest everyone gave up halfway.
+The story in Lotus Sutra tells
+what the Buddha hopes for everyone to achieve are Buddhism.
+The Buddhist path is very long.
+There are little saints,
+middle saints, big saints, and other different ranks
+to guide everyone forward.
+There is a more life-like example
+Take studying Ph.D. as an example.
+You may think you can get rewards
+only after you get a Ph.D.
+Then you will feel,
+wow, this road is very long.
+I don’t want to study Ph.D. anymore.
+However, if I tell you that
+you can get rewards by taking a class first,
+then work on a small project.
+Although there might not be any great result,
+the teacher will still say that you are great and you will get the reward.
+Keep moving on.
+Publish at a second-tier conference,
+get some reward.
+Publish at a top-tier conference,
+get reward again.
+Then eventually, you can graduate with a Ph.D.
+By moving forward step by step like this,
+you can eventually achieve the final goal.
+Here, I still encourage you to study for a Ph.D.
+You might be tired of hearing it again,
+but it doesn't matter.
+Since this course is almost over,
+there's no much time I can talk about studying Ph.D. again.
+Okay, so this is the concept of Reward Shaping.
+What's next?
+Here, I am going to give an example
+of using Reward Shaping in RL.
+The example given here
+is called VizDoom.
+Since I’m afraid that you don’t know what VizDoom is,
+let me show you a video.
+The VizDoom is actually
+a first-person shooting game.
+People often use RL to play VizDoom
+The following is a video of
+playing VizDoom with RL.
+That is to say, using a machine to play VizDoom.
+Let's take a look at the video of the game.
+It looks like this.
+Every player here is not a human.
+Every player is a machine.
+So, if you look closely, you will find that
+some players have strange behaviors.
+For example, the player in the upper right corner
+is prone to get stuck.
+This person in the upper right corner is quite easy to get stuck.
+It's hitting the wall.
+Why is it?
+Because it's not a person. It's a machine.
+Okay, this is to let you know that
+what kind of game VizDoom is.
+This video is very long.
+It's a two-hour epic battle.
+If you are interested, you could watch it in your time.
+In the past year,
+the first-place team of the VizDoom game
+used the concept of reward shaping.
+In the game of VizDoom,
+if you are killed by the enemy, your points will decrease;
+in contrast, your points increase if you kill the enemy.
+But, if you just rely on the real reward in this game
+to train the Agent,
+it's hard for you to train it.
+So, in this article,
+they use some concepts about reward shaping.
+We could take a look at
+how they define these rewards.
+We will skip the first point and go back to it later.
+We first look at the second point.
+The second point says that,
+if the blood decreases,
+you get a negative reward.
+In fact, there is no penalty for blood decreasing in the game.
+Blood decreasing does not reduce points.
+Only when you die, your points decrease.
+But, if the machine gets a negative reward
+only when it has died,
+it may take a long time
+to learn the relation between blood decreasing and death.
+So, we tell the machine directly that it should not make blood decrease.
+Blood decreasing is a bad event.
+Next, some points are deducted if you lose ammunition.
+Add points if you find a medical kit.
+Add points if you find ammunition supply.
+These things will not affect the score in the game,
+but we humans, we developers,
+impose these on the machine to guide the machine's learning.
+Then there are some more interesting rewards.
+For example,
+if your agent always stays at the same place,
+points will be deducted.
+Why do we need such a reward?
+Because if you don’t have such a reward
+and the agent is really weak at first,
+it may go out and walk just two steps and get killed by the enemy.
+So, for the agent that was weak at the beginning,
+the strategy to get a higher reward
+is to stay at the same place.
+At least this way, the reward is 0.
+If it goes out and runs into an enemy and has its health deducted,
+that's not worth it.
+So, in order to avoid the machine not learning anything
+and stay right where it is,
+we forcefully tell it
+that points will be deducted if it stays at the same location.
+And we also tell it that if it moves,
+it will get a small score.
+Every time it moves,
+it gets 9*10^-5 points.
+A very small but positive reward.
+But it’s not enough to ask the machine to move,
+so here is another very interesting reward.
+This reward is if the agent is alive,
+every time the agent is alive, points will be deducted.
+You may think it’s weird. Isn't being alive a good thing?
+Why should points be deducted if it's alive?
+That’s because if there's no penalty for being alive,
+or if it's a positive thing,
+for the agent,
+what it will learn may only make it an observer.
+Although you told it to move,
+it would ignore your instructions
+and just keep rotating in some corner.
+It would avoid the enemies
+or any conflict
+and just keep rotating in some corner on the map.
+For your agent,
+that was perhaps the safest way.
+But, in order to force the agent to learn how to kill the enemy,
+you would instead have to tell it that living would have penalties.
+It would have to find a way to not live for too long
+and fight against other players.
+So, this is a very interesting way
+of doing reward shaping.
+After seeing these ways of doing reward shaping,
+you would actually find that
+it requires some domain knowledge.
+It is actually enforced
+based on the researcher's understanding of the environment.
+Let’s give another example of reward shaping.
+Suppose you want to train a robotic arm,
+the task of this robotic arm
+is to put this blue board
+onto this stick.
+For a task like this,
+it is not easy to use RL to teach the machine
+to put the blue board
+onto this stick.
+However, you might think of a
+very intuitive method of reward shaping.
+The closer the blue board is
+to the stick, the higher
+the reward.
+But if you think about it, you will find that
+it’s not quite enough to just get the blue board closer to the stick.
+Why is that not enough for the task?
+You can take a look at these two cases on the right.
+The robotic arms are also performing the same task.
+But what it did
+was actually just bashing the stick.
+Approaching from the side
+is useless.
+You can't achieve your goal
+by approaching the stick from the side.
+So giving more rewards
+whenever the board is closer to the stick
+is too naive.
+Using reward shaping,
+you let the reward
+be a function of the distance.
+But it might not be helpful
+for solving the problem in some cases.
+That's why you should always be careful
+while using Reward Shaping.
+It requires you to have a sufficient understanding
+of the problem.
+Okay, let's stop and see if any classmates have asked questions.
+Well, no classmates are asking questions,
+so let's continue.
+There is an interesting
+and well-known method called
+Curiosity Based Reward Shaping.
+As its name implies,
+we give the machine curiosity.
+What does it mean to give curiosity to a machine?
+Curiosity means the motivation to explore new things.
+We are going to add a new term
+to the reward.
+If the machine discovers new things
+during the process,
+it receives additional points.
+But there is a caveat.
+New things must be
+"meaningfully new".
+What does this mean?
+I'll explain this later.
+This method,
+the Curiosity based Reinforcement Learning,
+origins from an article published at ICML 2017.
+There is an amazing demo in this article.
+Let me show you.
+I want to explain the meaning of the video.
+Let me stop the video. Wait for me.
+It makes the machine play Mario.
+In the game Mario,
+there is no reward.
+He didn't even tell the machine that
+it can get a positive reward by passing the level.
+Actually, It’s useless to tell the machine that
+it can get a positive reward if it passes the level.
+This kind of reward is too sparse.
+It is difficult to use this reward to train the agent.
+It only tells the machine that
+you have to keep seeing new things.
+That alone can make the machine learn
+to pass some levels in Mario.
+This approach may be the most suitable approach
+for Mario.
+Mario is a side-scrolling game.
+If you want to pass the level, you have to keep walking to the right.
+If the machine wants to see new things,
+it needs to keep going to the right.
+So, the machine can learn to pass some levels in Mario
+only by curiosity.
+It has been tried that the agent is trained in the previous levels
+and then directly test
+in the underground level.
+It failed.
+At the underground level, we still need
+to fine-tune some networks.
+Okay, the video has the second half.
+We just
+start watching it from somewhere.
+Ok.
+Next, he directly asks the machine to play VizDoom.
+He directly asks the machine to play VizDoom.
+Let's also play the part of VizDoom.
+Okay, there is a lot of noise in the last background.
+It's kind of like the screen full of noise
+when the TV is broken.
+You may not know what it wants to express in this video.
+This part is
+the meaningful new thing I mentioned earlier.
+Wait for a second.
+The meaningful new thing
+is that we assume we require the agent
+to always see new things.
+If there is a noise in the background of your screen,
+the noise will keep changing.
+So the noise is new to the agent.
+Maybe it won’t learn to explore new environments
+since just standing there and watching the noise is enough.
+It thinks that it keeps seeing new things.
+So actually,
+in curiosity-based RL,
+there are also ways to overcome this meaningless new thing.
+The problem of seeing noise.
+As for how to actually solve it,
+you can refer to his paper.

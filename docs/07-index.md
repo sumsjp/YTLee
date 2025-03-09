@@ -87,36 +87,169 @@
 </details>
 
 <details>
-<summary>359. [ML 2021 (English version)] Lecture 34: Life-long Learning (2/2)</summary><br>
+<summary>359. [2021-06-11] [ML 2021 (English version)] Lecture 34: Life-long Learning (2/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=-2r4cqDP4BY" target="_blank">
     <img src="https://img.youtube.com/vi/-2r4cqDP4BY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 核心主題
+- **_life-long learning (持續學習)**: 探討模型在連續任務學習中如何避免 catastrophic forgetting（災難性遺忘），並在不同任務之間保持良好的性能。
 
+### 主要觀念
+1. **Catastrophic Forgetting**: 模型在學習新任務時，可能會完全遺忘之前學到的知識。
+2. **Incremental Learning**: 在不遺忘先前知識的情況下逐步學習新任務。
+3. **Data Generation Methods**: 通過生成數據來緩解存儲真實數據的高成本問題。
+
+### 問題原因
+- **Task Dependency**: 後續任務的學習可能會影響先前任務的表現，尤其是當任務順序不合理時。
+- **Resource Constraints**: 存儲和處理大量真實數據的需求較高。
+
+### 解決方法
+1. **Regularization Techniques**:
+   - **Elastic Weight Consolidation (EWC)**: 通過限制關鍵參數的變化來保護重要權重。
+   - **Synaptic Intelligence (SI)**: 動態調整參數更新，優先保留對先前任務重要的神經元。
+2. **Data Generation Approaches**:
+   - 使用生成對抗網絡（GANs）或其他生成模型創建合成數據，以減少對真實數據的依賴。
+3. **Curriculum Learning**: 通過合理安排任務順序，逐步增加任務難度，優化學習效果。
+
+### 優化方式
+1. **Task Order Optimization**: 研究不同任務順序對學習效果的影響，尋找最優的學習路徑。
+2. **Efficient Resource Utilization**: 利用生成數據代替存儲真實數據，降低計算和存儲成本。
+3. **Generalization Across Tasks**: 通過優化模型結構或算法，提高模型在多任務間的泛化能力。
+
+### 結論
+- 持續學習是人工智能領域的重要研究方向，旨在實現類似人類的學習能力。
+- 目前已有一些有效的解決方案，如正則化技術、數據生成方法和課程學習策略。
+- 未來的研究應關注更複雜的持續學習場景，並探索如何在不同任務順序下優化模型性能。
+
+### 參考文獻
+- "Learning without Forgetting" (LwF)
+- Incremental Classifier and Representation Learning (iCaRl)
 </details>
 
 <details>
-<summary>360. [ML 2021 (English version)] Lecture 33: Life-long Learning (1/2)</summary><br>
+<summary>360. [2021-06-11] [ML 2021 (English version)] Lecture 33: Life-long Learning (1/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=yAX8Ydfek_I" target="_blank">
     <img src="https://img.youtube.com/vi/yAX8Ydfek_I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章重點整理
 
+#### 核心主題
+- **_life-long learning (Lifelong Learning, L4)_**：探討機器學習模型在連續任務學習中保持性能的挑戰與方法。
+
+#### 主要觀念
+1. **連續任務學習的特性**：
+   - 隨著新任務的加入，舊任務的表現會逐漸下降。
+   - 最近學習的任務通常表現最佳，而早期任務可能被嚴重遺忘。
+
+2. **評估方法**：
+   - **前向遷移（Forward Transfer）**：衡量模型在未接觸特定任務時的學習效果。
+   - **反向遷移（Backward Transfer）**：評估模型在完成所有任務後，對早期任務表現的影響。
+   - **平均正確率**：學習完所有任務後，模型在所有任務上的平均性能。
+
+3. **挑戰與問題**：
+   - 模型在學習新任務時容易遺忘舊任務（ catastrophic forgetting）。
+   - 如何量化遷移能力和遺忘程度是評估系統的重要課題。
+
+#### 評估方法詳細解說
+1. **平均正確率**：
+   - 學習完所有任務後，測試模型在所有任務上的正確率並取平均。
+   - 最常見的評估指標，反映模型整體性能。
+
+2. **反向遷移（Backward Transfer）**：
+   - 計算公式：$\text{Backward Transfer} = \sum_{t=1}^{T} (R_T,t - R_t,t)$。
+   - 解釋：衡量完成所有任務後，模型對早期任務表現的提升或下降情況。
+   - 通常為負值，若遷移能力為正則表示模型在新任務學習後提升了早期任務性能。
+
+3. **前向遷移（Forward Transfer）**：
+   - 計算公式：$\text{Forward Transfer} = R_{T-1,T} - R_{0,T}$。
+   - 解釋：衡量模型在未接觸特定任務時的學習效果，評估模型的泛化能力。
+
+#### 優化方式
+- **平衡新舊任務學習**：通過正規化的技術（如 Elastic Weight Consolidation, EWC）來防止 catastrophic forgetting。
+- **遷移學習策略**：設計modelo que mantenha o desempenho em tarefas anteriores ao aprender novas.
+
+#### 總結
+- 機器學習模型在連續任務學習中面臨遺忘問題，反向遷移和平均正確率是常見的評估指標。
+- 反向遷移為負值代表模型性能下降，若能提出方法使遷移能力為正，表示模型具有強大的 life-long learning 能力。
+- 未來研究可聚焦於設計更有效的防止遺忘技術，並探索如何提升遷移學習的效果。
 </details>
 
 <details>
-<summary>361. [ML 2021 (English version)] Lecture 31: Introduction of Reinforcement Learning (RL) (4/5)</summary><br>
+<summary>361. [2021-06-11] [ML 2021 (English version)] Lecture 31: Introduction of Reinforcement Learning (RL) (4/5)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=pibO_5JhQ4U" target="_blank">
     <img src="https://img.youtube.com/vi/pibO_5JhQ4U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章重點整理
 
+#### 核心主題
+- **.reward shaping 在強化學習中的應用**
+- **基於好奇心的獎勵塑形方法**
+
+#### 主要觀念
+1. **Reward Shaping (獎勵塑形)**
+   - 定義： Reward shaping 是一種通過設計和調整獎勵函數來指導AGENT learning過程的方法。
+   - 段落位置：第2段
+
+2. **Curiosity-Based Reward Shaping (基於好奇心的獎勵塑形)**
+   - 定義： 基於好奇心的獎勵塑形是一種通過激發AGENT的好奇心，使其主動探索新環境和新事物的方法。
+   - 段落位置： 第10段
+
+3. **Sparse Rewards (稀疏獎勵)**
+   - 說明： 稀疏獎勵是指在學習過程中獎勵信號出現的頻率很低，使得AGENT難以有效學習。
+   - 段落位置： 第8段
+
+4. **Meaningful New Things (有意義的新事物)**
+   - 定義： 在基於好奇心的獎勵塑形中，有意義的新事物是指AGENT在探索過程中新接觸到的、具有實際意義的信息或環境變化。
+   - 段落位置： 第10段
+
+#### 啟發來源
+- **ICML 2017 Paper on Curiosity-Based Reinforcement Learning**
+  - 內容簡述： 本文提出了一種基於好奇心的強化學習方法，並通過實驗展示了該方法在Mario遊戲中的有效性。
+  - 段落位置： 第9段
+
+#### 問題原因
+1. **Sparse Rewards Issue (稀疏獎勵問題)**
+   - 說明： 稀疏獎勵使得AGENT難以從環境中獲得及時和有效的反饋，影響學習效率。
+   - 段落位置： 第8段
+
+2. **Noise in Exploration (探索中的噪聲問題)**
+   - 說明： 在基於好奇心的獎勵塑形中，AGENT可能因環境中的噪聲而誤判新事物，從而影響有效探索。
+   - 段落位置： 第13段
+
+#### 解決方法
+1. **Curiosity-Based Intrinsic Reward (基於好奇心的固有獎勵)**
+   - 說明： 經過設計的固有獎勵函數用於激發AGENT的好奇心，使其更有可能探索新環境。
+   - 段落位置： 第10段
+
+2. **Filtering Meaningless Noise (過濾無意義噪聲)**
+   - 說明： 在基於好奇心的獎勵塑形中，需設計機制以過濾無意義的新事物，如背景噪聲，確保AGENT能有效探索。
+   - 段落位置： 第13段
+
+3. **Pre-training and Fine-tuning (預訓練和微調)**
+   - 說明： 在某些情況下，AGENT需要先在已知環境中進行預訓練，然後再在新環境中進行微調以提高學習效果。
+   - 段落位置： 第12段
+
+#### 總結
+- **Reward Shaping的價值**： Reward shaping 是一種有效的強化學習技術，能夠通過設計獎勵函數引導AGENT learning方向。
+- **Curiosity-Based 方法的創新性**： 基於好奇心的獎勵塑形方法成功地激發了AGENT的好奇心，使其在缺乏外部獎勵的情況下也能進行有效的探索和學習。
+- **挑戰與改進**： 雖然基於好奇心的方法展示出了巨大的潛力，但還需要進一步研究如何過濾無意義的新事物，並提高其在不同環境中的泛化能力。
+
+#### 參考文獻
+1. Curiosity-Based Reinforcement Learning Paper (ICML 2017)
+   - 貢獻： 提出了一種基於好奇心的強化學習方法，展示了其在遊戲環境中的有效性。
+   
+---
+
+以上整理涵蓋了文章的核心主題、主要觀念、問題原因、解決方法、優化方式和結論等部分，每個主要概念均附有相應段落位置供查閱。
 </details>
 
 <details>

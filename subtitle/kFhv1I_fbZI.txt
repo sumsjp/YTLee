@@ -1,0 +1,1058 @@
+I just used a lot of metaphors to
+tell you how GAN works.
+I also told you
+how you use GAN in practice.
+Now,
+We are going to talk about the theory of GAN,
+and talk about the parts which are not covered in the content farm.
+Tell you
+how GAN works.
+I'll tell you why the interaction between the generator and the discriminator
+can make the generator
+generate tons of lifelike human faces.
+What's the mechanism behind this?
+First of all,
+let's figure out what the training goal is.
+Everytime we train a network
+we always have to choose a loss function
+and use gradient descent to update the parameters.
+We need to minimize loss function.
+But in this generation problem,
+What kind of loss fuction
+should we minimize or maximize?
+What is it?
+We have to figure this out
+to be able to take a step further.
+For a generator,
+what do we want to
+minimize or maximize?
+The answer is:
+Given a generator
+and a lot of vectors
+randomly sampled from the normal distribution,
+the generator should
+output a more complicated distribution.
+We call this complex distribution PG.
+Also,
+we have a bunch of real data.
+The real data also forms another distribution
+called Pdata.
+We hope that PG and Pdata can be as close as possible.
+If you can't imagine
+what PG and Pdata are,
+we use a one-dimensional case to explain first.
+Suppose that the input of the generator is a one-dimensional vector,
+the generator's output is a one-dimensional vector,
+and the real data is also a one-dimensional vector,
+then the normal distribution
+should look like this.
+Then,
+we give this vector to the generator.
+Suppose you enter 5 data points,
+the location of these data points
+will change.
+It will generate a new distribution.
+Originally, data points were centered in the middle.
+Then,
+these data points
+are divided into two groups
+after passing through a generator.
+So your distribution becomes like this.
+In addition, Pdata refers to the distribution of the real data.
+The real data distribution may look like this.
+It's much sharper,
+and the left side contains more elements
+comparing to the right side.
+We expect the distribution on the left and the distribution on the right
+to be as close as possible.
+We can use a formula to
+describe this.
+Div of PG and Pdata
+means the divergence
+between PG and Pdata.
+What does divergence mean?
+You can
+regard it as a certain distance
+between these two distributions.
+If this divergence is large,
+it means that these two distributions are not similar.
+On the other hand, if the the divergence small,
+it means that the two distributions are close.
+Divergence is the measure
+of the similarity between two distributions.
+Our current goal
+is going to find a generator.
+The so-called 'find a generator'
+actually means
+find a set of parameters in a generator.
+Note that the generator is also a network;
+There are a lot of weights and biases in it.
+Find a set of generator parameters to generate PG,
+and the divergence between this PG and Pdata
+should be as smaller as possible.
+What we are looking for is such a generator.
+We use G* to represent it here.
+So what we have to do here is actually very similar to
+what we do when training a normal network.
+We told you in the first class.
+We define a loss function
+and find a set of parameters to minimize the loss function.
+We have actually defined our loss function now.
+In this case,
+Our loss function is
+the divergence of PG and Pdata.
+It's the distance between them.
+The closer they are,
+the more similar the generated PG and Pdata are.
+We hope PG and Pdata
+can be as similar as possible.
+In other words, we want the divergence
+between PG and Pdata to be smaller.
+And we are trying to find a G
+to minimize the divergence.
+But we are faced with a difficulty here.
+The difficulty lies in the calculation of divergence.
+The loss function
+is easy to calculate,
+but how about the divergence?
+You might have heard of some names
+such as KL divergence
+or JS divergence.
+If you apply those divergence formulas
+on continuous distributions,
+you have to a do a very complex integration
+which is impractical to do.
+So it seems impossible to calculate the divergence.
+Then how do we find a G
+and minimize divergence,
+if we can't even figure out the divergence?
+This is the major problem
+we will suffer
+when we try to train the generator.
+GAN, though,
+is a powerful method.
+It can overcome
+the difficulty of calculating the divergence.
+So the current problem is that
+we don't know how to calculate Divergence.
+But actually,
+as long as you can take samples
+from the two probability distributions,
+PG and Pdata,
+then you can calculate the divergence.
+To calculate the divergence,
+we only need the ability
+to sample from the two distributions,
+but not the actual form of them.
+Is this doable?
+Fortunately, yes.
+So how do we create samples of the distribution
+from the real data?
+The method is very simple.
+Just randomly take any stuff
+from your data base,
+and you can obtain Pdata.
+How about
+the Generator?
+We can generate some sample vectors
+from the normal distribution,
+and feed them into
+the generator.
+I had mentioned before that
+the distribution we are sampling from
+should be simple enough
+to write down the formula
+and generate samples.
+That's why we choose the normal distribution,
+which is obviously capable
+of what we need.
+Starting from the vectors
+sampled from a normal distribution,
+let the generator generate a bunch of pictures from them,
+then we can treat the resulting pictures as samples of PG.
+Now we have a method to take samples
+from both PG and Pdata.
+GAN
+then gives us the ability
+to train the model,
+while all we can do is creating samples.
+I don't even know the
+exact form of PG and Pdata.
+With only the ability to sample,
+we are able to
+estimate the divergence.
+We are going to rely on the Discriminator to do this.
+Recall how we trained
+the Discriminator.
+We have a bunch of Real data,
+i.e., samples from Pdata.
+We also have a bunch of generated Data,
+which can be treated as
+samples from PG.
+We are going to train the Discriminator
+with those two datasets.
+The goal of the discriminator
+is to give higher scores
+to real data
+but lower scores
+to generated data.
+I kept highlighting that
+the goal of the discriminator
+is to distinguish real pictures
+from generated pictures.
+When it is sees a real picture, the discriminator should give it a higher score.
+When it is sees a generated picture, the discriminator should give it a lower score.
+We can write down the formulas
+and think of all the stuff above
+as an optimization problem.
+Specifically,
+we are trying to train a Discriminator
+which maximizes
+some function.
+We will call this function
+the objective function.
+But if the goal is to minimize the function,
+we call it Loss Function.
+We are now looking for a D
+which can Maximize this objective function.
+What is the formula of the Objective Function?
+The formula of the Objective Function looks like this
+We have a bunch of Y
+follow the distribution of Pdata
+That is, they are real images
+We feed these real images to the Discriminator
+to get the logarithm of the output score.
+What about the other part of this formula?
+We have a bunch of Y
+followed distribution PG, the Generator output.
+We also feed these generated images to the Discriminator
+to get a score.
+Then compute Log( 1 - D(Y) )
+We hope that the value of Objective Function V
+as large as possible.
+We hope that the larger the V, the better.
+It means we want to make D(Y) as large as possible.
+If we sample Y from Pdata,
+the value of D(Y) becomes larger and larger.
+If we sample Y from
+distribution PG, the Generator output,
+The value of 1 - D(Y) becomes smaller and smaller.
+Then we maximize the formula of V.
+We are going to
+find a model D to Maximize
+this Objective Function.
+We just make D(Y) the larger and larger.
+Let D(Y), the score of generated images,
+as small as possible.
+The smaller the value of Discriminator Output, the better.
+This thing is
+actually equivalent to ...
+You may think this formula is weird at first glance.
+But the Objective Function is not necessary
+to be written in this form
+You can write this formula in other ways.
+There is a reason why it was written like this in 2014.
+There is a thoughtful reason.
+There is a thoughtful motivation.
+The author of GAN believes
+Discriminator has something to do
+with the Classification.
+Discriminator has something to do with the Binary classification.
+How to say?
+This Objective Function is
+Cross Entropy multiplied by -1.
+Our objective in training a Classifier
+is to minimize Cross Entropy.
+When we Maximize
+this Objective Function,
+Maximize Cross Entropy with a negative sign,
+is equivalent to Minimize Cross Entropy.
+It is equivalent to training a ...
+It is equivalent to training a Classifier.
+So what the Discriminator does?
+If what Discriminator does
+is to Maximize the Objective Function.
+Discriminator can be
+viewed as a Classifier.
+The Classifier treats these blue dots,
+samples from Pdata,
+as Class 1.
+The Classifier treats samples from PG
+as Class 2.
+There are two classes of Data
+and train a Binary Classifier.
+After training this Classifier, it is equivalent to
+solve the optimization problem V.
+The most magical thing is the following sentence.
+This formula,
+the value in this red box,
+is related to JS Divergence.
+The interesting thing is
+the idea might come from Binary Classifier
+in the most primitive GAN Paper.
+In the beginning, Discriminator
+is written as Binary Classifier.
+So we have Cross Entropy Objective Function.
+After some deduction,
+the Maximum of
+the Objective Function.
+You find a D
+can make this Objective Function
+reach its maximum.
+This maximum value is related to JS Divergence.
+They are not exactly the same.
+The Objective Function is obviously
+not designed for JS Divergence at first.
+After some deduction,
+the author found that they are related.
+As for the actual derivation process.
+You can refer to the original paper written by Ian J. Goodfellow.
+I think the derivation process in the paper
+is pretty clear.
+The real magical place is
+the maximum value of this Objective Function.
+is related to Divergence.
+Even if we don’t know
+how to count Divergence.
+It's ok.
+Train your Discriminator.
+After training is finished,
+see how large its Objective Function can be.
+That value is related to Divergence.
+We didn’t show the proof
+to everyone.
+We can still understand it intuitively
+why the value of this Objective Function
+is related to Divergence.
+This intuitive understanding is not very difficult.
+Because you can think about that
+assuming the divergence between PG and Pdata is very small.
+It means that PG is very similar to Pdata.
+The difference between them is small.
+We sample several points from PG and Pdata.
+Blue and red stars are mixed.
+The discriminator is trained as a binary classifier.
+At the time, for the discriminator,
+since these two piles of data are mixed,
+it's hard to separate them.
+This problem is difficult.
+Since it is difficult to separate them,
+we are not likely to have this objective function very large.
+So the maximum value of v in this objective is relatively small.
+The small divergence corresponds to
+the small maximum value in this objective function.
+It’s not the value of the objective function.
+It is the largest value that the discriminator can be obtained
+from objective function with exhaustive possibilities.
+If your two sets of data are very different today.
+Their divergence is very large.
+For the discriminator, it can easily separate them.
+When the discriminator can easily separate them.
+This value of the objective function can be very large.
+So when you have a large divergence
+the maximum value of this objective function can be very large.
+Here is an intuitive way to tell you.
+For detailed proof, please refer to the original paper of GAN.
+Some assumptions are being made inside.
+For example, the capacity of the discriminator is infinite.
+After the assumptions,
+you can get derivation related to JS divergence with this maximum value.
+Back to the beginning,
+our original goal is to find a generator
+to minimize the divergence between P G and P data.
+But we are stuck and don't know how to calculate divergence.
+Now, we know that we only need to train a discriminator.
+After training it,
+the maximum value of this objective function is related to this divergence.
+The maximum value of this objective function is this divergence.
+Why don't we replace the divergence with the item in the red box?
+So we have such an objective function.
+This objective function is a bit complicated at first glance.
+There are a minimum and maximum at the same time.
+So you will turn your head if you are not careful.
+We are looking for a generator to minimize the function in this red box.
+But the function in this red box is another optimization problem.
+It is to find a discriminator with the given generator.
+This discriminator can maximize the objective function V.
+Then we find a G to minimize the value in the red box.
+This G is the generator we want.
+The generator and discriminator we just talked about
+interact or deceive each other in this process
+In fact, we only want to understand this min-max problem.
+We solve this problem with the algorithm of GAN we mentioned above.
+Why the following algorithm can solve this problem?
+You can see paper of the original GAN.
+Now, you maybe ask why to use JS divergence.
+Even it's not really JS divergence.
+It's just related to JS divergence.
+Why not use real JS divergence or another divergence?
+For example, KL divergence.
+Of course, you can do it.
+You only need to change the objective function.
+Then, you can use all kinds of divergence.
+How to design objective function for different divergence?
+There is an article called f-GAN in Paper.
+There are very detailed proofs.
+There are a lot of tables to tell you
+how to design objective function for different divergence
+Once you design an objective function,
+its maximum value tells some kinds of divergence.
+There are detailed records in this article.
+Some people would ask why the training of GAN is not very easy.
+It may be we are not the minimize JS divergence.
+But, after f-GAN was introduced in this paper,
+we now have
+a way to truly minimize JS divergence.
+However, even if we can minimize JS divergence,
+the results still leave much to be desired.
+It's still very hard to train GANs.
+So,
+GANs are notoriously hard to train.
+As the saying goes,
+"No pain, no gain".
+This goes to show
+how hard it is to train a GAN.
+So, we're going to talk about
+some tips for training a GAN.
+Since it is very hard to train a GAN,
+there exist many tips for
+training a stable GAN.
+For the sake of time,
+we'll only talk about the most famous one,
+and many of you might have heard about it before.
+Hold on,
+I need to change
+my microphone real quick.
+Alright, this should be fine.
+Ok, back on topic.
+Many of you might have heard of WGAN.
+What is WGAN?
+Before we introduce WGAN,
+let’s talk about the problems with JS divergence.
+Initially, when we want to train a GAN,
+we try to minimize the JS divergence.
+What's the problem with
+using the JS divergence?
+Before we try to solve the JS divergence problem,
+let’s take a look at what features PG and Pdata have.
+A key feature of PG and Pdata is that
+the overlap between PG and Pdata is often very small.
+How come?
+There are two main reasons.
+The first reason comes from the nature of the data.
+If you think about it,
+PG and Pdata are used to generate images,
+and an image is actually a low-dimensional manifold
+in the high-dimensional space.
+How do we know that an image
+is a low-dimensional manifold?
+Think about it.
+When we sample a point
+in a high-dimensional space,
+it usually can't form
+an anime avatar.
+So, in reality, the distribution of anime avatars
+in the high-dimensional space
+is actually very narrow.
+Now we know the distribution of anime avatars
+is actually a low-dimensional manifold
+in a high-dimensional space.
+Alternatively, if we think about it in a two-dimensional space setting,
+the distribution of the images
+could be a line in a two-dimensional space.
+Most data points in the two-dimensional space are not images,
+just like how a random data point in high-dimensional space
+isn't an image.
+The area that can be sampled
+to form an image is very small.
+From this perspective,
+PG and Pdata are both low-dimensional manifolds
+judging from
+the nature of the data.
+In terms of two-dimensional space,
+PG and Pdata are like two straight lines.
+The area of intersection
+between two straight lines in the two-dimensional space
+is almost negligible
+unless one line is on top of the other.
+This is the first reason.
+Some people might say that
+an image might not actually be
+a low-dimensional manifold.
+If the first reason couldn't convince you,
+here's a second one.
+The second reason is that
+we never actually knew what PG and Pdata look like.
+The understanding of the distributions
+of PG and Pdata
+actually came from sampling.
+So, maybe PG and Pdata
+do have a very large overlap.
+However, when we want to compute
+the divergence of PG and Pdata,
+we have to sample some data points
+from PG and Pdata respectively.
+Since we only sample a limited amount of data points,
+if the sampled data points
+are few in number
+or too sparse,
+there won't be any overlap between the two
+in the eyes of the discriminator,
+even if the overlap area
+does indeed exist.
+For example, in this image, the blue distribution
+and the red distribution do indeed overlap.
+However, when we sample some blue dots from the blue distribution
+and some red dots from the red distribution,
+we can separate these dots with a curve
+since we sampled few dots.
+This completely separates the red dots from the blue dots.
+Thus, we can say that
+the red dots are on the right-hand side of the curve,
+and the blue dots are on the left-hand side of the curve.
+This is totally reasonable.
+So the above gives you two reasons,
+trying to convince you that the two distributions of P_G and P_data
+overlap only in a very small region.
+And what will the fact that there is almost no overlapping
+affect JS Divergence?
+JS Divergence has a feature
+that the JS Divergence of
+two non-overlapping distributions
+will always be Log_2.
+No matter what the two distributions are.
+So as long as the two distributions do not overlap,
+it must be Log_2.
+No matter what they look like,
+it's always Log_2.
+For example,
+assuming this is your P_data
+and this is your P_G.
+Assuming that
+they are both a straight line,
+and there is a long distance in the middle.
+Then their JS Divergence
+is Log_2.
+Suppose your P_G is quite close to P_data.
+The interval between them is relatively small.
+The result is still Log_2.
+Unless your P_G overlaps with P_data.
+Otherwise, as long as the P_G and P_data are two straight lines,
+and the two lines do not intersect,
+then it’s Log_2.
+In this case,
+it is Log_2.
+In this case, it is still Log_2.
+But obviously, this case is better than this one.
+The case in the middle.
+The Generator in the middle
+is better than the Generator on the left.
+But you don't know.
+The blue line is closer to the red line.
+However, from the view of JS Divergence,
+you can't observe such a phenomenon.
+Since from the view of JS Divergence
+you can't observe such a phenomenon,
+when you are training,
+you simply can't make this kind of Generator
+to be updated to become a Generator like this.
+Because of your loss,
+for your objective,
+these two generators are equally good,
+or they are equally bad.
+The above is from the perspective of theory.
+If we explain from the perspective of a more intuitive operation,
+you will find that
+when you use JS Divergence,
+you assume that you are training
+a binary classifier
+to distinguish between real image
+and generated image.
+In fact, you will find that after training,
+the accuracy is almost 100%.
+Why?
+Because there are not many sampled pictures at all.
+For your Discriminator,
+your 256 sampled real pictures
+and 256 fake pictures
+can be separated
+into two groups easily by cramming up.
+It knows who is real and who is fake.
+Therefore,
+if you have trained a GAN in practice, you will find
+if you train it as a binary classifier,
+you will find that
+almost every time you finish training
+your classifier, that is, your discriminator,
+the accuracy is always 100%.
+Originally, we expected that
+the loss of the Discriminator
+may represent something.
+This binary classifier loss
+may represent something.
+This Loss is getting higher and higher,
+meaning the task is getting harder and harder.
+It means our generated data
+are getting closer and closer to real data.
+In fact,
+you can't observe this phenomenon in practice.
+The loss of the Binary Classifier after training
+doesn't make any sense at all.
+Because it can always get 100% accuracy.
+Two groups of images are from sampling.
+It can easily get 100% accuracy by cramming up.
+You have no idea whether your Generator
+is getting better and better.
+In the past,
+especially when there is no skill like WGAN,
+when we used Binary Classifier
+as Discriminator,
+it's really like witchcraft to train a GAN.
+You don’t even know whether your GAN
+is getting better or not.
+So,
+at that time the approach was
+every time after you update the Generator some epochs,
+you have to print out the generated picture.
+Then you can eat something and look at
+the result of that pictures at the same time.
+Maybe you would find that it was broken
+and restart the training.
+So in the past, you didn’t have anything.
+Unlike when we are training a normal network,
+you have a loss function.
+Then the loss will gradually become lower
+during the training process.
+When you see that the loss is becoming lower,
+You can rest assured that your network is training.
+Whether it will overfit is another thing.
+At least it is getting better and better on the training data.
+But for ghaine,
+originally, we expected that the loss of the classifier
+could provide some information.
+But when your classifier is a
+simple and general binary classifier,
+you don’t get any information from a result of its training.
+The accuracy is 100% every time you train.
+You don't even know whether your generator
+is getting better.
+You can only see it with human eyes.
+You see it with human eyes in front of the computer.
+If you find that the result is not good, you terminate it
+and use another set of hyperparameters
+and adjust the network.
+You reconstruct the network.
+So training GAN in the past was a bit hard.
+Since it is a problem of JS divergence,
+someone may think that
+changing the way of
+measuring the similarity of two distributions,
+changing a kind of divergence
+can solve this problem.
+So there is this, Wasserstein.
+There's an idea of using the ​​Wasserstein distance.
+Okay, there is a trivia
+about the ​​Wasserstein distance.
+This "W" here
+actually pronounces "V".
+It doesn't pronounce "W".
+It's not Wasserstein distance
+but Wasserstein(Vasserstein) distance.
+Ok, how this Wasserstein distance
+is calculated?
+The idea of ​​Wasserstein distance is like this.
+Suppose you have two distributions.
+One distribution we call it P.
+Another distribution we call it Q.
+To calculate Wasserstein distance,
+you just imagine you are driving a bulldozer.
+Bulldozer is called earthmover in English.
+Imagine you are driving a bulldozer.
+You think of P as a pile of dirt.
+You think of Q as the destination where you want to pile the dirt.
+Then the average distance for this bulldozer
+to move the soil on the P to Q
+is Wasserstein distance.
+In this example,
+we assume that P is at this point
+and Q is at this point.
+For the bulldozer,
+assume it wants to move the soil on the side of P to the side of Q.
+The average distance it has to travel
+is D.
+So in this example,
+Assume that P is at one point
+and Q is at another point.
+If the distance between these two points is D,
+then the Wasserstein distance between P and Q
+is D.
+When talking about
+Wasserstein distance,
+since you have to imagine that there is an earthmover,
+a bulldozer bulldozing,
+Wasserstein distance
+is also called earth mover distance.
+But if it is a more complex distribution,
+it's a little difficult to
+calculate Wasserstein distance.
+Why?
+Suppose this is your P,
+and this is your Q.
+Assume you drive a bulldozer
+to reshape P so that
+the shape of P is closer to Q.
+What's the way to do it?
+You will find that
+your possible moving plans
+for reshaping P to Q
+are countless.
+You can say that I move the soil here to here.
+I move the soil here to here.
+Turning P into Q.
+But you can also say that
+I moved the soil here to here.
+Although I choose a farther path,
+I can still turn P into Q.
+So when we consider
+a more complicated distribution,
+There are so many different methods that
+can turn P into Q.
+There are so many different methods.
+You have a variety of moving plans.
+The distance you calculate,
+the average distance your bulldozer travels, is different.
+In the example on the left,
+the bulldozer travels less on average.
+In the example on the right,
+the bulldozer travels more on average.
+For the Wasserstein distance
+between P and Q,
+will the value be different
+based on different ways for
+the bulldozer to travel?
+In order to make the Wasserstein Distance have only one value,
+the definition of Wasserstein Distance here is
+exhausting all the Moving Plans
+to see which bulldozing method,
+which Moving Plan,
+which bulldozing plan,
+could minimize the average distance.
+The smallest value
+is the Wasserstein Distance.
+So, the ways to transform "P" into "Q" will be exhausted.
+Then, we can see which bulldozer has the shortest average distance,
+and we can choose it
+as the Wasserstein Distance.
+So, actually, to calculate the Wasserstein Distance
+is quite troublesome.
+You will realize that,
+to calculate only a distance,
+I have to solve an optimization problem.
+Once the optimization problem was solved,
+we could calculate the Wasserstein Distance.
+Okay, let's skip it.
+How to calculate the Wasserstein Distance.
+Let’s start by assuming that
+we can calculate the Wasserstein Distance.
+What benefits can it bring us?
+We assume the distance between "PG" and "Pdata" is "D0".
+In this example,
+the Wasserstein Distance calculated is "D0."
+In this example,
+the distance between "PG" and "Pdata" is "D1".
+The calculated Wasserstein Distance
+is "D1".
+We assume that "D1" is relatively small,
+and "D0" is relatively large.
+While calculating the Wasserstein Distance,
+The Wasserstein Distance of this case is relatively small,
+and the Wasserstein Distance of this case is relatively large.
+So, we can know that,
+from left to right,
+the Wasserstein Distance is getting smaller and smaller.
+So, if you observe
+the Wasserstein Distance, you will know that,
+from left to right, our Generator is getting better and better.
+But, if you observe the Discriminator,
+you will find that you can't observe anything.
+For a Discriminator,
+the JS Divergences calculated here by every cases
+are all the same.
+They are all the same good or the same bad.
+But, if you use the Wasserstein Distance,
+from left to right, we will know that
+our Discriminator,
+or our Generator is getting better and better.
+So, By changing the way of calculating Divergence,
+we can solve the possible problems of
+JS Divergence.
+It reminds me
+an evolutionary example.
+This is the evolution of eyes.
+The one on the right is the human eye.
+The human eye is very complicated.
+Some creatures have very primitive eyes.
+For example, some cells have the ability to sense light.
+They can be regarded as the most primitive eyes.
+But, how do these most primitive eyes
+become the most complicated eyes?
+It is actually very difficult for humans to imagine.
+This is so simple.
+Just some light-sensitive cells on the skin,
+via mutation, become some light-sensitive cells.
+It sounds reasonable.
+But, how can it possible that mutation from natural selection
+generates such a complicated organ?
+How does it generate such a delicate organ of the eyes?
+Then, if you feel that
+you can directly jump from this place to this place with one leap,
+it's not going to happen at all.
+But, there are actually many continuous steps between them.
+From light-sensitive cells to eyes,
+there are actually continuous steps between them.
+For example,
+the light-sensitive cells may
+appear in a relatively concave place.
+Skin becomes concave.
+So, the light-sensitive cells can receive light from different angles.
+Then, it feels that
+it could cover the concave area.
+Later on, it feels that, inside the enclosed place,
+it could fill some liquid.
+Then, it becomes human eyes in the end.
+Jumping from here to this step
+is very large.
+But, every small step here
+can increase the chance of a species to survive,
+and it can make the probability higher for a species to propagate.
+Since every steps here
+can increase the probability of a species to propagate.
+Then, species can evolve from the left to the right
+to eventually generate complex organs.
+And, I think that, when you use W-GAN,
+when you use this Wasserstein Distance
+to measure your Divergence,
+you actually created a similar effect.
+Originally, "PG0" is very far away from "Pdata".
+You want it to run from here to here in one step.
+One step from here to here.
+You want these "PG0" and "Pdata"
+to align together directly.
+It is impossible.
+It may be very difficult.
+For JS divergence,
+it needs to jump from this step to this step,
+and its loss of JS divergence will be different.
+But for W distance,
+you just have to
+move P_G closer to P_data,
+and W distance will be changed.
+W distance will be changed.
+You can train your Generator
+by minimizing W distance.
+So that's why
+when we change from JS divergence
+to Wasserstein distance,
+it can perform better.
+Okay, when WGAN uses
+Wasserstein distance
+to replace JS divergence,
+this GAN is called WGAN.
+The next problem you will encounter is
+how to calculate Wasserstein distance?
+For P_data and P_G,
+how to calculate their Wasserstein distance?
+Wasserstein distance
+is a very complicated thing.
+If I want to calculate Wasserstein distance,
+I need to solve an optimization problem.
+How to calculate in practice?
+I won’t talk about the process here.
+I just tell you the result directly.
+Solve the following problem of optimization.
+The value you get
+is Wasserstein distance.
+It is the Wasserstein distance of P_data and P_G.
+I found that I made a small mistake here.
+What kind of small mistake is it?
+The x here may be changed to y,
+and it will be more consistent with the previous slides.
+So the x here in the previous slide
+is all y.
+They all refer to a picture.
+Okay.
+They are the outputs of the network
+instead of the inputs of the network.
+Okay, what kind of stuff is in this formula?
+Let's take a look at this formula.
+This formula says that
+if x is from P_data,
+then we have to calculate its expected value of D(x).
+If x is from P_G,
+we calculate the expected value of D(x)
+but multiplied by a minus sign.
+So, if you want to maximize
+this objective function,
+What result will you achieve?
+You will get that
+if x is sampled from P_data,
+D(x),
+the output of Discriminator, is the larger the better.
+If x is sampled from P_G,
+sampled from the Generator,
+then D(x),
+the output of Discriminator,
+should be as small as possible.
+But there is another limitation.
+It's not just making
+the value in the braces becomes larger.
+Another limitation is that
+D cannot be a random function.
+D must be a 1-Lipschitz function.
+You may ask
+what is 1-Lipschitz?
+If you don't know what it is,
+it doesn't matter.
+You just think that
+D must be a sufficiently smooth function.
+It cannot be a function that changes drastically.
+It must be a smooth enough function.
+Why is it so important to be smooth enough?
+We can understand it intuitively.
+Assume that this is the distribution of real data.
+This is the distribution of generated data.
+If we don't have this restriction,
+and just look at the value in the braces.
+The objective here
+is to maximize these real values.
+The larger the D(x), the better
+Let the generated value,
+its D(x), to be as small as possible.
+If you don't make any restrictions,
+just want a result that the larger the value here, the better.
+The smaller the value here, the better.
+The blue dots and the green dots,
+which are the real image
+and generated image,
+do not overlap.
+What will your Discriminator do?
+It will give the real image an infinite positive value.
+Give an infinite negative value to the generated image.
+So your training has no way to converge.
+You will find that
+as long as the two piles of data do not overlap,
+the values ​​you calculate are all infinite.
+The maximum value you calculated is infinite.
+This is not what we want.
+Isn’t this exactly the same as the problem of JS divergence?
+So, you need to add this restriction.
+You have to add this restriction,
+and then your maximum value
+will be Wasserstein distance,
+and so it is WGAN.
+Okay, why can the problem be solved
+by adding this restriction?
+Because this restriction tells the discriminator
+not to change too drastically.
+It must be smooth enough.
+When you require
+your discriminator to be smooth enough,
+if the real data and the generated data
+are relatively close,
+then you can’t have a very large real value
+and a very small generated value.
+Because if you make the real value very large
+and the generated value very small,
+There will be a big gap between them
+and the discriminator will change drastically.
+It will not be smooth.
+It will not be 1-Lipschitz.
+So to make it be 1-Lipschitz,
+the value here can’t be very large.
+The value here can't be very small.
+Then the discrimination will be smooth enough.
+Intuitively,
+if real data is far from the generated data,
+then their values ​​can be quite apart.
+The value calculated here will be larger
+and so will your Wasserstein distance.
+If real data is close to generated data,
+even if they don’t overlap...
+Because of this limitation
+written under max,
+the limitation imposed by the 1-Lipschitz function,
+you will find out
+that the values actually won’t go to infinity.
+The distance
+between the value of real data and the value of generated data,
+due to the limitation of the 1-Lipschitz function,
+can not be too apart.
+The Wasserstein distance you calculated as a result
+will be smaller.
+Okay, the next problem is
+how to achieve this restriction?
+How to ensure that the discriminator
+will meet the criteria of a 1-Lipschitz function?
+When WGAN was first proposed,
+there were actually no good ideas.
+They could only write out this equation.
+But solving it,
+that's a little difficult.
+So the earliest paper on WGAN,
+the earliest paper using Wasserstein,
+said that it used a rather rough implementation.
+It simply trains a network.
+When training the network,
+its training parameter
+will be bounded between C and -C.
+If it exceeds C
+after updated by gradient descent,
+it is set to C.
+After gradient descent, if it's less than -C,
+just set it to -C.
+This method
+does not necessarily make the discriminator
+become a 1-Lipschitz function.
+You can imagine that maybe this method
+can make our discriminator
+relatively smooth,
+but it didn't really solve this
+optimization problem.
+It didn’t really make the discriminator
+meet the restriction.
+So there are other ideas.
+One of them is called Gradient Penalty.
+Gradient Penalty is from
+a paper called "Improved WGAN".
+The paper says,
+assuming this is the distribution of your real data
+and this is the distribution of your fake data.
+I will take a sample from the real data
+and take a sample from the fake data.
+Then, take another sample between the two points.
+The gradient of this point should be close to 1.
+You might wonder
+what it is talking about.
+What is the relationship
+between this method
+and this restriction?
+You can see the paper "Improved WGAN" for more details.
+I think for now,
+you don’t really have to focus on
+the relationship between Gradient Penalty
+and this restriction.
+Because there are many more other methods
+to solve this problem.
+In fact, after "Improved WGAN",
+there's an "Improved The Improved WGAN".
+This paper really exists.
+It modified this restriction slightly.
+There really is another paper called
+"Improved The Improved WGAN."
+There's another method to
+restrict D
+to be a 1-Lipschitz function.
+This is called Spectral Normalization.
+I will put its paper here for your reference.
+If you want to train a very good GAN,
+you may need to use Spectral Normalization.

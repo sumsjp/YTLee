@@ -1,0 +1,1002 @@
+Hello everyone.
+Let's go on with the course.
+Next, we're going to talk about something new,
+which is the generator.
+What's special about it?
+All the networks we've learned so far
+had been functions.
+Given an input x, it produces an output Y.
+We have learned all kinds of
+network architectures
+that can handle different types of inputs and outputs.
+We have learned about
+using an image as the input.
+We also learned about
+using a sequence as the input.
+Similarly, we've learned that
+the output can be a value,
+a class, or a sequence.
+The network architectures that we've mentioned in this course
+should be sufficient for
+most of the tasks you might face in the future.
+Now, we are going to enter a new chapter,
+which is using a network
+as a generator.
+We're going to use the network for deep learning.
+What's special about
+using a network
+as a generator?
+The main difference is that
+we will add a random variable, Z,
+to the input.
+Z is sampled from
+a distribution.
+This way, the output of the network
+no longer solely depends on a fixed x.
+Instead, it now depends on both x and Z.
+You might want to ask about
+how the network takes x and Z into consideration at the same time.
+There are many different ways to do this,
+and it all depends on how you design your network architecture.
+For example, if both x and Z are vectors,
+we can simply concatenate those two
+to create a longer vector that
+can be used as the input of the network.
+That's one way of doing it.
+Or, if x and Z have the same shape,
+we can just add them together
+and use the result as the input.
+This is also viable.
+What makes Z special is that it is not fixed.
+Every time we use this network,
+a Z is randomly generated.
+The Z we see every time won't be the same
+since it is sampled
+from a distribution.
+There's one restriction on the distribution,
+which is that the distribution itself
+must be simple enough. What does it mean by "simple enough"?
+By that, it means that
+we need to know what its formula looks like.
+We can sample
+from this distribution.
+For example, this distribution
+could be a function distribution.
+If we know the formula of the function distribution,
+we can sample from it.
+We know how to sample from a Gaussian distribution.
+It could also be a uniform distribution.
+We definitely know the formula for
+the uniform distribution.
+So, we also know how to
+sample from a uniform distribution.
+In summary, we can decide
+the shape of the distribution
+as long as it is simple
+and can be sampled from.
+So, every time
+we have an input x,
+we get Z by sampling from
+this distribution.
+Then, we generate an output.
+As we sample different Z,
+the outputs, y, also change accordingly.
+Now, the output of the network
+becomes a complex distribution
+instead of something fixed.
+Using the same x as input,
+different things are sampled
+every time.
+After passing it through the network, it goes through a complex transformation
+and becomes a complex distribution.
+This way, the output of the network
+now becomes a distribution.
+The kind of network
+that can output a distribution
+is called a "generator".
+Next, we are going to talk about
+how to train a generator.
+Before we talk about that,
+we would like to answer a question first.
+Why do we need to train a generator?
+Why do we need a generator?
+Weren't fixed input and output
+good enough already?
+Why do we need a distribution as an output?
+So the following is an example to explain to you
+why the output sometimes needs to be a probabiltity distribution.
+Ok, the example here is
+video prediction.
+We give a video to the machine,
+and it has to predict what will happen next.
+I found this example
+from the GitHub link
+above.
+In this link, what it's going to do is
+to predict that in the game of elf,
+what the next game screen will look like.
+For people who don’t know what an elf game is,
+this is a real game screen of the elf.
+Ok, so how to make
+a video prediction?
+You provide your network
+with the game screens in the past.
+Then its output is the new game screen.
+Its output is the game screen at the next time point at the next second.
+Then it's finished.
+It’s not difficult at all to get such training data.
+You just need to keep recording
+the picture of someone playing the elf.
+Then you can know that
+given these three frames,
+what will happen next.
+You've already had it in your training data.
+When you have a bunch of recorded videos,
+you know what will happen next, given the past information.
+You can train your network to
+let its output Y be as close to our goal as possible.
+Then it's finished.
+Someone may ask how to output a picture.
+This picture is a very long vector.
+So you just need to make your network
+output a very long vector.
+Then this vector is sorted into a picture.
+The closer you get to your goal, the better it is.
+Well, actually, this GitHub
+does not directly use the entire screen as input.
+It only cuts a small piece from the screen as input.
+It cuts the whole picture into many pieces
+and then deals with it separately.
+However, in order to simplify the explanation,
+we assume that the network
+takes a whole picture like this.
+OK, but what's the problem with this?
+You use this method,
+using the network training method
+we have learned.
+After training it with supervised learning,
+the result you get may look like this.
+This is the result predicted by the machine.
+So it's a little vague,
+and it changes the role in the middle.
+The magical thing is that the elf
+splits while walking.
+When it walks to the corner,
+it splits into two when it reaches the corner.
+When it walks here, it splits into two again.
+Sometimes it disappears when walking.
+Why does the elf split when it walks?
+That’s because today, for this network,
+for the same input in the training data,
+with the same corner,
+sometimes the elf turns left,
+sometimes the elf turns right.
+These two possibilities
+coexist in your training data.
+When you are training,
+the training instruction
+your network gets is that
+given this input,
+given this training material,
+it has to learn that given this input,
+the output should be turning right.
+Given these training data,
+sometimes what you will see is turning left.
+Then the machine will learn that given this piece of input,
+it's going to turn left.
+But these two training materials very likely
+coexist in your training machine.
+So what your network learns
+is to please both sides.
+Because it needs to get an output,
+this output is not only the closest to turning left
+but also the closest to turning right.
+How to be the closest to turning left and
+turning right at the same time?
+Maybe it's turning left and right at the same time.
+So your network
+will get the wrong result.
+Turning left is correct, turning right is also correct.
+But turning left and right at the same time is wrong.
+What's the possible way
+to handle this problem?
+One possibility is
+letting the output of the machine have a probability.
+So that it is no longer a single output,
+let it output a probability distribution.
+When we give this network
+a distribution.
+When we give this network an input
+plus extra "Z",
+its output becomes a distribution.
+Its output is no longer fixed.
+We hope to train a network,
+which can know the output distribution
+including the possibility of turning left
+and the possibility of turning right.
+For example, we assume you pick your "Z",
+which is, for example,
+a binary random variable.
+It only includes 0 and 1, which may account for 50% each.
+Maybe, your network can learn
+to turn left when "Z" picks 1
+and to turn right when "Z" picks 0.
+Then, it can be solved.
+There are many unpredictable things in this world
+such as a situation like this.
+When will we need
+to deal with this kind of problem?
+When
+will we especially need this
+generator model?
+It's the time when our task requires a little creativity.
+Of course, "the task requires a little creativity"
+is a human-like way of saying.
+To be more specific is that
+we want to find a function,
+which could have the same input but different possible outputs,
+and these different outputs are all correct.
+Since the same input could result in different possible outputs,
+you need everyone to be able to play independently.
+Even if it’s human to deal with this problem,
+the answers may be different from person to person.
+At this time, we say that
+"we let the machine have the ability to create."
+So, for example,
+drawing
+may need some creativity.
+For example, we ask a person
+to draw a character with red eyes.
+Then, everyone may draw differently
+since the animated characters in mind may not be the same.
+What kind of characters have red eyes?
+For example, Kurapika has red eyes.
+He is from the Kuluta race.
+When the Kuluta people get angry,
+their eyes will turn red.
+Kaguya also has red eyes.
+Because Kurapica is from the Dark Continent,
+After coming back, with the resources obtained from the Dark Continent,
+he forms the Shinomiya Group.
+Kaguya is actually a descendant of Kurapika,
+but in her generation the red-eyes phenotype becomes dominant.
+You don't have to get angry to turn the eyes red.
+So, both Kurapika and Kaguya
+have red eyes.
+So, drawing a character with the same red eyes
+may result in different red-eyed characters
+from different imaginations of people. At this time,
+we need to enable the machine to
+let our model
+be able to output a distribution.
+What other examples
+that needs creativity do we have?
+For example, conversation.
+We assume that you want to train a Chatbot,
+you may need creativity.
+For example, we assume that you ask others that
+"do you know who is Kaguya?"
+There are actually many different correct answers, right?
+Kaguya is the vice president of the student union of Private Shuchiin Gakuen.
+Recently, she did something indescribable with the president.
+I didn't say what it was.
+So, it's not a spoiler.
+But, we know that Kaguya
+actually has another achievement.
+Although Kaguya Hime,
+the animation, is not over yet,
+its postquel has actually finished.
+Later on, Shirogane die young. So, Kaguya
+dye her own hair white,
+and she wants to leave the sad earth.
+Thus, she takes a spaceship to another planet.
+There are some primitive creatures on another planet.
+Those creatures look similar to humans.
+They still live a farming life.
+Then, Kaguya sees the king of one of the small countries.
+He looks a bit like Shirogane.
+So, she stays with the king of the small country.
+They have a child, who is the Rikudo Sennin.
+So, the age of ninja begins.
+It's really happy. It's really happy.
+So, what did we learn today?
+We learned that
+the animation of Kaguya-sama
+is really an amazing.
+It's actually a short story in the middle of two long novels.
+It is the postquel of the hunter-hunter
+and the prequel of the Naruto.
+These three stories can be connected together.
+That's it.
+So, when we say a word to the machine
+to ask "who is Kaguya?",
+actually everyone may have different answers.
+This is exactly when
+we need a generative model.
+One of the well-known
+generative models
+is the "generative adversarial network".
+Its abbreviation is GAN.
+In this class, we will focus on the
+generative adversarial network.
+Before we discuss
+the generate adversarial network,
+we have a very important problem.
+How do you pronounce G A N?
+This is how Mr. Google pronounces it:
+"GAN GAN GAN".
+Basically it is GAN(ㄍㄢ ˋ).
+GAN
+actually has a lot of variations.
+Interestingly enough,
+you can find a "GAN-zoo"
+on GitHub.
+In the GAN zoo,
+there are more than 500 kinds of GAN.
+Every time someone invents a new GAN,
+he or she puts an English letter
+in front of GAN as its name.
+But there are only 26 letters in English,
+so all the letters were used in a very short time.
+For example, in the GAN zoo,
+there are at least six GANs named SGAN.
+All of them are different networks,
+but they share the same name SGAN.
+Once upon a time,
+there was a paper proposing a model called
+"Variational auto-encoding GAN".
+Theoretically, it should be named
+AEGAN or AGAN.
+But the author added the following comment:
+"Oops, AEGAN had been used already.
+Also all the English letters
+seemed to be unavailable,
+so I will call it α-GAN instead."
+There are just
+too many GANs!
+You can also
+compete with your classmates
+to see who can memorize more GANs.
+The task we are going to talk about later
+is to let the machine generate
+anime avatars faces.
+We are going to solve the task with
+unconditional generation.
+What is unconditional generation?
+We will remove X first.
+We will add it back later
+when we are discussing
+conditional generation
+but I will remove it first.
+So the input to the generator is Z,
+and the output is Y.
+We will assume that
+Z
+is a vector
+that is sampled from
+the normal distribution.
+Usually, this vector is a
+low-dimensional vector.
+You can change the dimension to
+any number you like,
+such as 50 or 100.
+The dimension of the vector.
+is decided by you.
+So given any vector
+which is a sample
+taken from the normal distribution,
+give it to the generator,
+and the generator will give you a corresponding output.
+We want the corresponding output
+to be an anime-style face.
+But how do we actually
+require the generator
+to output an "anime style face"?
+This problem is not that difficult.
+A picture is simply some very high-dimensional vector.
+So what the generator actually outputs
+is a high-dimensional vector.
+For example, a 64*64
+colored picture
+is a 64*64*3 dimensional vector.
+Manipulate with the vector,
+and you can reconstruct the image.
+This is exactly what the generator does!
+When the input vector is different
+the output will change accordingly.
+Given any sample Z
+taken from
+the normal distribution,
+the output Y is different.
+What we want is that the generator always outputs an anime-style face
+given any Z.
+Some students might ask
+why we chose
+the normal distribution.
+Can it be some other distribution?
+Well, if I had chosen another
+you would still ask the same question.
+My experience tells me that
+the difference between distributions
+may not be very big.
+But, you can still find some literature
+that tries to explore the difference
+between the distributions.
+Here, you only need to choose a
+simple distribution,
+because your generator will find a way
+to make this simple distribution
+correspond to a complex distribution.
+So, you can let your generator
+choose the distribution
+for you.
+In the later discussion,
+we assumed that it is a
+normal distribution.
+In GAN,
+something special is that,
+besides the generator,
+we have to train a something
+called "discriminator".
+What does the discriminator
+do for?
+The role of this discriminator is that
+it will take a picture as input.
+What is its output?
+Its output is a numeric value.
+The discriminator itself
+is also a neural network.
+It is a function.
+It inputs something and outputs something.
+It inputs a picture
+and outputs a number.
+Its output is a scalar
+The larger the scalar, the more likely
+this picture input now
+looks like an image of a real two-dimensional character.
+For example, this is the avatar of the two-dimensional character,
+then output 1, assuming 1 is the largest value.
+This one is also well-drawn, just output 1.
+This will output 0.1 if you don’t know what it is.
+This is the job of the discriminator.
+As for the discriminator
+and the architecture of the neural network,
+this is also completely designed by yourself.
+So, the generator
+is a neural network.
+The discriminator
+is also a neural network.
+What does their architecture look like?
+You can design it yourself.
+You can use CNN
+or transformer,
+as long as you can produce the input and output you want.
+That's it.
+In this example,
+the input of the discriminator
+is a picture,
+so you will choose CNN, right?
+CNN has a very big advantage in processing images.
+Since the input is a picture,
+your discriminator is very likely
+to have a lot of CNN architecture.
+As for what kind of architecture is used,
+this is all decided by yourself.
+It's up to you.
+Okay, what is the basic concept of GAN?
+Why do we need one more discriminator?
+Here is a story.
+This story is related to evolution.
+What is this? This is not a dead leaf.
+It's the mimicry of a dead leaf butterfly.
+The dead leaf butterfly looks very similar to the dead leaf.
+It can avoid predators.
+The ancestors of the dead leaf butterfly
+don’t look like dead leaves.
+Maybe they were colorful.
+Why do they grow like dead leaves?
+Because of the pressure of natural selection,
+this is not an ordinary sparrow, this is "Pidgey".
+Pidgey is not an ordinary sparrow.
+Pidgey will eat the ancestors of the dead leaf butterfly.
+Under the pressure of natural selection,
+the dead leaf butterfly becomes brown,
+because Pidgey only eats colorful things.
+Pidgey sees colored things and knows it is a butterfly.
+Eat it.
+Pidgey sees something brown
+and thinks it is a dead leaf. Pidgey is fooled.
+So, the ancestors of the dead leaf butterfly
+become brown
+under the pressure of natural selection.
+Okay, but Pidgey will also evolve.
+To eat these dead leaf butterflies,
+which look like a dead leaf,
+Pidgey also evolved.
+After Pidgey evolved, it becomes Pidgeotto.
+The Pidgeotto
+is more clever
+when it judges whether a butterfly can be eaten.
+It doesn’t just look at the color, it looks at its veins.
+It knows that those without veins are butterflies,
+and those with veins are the real dead leaves.
+Under the pressure of natural selection,
+mimicry is induced in dead leaf butterfly with leaf veins.
+Butterflies want to fool Pidgeotto,
+but Pidgeotto may also evolve.
+What is the evolution of Pidgeotto?
+Pidgeotto can evolve to be Pidgeot.
+This is the Pidgeot.
+Pidgeot may be able to tell the difference
+between dead leaf butterflies and dead leaves.
+Okay, this is a story of evolution.
+Corresponding to GAN, the dead leaf butterfly is the Generator,
+and its natural enemy is the Discriminator.
+We hope our Generator can
+draw images of anime avatars.
+How does the Generator learn to draw anime avatars?
+The learning process is like this.
+The parameters of the first Generator are almost ...
+Its parameters are completely random.
+So it doesn't know how to
+draw anime avatars.
+The first Generator draws some
+inexplicable noise.
+The next learning goal
+of Discriminator is to distinguish
+the output of the Generator
+from the real image.
+It may be very easy for Discriminator in this example.
+Does it just need to see if
+there are two black balls, the eyes,
+in the image?
+Images with eyes are real anime avatars
+and without are productions
+from Generator.
+Then Generator can
+adjust its parameters.
+Generator evolved.
+The goal of its adjustment is
+to fool the Discriminator.
+Suppose Discriminator
+judging whether a picture is true is base on
+if there are eyes.
+Generator produces eyes in the image
+and shows them to the Discriminator.
+By doing so, Generator
+can fool the first
+Discriminator.
+But Discriminator will also evolve.
+The first Discriminator will evolve
+to be the second Discriminator.
+The second Discriminator will
+try to distinguish the difference between
+this set of images and the real image.
+It will try to find the difference between the two.
+For example, it found that
+the generated pictures are relatively simple.
+Neither hair nor mouth is in these images.
+Both hair and mouths are in these images.
+The third Generator
+will find one way
+to fool the second Discriminator.
+Since the second Discriminator is looking
+for a mouth to judge
+the authenticity of anime avatars.
+The third Generator will add a mouth to images.
+The Discriminator will improve gradually.
+It will become more and more demanding.
+We hope that Discriminator becoming more and more stringent.
+Images generated by Generator
+become more and more like anime avatars.
+Because there is a Generator and
+a Discriminator.
+They interact with each other.
+At first, GAN is
+proposed by Ian J. Goodfellow in 2014
+The paper if GAN is
+published in NIPS in 2014.
+The original
+paper of GAN
+treats the Generator and Discriminator
+as enemies.
+If you read a lot of internet articles introducing GAN.
+They give an example for making counterfeit bills.
+The Generator is making counterfeit bills.
+The Discriminator is a policeman.
+The police are going to catch someone who makes counterfeit bills.
+In consequence, Counterfeit bills will become more and more real,
+The police will be better and better at catching these guys.
+Ian J. Goodfellow thought the Generator
+and Discriminator have
+an antagonistic relationship.
+So he used the word "adversarial"
+in the original paper.
+Adversarial means confrontation.
+As for Generator and Discriminator,
+are they fighting?
+This is just an anthropomorphic statement.
+On April Fool’s Day, there was an internet article
+writing that we must not abuse artificial intelligence.
+We can't force artificial intelligence to kill each other
+in the cockfighting ground. This is immoral.
+We should release these
+Generators and Discriminators.
+Okay, so whether they are adversaries
+is just a matter of analogy.
+You can also say that they are collaborating
+as both friends and enemies.
+So the relationship between the generator
+and the discriminator,
+in anime terms, is more like frenemies.
+Just like Hikaru and Akira
+or Naruto and Sasuke.
+Next, we will discuss
+how generator and discriminator works,
+from an algorithmic point of view.
+So the following is the formal explanation of
+what this algorithm actually looks like.
+Generator and discriminator
+are two networks.
+Before training a network,
+you have to initialize its parameters first.
+So here we assume the
+parameters of generator and discriminator
+have been initialized.
+After the initialization,
+the first step of training is to
+fix your generator
+and only train your discriminator.
+Because at the beginning the parameters of your generator
+are initialized randomly,
+fixing your generator
+means it didn't do anything at all.
+Its parameters are all random.
+So when you throw a bunch of vectors to it,
+its outputs will be a mess.
+In fact, if the generator's parameters
+are initialized and not updated,
+you can't even produce results like this.
+Your results will look like the noise
+on a broken TV screen.
+Now, from this Gaussian distribution,
+you will randomly sample a bunch of vectors
+and throw these vectors into the generator.
+The generator will spit out some pictures that
+look nothing like normal anime characters.
+You will also have a database.
+In this database,
+there are many anime avatars.
+Just go to a gallery on the Internet and you’ll have it.
+This is not difficult to collect.
+From this database,
+you sample some avatars.
+Next, you take the real anime avatars
+and the results produced by the generator to
+train your discriminator.
+What is the goal
+of the discriminator's training?
+The goal of its training is to
+find the difference between
+the real anime avatars
+and the ones generated by the generator.
+To be more specific,
+your actual operation looks like this.
+You might label these real avatars as 1.
+The pictures generated by the generator are labeled as 0.
+Now, for the discriminator,
+this is a problem of classification
+or a problem of regression.
+If it is a classification problem,
+you just treat the real avatars as category 1
+and these pictures generated by the generator
+as category 2.
+Then train a classifier and it is over.
+Or someone will treat it as
+a regression problem.
+Then you teach your discriminator to
+output 1 when it sees these pictures.
+Output 0 when it sees these pictures.
+Either way, the discriminator
+will learn to find the difference between the real images
+and the generated images.
+It won't matter
+if you treat it as a classification problem
+or a regression problem.
+After we finish training
+the discriminator,
+we fix the discriminator
+and train the generator.
+How to train the generator?
+A personified way to say this is to
+let the generator figure out a way
+to "fool" the discriminator.
+Because now the discriminator
+has learned to distinguish
+the difference between the real picture and the fake picture.
+It knows the difference between the real image and the generated image.
+If the generator can fool
+the discriminator by producing some pictures to
+let the discriminator think
+it is a real picture,
+the picture produced by the generator
+may look very real.
+So, how does this "fooling"
+work in practice?
+Its operation is like this.
+Here is a Generator,
+and it operates on an input vector
+that is sampled from
+a Gaussian distribution.
+Then it generates an image.
+Next, we feed this image into
+the Discriminator.
+The Discriminator would give this image
+a score.
+The goal of the Generator training.
+The parameters of the Discriminator are fixed,
+and we would only update the parameters of the Generator.
+The goal of the Generator training
+is to maximize the output value
+of the Discriminator.
+Because of the goal of
+the Discriminator training,
+the objective of it is to
+give a good image a high score.
+If the Generator can update the parameters,
+making the Discriminator gives
+the generated image a high score.
+It means that the generated image
+is relatively real.
+More specifically,
+your operation is like this,
+The Generator is a bunch of networks.
+Oh, it's not a bunch of networks.
+It's a network with several layers.
+The Discriminator is also a
+network with several layers.
+We directly connect
+the Generator and the Discriminator
+and treat them as a large network.
+For example, if the Generator
+has five layers
+and the Discriminator has five layers, too.
+We connect them and treat them as a
+ten-layer network.
+In this ten-layer network,
+one of the hidden layers,
+its output is very wide.
+Its output dimension is the same as
+three times the number of
+pixels in an image.
+After the hidden layer, the output is processed
+and it would become an image.
+So in this large network,
+one of the hidden layer outputs represents an image.
+What are we going to do next?
+What we are going to do is,
+the entire large network
+would operate on an input vector
+and outputs a score.
+Then we hope to update this network
+to make the output score the higher the better.
+Notice that we wouldn't update
+the Discriminator part in this network.
+We wouldn't update the
+last few layers of the network.
+Why not update the last few layers?
+You can imagine that if we can update them,
+this entire game was hacked.
+Suppose the higher the score you want to output.
+You can directly update the bias
+of the output layer neuron.
+Isn’t the output is huge
+if we set it to 10 million?
+So the parameters of the Discriminator
+couldn't be updated.
+We only update the parameters of the Generator.
+Okay.
+As for how to update the parameters of the Generator,
+the training procedure is
+the same as we trained other networks.
+There is no difference.
+When we trained a network before,
+you determined a loss function and used gradient descent
+to make the loss as small as possible.
+You also have a goal here.
+Instead of minimizing the target,
+the goal here is to maximize it.
+Of course, you can also multiply the target,
+that is, the Discriminator output, a negative sign.
+You can treat it as a loss, right?
+You can make the output of the Discriminator
+becomes negative like the loss.
+Then the goal of the Generator training
+is to make the loss as small as possible.
+Or you can say,
+we just want to maximize the
+output value of the Discriminator.
+Then we use gradient ascent,
+instead of gradient descent.
+Gradient descent is to
+minimize the loss.
+Gradient ascent is to maximize
+the objective function.
+We will use gradient ascent to update the Generator
+to maximize the output of the Discriminator.
+They are the same.
+How we train the Generator
+also uses the gradient descent base method.
+There is no difference
+between it and how we trained
+a network before.
+Now, I’ve talked about two steps.
+The first step is to fix the generator and train the discriminator.
+The second step is to fix the discriminator and train the generator.
+Then, train the discriminator and generator repeatedly.
+After training the discriminator,
+fix the discriminator and train the generator.
+After training the generator,
+use the generator to produce new pictures to train the discriminator again.
+After training the discriminator, train the generator again.
+Train the two models repeatedly.
+You train the discriminator for a while.
+Then, you train the generator for a while.
+Then, train the discriminator again.
+Then, train the generator again.
+The generator and discriminator are trained repeatedly.
+When one of them is training, fix the other one.
+Then you expect the discriminator and generator can do better and better.
+Okay, the next homework is the face generation task of anime avatars.
+You might ask how do those pictures look.
+I have tried the task in 2017 and show you the results now.
+I trained the GAN by myself to analyze whether GAN produces two-dimensional characters.
+When I say training a hundred times,
+it means the following process repeats a hundred times.
+Train the discriminator.
+Then, train the generator.
+Then, train the discriminator again.
+Then, train the generator again.
+Then, train the discriminator again.
+Then, train the generator again.
+Train the generator and discriminator by turns a hundred times.
+After training a hundred times, it's the result.
+I can't understand what is the generator produces.
+I wait for a while.
+After training a thousand times.
+It's the result.
+The machine learns to produce the eyes.
+The machine knows that a human face needs two eyes.
+So it produces the eyes.
+After training two thousand times.
+You can observe that the machine learns to produces mouth.
+After training five thousand times.
+It's starting to look like a human face.
+And you find that the machine learns that
+animated characters have big watery eyes.
+All of the faces contain big watery eyes.
+So you can observe that machine produces better and better.
+After training ten thousand times.
+The shape of the face has appeared.
+Just a little fuzzy.
+There are some faint places in the pictures.
+It looks like a watercolor painting.
+This is the result of twenty thousand updates.
+This is the result of fifty thousand updates.
+I stopped to train the model after fifty thousand times.
+You can do better than this result in your homework.
+These are the results which produce by TA when they were students.
+So you may able to produce pictures like the results by yourself.
+You can find these characters are pretty good.
+However, the pictures still may be occasional crashes.
+If you have a good database, you may do better than the results.
+Of course, this is hard to achieve better performance
+by using the dataset we provide to everyone.
+If you have a dataset that is good enough,
+you may produce surprising results.
+These results are found on the Internet.
+These results are produced with styleGAN.
+I am very surprised that the performance of styleGAN is so good.
+It's amazing.
+These all characters are generated by GAN.
+Here, the model produces heterochromia iridum.
+I am not sure that it should be fault or deliberate.
+But, it is still interesting.
+In addition to producing animated characters,
+it can also generate real human faces.
+There is a model called progressive GAN,
+which can generate very high-resolution human faces.
+Let's take a test here.
+There are two rows of human faces.
+If you think the images in the top row
+are generated by the machine, please raise your hand.
+Okay, put down your hand please.
+If you think the images in the second row
+are generated by the machine, please raise your hand.
+Ok, there are more people. Put down your and please.
+In fact, both rows are generated by machines.
+Obviously, progressive GAN
+has a way to generate lifelike human faces.
+Even, it is said that
+some people found that some profile pictures
+in a startup are weird.
+Then, they guessed that
+those pictures were actually generated by GAN.
+They're not real people.
+There aren't so many people in that startup,
+and they use GAN to generate some fake profile pictures.
+Then you may ask that
+what's the benefit of generating human faces.
+Just taking a picture of someone on the road
+may be more real.
+But with GAN,
+you can generate those faces you haven't seen.
+For example, if you use GAN,
+you can do something like this.
+We just said that for the generator in GAN,
+we use a vector as its input and it outputs a picture.
+Besides this,
+you can also do the interpolation
+on the input vectors.
+After interpolating the input vectors,
+what will happen?
+You will see the continuous changes between the two pictures.
+For example, if you put in a vector
+and it generates a man who looks very serious.
+Then you put in another vector,
+and it generates a smiling woman.
+Afterwards, if you use
+the interpolation of these two vectors as the input,
+you will see the man gradually smile.
+There are more examples here.
+Here, note that
+the input vectors are fake
+but the pictures produced here are real.
+If you give it a vector,
+it will generate a person looking to the left.
+If you enter another vector,
+it will generate another person looking to the right.
+What if we do the interpolation here.
+What will happen?
+The machine is not stupid.
+It will not merely
+stack two images together.
+The machine knows
+the output of this interpolation vector should be
+a person looking straight ahead.
+You didn’t actually tell this to your model.
+However, machines can learn by themselves.
+They learn the interpolation of these two faces
+should be a face looking straight ahead.
+When it comes to GAN, I have already said that
+GAN is proposed byIan Goodfellow
+in 2014.
+You may have heard about the story of GAN.
+Yet I have no idea whether it is true or not.
+Ian Goodfellow went to a bar
+and saw two people quarreling.
+Then he went home
+and tried to implement the idea.
+Finally, he succeeded
+and published a paper.
+But his so-called success
+is actually like this.
+In 2014
+when I saw this result for the first time,
+I think wow, it can really generate pictures.
+It's so amazing.
+Of course,
+now we won't regard these pictures as a great success.
+Nowadays,
+pictures generated by BigGAN
+are like this.
+These pictures are all generated by the machine.
+Of course if you take a closer look,
+you can still find some flaws.
+For example, this dog has an extra leg.
+Also,
+this cup is not very symmetrical.
+These pictures are all generated by the machine.
+Sometimes the machine
+also generates some virtual characters.
+For example, the machine generates a tennis dog.

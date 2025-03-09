@@ -638,7 +638,7 @@ This article provides a detailed exploration of the attention mechanism, focusin
 </details>
 
 <details>
-<summary>313. 【機器學習2021】自注意力機制 (Self-attention) (下)</summary><br>
+<summary>313. [2021-03-26] 【機器學習2021】自注意力機制 (Self-attention) (下)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=gmsMY5kc-zw" target="_blank">
     <img src="https://img.youtube.com/vi/gmsMY5kc-zw/maxresdefault.jpg" 
@@ -647,11 +647,54 @@ This article provides a detailed exploration of the attention mechanism, focusin
 
 # 【機器學習2021】自注意力機制 (Self-attention) (下)
 
+# 文章整理：自注意力機制（Self-Attention）的深入探討與應用
 
+## 核心主題
+- 自注意力機制（Self-Attention）是Transformer模型的核心組件，廣泛應用於自然語言處理、計算機視覺等領域。
+- 探討了自注意力機制在圖神經網絡（GNN）中的應用及其優化方法。
+
+## 主要觀念
+1. **自注意力機制的原理**：
+   - 通過計算序列中每個元素與其他元素之間的相似性或相關性，生成一個注意力權重矩陣。
+   - 根據這些權重對輸入進行加權求和，提取上下文信息。
+   
+2. **圖神經網絡中的自注意力機制應用**：
+   - 利用圖的結構信息（如節點和邊）來限制注意力計算，減少不必要的計算量。
+   - 通過僅考慮相連節點之間的注意力分數，提升模型效率。
+
+3. **自注意力機制的變體與優化**：
+   - 出現了多種針對不同場景的自注意力變體，如Linformer、Performer等，旨在降低計算複雜度並提高速度。
+   - 這些變體通常在性能和速度之間尋求平衡，以適應不同的應用場景。
+
+## 問題原因
+1. **計算複雜度過高**：
+   - 原始的自注意力機制時間複雜度爲O(n²)，對於大規模數據來說計算量巨大。
+   
+2. **圖結構信息未充分利用**：
+   - 在傳統的自注意力機制中，節點之間的關係是通過模型自動學習得到的，未能充分結合先驗知識（如圖中的邊信息）。
+
+## 解決方法
+1. **優化自注意力機制**：
+   - 引入低秩分解、稀疏化等技術減少計算量。
+   
+2. **結合圖結構信息**：
+   - 在計算注意力權重時，僅考慮相連節點對的注意力分數，忽略其他無關節點之間的關係。
+   - 利用邊信息指導注意力計算，提高模型效率。
+
+## 優化方式
+1. **降低計算複雜度**：
+   - 使用更高效的矩陣運算（如低秩分解）或稀疏化技術，減少計算量。
+   
+2. **結合先驗知識提升效率**：
+   - 在圖結構中，利用已知的邊信息限制注意力計算範圍，避免不必要的計算。
+
+## 結論
+- 自注意力機制在多個領域展現出強大的潛力，但其計算複雜度和對大規模數據的處理能力仍需進一步優化。
+- 通過結合先驗知識（如圖結構信息）和引入新的技術手段，可以有效提升自注意力機制的效率和性能。
 </details>
 
 <details>
-<summary>314. 【機器學習2021】Transformer (下)</summary><br>
+<summary>314. [2021-04-09] 【機器學習2021】Transformer (下)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=N6aRv06iv2g" target="_blank">
     <img src="https://img.youtube.com/vi/N6aRv06iv2g/maxresdefault.jpg" 
@@ -660,11 +703,47 @@ This article provides a detailed exploration of the attention mechanism, focusin
 
 # 【機器學習2021】Transformer (下)
 
+# 文章重點整理
 
+## 核心主題
+本文主要探討TRANSFORMER模型在自然語言處理任務中的應用及其訓練技巧。文章圍繞ENCODER和DECODER結構、訓練過程中存在的問題、解決方法以及優化策略展開，強調了TRAINING-TESTING不一致現象對模型性能的影響。
+
+## 主要觀念
+1. **TRANSFORMER架構**：
+   - **ENCODER**：負責將輸入序列轉換為 setHidden states。
+   - **DECODER**：基於ENCODER的 setHidden states生成輸出序列。
+   
+2. **訓練過程中存在的問題**：
+   - **EXPOSURE BIAS**：訓練時DECODER只接觸正確輸出，導致測試時對錯誤輸入反應不佳。
+   - **BLEU SCORE**：雖然用於評估模型性能，但無法直接用作LOSSFUNCTION進行微分。
+
+## 問題原因
+1. **EXPOSURE BIAS**：
+   - 因為DECODER在訓練時只接觸到正確的輸出，在測試時遇到錯誤輸入會導致模型性能下降。
+   
+2. **BLEU SCORE作為LOSS FUNCTION的局限性**：
+   - BLEU SCORE需要計算兩個句子之間的相似度，無法直接進行微分，因此不能用於梯度下降算法。
+
+## 解決方法
+1. **強化學習（REINFORCEMENT LEARNING, RL）**：
+   - 將BLEU SCORE作為獎勵信號，將DECODER視為AGENT，在RL框架下訓練模型。
+   
+2. **Scheduled Sampling**：
+   - 在訓練過程中有計劃地引入錯誤的輸入，以提高模型在測試時的 robustness。
+
+## 優化方式
+1. **LOSSFUNCTION設計**：
+   - 使用可微分的LOSSFUNCTION（如CROSSENTROPY）代替BLEU SCORE進行訓練。
+   
+2. **Training Technique**：
+   - 通過Scheduled Sampling技術，在訓練過程中有計劃地引入錯誤輸入，模擬測試環境，提高模型的泛化能力。
+
+##結論
+TRANSFORMER模型在自然語言處理任務中表現優越，但在訓練和測試過程中存在不一致問題。通過強化學習和Scheduled Sampling等方法可以有效解決這些問題，提升模型性能。
 </details>
 
 <details>
-<summary>315. 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (一) – 基本概念介紹</summary><br>
+<summary>315. [2021-04-09] 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (一) – 基本概念介紹</summary><br>
 
 <a href="https://www.youtube.com/watch?v=4OWp0wDu6Xw" target="_blank">
     <img src="https://img.youtube.com/vi/4OWp0wDu6Xw/maxresdefault.jpg" 
@@ -673,7 +752,57 @@ This article provides a detailed exploration of the attention mechanism, focusin
 
 # 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (一) – 基本概念介紹
 
+# 文章整理：生成對抗網路（GAN）的核心概念與應用
 
+## 1. 核心主題
+- **生成對抗網路（GAN）**  
+  GAN 是一種深度學習模型，由Ian Goodfellow等人於2014年提出，主要用於生成逼真的數據樣本，如圖像、音頻等。
+
+## 2. 主要觀念
+- **結構組成**  
+  GAN 由兩個神經網路競爭對抗：  
+  - **生成器（Generator）**：學習如何將低維向量映射到高維數據空間，以生成新的數據樣本。  
+  - **判別器（Discriminator）**：用於區分真實數據和生成數據，提供反饋給生成器以改進性能。
+
+- **訓練機制**  
+  GAN 的訓練目標是最小化生成器被判別器識破的風險，通過交替更新生成器和判別器的參數來實現對抗均衡。
+
+## 3. 問題原因
+- **早期GAN的局限性**  
+  - 生成圖片質量粗糙，存在模式坍塌問題。  
+  - 訓練過程不穩定，易於梯度消失或爆炸。
+
+## 4. 解決方法
+- **改進的GAN架構**  
+  - **Progressive GAN (ProGAN)**：通過逐步增加網路深度和分辨率，提升生成圖片的質量。  
+  - **StyleGAN**：引入風格向量化概念，實現更高品質的圖像生成。  
+
+- **訓練技巧**  
+  - 使用 Wasserstein 情況（WGAN）改進損失函數，穩定訓練過程。  
+  - 引入標籤指引（ conditional GAN, cGAN），讓生成器根據特定條件（如圖片類別）生成數據。
+
+## 5. 優化方式
+- **多領域對抗訓練**  
+  - 設計多個判別器或生成器，提升模型的泛化能力。  
+
+- **深度網路架構優化**  
+  - 使用更深的網路結構（如殘差網絡）來增強表示能力。  
+
+## 6. 應用案例
+- **圖像生成**  
+  - 動漫角色臉孔合成與風格轉移。  
+  - 高清人臉生成，實現以假亂真效果。  
+
+- **風格控制**  
+  - 通過向量插值（interpolation）實現連續的面孔變化，如改變表情、姿勢等。  
+
+## 7. 結論
+GAN 技術已成為人工智慧領域的重要工具，其應用涵蓋圖像生成、數據增強、風格轉移等多個方面。未來隨著網路架構和訓練方法的進一步優化，GAN 將在更多領域實現更為複雜和自然的數據生成能力。
+
+---
+
+### 參考文獻
+- Goodfellow, I., Pouget-Abadie, J., Mirza, M., & Bengio, Y. (2014). Generative adversarial nets. In *Advances in neural information processing systems* (pp. 2672-2680).
 </details>
 
 <details>

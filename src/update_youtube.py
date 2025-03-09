@@ -110,7 +110,7 @@ def download_script(df):
     max_downloads = 3
     
     # 優先字幕語言列表
-    preferred_langs = ['zh-TW']
+    preferred_langs = ['zh-TW', 'en']
     
     # 從最後一筆往前處理
     lst = df.index
@@ -258,7 +258,7 @@ def make_doc(filename: str, video_list: list):
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         
         # 依 idx 由大到小排序
-        sorted_videos = sorted(video_list, key=lambda x: x['idx'], reverse=True)
+        sorted_videos = sorted(video_list, key=lambda x: x['idx'], reverse=False)
         
         with open(filename, 'w', encoding='utf-8') as f:
             for video in sorted_videos:
@@ -297,7 +297,7 @@ def create_readme_doc(max_idx, latest_date, batch_size=100):
     start_batch = (max_idx - 1) // batch_size  # 最大的批次編號
     
     # 從大到小遍歷
-    for i in range(start_batch, -1, -1):
+    for i in range(0, start_batch):
         start_idx = i * batch_size + 1
         end_idx = min((i + 1) * batch_size, max_idx)
         content += f"- [{start_idx:04d}~{end_idx:04d}](docs/{i:02d}-index.md)\n"

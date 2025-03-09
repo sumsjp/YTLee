@@ -29,7 +29,7 @@ def get_video_list(channel_url):
         logger.error(f"取得影片清單失敗: {str(e)}")
         return []
 
-def download_subtitle(video_id, preferred_langs='en'):
+def download_subtitle(video_id, preferred_langs):
     info_opts = {
         'quiet': True,
         'skip_download': True,
@@ -50,13 +50,18 @@ def download_subtitle(video_id, preferred_langs='en'):
     logger.info(f"影片標題：{title}")
     logger.info(f"上傳日期：{formatted_date}")
 
-    selected_lang = preferred_langs
     subtitles = video_info.get('subtitles', {}) or video_info.get('automatic_captions', {})
     if not subtitles:
         logger.warning(f"無可用字幕：{video_id}")
         return "", ""
     
-    if selected_lang not in subtitles:
+    selected_lang = None
+    for lang in preferred_langs:
+        if lang in subtitles:
+            selected_lang = lang
+            break
+
+    if not selected_lang:
         selected_lang = list(subtitles.keys())[0]
         
     sub_url = subtitles[selected_lang][0]['url']

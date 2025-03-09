@@ -1,0 +1,1359 @@
+We have looked through homework 1.
+Actually, a large amount of homework afterward
+look like
+the same as this one.
+You will have a bunch of training data,
+and in these training data,
+there will be pairs of x and y.
+There will be x¹ and its corresponding ŷ¹.
+There will be x² and its corresponding ŷ².
+There will be xⁿ and its corresponding ŷⁿ.
+Testing data.
+The testing data are that you only have x but no y.
+Everyone has looked through homework 1.
+In fact, all the homework afterward
+looks very similar in format.
+For example, homework 2
+is to do speech recognition.
+Our x is small part of voiced speech signals.
+Actually, it is not the real and
+complete version of the speech recognition system.
+It is a simple version of the speech recognition system.
+x is a small signal.
+ŷ is to predict
+which phoneme corresponds to
+this small voice signal.
+It doesn't matter if you don't know what phoneme is.
+Just think of it as "A Pronouncing Dictionary of American English".
+Homework 3 is called image recognition.
+Our x is a picture,
+and ŷ is what kind of things in this picture
+that predicted by the machine.
+Homework 4 is speaker identification.
+What is the purpose of speaker identification?
+What the speaker identification to do is that
+x is a sound signal,
+but ŷ is not a phoneme now.
+ŷ is the person who is talking now.
+You can imagine such a system
+is very useful now.
+If you call the customer service of the bank,
+there is now an automatic speaker recognition system.
+It will check that people who call in now
+is the customer or not?
+It spends less time for the customer service staff to do identity verification.
+Homework 5 is to do machine translation.
+It is doing machine translation.
+x is a certain language.
+For example,
+this is the only Japanese sentence I know,
+痛みを知れ.
+Its ŷ is another sentence like this.
+Okay.
+Now you can flood the message board with
+something like 諸葛村夫.
+What are the training data used for?
+Training data will be used to train our model.
+The process of training a model has been talked about last week.
+The training process has three steps.
+First,
+you have to write a function with unknown parameters.
+These unknown parameters
+will be denoted as θ.
+All unknown functions in a model.
+So fθ(x) means
+I now have a function called f(x)
+There are some unknown parameters in it.
+These unknown parameters are denoted as θ.
+Its input is called x.
+This input is called "feature".
+Then, you have to set something called loss.
+Loss is a function.
+The input of this loss is a set of parameters, and the loss function is to
+judge whether this set of parameters is good or not.
+Next, you have to solve an
+optimization problem.
+You are going to find a θ.
+This θ can make the value of loss as low as possible.
+The θ that can make the value of loss the lowest
+are called θ*.
+With θ*,
+you can use it on the testing data.
+That is, you bring θ* into these unknown parameters.
+Originally, there are some unknown parameters in fθ(x).
+Now, this θ is replaced by θ*.
+It is replaced by θ*.
+Its input is your current testing data.
+You need to save the output result and upload it to Kaggle.
+It's over.
+Next, you will face a problem that
+directly executing the sample code provided by the TA
+can only give you the result that over a simple baseline.
+If you want to do better,
+what should you do?
+Here is a guideline of how to make you do better.
+It works for all early-stage homework.
+This is just like the character of "Guan yu".
+You can get it at the start.
+It can help you beat all the early-stage enemies of the game.
+What is the guideline?
+Starting from the top,
+the first one is that if you think
+you are not satisfied with the results on Kaggle,
+what is the first thing you have to do?
+Check the loss of your training data.
+Some people may say that you should only care about
+the loss of testing data,
+because the result on Kaggle is
+the result of the testing data.
+But, you have to check your training data first.
+Look at your model on the training data.
+Did the model learn anything?
+After that, go to see the results of the testing data.
+So, what you have to check first
+is the loss of the training data.
+If you find that
+the loss of your training data is high,
+it did not learn well on the training data.
+Next, you have to analyze
+the reason for not learning well
+on the training data.
+There are two possible reasons here.
+The first one may be the bias of the model.
+The bias of the model
+is told about in last week.
+The so-called model bias means that ...
+Supposing your model is too simple,
+for example,
+we now have a function
+with unknown parameters,
+and these unknown parameters
+could be replaced by any kinds of numbers,
+you get a function with θ1,
+and this function is represented
+by a point,
+and you get another function with θ2.
+You could combine all these functions
+to get one function set.
+But this function set is too small.
+In this function set,
+there is no function
+can reduce the loss.
+Functions that can make the loss lower
+don't belong to the range that your model can describe.
+There are unknown parameters in your model.
+The unknown parameters could be replaced by any values.
+With these values,
+you get a function set.
+With different values, you could get different functions.
+Combining all the functions,
+you get a function set.
+In this set,
+there is no function,
+which can reduce your loss.
+In this situation,
+even if you could find a θ*,
+which is, in these blue functions,
+the best one,
+which is, in these blue functions,
+the one that can make the loss lowest,
+but to no avail.
+It is just the king
+among all losers,
+which is still a loser.
+The loss is still not low enough.
+This situation is just like that you are trying to find a needle in a haystack.
+Here, the needle refers to a function with low loss.
+However, the needle is not in the haystack at all.
+In vain.
+You can't find the needle no matter how hard you try.
+Because the needle is
+not in your function at all,
+not in your haystack at all.
+So, what should we do?
+We should redesign a model at this moment.
+But, how should we do
+to give the model more flexibility?
+We demonstrated last week.
+For example,
+we can increase the input features.
+We said last week.
+Originally, the input features
+are only from the information one day ago.
+Supposing that we want to predict
+the number of viewers,
+with the information one day ago,
+it is not enough.
+How about we use the information from the last 56 days?
+The model becomes more flexible.
+You can also apply deep learning
+to improve the flexibility.
+So, if you feel that
+your model is not flexible enough,
+you could add more features,
+you could design larger model,
+or you could apply deep learning,
+to increase the flexibility of the model.
+This is the first possible solution.
+But, you should notice that, while training,
+high loss doesn't mean model bias in all cases.
+You may encounter another issue.
+What is this issue?
+The issue is that the optimization is not so good.
+What does it mean?
+We know that
+the optimization we use
+in this class
+is gradient descent only.
+In this kind of optimization,
+There are many issues.
+For example, we mentioned last week that
+you might get stuck in the local minima.
+You can't find parameters
+that can actually make the loss very low.
+It could be visualized
+like this.
+This is your model.
+It could describe the set of functions.
+You can replace θ by different values
+to form different functions.
+Putting all the functions together,
+we could get this blue set.
+Inside this blue set,
+it does contain some functions.
+These functions have low losses.
+But, the problem is that, for the gradient descent algorithm,
+it can't help us find out
+the function with low loss.
+Gradient descent says you want me to solve .
+the optimization problem,
+and it give you this θ*, then that's all.
+But, this θ* does not give me the loss low enough.
+In this model,
+there is a certain function
+with loss low enough.
+Unfortunately, gradient descent
+didn't give us this function.
+It’s like that we want to find a needle in a haystack,
+and we actually know the needle is in the haystack,
+but we can not pick the needle up.
+Here comes the problem.
+We see that,
+when the loss on training data is not low enough,
+is it a issue of model bias?
+Or is it a issue of optimization?
+Today we find out that
+when we can't find a function with low loss.
+Is it because the capacity of our model is not high enough?
+There are no needles in the ocean,
+,or
+the capacity of our model is actually enough.
+It’s just because the gradient descent is not strong enough
+to get the needle out.
+Which one is it?
+Is our model gigantic enough?
+Or is it actually not big enough?
+How to judge this?
+Here is a suggested method of judgment:
+You can compare different models
+to know that
+whether the model is big enough or not?
+How to say?
+Let's take an example here.
+This experiment is from
+the paper of the residual network.
+We put the paper link in the upper right corner.
+There is a story at the beginning of this paper:
+It says that I want to train 2 networks,
+one of which has 20 layers
+and the other has 56 layers.
+We test them on the test data.
+This horizontal axis refers to the training process.
+It shows how your parameters update.
+With the parameter update,
+the loss of your model will get lower and lower for sure.
+Here, note that the loss of the model with 20 layers is relatively low
+and the loss on the one with 56 layers is relatively high.
+This residual network is a relatively early paper,
+which is proposed in 2015.
+If you are a university student now,
+you were still a high school student then.
+So at that time, most people
+didn't know much about deep learning then.
+For deep learning,
+there are many kinds of weird misunderstandings.
+At that time,
+the phenomenon in this figure is regard as overfitting
+for most people.
+They may tell you that deep learning doesn't work.
+The model with 56 layers is too deep to work.
+Models Don't need to be so deep at all.
+At that time, not everyone thought
+deep learning is good.
+The effectiveness of deep learning
+is still questionable.
+With the experiment mentioned above, someone will say that
+those deeper models are actually bad.
+This is called overfitting.
+But is this overfitting?
+This is not overfitting.
+I will tell you what overfitting is later.
+Not all bad results
+are called overfitting.
+You have to check the experiment results of the training data.
+After you check the training data of both models,
+you will find that
+the training loss of the network with 20 layers
+is lower than
+the training loss of the network with 56 layers
+on the training data.
+What does this mean?
+It means that
+the optimization of the network with 56 layers is not done.
+The optimization is not powerful enough.
+You may ask
+how do I know make sure that
+it's the optimization issue.
+Maybe it's model bias.
+Maybe it's because the capacity of this 56-layer network
+is not good enough.
+It may need 156 layers
+and 56 layers are not enough at all.
+But after you compare the 56-layer network to the 20-layer one,
+the loss of the 20-layer network can be so low.
+The capacity of a 56-layer network must be greater than that of 20 layers, isn't it?
+A 56-layer network
+can easily do
+what a 20-layer network can do.
+It only needs to make sure that the parameters of the first 20 layers
+are the as that 20-layer network
+and do nothing for the remaining 36 layers.
+They merely copy the previous layer's outputs as their outputs.
+As a result, a 56-layer network must be able to do
+what a 20-layer network can do.
+Here, the 20-layer network
+can already reach such a low loss,
+and the 56-layer network
+has higher capacity than the 20-layer network.
+So it doesn't make sense that
+the 56-layer network can't do
+what a 20-layer network has done.
+So for the 56-layer network,
+if your optimization is successful,
+the loss of it should be lower than
+the loss of a 20-layer network.
+But for the training data here, the result doesn't match obviously.
+This is not overfitting,
+and this is not model bias, either.
+Because the capacity of a 56-layer network is enough.
+The problem is because your optimization is not strong,
+the optimization is not good enough.
+So the previous example can tell us:
+How do you know
+whether your optimization is good or not.
+The suggestion for you here is:
+For those problem you have never seen before,
+maybe you can
+use some smaller or shallower networks first.
+Or, you can even
+use some traditional method rather than deep learning.
+For example, linear model.
+For example, support vector machine.
+There are some methods such as support vector machine,
+it doesn't matter if you don't know what it is.
+They optimization may be easier for you.
+The optimization of them
+seldom fails.
+These models
+will do their best to
+find the best parameters.
+They are less likely to fail.
+So you can train some
+relatively shallow models
+or some simpler models first
+to have an idea about
+the kind of loss you can get
+from these simple models.
+Then you can train a deeper model.
+If you compare the two models
+and find out that even though
+the deep model is more flexible,
+it still can't have a loss
+lower than the shallow model,
+that means there is a problem with your optimization.
+Your gradient descent did not work well.
+You will have to find some other methods to
+do better optimization.
+For example,
+we saw this last time when we were
+predicting the number of viewers.
+We said on the training data,
+which are data from 2017 to 2020,
+a network with 1 layer
+has a loss of 0.28k.
+It decreases to 0.18k with 2 layers,
+0.14k with 3 layers,
+and 0.10k with 4 layers.
+However, when I trained with 5 layers, the result becomes 0.34k.
+How did this happen?
+We have a bigger loss now,
+how did this happen?
+Is it due to model bias?
+Clearly not.
+Because we achieve 0.10k with 4 layers
+and we should be able to lower it with 5 layers.
+There's a problem with optimization.
+Something's not done well when we're doing optimization,
+which caused the problem.
+Okay, if we didn't do optimization well,
+what should we do?
+In our next session,
+I will tell everyone what to do.
+Now, you just have to know this problem exists.
+You need to know how to distinguish
+between model bias and optimization
+if your training loss is high.
+If it's due to model bias, then make the model bigger.
+If it's because the optimization fails,
+then we'll see how to solve this problem in the next session.
+Okay, now suppose you have gone through some hard work.
+You can already make your
+loss on training data lower.
+Then you can check
+the loss on testing data.
+Check how the loss on testing data is.
+If the loss on testing data is also low,
+if it is lower than the strong baseline, it's over.
+There is nothing left to do, okay?
+But if you think it’s not low enough...
+If the loss on the training data is low
+but is high on testing data,
+then you might actually have
+a problem with overfitting.
+Pay attention here, only when having low training loss
+and high testing loss can it be called overfitting.
+Many students upon seeing bad results
+on the testing set,
+simply say it is overfitting.
+It is not necessarily overfitting.
+If you have a result and ask me,
+"Professor, how can I have a better result?"
+The first question I will ask you is
+your loss on the training data.
+What is your loss on the training data?
+I found that eight out of ten students will say,
+"The loss on training data?
+I did not record training data's loss."
+You have to record training data's loss.
+Make sure that your optimization is ok first,
+that your model is big enough.
+Then,
+check if there's a problem in testing.
+Okay, if the training loss is low
+and the testing loss is high,
+it could be overfitting.
+Why does overfitting happen?
+Why is it possible that the training loss is low
+while the testing loss is high?
+Here is an extreme example to tell you
+why this happened.
+This is our training data.
+Assuming that based on these training data,
+a certain crappy
+machine learning method
+found a function that was less than useless.
+This useless function,
+what does it look like?
+This useless function says
+if today the input is x,
+then we'll find if this x
+is present in the training data.
+If x is present in the training data,
+then we take its corresponding ŷ as output.
+If x is not present in the training data,
+what to do then?
+It just outputs a random value.
+You can imagine that
+this function did nothing.
+It is less than useless.
+But even though it is a useless function,
+Its loss on the training data
+is 0.
+When you input all the training data
+into this function,
+its outputs are exactly the same as
+your training data's labels.
+So on the training data,
+this useless function
+has a loss of 0.
+But on the testing data,
+its loss will become very large
+because it doesn’t actually learn anything.
+This is a more extreme example.
+However, under normal conditions,
+something similar might happen.
+For example.
+Suppose the input feature is called x.
+The output label is called y.
+Both x and y are one-dimensional.
+The relationship between x and y
+is this quadratic curve.
+We deliberately use a dotted line to represent this curve.
+Because we usually have no way to
+observe this curve directly.
+What we can really observe.
+What we can really observe
+is our training data.
+You can imagine the training data as
+random samples from
+a few points on this curve.
+If the model is very capable,
+If it has great flexibility,
+If it's very flexible,
+You only give it three points.
+It will know that
+we need to make the loss low at these three points.
+So the curve of your model
+will pass through these three points.
+But other
+places without training data as a limitation
+will be freestyle.
+Because of its great flexibility,
+It's very flexible.
+So your model
+can turn into a variety of functions.
+You don't give it information for training,
+it will have freestyle,
+producing all kinds of strange results.
+At this time,
+If you input your test data,
+Your test data and training data
+are not exactly the same of course.
+They may be sampled
+from the same distribution.
+The testing data are the orange dots.
+The training data is these blue points.
+After using these blue dots
+and find a function,
+you test it on these orange dots.
+Not necessarily good.
+If your model has a lot of degrees of freedom,
+it can produce very strange curves,
+leading to good results on training materials
+but the high loss on the test data.
+Okay, as for the more detailed mathematical principles,
+why a more flexible model
+will be more likely to be overfitting.
+The mathematics behind
+will be discussed on the week after next week.
+Teacher Pei-Yuan, Wu will explain to everyone in more detail.
+Let’s talk about its concept today.
+Okay, how can I solve the
+overfitting problem just now?
+There are two possible directions.
+The first direction.
+Maybe this direction is often the most effective one.
+That is to increase your training data.
+So suppose you
+want to make an application.
+You find that there is an overfitting problem.
+I think that
+the easiest way to solve overfitting
+is to increase your training data.
+So if the training data
+the blue dots become more.
+Although your model may be very flexible,
+you have a lot of points.
+So it can be limited.
+It will still look like the shape
+of the quadratic curve behind these data.
+But in your homework,
+you can't use this trick.
+Because we don’t want everyone to waste time
+collecting information and so on.
+This is not the core part of machine learning techniques.
+We hope everyone will focus more on
+the core techniques of machine learning,
+instead of spending too much effort collecting information on the Internet
+and figuring out how to do the homework.
+This is not what we want everyone to do.
+You can't collect data by yourself in homework.
+What can you do?
+You can do data augmentation.
+This method is not considered as using additional data.
+What does data augmentation mean?
+Data augmentation is
+You use some of your understanding of this problem.
+Create new data by yourself.
+For example, when doing image recognition,
+a very common trick is
+Suppose there is a picture in your training data,
+flip it left and right
+or crop one part of it and enlarge it, etc.
+If you flip left and right, your data will double.
+This is data augmentation.
+But you should pay attention that
+data augmentation can't be done casually.
+This data augmentation.
+The augmentation should make sense.
+For example, in image recognition,
+you rarely see people turning the image upside down
+as augmentation
+Why?
+Because these pictures are all reasonable.
+Flipping a photo left and right
+does not affect what is inside.
+But it's weird if you turn it upside down.
+This may not be training material.
+It may not be the image that will appear in the real world.
+If you show the machine
+these strange images,
+it might learn weird things.
+So data augmentation
+should base on the characteristics of your data,
+and the understanding of the problem you are dealing with
+to choose the right
+way of data augmentation.
+Okay, here is the part for adding information.
+What other solutions do we have?
+Another solution is to limit the flexibility
+of your model
+and give it some restrictions.
+For example, suppose we restrict
+our model to
+a quadratic curve.
+That is, we somehow know that
+the relation between x and y
+has the form of a quadratic curve.
+It's just that we don't know the coefficients
+that are associated with the quadratic curve.
+You might wonder how we reached this conclusion.
+How should one know
+how constrained the model needs to be?
+This depends on your understanding of the problem.
+Since you designed the model,
+how constrained or flexible should the model be
+to get a good result
+is something only you can answer.
+Different models and different designs
+would lead to different results.
+Now, assume that we already know that
+the model is a quadratic curve.
+This piece of information
+will greatly restrict our options
+when choosing a function.
+Since the quadratic curve is very simple,
+there aren't too many variations
+and it generally looks something like this.
+So, when the training data is limited,
+there aren't too many functions
+for us to pick from.
+For example,
+when only three points are given,
+we might just pick a function that
+is close to the real distribution
+because the functions we can choose from
+are quite limited.
+This is the second method that
+we can use to achieve better results
+and solve the problem of overfitting.
+By giving your model some restrictions,
+there is a chance that
+your model would closely resemble
+the real data distribution.
+Then, you might
+have a chance to get good results.
+Is there any other way to
+further limit the model and create more restrictions?
+For example,
+we can give it fewer parameters.
+If we're dealing with deep learning,
+we can decrease the number of neurons.
+Perhaps changing from one thousand neurons per layer
+to only one hundred neurons per layer.
+Or, you can make models share parameters
+by forcing some parameters to have the same value.
+If you didn't quite understand this part,
+do not worry.
+We will come back to this part in the future
+when we discuss CNNs.
+This is just a small preview of it.
+When we talked about the network architecture earlier,
+we mentioned the fully connected network.
+The fully connected network
+actually has a more flexible architecture,
+whereas a CNN has a more restricted architecture.
+You might think that
+CNNs are better.
+After all, most tasks regarding computer vision
+are done by CNNs.
+Is a CNN, a superior model, really less flexible?
+Indeed.
+It is a relatively inflexible model.
+What's great about it is that
+the flexibility of the model is restricted
+with the characteristics of images in mind.
+The set of functions found by fully connected networks
+is larger in size when compared to
+the set of functions
+found by the CNN model.
+The set it forms is actually
+a subset in the set of functions
+found by fully connected networks.
+However, it is the restrictions
+given to the CNN model that
+makes it perform better
+than the fully connected network.
+We will learn more about CNNs in the future.
+Are there any other methods?
+One way is to use fewer features.
+The teaching assistant has already demonstrated this method.
+Originally, we were using three days of data.
+When we choose to only use two days of data,
+the result actually got better.
+This is one of the techniques.
+There is another technique called "Early stopping".
+Early stopping,
+regularization, and dropout
+are all things that will be covered in later courses.
+These three techniques were included in homework 1.
+Early stopping is actually already implemented
+by the teaching assistant in the sample code,
+so it's fine if you don't know what it is.
+Just execute the sample code
+and that's it.
+Regularization
+is left out and it's up to you to implement it.
+If you don't know what regularization is,
+that's ok.
+The sample code should be enough for the simple baseline.
+If you want to improve your work,
+you can do some research
+on regularization
+and implement it by yourself.
+As for dropout,
+it is another common way to restrict models
+when we're working on deep learning.
+We will elaborate on this later.
+Too many restrictions could also impact the performance.
+Why can't we restrict the model too much?
+Suppose now we put more constraints on the model,
+and we force our model
+to be a linear model.
+It must be written as y=a+bx.
+Then the functions which can be produced by your model
+must be straight lines.
+Given these three points,
+there is no straight line
+which can pass all these three points.
+However, you can find a straight line
+which is relatively close
+to these points.
+But you can’t find any straight line
+which can pass all these three points at the same time.
+In this situation, your model is too restrictive.
+You won’t get good results on the testing data.
+But is this overfitting?
+This is not overfitting,
+because you are back to the problem of model bias.
+So under this situation,
+the result on the slide being not good
+is not because of overfitting,
+but because you put too many constraints on your model.
+The constraints are too many so you have a problem of model bias.
+So you will find that
+there is a contradiction here.
+A contradiction occurs here.
+Today you make your model more complex
+or make your model more flexible.
+But what is the complexity of a model?
+What is flexiblility of a model?
+In today's class,
+we didn’t give a clear definition
+but only a concept.
+But in the class of the week after next,
+you will be really clear on
+what it means that a model is complex,
+and what it means that a model is flexible.
+How to measure the complexity of a model?
+How complex is it?
+Let’s first explain it intuitively.
+If we say a model is more complex,
+it means that it can produce more functions,
+and it has more parameters.
+This is a more complex model.
+Then suppose we have a more complex model,
+if you look at its training loss,
+you will find that when the model becomes more and more complex,
+the training loss can get lower and lower.
+However, while testing,
+when the model becomes more and more complex,
+at the beginning,
+the test loss will decrease,
+but when the degree of complexity
+is higher than a certain level,
+testing loss will suddenly increase.
+The reason is that,
+when your model becomes more and more complex,
+and its complexity exceed a certain degree,
+the overfitting happens.
+So on the training loss,
+you can get a better result.
+Then on the testing loss,
+You will get a higher loss.
+Of course we expect that
+we can choose a proper model.
+Not too complex and not too simple.
+On the training data,
+it can give us the best result.
+Give us the lowest loss.
+Give us the lowest testing loss.
+How to find such a model?
+A very intuitive method that you are very likely to do,
+if no one tells you what to do.
+You might do this intuitively.
+The method is as the following.
+After we upload a submission to kaggle,
+we can get the result immediately.
+So suppose we have three models,
+and their complexity is not the same.
+I don’t know which model has proper complexity.
+to get the best result on the testing data.
+Overfitting will happen if you choose a too complex model,
+but choosing a too simple model causes the problem of model bias.
+How to choose a proper one?
+What to do if we don't know?
+Get the results of these three models,
+upload them to kaggle,
+and you can know the scores immediately.
+After checking which score is the lowest,
+the corresponding model is obviously the best model.
+But it is not recommended for you.
+Why is not recommended for you to do this?
+Let's take a extreme case.
+We use again
+the previous extreme case.
+Suppose there is a group of models,
+and these models are very useless.
+The functions generated by the models
+are useless functions.
+How big is the number?
+I don’t know so let's assume that it is one trillion.
+We have one trillion models.
+Without knowing why, these one trillion models
+only learn
+useless functions.
+What they do is
+memorizing the data in the training set.
+For those data that are not in the training set,
+they just output random results.
+Okay, you now have a trillion models.
+Then you upload all the results of these one trillion models
+to kaggle,
+and get a trillion scores.
+Then after checking all these one trillion results
+to find the best one,
+you may think that the corresponding model is the best.
+Because every model
+is not trained on the test data,
+and they haven’t seen the test data,
+the results they output are all random.
+Although on the test data,
+the results are all random,
+if you keep trying,
+You will still find a good result right.
+So maybe for model 56789,
+the function it finds
+happens to match the test data.
+So it gives you a good result.
+Then you will be very happy to think that
+model 56789
+is a good model.
+This good model gets a good function.
+Although it's actually random,
+this good function
+gives us good results
+on testing data.
+So you think that the result is good.
+I choose this model,
+this function
+as the result of the last upload.
+As my final result
+on the private testing set.
+But if you do that,
+you often get very bad results.
+Because this model is random,
+it happens to get a good result
+on the public testing set.
+A good result is on the public testing set.
+But when it is on the private testing set,
+it may still be random.
+So suppose you are choosing a model today.
+You all use the testing set we provide.
+The testing set is
+divided into a public set and a private set.
+When you look at the score, you only see
+the public score. The private score
+won’t be released until the deadline.
+But suppose you are picking a model
+totally by the score on the public testing set.
+That is, using the score on the leaderboard
+to choose your model.
+You might be like this:
+You are in the top ten on the public leaderboard.
+But once the deadline is over.
+You just collapsed like this.
+You fall out of 300 places.
+And there are so many people taking courses here.
+Maybe you will fall out of thousand places.
+Maybe.
+Okay, this is not folklore.
+It's no exaggeration.
+It happens every year.
+Because this year we will consider the public scores.
+It means that when we calculate the score,
+your good results on public
+will still give you a little point.
+We don’t just consider private scores.
+We look at both public and private scores.
+Some semesters in the past,
+when only considering private scores,
+your mentality will collapse
+if this happens.
+You will be very, very depressed.
+Okay, then some classmates will say that
+why do we want to divide the testing set
+into public and private.
+Why can't we
+just divide everything into public?
+Why am I embarrassing everyone?
+Why I make everyone worried
+about the result on the private testing set.
+Think about it for yourself.
+Assuming all data is public.
+I just said that
+even if it's a worthless model,
+a useless function,
+it may also get good results
+on public data.
+If we only have public testing set today
+with no private testing set.
+Then you just go back and write a program
+that keeps generating output randomly.
+And then keep uploading the random output
+to kaggle
+And see when you
+can randomly produce a good result.
+Then this homework is over.
+This is obviously meaningless.
+It's obviously not what we want.
+And today,
+there is another interesting thing here.
+You know that
+public testing data is open to the public.
+You can know the result
+of the public testing data.
+Then even if you have a very useless model that
+produces a very useless function.
+It may also get very good results.
+This should explain
+why in the field of machine learning,
+on those benchmark corpora,
+machines can often get
+unusually good results,
+which often surpass humans'.
+The so-called benchmark corpora means
+some data sets are public.
+For example,
+Librispeech is a public
+data set that is used to train speech recognition.
+Then if you want to test whether
+your own voice recognition model is good or not,
+then you train it on Librispeech.
+Librispeech also has a testing set.
+Everyone shares the same testing set.
+Then we can compare the quality of different models.
+But the problem is that the result of these testing sets
+is all public.
+So even if it’s a very useless model
+that can only produce very useless functions.
+As long as you train it enough times,
+You can still get a good result
+on the public testing set.
+This explains why
+on these benchmark corpora,
+machines can eventually get results that surpass humans'.
+The most famous example is this.
+In 2016,
+Microsoft and IBM
+claimed at the same time
+that their models
+had outperformed humans on speech recognition.
+Compared to professional transcribers,
+these ASR models achieved even better error rates.
+Where are these results from?
+These are actually done
+on some benchmark corpora.
+Here the corpus is named
+the switchboard benchmark corpus.
+Do you believe
+that machines are truely smarter than humans
+just because they perform better on some benchmarks?
+I don't think so.
+You don't have to be an ASR researcher
+since you may have seen some related applications.
+Speech recognition systems are ubiquitous today.
+Every smartphone has one in it.
+From your everyday experience,
+you won't believe that machines have surpassed humans
+on real-world ASR.
+Those benchmark corpora
+are just like
+the testing set here,
+namely the public testing set.
+However, when an ASR system is put into production,
+the input from the end-users
+will be like the private testing set.
+The systems may beat humans
+on the public testing set,
+which doesn't mean
+they are still better
+on the private testing sets.
+Even if the machines
+are claimed to
+achieve higher accuracies than the humans,
+that may not be the case
+for their accuracies in real-world applications.
+You know
+those claims regarding
+machines' excellent performance
+on benchmark corpora
+are just rhetorics used to hoax the 'muggles'.
+But in my opinion,
+it's still responsible of the companies to
+publish their valid results on the benchmarks.
+But I've heard worse.
+A startup from out of nowhere
+got a government project
+which is about ASR.
+On their dataset,
+they set a KPI target
+that their model has to achieve more than 90% accuracy.
+Yet sadly, they failed.
+Their performance can't reach 90%, whatever they tried.
+How could they deal with the project acceptance review?
+When questioned by the officer,
+they came up with an excuse
+that this is due to the poor quality of the given dataset.
+"The dataset has too much noise" they said.
+"So we decided to remove all the noisy data, "
+"and now we are able to reach 90% accuracy."
+They achieved the KPI target with their cleverness.
+In fact, this isn't the most terrible of them.
+Someone,
+more precisely some strange startups,
+will show you their apps and say
+"Hey, this is our ASR system."
+"Did you know?"
+"Its recognition results are as good as those from the Google ASR API."
+How did they do that?
+They called the Google API
+stealthily in their app.
+So there are all sorts of weird things happening.
+You can just ignore all those
+flattering comments on those doubtful APIs.
+The reason I've mentioned all these
+is that I'd like to tell you
+why you should split the testing set
+into the public and private parts.
+Actually, you must not
+tune your model
+on the public one
+because you may still
+get poor scores
+on the private one.
+But in this class,
+your performance on the public set
+are included in your final score.
+This would be a problem.
+Some people may exploit this
+and sacrifice their private set scores
+for better performance on the public set
+by constantly generating random predictions.
+Those random predictions are then submitted to Kaggle
+to see if
+they can score higher on the public set.
+In order to prevent you from doing this,
+there is a daily submission limit.
+You are thus discouraged
+from getting good results with a poorly trained model
+simply by trial and error.
+Which way of model selection
+would be more reasonable?
+As implemented in the sample codes by the TAs,
+our method of choosing the best model for inference is as the following:
+You have to split the training data into two parts.
+One is called the Training Set.
+And the other is called the Validation Set.
+As we saw in the previous sample code,
+90% of the data makes up the Training Set
+and the other 10%
+will be used as the Validation Set.
+You can train a model on the Training Set
+and test its performance
+on the Validation Set.
+Based on the scores on the Validation Set,
+you can pick the model with the best performance
+and submit its prediction to Kaggle.
+Then the public set score may be a better estimate of the model's ability.
+That's because the models are chosen
+according to their performance on the Validation Set.
+So your public testing score
+somehow reflects your
+private testing score.
+You are less prone to the situation that
+you did well on the public set,
+but failed on the private set
+at the same time.
+When you saw your public set's results,
+you can't help but
+try to modify your model.
+If you have a bunch of models
+doing well on validation sets,
+but failed on the public sets
+on Kaggle,
+it is very hard for you to simply ignore it
+and be confident in your model.
+But if you adjusted your model
+too many times
+trying to fit the
+public testing set,
+you are possibly overfitting
+to the public testing set.
+If that's the case,
+you will receive poor results on the private testing set.
+Fortunately, we have set a restriction on how many times you can upload your model.
+So you won't be able to
+fit the public testing set excessively anyway.
+We are trying to prevent you from
+overfitting the public testing set.
+Okay. Since the results of
+public testing set
+are available for everyone to see
+and you can be named yourself
+whatever you like,
+if some person gets the first place,
+he might be very proud
+and change his name to something like
+"I got the first place in the first try",
+or "I'm just an auditor"
+while he is actually not.
+If he changed his name to
+"I'm actually just an auditor
+but got first place easily",
+you might be very nervous,
+especially if you know him.
+If one of your close friends
+won the first place,
+you will be nervous.
+Then you might say:
+Don't be proud!
+I'll beat you soon.
+But actually,
+you don't need to waste your time trying to beat him.
+Based on my experience,
+those who score very good on public leaderboards
+are likely to fail on private sets.
+So don't celebrate too early
+if you get good results
+on public sets.
+The best way to determine the quality of a model
+is to use validation loss.
+Just pick the one with the lowest validation loss.
+Don't care about
+the result of public sets too much.
+That being said, I know that
+it is hard for you to ignore the public leaderboard,
+because you saw the score.
+So the public leaderboard
+may slightly affect your confidence in your models,
+but I suggest you to
+not care too much about the leaderboard.
+Did I answer your question clearly?
+Ok. If there are any other questions,
+I will answer those later.
+Oh,
+I forgot to repeat that student's question.
+For those who watch are videos online,
+let me repeat the question.
+His question is:
+Are you saying that we shouldn't rely too heavily
+on the result of the public testing set?
+Ideally, yes.
+You should use only the Validation Set to choose between your models.
+Then simply upload the best one.
+If you managed to pass the strong baseline,
+don't change it anymore.
+This is how you avoid
+being overfitting to the testing Set.
+OK, but there is still a problem here.
+How should we divide the training set
+and validation Set?
+If in TA's source code,
+the sets are randomly divided.
+But you might think that
+the dividing is bad.
+Maybe I picked out a very strange validation Set
+which resulted in poor scores.
+If you are worried of this issue,
+maybe you can use N-fold Cross Validation.
+How does N-fold Cross Validation work?
+You separate your training data into N equal parts.
+In this example we set N equal to 3.
+After that,
+take one of them as the Validation Set.
+The other two will be your Training Sets.
+Then, you have to repeat this three times.
+So what you do is,
+first use the first and the second copies to train the model,
+and the third copy as the validation set;
+then choose the first and the third copies as the training sets,
+and the second copy as the validation set;
+lastly, pick the first copy as the validation set,
+while the second and the third copies are the training sets.
+So you end up with three models,
+but you don't know which one is the best.
+Now,
+use all three models
+to run through all three data sets,
+i.e. the training and the validation sets.
+Do this for all three models,
+and record the performances on the three sets
+for every model respectively.
+Take the average performance on three data sets
+for every model,
+and see which model
+has the best average result.
+Let’s assume that model 1 has the best result.
+The result you get with these three folds is that
+the model 1 performs best.
+Then you use all the data in the training set
+to train model 1.
+Then use the trained model
+on the testing set.
+Okay, this is N-fold cross-validation.
+This is the guide for the early stage of this course.
+It can take you to win all the early instanced dungeons.
+Then the next question you might want to ask is
+the number of viewers last Friday,
+February 26,
+we talk about at the end of last week.
+How did it turn out?
+Okay, this is the result.
+Most people chose the three-layer network last week.
+So we put the three-layer network
+to test.
+The following is the result of the test.
+We did not further adjust the parameters
+After we make our choice, we don't change our decision.
+Just use it directly.
+Okay, the result is here.
+The horizontal axis on this graph is from
+January 1st, 2021, and going on.
+The red line is the ground true.
+The blue line is the predicted result.
+February 26 is over here, which has the highest viewers count
+in 2021.
+What about the machine's prediction.
+Wow, it’s very miserable, the gap is very big.
+The gap is 2.58k.
+Thank you everyone for making this model inaccurate
+by spending a lot of effort last Friday
+clicking on this video.
+So this day is
+the most-watched day this year.
+Then you might start to wonder that
+how the other models perform?
+Actually, I also ran the single-layer, the two-layer, and the four-layer model.
+All models perform miserably.
+The error of the two-layer and the three-layer are both over 2k.
+Actually, the four-layer performs better than the single-layer,
+which has an error of about 1.8k.
+These four models predict a low point
+on February 26 coincidentally,
+however, February 26 is a high point..
+However, we can't blame that
+the model predicts a low point.
+Because based on previous data
+there is no one who will learn machine learning on Friday.
+Everyone has fun on Friday night, right?
+The number of viewers on Friday usually is the least
+but there has an abnormal situation on February 26.
+Okay, you can't blame the model for this.
+The situation
+should be considered as another form of error.
+This form of error,
+we called it a mismatch.
+Then some people claim that
+mismatch is also a kind of overfitting.
+This is okay too.
+It's just a matter of definition.
+What I want to express here is that
+the reason for the mismatch
+is actually different from overfitting.
+In general, you can overcome overfitting
+by collecting more data.
+However, mismatch implies that
+the training data and testing data
+have a different distribution.
+When training data and testing data
+have a different distribution,
+it doesn't help
+even if you increase the amount of training data.
+Actually, in most homework in this course,
+we will not encounter this kind of mismatch problem.
+We have designed the problem carefully
+so the distribution of the data is similar to the testing data.
+Take homework one, predicting Covid-19,
+as an example.
+Suppose when we divide
+training data and testing data.
+We set the data in 2020 as training data
+and the data in 2021 as testing data.
+The mismatch problem may be very serious.
+We have actually tried this setting.
+If you use 2020 as your training data and
+2021 as testing data.
+Whatever you do, it’s the performance is miserable.
+Training on any model is miserable.
+Because the data distribution in 2020 and 2021
+is actually different.
+If you use the 2020 data to train
+and test on the data in 2021,
+you will have an incorrect prediction.
+The teaching assistant used other methods
+to split training data and testing data.
+Most of our homework
+will not have a mismatch problem.
+Except for homework eleven.
+Because homework eleven is
+designed for the mismatch problem.
+Assignment 11 is also an image classification problem.
+This is its training data,
+looks pretty normal.
+But its testing data looks like this.
+So you know that under this circumstance
+there is no use in adding data.
+Adding data
+can not make your model perform better.
+So how to solve this kind of problem?
+I'll talk about it at homework eleven.
+Okay, then you might ask that
+why I know the cause is a mismatch.
+In my opinion, the judgment of mismatch
+depends on your understanding of the data.
+You may need to have some understanding of
+how the training data and testing data are produced.
+Then you can decide that
+whether the mismatch problem is encountered.
+Okay, this is the guide for our homework.

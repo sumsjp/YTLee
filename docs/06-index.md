@@ -157,7 +157,7 @@
 </details>
 
 <details>
-<summary>304. 【機器學習2021】卷積神經網路 (Convolutional Neural Networks, CNN)</summary><br>
+<summary>304. [2021-03-12] 【機器學習2021】卷積神經網路 (Convolutional Neural Networks, CNN)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=OP5HcXJg2Aw" target="_blank">
     <img src="https://img.youtube.com/vi/OP5HcXJg2Aw/maxresdefault.jpg" 
@@ -166,11 +166,38 @@
 
 # 【機器學習2021】卷積神經網路 (Convolutional Neural Networks, CNN)
 
+# 文章整理：CNN在特定任務中的適用性分析
 
+## 1. 核心主題
+探討卷積神經網絡（CNN）在不同任務中的適用性，特別是下棋和影像處理中的差異。
+
+## 2. 主要觀念
+- **CNN的設計依賴於任務特性**：CNN的架構需要根據具體任務的特點進行設計，不能盲目套用。
+- **Poolings的局限性**：雖然池化層常用於影像處理以降低維度和提取特徵，但在下棋等任務中並不適用，可能導致信息丟失。
+
+## 3. 問題原因
+- **信息丟失的風險**：池化操作可能破壞關鍵的空間信息，影響任務性能。
+- **對尺度和旋轉的敏感性**：CNN在固定尺寸和方向上的訓練導致其難以處理不同尺度和旋轉的對象。
+
+## 4. 解決方法
+- **任務適配設計**：
+  - 針對下棋任務，採用多層卷積而無池化。
+  - 針對語言處理，設計適合序列數據的CNN變體（如TextCNN）。
+- **數據增強技術**：通過旋轉、縮放等方式擴展訓練數據，提高模型魯棒性。
+
+## 5. 優化方式
+- **架構調整**：
+  - 使用不同核大小的卷積層以適應多種特徵尺度。
+  - 增加Batch Normalization以提升泛化能力。
+- **替代方法探索**：引入Transformer等架構解決CNN在序列數據上的局限性。
+
+## 6. 結論
+- CNN的應用需根據任務特點量身定製，而非通用方案。
+- 數據增強和架構優化是提升模型魯棒性的關鍵手段。
 </details>
 
 <details>
-<summary>305. [ML 2021 (English version)] Lecture 3: Roadmap of Improving Model</summary><br>
+<summary>305. [2021-03-12] [ML 2021 (English version)] Lecture 3: Roadmap of Improving Model</summary><br>
 
 <a href="https://www.youtube.com/watch?v=3qgKpBptyFY" target="_blank">
     <img src="https://img.youtube.com/vi/3qgKpBptyFY/maxresdefault.jpg" 
@@ -179,11 +206,65 @@
 
 # [ML 2021 (English version)] Lecture 3: Roadmap of Improving Model
 
+### 文章重點整理
 
+#### 核心主題
+- **機器學習模型的錯誤分析與改進**
+- **數據分 distribution 集問題（Mismatch）的影響與應對**
+
+#### 主要觀念
+1. **過度擬合 (Overfitting) 的定義與解決方法**  
+   - 過度擬合是指模型在訓練數據上表現良好，但在未見過的測試數據上效果不佳。
+   - 解決方法包括增加更多數據、使用正則化技術（如Dropout）等。
+
+2. **分 distribution 集問題 (Mismatch)**  
+   - 分集指的是訓練數據和測試數據之間存在不同的分布，導致模型性能下降。
+   - 分集問題無法通過增加訓練數據來解決，因為數據的分布差異是根本原因。
+
+#### 問題原因
+1. **過度擬合的原因**  
+   - 訓練數據不足或複雜度過高的模型易導致過度擬合。
+
+2. **分 distribution 集問題的原因**  
+   - 訓練數據和測試數據來源不同，例如時間差異（如2020年數據訓練，2021年數據測試）。
+   - 數據分布的自然變化或人工幹擾導致分集。
+
+#### 解決方法
+1. **過度擬合的解決方法**  
+   - 增加訓練數據量。
+   - 使用正則化技術（如Lasso、Ridge_regression等）。
+   - 簡化模型複雜度。
+
+2. **分 distribution 集問題的解決方法**  
+   -仔細設計數據分割方式，確保訓練和測試數據的分布相似。
+   -若不可避免分集，可使用遷移學習或強化模型的泛化能力。
+
+#### 優化方式
+1. **數據收集與 preprocessing**  
+   - 確保數據來源和分布的多樣性。
+   - 清洗數據以消除噪聲。
+
+2. **模型結構設計**  
+   - 選擇適合數據特性的模型架構。
+   - 使用ensemble技術（如Bagging、Boosting）提高模型魯棒性。
+
+#### 結論
+- **模型性能受多重因素影響**  
+   - 過度擬合和分集問題是常見的兩大挑戰。
+- **數據與模型的重要性**  
+   - 高質量的數據和恰當的模型設計是確保機器學習系統性能的關鍵。
+- **未來研究方向**  
+   - 探索更有效的分 distribution 調整方法。
+   - 研究抗分集的深度學習技術。
+
+---
+
+### 文章結論
+文章主要探討了機器學習模型在實際應用中常遇到的錯誤類型，特別是過度擬合和分 distribution 集問題。作者通過具體案例分析，強調了解決這些問題的重要性，並提出了一系列實用的解決方案和優化策略。最終結論指出，數據質量與模型設計是影響機器學習性能的核心因素，未來的研究應進一步探索如何有效應對分 distribution 問題。
 </details>
 
 <details>
-<summary>306. [ML 2021 (English version)] Lecture 4: What to do when optimization fails? (1/4)</summary><br>
+<summary>306. [2021-03-12] [ML 2021 (English version)] Lecture 4: What to do when optimization fails? (1/4)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=yz7QS1I6omw" target="_blank">
     <img src="https://img.youtube.com/vi/yz7QS1I6omw/maxresdefault.jpg" 
@@ -192,7 +273,44 @@
 
 # [ML 2021 (English version)] Lecture 4: What to do when optimization fails? (1/4)
 
+### 文章整理：深度學習模型訓練中的收斂問題與 saddle point 的影響
 
+#### 核心主題  
+本文探討了深度學習模型在訓練過程中常遇到的梯度消失或不易更新的問題，特別是 saddle point（鞍點）現象對模型收斂的影響。
+
+#### 主要觀念  
+1. **Error Surface 的高維特性**：模型參數通常超過一百萬甚至上億，導致誤差 surface 存在於十-million 維度的高維空間。
+2. **Local Minima vs Saddle Point**：
+   - Local minimum 是所有方向損失都增加的點。
+   - Saddle point 是某些方向損失增加，而其他方向損失降低的點。
+3. **梯度消失與參數更新停止**：在 saddle point 處，梯度可能非常小，導致訓練過程停滯。
+
+#### 問題原因  
+1. **高維空間中 saddle point 的普遍存在**：
+   - 研究表明，在深度學習模型中，ritical points（如 local minima 和 saddle point）通常具有混合的特徵值分佈。
+   - 在 experiments 中，minimum ratio（正特徵值數量 / 所有特徵值數量）大約在 0.5 到 0.6 之間，表明一半以上方向會增加損失。
+2. **梯度下降算法敏感性**：傳統的梯度下降方法在高維空間中容易陷入 saddle point。
+
+#### 製定方式與研究數據  
+1. **實驗結果**：
+   - 每個 points 表示訓練完成後網路的 Hessian 矩陣。
+   - Vertical axis：training 中最小損失值。
+   - Horizontal axis：minimum ratio（正特徵值比例）。
+2. **數據分析**：
+   - 大部分 critical points 的 minimum ratio 在 0.5 到 0.6，表明 saddle point 現象普遍存在。
+   - 即使是在 extreme cases 中，negative eigenvalues 仍然佔總數的 50% 左右。
+
+#### 課題與挑戰  
+1. **Local Minima 的罕見性**：在實際訓練中，almost 不可能找到所有特徵值都是正的情況。
+2. **Saddle Point 的影響**：高維度下 saddle point 現象更容易發生，導致梯度下降過程中的更新困難。
+
+#### 結論  
+1. 在深度學習模型中，local minima 並不常見，更多的是 saddle points 造成訓練停滯。
+2. 高維空間的特性使得 saddle point 現象更加普遍，這對傳統 gradient descent 方法提出了挑戰。
+
+---
+
+本文強調了高維度下 saddle point 的影響，並通過 experiments 表明，在深度學習中 local minima 並不常見，主要問題出在 saddle points。研究結果為改進訓練算法提供了重要啟發。
 </details>
 
 <details>

@@ -27,7 +27,7 @@ readme_file = os.path.join(base_dir, 'README.md')
 csv_file = os.path.join(base_dir, 'src/video_list.csv')
 
 # === 設定頻道網址 ===
-channel_url = 'https://www.youtube.com/@Drberg/videos'
+channel_url = 'https://www.youtube.com/@HungyiLeeNTU/videos'
 
 # === 載入環境變數 ===
 load_result = load_dotenv()
@@ -37,7 +37,7 @@ sender_email = os.getenv('SENDER_EMAIL')
 sender_password= os.getenv('SENDER_PASSWORD')
 # logger.info(f"email={sender_email}, password={sender_password}")
 
-receiver_emails = ["jack.wu0205@gmail.com", "mingshing.su@gmail.com", "sibuzu.ai@gmail.com"]
+receiver_emails = ["mingshing.su@gmail.com", "sibuzu.ai@gmail.com"]
 # receiver_emails = ["sibuzu.ai@gmail.com"]
 
 def update_list():
@@ -107,10 +107,10 @@ def download_script(df):
     
     # 計數器
     download_count = 0
-    max_downloads = 10
+    max_downloads = 3
     
     # 優先字幕語言列表
-    preferred_langs = ['en']
+    preferred_langs = ['zh-TW']
     
     # 從最後一筆往前處理
     lst = df.index
@@ -288,7 +288,7 @@ def make_doc(filename: str, video_list: list):
         logger.error(f"製作文件失敗 {filename}: {str(e)}")
 
 def create_readme_doc(max_idx, latest_date):
-    content = f"""# Dr. Eric Berg DC ({latest_date})
+    content = f"""# YTLee ({latest_date})
 
 ---
 
@@ -317,7 +317,7 @@ def create_doc(df):
     try:
         # 取得最大的 idx
         max_idx = df['idx'].max()
-        batch_size = 100
+        batch_size = 50
         
         # 計算需要產生幾個檔案
         num_batches = (max_idx + batch_size - 1) // batch_size  # 向上取整
@@ -427,5 +427,5 @@ if __name__ == '__main__':
     download_script(df)
     summerize_script()
     create_doc(df)
-    email_notify(new_df)
+    # email_notify(new_df)
     logger.info("更新程序完成")

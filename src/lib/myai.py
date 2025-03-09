@@ -1,4 +1,5 @@
 from openai import OpenAI
+from zhconv import convert
 
 prompt = '''
 您是個專業的研究員，可幫忙整理學術文獻的重要內容。
@@ -53,8 +54,13 @@ def get_summary(text):
             last_think_pos = summary.rindex('</think>')
             # 只保留 tag 之後的內容，並去除開頭的空白
             summary = summary[last_think_pos + 8:].lstrip()
+            summary = to_tranditional_chinese(summary)
             
         return summary
         
     except Exception as e:
         return f"Error generating summary: {str(e)}"
+
+def to_tranditional_chinese(text):
+    """將簡體中文轉換為繁體中文"""
+    return convert(text, 'zh-hant')

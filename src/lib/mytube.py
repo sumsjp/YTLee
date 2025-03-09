@@ -50,7 +50,7 @@ def download_subtitle(video_id, preferred_langs=['en']):
     logger.info(f"影片標題：{title}")
     logger.info(f"上傳日期：{formatted_date}")
 
-    selected_lang = 'en'
+    selected_lang = preferred_langs[0]
     subtitles = video_info.get('subtitles', {}) or video_info.get('automatic_captions', {})
     if not subtitles or selected_lang not in subtitles:
         logger.warning(f"無可用字幕：{video_id}")

@@ -935,7 +935,7 @@
 </details>
 
 <details>
-<summary>238. [ICASSP 2020] ONE-SHOT VOICE CONVERSION BY VECTOR QUANTIZATION (Speaker: Da-Yi Wu)</summary><br>
+<summary>238. [2020-05-03] [ICASSP 2020] ONE-SHOT VOICE CONVERSION BY VECTOR QUANTIZATION (Speaker: Da-Yi Wu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=W3t8FHgV90M" target="_blank">
     <img src="https://img.youtube.com/vi/W3t8FHgV90M/maxresdefault.jpg" 
@@ -944,11 +944,68 @@
 
 # [ICASSP 2020] ONE-SHOT VOICE CONVERSION BY VECTOR QUANTIZATION (Speaker: Da-Yi Wu)
 
+### 文章整理（正式學術用語）
 
+---
+
+#### **核心主題**
+- 探討基於語音轉換（Voice Conversion, VCC）的任務中，內容編碼（Content Code）與說話人編碼（Speaker Code）之間信息分離的技術。
+- 研究如何通過模型設計和優化實現語音特徵的解耦。
+
+---
+
+#### **主要觀念**
+1. 語音轉換任務的核心挑戰在於實現內容信息和說話人信息的有效分離。
+2. 內容編碼應僅包含與語音內容相關的信息，而說話人編碼應僅反映說話人的特徵。
+3. 提出一種基於自動編碼器（Autoencoder）的模型框架，通過引入內部分離機制（Internal Disentanglement）來實現特徵解耦。
+
+---
+
+#### **問題原因**
+- 常見的語音轉換模型中，內容編碼和說話人編碼之間可能存在信息混雜現象，導致語音轉換結果的質量不穩定。
+- 傳統的自動編碼器在特徵分離方面的能力有限，難以有效區分內容和說話人的信息。
+
+---
+
+#### **解決方法**
+1. 引入內部分離機制（Internal Disentanglement）：
+   - 在自動編碼器中，通過將編碼層分爲內容編碼和說話人編碼兩部分，實現對語音特徵的初步分離。
+2. 使用向量量化（Vector Quantization, VQ）技術對內容編碼進行進一步優化：
+   - 通過引入VQ模塊，降低內容編碼的空間相關性，增強其表徵能力。
+
+---
+
+#### **優化方式**
+1. 在訓練過程中最小化重構損失，提升模型的語音生成質量。
+2. 通過實驗驗證不同參數設置（如向量量化碼本大小）對模型性能的影響。
+3. 對比分析模型在內容編碼和說話人編碼上的分離效果：
+   - 使用分類任務評估說話人信息的純淨度。
+   - 檢查內容編碼中是否存在說話人信息的混雜。
+
+---
+
+#### **實驗結果**
+1. 在包含400位說話人的測試集上，模型表現出良好的特徵分離能力：
+   - 內容編碼和說話人編碼在分類任務中的準確率接近50%，表明兩者的信息分離較爲理想。
+2. 向量量化碼本大小對模型性能的影響顯著：
+   - 當碼本大小爲256時，模型的重建質量達到最佳狀態。
+3. 通過主觀聽覺評估，轉換後的語音質量得到提升，表現出較高的自然度和可懂度。
+
+---
+
+#### **結論**
+- 內部分離機制結合向量量化技術能夠有效實現內容信息和說話人信息的解耦。
+- 優化的內容編碼設計顯著提升了語音轉換模型的性能和穩定性。
+- 模型在保持較低複雜度的同時，實現了高質量的語音轉換效果。
+
+---
+
+### 總結
+本文提出了一種基於內部分離機制的語音轉換方法，通過結合向量量化技術，有效解決了內容信息與說話人信息混雜的問題。實驗結果表明，該模型在特徵分離和語音生成質量方面均表現出色，爲語音轉換任務提供了新的研究方向。
 </details>
 
 <details>
-<summary>239. [ICASSP 2020] MOCKINGJAY: UNSUPERVISED SPEECH REPRESENTATION LEARNING (Speaker: Andy T. Liu)</summary><br>
+<summary>239. [2020-05-03] [ICASSP 2020] MOCKINGJAY: UNSUPERVISED SPEECH REPRESENTATION LEARNING (Speaker: Andy T. Liu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=JlOSyRNFjOw" target="_blank">
     <img src="https://img.youtube.com/vi/JlOSyRNFjOw/maxresdefault.jpg" 
@@ -957,11 +1014,40 @@
 
 # [ICASSP 2020] MOCKINGJAY: UNSUPERVISED SPEECH REPRESENTATION LEARNING (Speaker: Andy T. Liu)
 
+### 1. 核心主題  
+   - 探討自監督學習（Self-Supervised Learning, SSL）在低資源語音任務中的有效性與優勢。  
+   - 提出了一種新的語音預訓練方法，名爲 **Mockingjay**，用於提升有監督任務的性能。  
 
+### 2. 主要觀念  
+   - 自監督學習通過利用未標記數據進行預訓練，減少對標註數據的依賴，在低資源場景中具有重要價值。  
+   - Mockingjay 方法結合了對比學習和掩蔽預測任務，以增強語音表示的學習能力。  
+
+### 3. 問題原因  
+   - 在低資源環境下（即標註數據有限），傳統的監督學習方法性能受限。  
+   - 現有自監督方法在某些特定任務上的泛化能力不足，難以在不同數據集之間有效遷移。  
+
+### 4. 解決方法  
+   - **Mockingjay 預訓練框架**：  
+     a. 使用對比學習（Contrastive Learning）來增強語音特徵的辨別能力。  
+     b. 引入掩蔽預測任務（Masked Prediction Task），通過掩蓋部分語音信號，進一步提升模型對語音內容的理解能力。  
+   - **多任務聯合優化**：在預訓練過程中同時優化多個相關任務，以提高模型的泛化性能。  
+
+### 5. 優化方式  
+   - **加權求和（Weighted Sum）**：通過學習各層隱藏狀態的權重，整合多層特徵表示，進一步提升下遊任務的性能。  
+   - **微調策略（Fine-Tuning Strategies）**：  
+     a. **全模型微調（Full Model Fine-Tuning, FT2）**：在保持預訓練權重的基礎上，對整個模型進行微調以適應特定任務需求。  
+     b. **部分微調（Partial Fine-Tuning）**：僅對下遊任務相關模塊進行調整，減少計算開銷。  
+
+### 6. 結論  
+   - Mockingjay 方法在三個下遊任務（音素分類、說話人識別和情感分類）中均表現出色：  
+     a. 基礎模型性能優於傳統的Mel特徵表示。  
+     b. 大型模型通過加權求和進一步提升性能，最高實現5.75%的性能增益。  
+   - 在低資源場景下（標註數據僅爲10%），基礎微調模型（Base FT2）表現最優，甚至超越使用全部標註數據的傳統Mel特徵方法。  
+   - 驗證了自監督預訓練在提升有監督任務性能方面的有效性，尤其是在標註數據稀缺的情況下。
 </details>
 
 <details>
-<summary>240. [ICASSP 2020] Defense against adversarial attacks on spoofing countermeasures (Speaker: Haibin Wu)</summary><br>
+<summary>240. [2020-05-04] [ICASSP 2020] Defense against adversarial attacks on spoofing countermeasures (Speaker: Haibin Wu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=sKwz5GvxGgI" target="_blank">
     <img src="https://img.youtube.com/vi/sKwz5GvxGgI/maxresdefault.jpg" 
@@ -970,7 +1056,52 @@
 
 # [ICASSP 2020] Defense against adversarial attacks on spoofing countermeasures (Speaker: Haibin Wu)
 
+### 核心主題  
+- **自動說話人驗證（ASV）**：Automatic Speaker Verification 在生物特徵識別中的重要性及其高性能系統仍存在的漏洞，特別是針對spoofing攻擊的防禦需求。  
 
+---
+
+### 主要觀念  
+1. **Spoofing 攻擊的危害**：  
+   - Spoofing 音頻（如聲音重放、文本到語音生成）對 ASV 系統造成威脅，需建立有效的反spoofing模型以保護 ASV。  
+
+2. **反spoofing 模型的脆弱性**：  
+   - 即便高性能的反spoofing模型，也容易受到 adversarial examples 的攻擊，導致性能大幅下降。  
+
+3. **Adversarial 攻擊的影響**：  
+   - Adversarial 攻擊能生成看似無害但可 fools 模型的音頻，這類攻擊在 subjective 試驗中通常無法被人類察覺。  
+
+---
+
+### 問題原因  
+1. **模型的脆弱性**：  
+   - 現有反spoofing模型缺乏對 adversarial 攻擊的魯棒性，容易被攻擊者利用。  
+
+2. **數據分布的限制**：  
+   - 基於特定訓練數據集（如ESB Spoof 2019）訓練的模型，可能無法有效防禦未見過的 adversarial 攻擊。  
+
+---
+
+### 解決方法  
+1. ** spatial smoothing 過濾器**：  
+   - 使用不同類型的 spatial filters （均值、中位數、高斯濾波器）對音頻 spectogram 進行處理，消除 adversarial perturbations 的影響。  
+
+2. **Hydra Stereo 訓練法則**：  
+   - 通過 iterative 的訓練步驟（生成 adversarial examples 並反向傳導錯誤），修復模型的脆弱點，增強其魯棒性。  
+
+---
+
+### 優化方式  
+1. **濾波器選擇**：  
+   - 中位數和均值濾波器在提升模型性能方面表現優越，而高斯濾波器可能降低性能，需謹慎使用。  
+
+2. **混合防禦策略**：  
+   - 結合 spatial smoothing 和 adversarial training，可顯著提升模型的 robustness（如 testing accuracy 提升至 92.4%）。  
+
+---
+
+### 結論  
+- 雖然 adversarial 攻擊具有高度隱蔽性且難以檢測，但通過結合patial.filters 和 adversarial training 等方法，可顯著增強反spoofing模型的魯棒性。未來工作可進一步探索其他防禦策略，以應對更多樣化和複雜的攻擊方式。
 </details>
 
 <details>

@@ -290,7 +290,7 @@ def make_doc(filename: str, video_list: list):
         logger.error(f"製作文件失敗 {filename}: {str(e)}")
 
 def create_readme_doc(max_idx, latest_date, batch_size=100):
-    content = f"""# YTLee ({latest_date})
+    content = f"""# HYLee ({latest_date})
 
 ---
 

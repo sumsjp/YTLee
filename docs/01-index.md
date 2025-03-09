@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 0-2: Why we need to learn machine learning?
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/L8unuZNpWw8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 8-3: Keras Demo
 
 # 文章整理：人工智慧深度學習入門與挑戰
 
@@ -84,6 +88,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 8-2: Keras 2.0
+
 ### 小節歸納
 
 #### 核心主題
@@ -145,6 +151,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 9-2: Keras Demo 2
+
 ### 核心主題：人工智慧模型在MNIST數據集上的訓練與優化
 
 ---
@@ -203,6 +211,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Gated RNN and Sequence Generation (Recorded at Fall, 2017)
+
 
 </details>
 
@@ -213,6 +223,8 @@
     <img src="https://img.youtube.com/vi/tH9FH1DH5n0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 22: Ensemble
 
 ### 文章整理： ensemble methods in machine learning
 
@@ -278,6 +290,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Pointer Network
+
 
 </details>
 
@@ -288,6 +302,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/F1vek6ULo9w/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 9-3: Fizz Buzz in Tensorflow (sequel)
 
 ### 核心主題
 - 人工智慧在Fizz Buzz問題上的應用。
@@ -327,6 +343,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Batch Normalization
+
 
 </details>
 
@@ -337,6 +355,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/1KElr75pHdQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Interesting things about deep learning
 
 
 </details>
@@ -349,6 +369,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Tuning Hyperparameters
+
 
 </details>
 
@@ -359,6 +381,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/1WPjVpwJ88I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# SELU
 
 
 </details>
@@ -371,6 +395,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 1 (2017): Introduction of Generative Adversarial Network (GAN)
+
 
 </details>
 
@@ -381,6 +407,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/9N_uOIPghuo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 2 (2017): CycleGAN
 
 
 </details>
@@ -393,6 +421,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 3 (2017): Improving Sequence Generation by GAN
+
 
 </details>
 
@@ -404,6 +434,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 4 (2017):  From A to Z
+
 
 </details>
 
@@ -414,6 +446,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/y8UPGr36ccI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 23-2: Policy Gradient (Supplementary Explanation)
 
 ### 文章重點整理
 
@@ -465,6 +499,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 23-3: Reinforcement Learning (including Q-learning)
+
 ### 文章整理：Inverse Reinforcement Learning（逆向強化學習）及其應用
 
 #### 一、核心主題
@@ -514,6 +550,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 1-1: Can shallow network fit any function?
+
 
 </details>
 
@@ -524,6 +562,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/FN8jclCrqY0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Deep Learning Theory 1-2: Potential of Deep
 
 ### 清理與分析文章重點
 
@@ -604,6 +644,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 1-3: Is Deep better than Shallow?
+
 # 文章重點整理
 
 ## 核心主題  
@@ -672,6 +714,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 2-1: When Gradient is Zero
+
 
 </details>
 
@@ -682,6 +726,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/NmelPQkUark/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Deep Learning Theory 2-3: Does Deep Network have Local Minima?
 
 ### 一、核心主題
 
@@ -746,6 +792,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/_VuWvQUMQVk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Deep Learning Theory 2-4: Geometry of Loss Surfaces (Conjecture)
 
 ---
 
@@ -823,6 +871,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 2-2: Deep Linear Network
+
 # 文章重點整理
 
 ## 核心主題
@@ -869,6 +919,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 2-5: Geometry of Loss Surfaces (Empirical)
+
 ### 文章整理：深度學習模型訓練中的動態行為分析
 
 #### 1. 核心主題
@@ -905,6 +957,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning Theory 3-1: Generalization Capability of Deep Learning
+
 
 </details>
 
@@ -915,6 +969,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/pivB5jEBOQw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Deep Learning Theory 3-2: Indicator of Generalization
 
 # 文章重點整理
 
@@ -957,6 +1013,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
     <img src="https://img.youtube.com/vi/DMA4MrNieWo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 4 (2018): Basic Theory
 
 ### 一、核心主題
 
@@ -1021,6 +1079,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 5 (2018): General Framework
+
 ### 小節一：核心主題  
 - 本篇文章探討了在生成模型（Generative Models）中使用不同的分散度指標（Divergence Measures）對生成結果的影響，特別是其與模式崩塌（Mode Collapse）現象的關聯性。  
 - 討論了如何通過選擇合適的分散度指標來改善生成模型的性能，並提出了可能的改進方法。
@@ -1070,6 +1130,8 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 2 (2018): Conditional Generation
+
 ### 核心主題  
 - 生成對抗網路（GAN）在多種數據類型和應用場景中的應用，包括影像、語音和影片。  
 
@@ -1105,6 +1167,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/DQNNMiAP5lw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 1 (2018): Introduction
 
 ### 文章整理：生成式人工智慧模型的對比與分析
 
@@ -1148,6 +1212,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/sU5CG8Z0zgw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 7 (2018): Info GAN, VAE-GAN, BiGAN
 
 ### 核心主題：特徵解耦（Feature Disentanglement）
 
@@ -1251,6 +1317,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 3 (2018): Unsupervised Conditional Generation
+
 # 文章重點整理
 
 ## 核心主題
@@ -1290,6 +1358,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/3JP-xuBJsyc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 6 (2018): WGAN, EBGAN
 
 ### 核心主題
 文章探討了生成對抗網絡（GAN）及其變體在圖像生成中的應用，重點介紹了兩種改進方法：基於能量的GAN（Energy-Based GAN, EBGAN）和損失敏感GAN（Loss-Sensitive GAN, LSGAN）。這些方法旨在解決傳統GAN訓練中 discriminator 和 generator 之間的平衡問題，提升生成模型的質量和穩定性。
@@ -1331,6 +1401,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/Xb1x4ZgV6iM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# GAN Lecture 9 (2018): Sequence Generation
 
 ### 核心主題
 - 探討無監督學習（Unsupervised Learning）在跨領域數據轉換中的應用及其潛力。
@@ -1394,6 +1466,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 8 (2018): Photo Editing
+
 # 文章整理：智能 Photoshop 與GAN技術的應用
 
 ## 核心主題
@@ -1447,6 +1521,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# GAN Lecture 10 (2018): Evaluation & Concluding Remarks
+
 ### 小結
 
 1. **核心主題**
@@ -1486,6 +1562,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/2-zGCx4iv_k/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# DRL Lecture 4: Q-learning (Advanced Tips)
 
 ### 核心主題  
 文章主要探討人工智慧中深度強化學習（Deep Reinforcement Learning, DRL）的多項優化技術及其綜合應用。核心圍繞如何提升DRL算法的性能、穩定性及效率，特別是通過整合多種技術來實現更佳的效果。
@@ -1578,6 +1656,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# DRL Lecture 3: Q-learning (Basic Idea)
+
 ### 核心主題  
 - **Q-Learning 演算法**：基於價值迭代的強化學習方法，用於學習最佳策略。  
 - **回放_BUFFER（Replay Buffer）**：用於儲存過去經歷以增強學習效果。  
@@ -1615,6 +1695,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/z95ZYgPgXOY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# DRL Lecture 1: Policy Gradient (Review)
 
 ### 文章整理：Temporal Difference Learning 在深度 reinforcement learning 中的核心原理
 
@@ -1681,6 +1763,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# DRL Lecture 2:  Proximal Policy Optimization (PPO)
+
 ### 文章重點整理
 
 #### 核心主題
@@ -1734,6 +1818,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# DRL Lecture 8: Imitation Learning
+
 # 文章整理：模仿學習（Imitation Learning）與生成對抗網絡（GAN）在自然語言處理中的應用
 
 ## 核心主題
@@ -1784,6 +1870,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# DRL Lecture 5: Q-learning (Continuous Action)
+
 # 文章整理：連續行動空間中的深度強化學習方法
 
 ## 核心主題
@@ -1826,6 +1914,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# DRL Lecture 7: Sparse Reward
+
 ### 文章整理：Hierarchical Reinforcement Learning in AI
 
 #### 1. 核心主題
@@ -1862,6 +1952,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/j82QLgfhFiY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# DRL Lecture 6: Actor-Critic
 
 # 文章重點整理：Actor-Critic 方法與生成式對抗網路（GAN）的連接
 
@@ -1932,6 +2024,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# HW1 (presented by 黃文璁,蔡昕宇,許傑盛)
+
 
 </details>
 
@@ -1942,6 +2036,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/95hyyAMJieU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW1 (presented by 毛弘仁, 王克安, 林哲賢)
 
 
 </details>
@@ -1954,6 +2050,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
         alt="[Youtube]" width="200">
 </a>
 
+# HW1 (presented by 劉俊緯, 吳宗翰)
+
 
 </details>
 
@@ -1964,6 +2062,8 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
     <img src="https://img.youtube.com/vi/TR937eL1WLc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW3 (presented by 謝宏祺, 朱柏澄, 蔡昀達)
 
 
 </details>

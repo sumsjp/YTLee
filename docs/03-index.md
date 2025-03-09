@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Anomaly Detection (5/7)
+
 ### 小節一：核心主題  
 - 文章探討了在多人線上遊戲中，玩家行為分異（尤其是「小白」或破壞性玩家）的分析與識別方法。  
 - 主要焦點放在如何通過玩家行為數據來區分正常玩家與異常玩家。  
@@ -61,6 +63,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Anomaly Detection (6/7)
+
 ### 小節一：核心主題  
 - 文章圍繞著異常偵測的核心思想展開討論，強調利用概率密度函數來建模數據分布，進而識別異常樣本。
 
@@ -94,6 +98,8 @@
     <img src="https://img.youtube.com/vi/6W8FqUGYyDo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Anomaly Detection (7/7)
 
 # 文章整理：異常偵測的機器學習方法
 
@@ -144,6 +150,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Attack ML Models (1/8)
+
 
 </details>
 
@@ -154,6 +162,8 @@
     <img src="https://img.youtube.com/vi/zOdg05BwE7I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Attack ML Models (2/8)
 
 
 </details>
@@ -166,6 +176,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Attack ML Models (3/8)
+
 
 </details>
 
@@ -176,6 +188,8 @@
     <img src="https://img.youtube.com/vi/qjnMoWmn1FQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Attack ML Models (4/8)
 
 
 </details>
@@ -188,6 +202,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Attack ML Models (5/8)
+
 
 </details>
 
@@ -198,6 +214,8 @@
     <img src="https://img.youtube.com/vi/z2nmPDLEXI0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Attack ML Models (6/8)
 
 
 </details>
@@ -210,6 +228,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Attack ML Models (7/8)
+
 
 </details>
 
@@ -220,6 +240,8 @@
     <img src="https://img.youtube.com/vi/ah_Ttx6cIVU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Attack ML Models (8/8)
 
 
 </details>
@@ -232,6 +254,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Explainable ML (1/8)
+
 
 </details>
 
@@ -242,6 +266,8 @@
     <img src="https://img.youtube.com/vi/pNpk6DPYUh8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Explainable ML (2/8)
 
 
 </details>
@@ -254,6 +280,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Explainable ML (3/8)
+
 
 </details>
 
@@ -264,6 +292,8 @@
     <img src="https://img.youtube.com/vi/yORbWn7UsBs/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Explainable ML (4/8)
 
 
 </details>
@@ -276,6 +306,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Explainable ML (5/8)
+
 
 </details>
 
@@ -286,6 +318,8 @@
     <img src="https://img.youtube.com/vi/gotiBlOu18I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Explainable ML (8/8)
 
 
 </details>
@@ -298,6 +332,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Explainable ML (7/8)
+
 
 </details>
 
@@ -308,6 +344,8 @@
     <img src="https://img.youtube.com/vi/K1mWgthGS-A/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Explainable ML (6/8)
 
 
 </details>
@@ -320,6 +358,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Unsupervised Syntactic Parsing (ft. 莊永松同學)
+
 
 </details>
 
@@ -330,6 +370,8 @@
     <img src="https://img.youtube.com/vi/7qT5P9KJnWo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Life Long Learning (1/7)
 
 
 </details>
@@ -342,6 +384,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Life Long Learning (7/7)
+
 
 </details>
 
@@ -352,6 +396,8 @@
     <img src="https://img.youtube.com/vi/D4aN7urRp3E/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Life Long Learning (6/7)
 
 
 </details>
@@ -364,6 +410,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Life Long Learning (5/7)
+
 
 </details>
 
@@ -374,6 +422,8 @@
     <img src="https://img.youtube.com/vi/UgLx4rjcCO8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Life Long Learning (4/7)
 
 
 </details>
@@ -386,6 +436,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Life Long Learning (2/7)
+
 
 </details>
 
@@ -396,6 +448,8 @@
     <img src="https://img.youtube.com/vi/8uo3kJ509hA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Life Long Learning (3/7)
 
 
 </details>
@@ -408,6 +462,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – MAML (1/9)
+
 
 </details>
 
@@ -418,6 +474,8 @@
     <img src="https://img.youtube.com/vi/9k4ND-xjcgM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning – MAML (2/9)
 
 
 </details>
@@ -430,6 +488,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – MAML (3/9)
+
 
 </details>
 
@@ -440,6 +500,8 @@
     <img src="https://img.youtube.com/vi/knaAdp5uWRg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning – MAML (4/9)
 
 
 </details>
@@ -452,6 +514,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – MAML (5/9)
+
 
 </details>
 
@@ -462,6 +526,8 @@
     <img src="https://img.youtube.com/vi/dV-Crj8hsJM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning – MAML (6/9)
 
 
 </details>
@@ -474,6 +540,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – MAML (8/9)
+
 
 </details>
 
@@ -484,6 +552,8 @@
     <img src="https://img.youtube.com/vi/mxqzGwP_Qys/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning – MAML (7/9)
 
 
 </details>
@@ -496,6 +566,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – MAML (9/9)
+
 
 </details>
 
@@ -506,6 +578,8 @@
     <img src="https://img.youtube.com/vi/NjZygLDXxjg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning - Gradient Descent as LSTM (1/3)
 
 
 </details>
@@ -518,6 +592,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning - Gradient Descent as LSTM (2/3)
+
 
 </details>
 
@@ -528,6 +604,8 @@
     <img src="https://img.youtube.com/vi/p0Tn8oZWZbQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning - Gradient Descent as LSTM (3/3)
 
 
 </details>
@@ -540,6 +618,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – Metric-based (1/3)
+
 
 </details>
 
@@ -550,6 +630,8 @@
     <img src="https://img.youtube.com/vi/scK2EIT7klw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Meta Learning – Metric-based (2/3)
 
 
 </details>
@@ -562,6 +644,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning – Metric-based (3/3)
+
 
 </details>
 
@@ -572,6 +656,8 @@
     <img src="https://img.youtube.com/vi/hhsfEaVaeQU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# More about Auto-encoder (2/4)
 
 
 </details>
@@ -584,6 +670,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# More about Auto-encoder (3/4)
+
 
 </details>
 
@@ -594,6 +682,8 @@
     <img src="https://img.youtube.com/vi/DRLsw4CshqU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# More about Auto-encoder (4/4)
 
 
 </details>
@@ -606,6 +696,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# More about Auto-encoder (1/4)
+
 
 </details>
 
@@ -616,6 +708,8 @@
     <img src="https://img.youtube.com/vi/dPp8rCAnU_A/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Network Compression (1/6)
 
 
 </details>
@@ -628,6 +722,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Network Compression (2/6)
+
 
 </details>
 
@@ -639,6 +735,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Network Compression (3/6)
+
 
 </details>
 
@@ -649,6 +747,8 @@
     <img src="https://img.youtube.com/vi/fMsNf0ufYnY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Network Compression (4/6)
 
 
 </details>

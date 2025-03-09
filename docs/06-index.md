@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】類神經網路訓練不起來怎麼辦 (四)：損失函數 (Loss) 也可能有影響
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/HYUXEeh3kwY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】類神經網路訓練不起來怎麼辦 (三)：自動調整學習速率 (Learning Rate)
 
 
 </details>
@@ -28,6 +32,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】自注意力機制 (Self-attention) (上)
+
 
 </details>
 
@@ -38,6 +44,8 @@
     <img src="https://img.youtube.com/vi/OP5HcXJg2Aw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】卷積神經網路 (Convolutional Neural Networks, CNN)
 
 
 </details>
@@ -50,6 +58,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 3: Roadmap of Improving Model
+
 
 </details>
 
@@ -60,6 +70,8 @@
     <img src="https://img.youtube.com/vi/yz7QS1I6omw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 4: What to do when optimization fails? (1/4)
 
 
 </details>
@@ -72,6 +84,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 5: What to do when optimization fails? (2/4)
+
 
 </details>
 
@@ -82,6 +96,8 @@
     <img src="https://img.youtube.com/vi/jqVONJ-Wn8w/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 8: Classification (Short Version)
 
 
 </details>
@@ -94,6 +110,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 9: Convolutional Neural Networks
+
 
 </details>
 
@@ -104,6 +122,8 @@
     <img src="https://img.youtube.com/vi/0djMUi2-uV4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 10: Self-attention (1/2)
 
 
 </details>
@@ -116,6 +136,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】類神經網路訓練不起來怎麼辦 (五)： 批次標準化 (Batch Normalization) 簡介
+
 
 </details>
 
@@ -126,6 +148,8 @@
     <img src="https://img.youtube.com/vi/n9TlOhRjYoc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】Transformer (上)
 
 
 </details>
@@ -138,6 +162,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】自注意力機制 (Self-attention) (下)
+
 
 </details>
 
@@ -148,6 +174,8 @@
     <img src="https://img.youtube.com/vi/N6aRv06iv2g/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】Transformer (下)
 
 
 </details>
@@ -160,6 +188,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (一) – 基本概念介紹
+
 
 </details>
 
@@ -170,6 +200,8 @@
     <img src="https://img.youtube.com/vi/jNY1WBb8l4U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (二) – 理論介紹與WGAN
 
 
 </details>
@@ -182,6 +214,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 6: What to do when optimization fails? (3/4)
+
 
 </details>
 
@@ -192,6 +226,8 @@
     <img src="https://img.youtube.com/vi/zeCDPYZli0k/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 11: Self-attention (2/2)
 
 
 </details>
@@ -204,6 +240,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 7: What to do when optimization fails? (4/4)
+
 
 </details>
 
@@ -214,6 +252,8 @@
     <img src="https://img.youtube.com/vi/zmOuJkH9l9M/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 12: Transformer (1/2)
 
 
 </details>
@@ -226,6 +266,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 13: Transformer (2/2)
+
 
 </details>
 
@@ -236,6 +278,8 @@
     <img src="https://img.youtube.com/vi/Mb9kddLfLRI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 14:  Generative Adversarial Network (GAN) (1/4)
 
 
 </details>
@@ -248,6 +292,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 15:  Generative Adversarial Network (GAN) (2/4)
+
 
 </details>
 
@@ -258,6 +304,8 @@
     <img src="https://img.youtube.com/vi/MP0BnVH2yOo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (三) – 生成器效能評估與條件式生成
 
 
 </details>
@@ -270,6 +318,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (四) – Cycle GAN
+
 
 </details>
 
@@ -280,6 +330,8 @@
     <img src="https://img.youtube.com/vi/e422eloJ0W4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】自督導式學習 (Self-supervised Learning) (一) – 芝麻街與進擊的巨人
 
 
 </details>
@@ -292,6 +344,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】自督導式學習 (Self-supervised Learning) (二) – BERT簡介
+
 
 </details>
 
@@ -302,6 +356,8 @@
     <img src="https://img.youtube.com/vi/ExXA05i8DEQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】自督導式學習 (Self-supervised Learning) (三) – BERT的奇聞軼事
 
 
 </details>
@@ -314,6 +370,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 19:  Self-supervised Learning (aka Foundation Model) (2/3)
+
 
 </details>
 
@@ -324,6 +382,8 @@
     <img src="https://img.youtube.com/vi/mEcVirwmrkA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 18:  Self-supervised Learning (aka Foundation Model) (1/3)
 
 
 </details>
@@ -336,6 +396,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 17:  Generative Adversarial Network (GAN) (4/4)
+
 
 </details>
 
@@ -346,6 +408,8 @@
     <img src="https://img.youtube.com/vi/XcAmPtMQqS8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 16:  Generative Adversarial Network (GAN) (3/4)
 
 
 </details>
@@ -358,6 +422,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】自督導式學習 (Self-supervised Learning) (四) – GPT的野望
+
 
 </details>
 
@@ -368,6 +434,8 @@
     <img src="https://img.youtube.com/vi/3oHlf8-J3Nc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】自編碼器 (Auto-encoder) (上) – 基本概念
 
 
 </details>
@@ -380,6 +448,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】來自人類的惡意攻擊 (Adversarial Attack) (上) – 基本概念
+
 
 </details>
 
@@ -390,6 +460,8 @@
     <img src="https://img.youtube.com/vi/JZvEzb5PV3U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】自編碼器 (Auto-encoder) (下) – 領結變聲器與更多應用
 
 
 </details>
@@ -402,6 +474,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 22:  Auto-encoder (2/2)
+
 
 </details>
 
@@ -412,6 +486,8 @@
     <img src="https://img.youtube.com/vi/xw6K4naFWFg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 23:  Adversarial Attack (1/2)
 
 
 </details>
@@ -424,6 +500,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 21:  Auto-encoder (1/2)
+
 
 </details>
 
@@ -434,6 +512,8 @@
     <img src="https://img.youtube.com/vi/6sAf24QvJEY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 20:  Self-supervised Learning (aka Foundation Model) (3/3)
 
 
 </details>
@@ -446,6 +526,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】來自人類的惡意攻擊 (Adversarial Attack) (下) – 類神經網路能否躲過人類深不見底的惡意？
+
 
 </details>
 
@@ -456,6 +538,8 @@
     <img src="https://img.youtube.com/vi/WQY85vaQfTI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】機器學習模型的可解釋性 (Explainable ML) (上) – 為什麼類神經網路可以正確分辨寶可夢和數碼寶貝呢？
 
 
 </details>
@@ -468,6 +552,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 24:  Adversarial Attack (2/2)
+
 
 </details>
 
@@ -478,6 +564,8 @@
     <img src="https://img.youtube.com/vi/4rVD1EOaAX4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 25: Explainable ML (1/2)
 
 
 </details>
@@ -490,6 +578,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】概述領域自適應 (Domain Adaptation)
+
 
 </details>
 
@@ -500,6 +590,8 @@
     <img src="https://img.youtube.com/vi/0ayIPqbdHYQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】機器學習模型的可解釋性 (Explainable ML) (下) –機器心中的貓長什麼樣子？
 
 
 </details>
@@ -512,6 +604,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (一) – 增強式學習跟機器學習一樣都是三個步驟
+
 
 </details>
 
@@ -522,6 +616,8 @@
     <img src="https://img.youtube.com/vi/US8DFaAZcp4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (二) – Policy Gradient 與修課心情
 
 
 </details>
@@ -534,6 +630,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 26: Explainable ML (2/2)
+
 
 </details>
 
@@ -544,6 +642,8 @@
     <img src="https://img.youtube.com/vi/0oucZNfBXlI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 28: Introduction of Reinforcement Learning (RL) (1/5)
 
 
 </details>

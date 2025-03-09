@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Deep Learning for Coreference Resolution
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/hTNE8iFXEMU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] SAGAN, BigGAN, SinGAN, GauGAN, GANILLA, NICE-GAN (由助教吳宗翰同學講授)
 
 
 </details>
@@ -28,6 +32,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Deep Learning for Constituency Parsing
+
 
 </details>
 
@@ -38,6 +44,8 @@
     <img src="https://img.youtube.com/vi/-C8RUrWb7F8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] More about Anomaly Detection (由助教林政豪同學講授)
 
 
 </details>
@@ -50,6 +58,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] More about Domain Adaptation (1/2) (由助教趙崇皓同學講授)
+
 
 </details>
 
@@ -60,6 +70,8 @@
     <img src="https://img.youtube.com/vi/-DQBMAULXX8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] More about Domain Adaptation (2/2) (由助教楊晟甫同學講授)
 
 
 </details>
@@ -72,6 +84,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] Self-supervised Learning (由助教劉記良同學講授)
+
 
 </details>
 
@@ -82,6 +96,8 @@
     <img src="https://img.youtube.com/vi/QBbeIsiqw-U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] More about Meta Learning (由助教陳建成同學講授) (1/2)
 
 
 </details>
@@ -94,6 +110,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] More about Meta Learning (由助教陳建成同學講授) (2/2)
+
 
 </details>
 
@@ -104,6 +122,8 @@
     <img src="https://img.youtube.com/vi/8rDN1jUI82g/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Multilingual BERT
 
 
 </details>
@@ -116,6 +136,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Deep Learning for Dependency Parsing
+
 
 </details>
 
@@ -126,6 +148,8 @@
     <img src="https://img.youtube.com/vi/gRfTfXCe3LA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Deep Learning for Question Answering (1/2) (重新上傳)
 
 
 </details>
@@ -138,6 +162,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Audio BERT (1/2) (由助教劉廷緯同學講授)
+
 
 </details>
 
@@ -148,6 +174,8 @@
     <img src="https://img.youtube.com/vi/0KNvAYb1emQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Audio BERT (2/2) (由助教紀伯翰同學和助教楊書文同學講授)
 
 
 </details>
@@ -160,6 +188,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] 來自獵人暗黑大陸的模型 GPT-3
+
 
 </details>
 
@@ -170,6 +200,8 @@
     <img src="https://img.youtube.com/vi/h_Lptoq8spQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Deep Learning for Question Answering (2/2)
 
 
 </details>
@@ -182,6 +214,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] RL - Model-based, Large-scale, Meta, Multi-agent, Hide-and-seek, Alpha Star (由助教林義聖同學講授)
+
 
 </details>
 
@@ -192,6 +226,8 @@
     <img src="https://img.youtube.com/vi/mk6v2raVGfk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Controllable Chatbot
 
 
 </details>
@@ -204,6 +240,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] More about Lifelong Learning (由助教楊舒涵同學講授)
+
 
 </details>
 
@@ -214,6 +252,8 @@
     <img src="https://img.youtube.com/vi/tRDF_w700Uw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Dialogue State Tracking (as Question Answering)
 
 
 </details>
@@ -226,6 +266,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ACL 2020] Worse WER, but Better BLEU? (Speaker: Shun-Po Chuang)
+
 
 </details>
 
@@ -236,6 +278,8 @@
     <img src="https://img.youtube.com/vi/SNT7LAGsLDY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 這門課在學什麼？
 
 
 </details>
@@ -248,6 +292,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 線性代數 vs. 電機系其他必修課
+
 
 </details>
 
@@ -258,6 +304,8 @@
     <img src="https://img.youtube.com/vi/J-U_zKg15f4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 課程速覽
 
 
 </details>
@@ -270,6 +318,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 向量 (Vector)
+
 
 </details>
 
@@ -280,6 +330,8 @@
     <img src="https://img.youtube.com/vi/Ww3eAfLZjME/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 線性系統 = 線性方程組 (System of Linear Equations)
 
 
 </details>
@@ -292,6 +344,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 矩陣 (Matrix)
+
 
 </details>
 
@@ -302,6 +356,8 @@
     <img src="https://img.youtube.com/vi/cf-WpQX70Vs/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 那些有名有姓的矩陣
 
 
 </details>
@@ -314,6 +370,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 矩陣乘上向量的一些特性
+
 
 </details>
 
@@ -324,6 +382,8 @@
     <img src="https://img.youtube.com/vi/6wPSfjwm_qk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 線性系統 = 線性方程組 (System of Linear Equations) = 矩陣乘上向量
 
 
 </details>
@@ -336,6 +396,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 線性方程組 (System of Linear Equations) 有解還是無解 (高中觀點)
+
 
 </details>
 
@@ -346,6 +408,8 @@
     <img src="https://img.youtube.com/vi/OHgibs_pDN8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 線性方程組 (System of Linear Equations) 有解還是無解 (線性代數觀點)
 
 
 </details>
@@ -358,6 +422,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] 線性組合 (Linear Combination)
+
 
 </details>
 
@@ -368,6 +434,8 @@
     <img src="https://img.youtube.com/vi/-zIPQ8hcsps/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [線性代數] 在 Span 時耍廢的向量
 
 
 </details>
@@ -380,6 +448,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [線性代數] Span 的概念
+
 
 </details>
 
@@ -390,6 +460,8 @@
     <img src="https://img.youtube.com/vi/JWGVfVSvQwc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [INTERSPEECH 2020] VQVC+: One-Shot Voice Conversion by Vector Quantization and U-Net architecture
 
 
 </details>
@@ -402,6 +474,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [INTERSPEECH 2020] WG-WaveNet: Real-Time High-Fidelity Speech Synthesis without GPU
+
 
 </details>
 
@@ -412,6 +486,8 @@
     <img src="https://img.youtube.com/vi/3b1S20iVyMY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [INTERSPEECH 2020]  Semi-supervised Learning for Multi-speaker Text-to-speech Synthesis
 
 
 </details>
@@ -424,6 +500,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [INTERSPEECH 2020] DARTS-ASR: Differentiable Architecture Search for Multilingual Speech Recognition
+
 
 </details>
 
@@ -434,6 +512,8 @@
     <img src="https://img.youtube.com/vi/7mf7nSh8dGE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [INTERSPEECH 2020] SpeechBERT: Model for End-to-end Spoken Question Answering
 
 
 </details>
@@ -446,6 +526,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [INTERSPEECH 2020] Understanding Self-Attention of Self-Supervised Audio Transformers
+
 
 </details>
 
@@ -456,6 +538,8 @@
     <img src="https://img.youtube.com/vi/k81atCYWpzg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [INTERSPEECH 2020] Defense for Black-box Attacks on Anti-spoofing Models by Self-Supervised Learning
 
 
 </details>
@@ -468,6 +552,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 21-1: Recurrent Neural Network (Part I) English version
+
 
 </details>
 
@@ -478,6 +564,8 @@
     <img src="https://img.youtube.com/vi/Ye018rCVvOo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】預測本頻道觀看人數 (上) - 機器學習基本概念簡介
 
 
 </details>
@@ -490,6 +578,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】預測本頻道觀看人數 (下) - 深度學習基本概念簡介
+
 
 </details>
 
@@ -500,6 +590,8 @@
     <img src="https://img.youtube.com/vi/Y87Ct23H3Kw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 1: Predicting the views of this channel - ML Introduction (1/2)
 
 
 </details>
@@ -512,6 +604,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 2: Predicting the views of this channel - ML Introduction (2/2)
+
 
 </details>
 
@@ -522,6 +616,8 @@
     <img src="https://img.youtube.com/vi/WeHM2xpYQpw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】機器學習任務攻略
 
 
 </details>
@@ -534,6 +630,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】類神經網路訓練不起來怎麼辦 (二)： 批次 (batch) 與動量 (momentum)
+
 
 </details>
 
@@ -544,6 +642,8 @@
     <img src="https://img.youtube.com/vi/QW6uINn7uGk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】類神經網路訓練不起來怎麼辦 (一)： 局部最小值 (local minima) 與鞍點 (saddle point)
 
 
 </details>

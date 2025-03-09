@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 27: Domain Adaptation
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/jbN0oYLtXps/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 29: Introduction of Reinforcement Learning (RL) (2/5)
 
 
 </details>
@@ -28,6 +32,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (三) - Actor-Critic
+
 
 </details>
 
@@ -38,6 +44,8 @@
     <img src="https://img.youtube.com/vi/73YyF1gmIus/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (四) - 回饋非常罕見的時候怎麼辦？機器的望梅止渴
 
 
 </details>
@@ -50,40 +58,207 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (五) - 如何從示範中學習？逆向增強式學習 (Inverse RL)
+
 
 </details>
 
 <details>
-<summary>356. 【機器學習2021】機器終身學習 (Life Long Learning, LL) (一) - 為什麼今日的人工智慧無法成為天網？災難性遺忘(Catastrophic Forgetting)</summary><br>
+<summary>356. [2021-06-05] 【機器學習2021】機器終身學習 (Life Long Learning, LL) (一) - 為什麼今日的人工智慧無法成為天網？災難性遺忘(Catastrophic Forgetting)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=rWF9sg5w6Zk" target="_blank">
     <img src="https://img.youtube.com/vi/rWF9sg5w6Zk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】機器終身學習 (Life Long Learning, LL) (一) - 為什麼今日的人工智慧無法成為天網？災難性遺忘(Catastrophic Forgetting)
 
+### 核心主題：Life Long Learning（終身學習）的挑戰與評估方法
+
+#### 主要觀念：
+1. **終身學習的定義**：
+   - 終身學習是指機器在面對一系列連續任務時，能夠逐漸適應並提高性能，而不斷更新其知識和能力。
+
+2. **主要挑戰**：
+   - **數據災氾（Data Flood）**：隨著新任務的引入，舊任務的數據逐漸被淹沒，導致模型可能遺忘或無法有效遷移已有知識。
+   - **知識遷移的困難性**：新舊任務之間可能存在概念差異，機器需要有效地將已習得的知識應用到新的情境中。
+
+3. **評估方法的核心思想**：
+   - 終身學習的效果通常通過模型在完成所有任務後，對先前所有任務的性能進行綜合評估來衡量。
+   - 評估方法包括向前遷移（Forward Transfer）和向後遷移（Backward Transfer），用於分析模型在新增任務後對舊任務影響的程度。
+
+#### 問題原因：
+1. **數據淹沒**：
+   - 新任務的大量數據可能蓋過舊任務的數據，導致模型性能下降。
+   
+2. **遷移學習的局限性**：
+   - 現有方法往往未能有效處理新舊任務之間的概念差異，影響遷移效果。
+
+#### 解cision 方法：
+1. **向前遷移（Forward Transfer）**：
+   - 評估在未接觸到某項新任務時，模型已掌握的能力。
+   - 使用指標：$RT-1, T$ 指標，計算在新增任務前後模型性能的提升。
+
+2. **向後遷移（Backward Transfer）**：
+   - 評估學習新任務後對舊任務性能的影響。
+   - 使用指標：$R_{T-1, 1}$ 和 $R_1,1$，計算在新增任務前後舊任務性能的下降幅度。
+
+3. **綜合評估方法**：
+   - 將所有任務完成後的正確率平均值作為終身學習系統的整體評估指標。
+   - 評估模型在完成所有任務後對早期任務的保持能力，通常會逐漸降低。
+
+#### 優 化 方 式：
+1. **提出高階遷移機制**：
+   - 採用更加智能的遷移學習策略，例如使用元學習（Meta-Learning）或多層次表示學習，來提高舊任務知識的保留和新舊任務之間的遷移效果。
+
+2. **數據平衡技術**：
+   - 引入數據再加權或生成技術，平衡新舊任務的數據影響力，防止數據淹沒現象。
+
+3. **網絡架構優化**：
+   - 設計特定的神經網絡結構，如分離式憶憶儲單元，來保存和更新不同任務的知識，避免相互幹擾。
+
+#### 結論與展望：
+1. **目前挑戰**：
+   - 大多數終身學習方法仍舊面臨遷移效率低、數據淹沒等問題，導致性能未能達到理想狀態。
+   - 向後遷移（Backward Transfer）指標通常為負，表顯模型在新增任務後舊能力的下降。
+
+2. **未來方向**：
+   - 開發更加高效的遷移學習算法，提升新舊任務之間的知識共享和保留效果。
+   - 探索新型網絡架構和數據處理技術，以應對終身學習中的多樣化挑戰。
 </details>
 
 <details>
-<summary>357. 【機器學習2021】機器終身學習 (Life Long Learning, LL) (二) - 災難性遺忘(Catastrophic Forgetting)的克服之道</summary><br>
+<summary>357. [2021-06-05] 【機器學習2021】機器終身學習 (Life Long Learning, LL) (二) - 災難性遺忘(Catastrophic Forgetting)的克服之道</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Y9Jay_vxOsM" target="_blank">
     <img src="https://img.youtube.com/vi/Y9Jay_vxOsM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】機器終身學習 (Life Long Learning, LL) (二) - 災難性遺忘(Catastrophic Forgetting)的克服之道
 
+### 研究領域：終身學習（Lifelong Learning）/ 持續學習（Continual Learning）
+
+#### 核心概念：
+- **終身學習（Lifelong Learning）**：指機器在現實環境中逐步接觸新任務，並在不遺忘舊知識的前提下，不斷提升學習能力。
+- **持續學習（Continual Learning）**：強調模型在線性時間內處理非穩態數據流的能力，避免 catastrophic forgetting。
+
+---
+
+### 文章重點整理
+
+#### 1. 核心主題
+- 探討終身學習的三個情境及其挑戰。
+- 強調模型在連續任務學習中避免知識遺忘的重要性。
+- 分析不同學習策略對模型性能的影響。
+
+#### 2. 主要觀念
+- **非穩態數據流**：學習任務和數據分布隨時間變化，且新舊任務相互影響。
+- **逐次任務學習**：模型需在接觸每一項新任務後，保持並提升已有能力。
+- ** Curriculum Learning**：通過合理安排學習任務的順序，提高學習效率。
+
+#### 3. 問題原因
+- **Catastrophic Forgetting**：傳統深度學習方法易因更新參數而遺忘舊知識。
+- **任務依賴性**：新舊任務之間的特性差異可能互相干擾。
+- **模型容量限制**：固定架構難以適應不斷增加的新任務。
+
+#### 4. 解決方法
+##### (1) 知識保存技術
+- **早期 freezing 技術**：鎖定關鍵網路層，防止其參數更新。
+- ** elastic weight consolidation**：動態調控 synaptic intelligence，保護重要權重。
+- **Progressive Neural Networks**：逐次增加新ネットワーク層，避免幹擾舊結構。
+
+##### (2) 數據保存技術
+- **生成數據方法**：利用GAN等模型生成虛擬數據，平衡新舊任務的訓練數據量。
+- **經驗回放**：存儲並重複使用過去任務的數據，防止遺忘。
+
+##### (3) 網路架構優化
+- **多任務學習架構**：設計共享和專用子網絡，實現多任務協作。
+- **分模塊結構**：將網路劃分為可更新和不可更新部分，平衡新舊任務需求。
+
+#### 5. 優化方式
+- ** Curriculum Learning**：按特定順序學習任務，降低 catastrophic forgetting 的風險。
+- **動態模型調整**：根據新舊任務特性，動態優化模型架構和參數。
+- **聯合學習策略**：結合知識保存、數據生成和網絡架構優化，提升整體性能。
+
+#### 6. 結論
+- 終身學習在實際應用中具有重要意義，需綜合考慮任務特性、模型架枸和學習策略。
+- 相同順序的任務學習效果差異明顯， Curriculum Learning 可顯著提升學習效率。
+- 未來研究可進一步探索更高效的知識保存方法和動態適應機制。
+
+---
+
+### 研究領域重要概念
+1. **終身學習（Lifelong Learning）**：指機器在不斷變化的環境中，持續接觸新任務並累積知識的能力。
+2. **持續學習（Continual Learning）**：強調模型在處理非穩態數據流時的實時性與有效性。
+3. ** Curriculum Learning**：通過合理安排學習內容的順序，提升學習效率和效果的方法。
+
+---
+
+以上為文章整理之重點，各小節以條列格式清晰地闡述了核心主題、主要觀念、問題原因、解決方法、優化方式及結論。
 </details>
 
 <details>
-<summary>358. 【機器學習2021】神經網路壓縮 (Network Compression) (一) - 類神經網路剪枝 (Pruning) 與大樂透假說 (Lottery Ticket Hypothesis)</summary><br>
+<summary>358. [2021-06-05] 【機器學習2021】神經網路壓縮 (Network Compression) (一) - 類神經網路剪枝 (Pruning) 與大樂透假說 (Lottery Ticket Hypothesis)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=utk3EnAUh-g" target="_blank">
     <img src="https://img.youtube.com/vi/utk3EnAUh-g/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】神經網路壓縮 (Network Compression) (一) - 類神經網路剪枝 (Pruning) 與大樂透假說 (Lottery Ticket Hypothesis)
 
+### 文章重點整理
+
+#### 核心主題
+- **網絡修剪（Network Pruning）的有效性與影響**
+- **大樂透假說（Lottery Ticket Hypothesis, LTH）的討論與爭議**
+
+#### 主要觀念
+1. **大樂透假說的核心思想**：
+   - 經過訓練後的大型神經網絡中，存在一些小型的子網絡（_lottery tickets_），這些子網絡在隨機初始化時即具有良好的學習能力。
+   - 修剪大型網絡以保留這些優秀的子網絡，並在修剪後進行微調，可以達到與原網絡相近或甚至更佳的性能。
+
+2. **反對大樂透假說的研究**：
+   - 某些研究指出，直接訓練小型網絡（而非修剪後的網絡）在適當調整訓練參數的情況下，可以獲得 competitive 的性能。
+   - 網絡修剪的效果可能受到學習率和修剪策略的影響。
+
+#### 問題原因
+1. **大樂透假說的局限性**：
+   - 修剪後的網絡需要依賴從大型網絡中繼承的參數，這限制了其通用性和可解釋性。
+   - 在某些情況下（如高.learning rate或結構化修剪），大樂透假說的效果並不顯著。
+
+2. **直接訓練小型網絡的挑戰**：
+   - 小型網絡在訓練初期可能表現 inferior，但通過增加訓練步數或調整超參數，可以逐步提升性能。
+
+#### 解決方法
+1. **修剪後網絡的微調**：
+   - 在修剪大型網絡後，對保留的部分進行額外的微調以優化性能。
+
+2. **直接訓練小型網絡的策略**：
+   - 增加訓練數據或訓練步數。
+   - 調整學習率和正則化參數以提高訓練效果。
+
+3. **多樣化修剪策略**：
+   - 採用結構化修剪（如按通道或 neurons 進行修剪），而非完全不結構化的修剪，可能獲得更好的結果。
+
+#### 結論
+1. **大樂透假說的影響**：
+   - 儘管在某些條件下成立，但其普適性受到質疑。未來的研究需要進一步探討其適用範圍和限制。
+
+2. **網絡修剪與直接訓練的平衡**：
+   - 修剪技術在特定情況下有效，但直接訓練小型網絡在適當調整後也可以獲得競爭力。
+   - 網絡規模的選擇應該根據具體任務和數據集來定。
+
+3. **未來研究方向**：
+   - 探討不同修剪策略對性能的影響。
+   - 深入研究大樂透假說在不同架構和任務中的表現。
+   - 資源受限的情況下，探索如何在不依賴大型網絡的前提下，提升小型模型的效果。
+
+---
+
+### 總結
+文章圍繞網絡修剪的有效性展開了深入探討，既肯定了大樂透假說的貢獻，也指出了其局限性。同時，提出了直接訓練小型網絡的可能性和條件，為網絡設計提供了多樣化的選擇。未來的研究需進一步驗證不同策略在各種場景下的效果，以期找到最優的模型壓縮與訓練方法。
 </details>
 
 <details>
@@ -93,6 +268,8 @@
     <img src="https://img.youtube.com/vi/-2r4cqDP4BY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 34: Life-long Learning (2/2)
 
 ### 核心主題
 - **_life-long learning (持續學習)**: 探討模型在連續任務學習中如何避免 catastrophic forgetting（災難性遺忘），並在不同任務之間保持良好的性能。
@@ -136,6 +313,8 @@
     <img src="https://img.youtube.com/vi/yAX8Ydfek_I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 33: Life-long Learning (1/2)
 
 ### 文章重點整理
 
@@ -187,6 +366,8 @@
     <img src="https://img.youtube.com/vi/pibO_5JhQ4U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 31: Introduction of Reinforcement Learning (RL) (4/5)
 
 ### 文章重點整理
 
@@ -260,6 +441,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 30: Introduction of Reinforcement Learning (RL) (3/5)
+
 # 文章整理：深度強化學習中的策略.gradient descent 方法
 
 ## 核心主題
@@ -332,6 +515,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 32: Introduction of Reinforcement Learning (RL) (5/5)
+
 ### 小節歸納
 
 #### 核心主題
@@ -373,6 +558,8 @@
     <img src="https://img.youtube.com/vi/xrlbLPaq_Og/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】神經網路壓縮 (Network Compression) (二) - 從各種不同的面向來壓縮神經網路
 
 # 文章重點整理：網絡壓縮技術研究與應用
 
@@ -421,6 +608,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】元學習 Meta Learning (一) - 元學習跟機器學習一樣也是三個步驟
+
 
 </details>
 
@@ -431,6 +620,8 @@
     <img src="https://img.youtube.com/vi/Q68Eh-wm1Ts/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2021】元學習 Meta Learning (二) - 萬物皆可 Meta
 
 
 </details>
@@ -443,6 +634,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2021】課程結語 - 最後的業配並改編《為學一首示子姪》作結
+
 
 </details>
 
@@ -453,6 +646,8 @@
     <img src="https://img.youtube.com/vi/CB0a3aBwND8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ML 2021 (English version)] Lecture 35: Network Compression (1/2)
 
 ### 小節整理：文章重點歸納
 
@@ -519,6 +714,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ML 2021 (English version)] Lecture 36: Network Compression (2/2)
+
 ### 重點整理
 
 #### 核心主題
@@ -572,6 +769,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# SUPERB: 語音上的自督導式學習模型居然十項全能？
+
 # 文章重點整理
 
 ## 核心主題
@@ -614,6 +813,8 @@
     <img src="https://img.youtube.com/vi/GTjwYzFG54E/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# SUPERB: Is self-supervised learning universal in speech processing tasks? (English version)
 
 ### 小節歸納
 
@@ -659,6 +860,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2022】開學囉~ 又要週更了~
+
 
 </details>
 
@@ -669,6 +872,8 @@
     <img src="https://img.youtube.com/vi/_j9MVVcvyZI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習 2022】再探寶可夢、數碼寶貝分類器 — 淺談機器學習原理
 
 
 </details>
@@ -681,6 +886,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習 2022】為什麼用了驗證集 (validation set) 結果卻還是過擬合(overfitting)了呢？
+
 
 </details>
 
@@ -691,6 +898,8 @@
     <img src="https://img.youtube.com/vi/yXd2D5J0QDU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習 2022】魚與熊掌可以兼得的深度學習
 
 
 </details>
@@ -703,6 +912,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習 2022】各式各樣神奇的自注意力機制 (Self-attention) 變型
+
 
 </details>
 
@@ -713,6 +924,8 @@
     <img src="https://img.youtube.com/vi/NzElV8jTNmw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習 2022】如何有效的使用自督導式模型 - Data-Efficient & Parameter-Efficient Tuning (由姜成翰助教講授)
 
 
 </details>
@@ -725,6 +938,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習 2022】語音與影像上的神奇自督導式學習 (Self-supervised Learning) 模型
+
 
 </details>
 
@@ -735,6 +950,8 @@
     <img src="https://img.youtube.com/vi/z-lRPFFYVJc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2022】自然語言處理上的對抗式攻擊 (由姜成翰助教講授) - Part 1
 
 
 </details>
@@ -747,6 +964,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2022】自然語言處理上的對抗式攻擊 (由姜成翰助教講授) - Part 2
+
 
 </details>
 
@@ -757,6 +976,8 @@
     <img src="https://img.youtube.com/vi/LP3q72MwE7A/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2022】自然語言處理上的對抗式攻擊 (由姜成翰助教講授) - Part 3
 
 
 </details>
@@ -769,6 +990,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2022】自然語言處理上的模仿攻擊 (Imitation Attack) 以及後門攻擊 (Backdoor Attack) (由姜成翰助教講授)
+
 
 </details>
 
@@ -779,6 +1002,8 @@
     <img src="https://img.youtube.com/vi/Pal2DbmiYpk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習 2022】惡搞自督導式學習模型 BERT 的三個故事
 
 
 </details>
@@ -791,6 +1016,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習 2022】各種奇葩的元學習 (Meta Learning) 用法
+
 
 </details>
 
@@ -801,6 +1028,8 @@
     <img src="https://img.youtube.com/vi/KPcA8QCTm5U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# AlphaTensor: 用增強式學習 (Reinforcement Learning) 找出更有效率的矩陣相乘演算法 (線性代數 2022 課程補充)
 
 
 </details>
@@ -813,6 +1042,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta 語音對語音翻譯技術背後的黑科技 (在繪圖 AI 中也有用上喔!)
+
 
 </details>
 
@@ -823,6 +1054,8 @@
     <img src="https://img.youtube.com/vi/e0aKI2GGZNg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ChatGPT (可能)是怎麼煉成的 - GPT 社會化的過程
 
 
 </details>
@@ -835,6 +1068,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】ChatGPT 原理剖析 (1/3) — 對 ChatGPT 的常見誤解
+
 
 </details>
 
@@ -846,6 +1081,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】ChatGPT 原理剖析 (2/3) — 預訓練 (Pre-train)
+
 
 </details>
 
@@ -856,6 +1093,8 @@
     <img src="https://img.youtube.com/vi/UsaZhQ9bY2k/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】ChatGPT 原理剖析 (3/3) — ChatGPT 所帶來的研究問題
 
 ### 核心主題：人工智能（AI）系統的倫理與技術挑戰
 
@@ -906,6 +1145,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】用 ChatGPT 和 Midjourney 來玩文字冒險遊戲
+
 
 </details>
 
@@ -916,6 +1157,8 @@
     <img src="https://img.youtube.com/vi/phQK8xZpgoU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】快速了解機器學習基本原理 (1/2) (已經略懂機器學習的同學可以跳過這段)
 
 
 </details>
@@ -928,6 +1171,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】快速了解機器學習基本原理 (2/2) (已經略懂機器學習的同學可以跳過這段)
+
 
 </details>
 
@@ -938,6 +1183,8 @@
     <img src="https://img.youtube.com/vi/AihBniegMKg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】生成式學習的兩種策略：要各個擊破，還是要一次到位
 
 # 文章整理：生成策略在文本和影像生成中的應用
 
@@ -994,6 +1241,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】能夠使用工具的AI：New Bing, WebGPT, Toolformer
+
 
 </details>
 
@@ -1004,6 +1253,8 @@
     <img src="https://img.youtube.com/vi/F58vJcGgjt0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】Finetuning vs. Prompting：對於大型語言模型的不同期待所衍生的兩類使用方式 (1/3)
 
 # 文章重點整理
 
@@ -1069,6 +1320,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】Finetuning vs. Prompting：對於大型語言模型的不同期待所衍生的兩類使用方式 (2/3)
+
 ### 小節分類整理
 
 #### 1. 核心主題
@@ -1110,6 +1363,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】Finetuning vs. Prompting：對於大型語言模型的不同期待所衍生的兩類使用方式 (3/3)
+
 
 </details>
 
@@ -1120,6 +1375,8 @@
     <img src="https://img.youtube.com/vi/SaZTJJNOCOY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】大模型 + 大資料 = 神奇結果？(1/3)：大模型的頓悟時刻
 
 ### 文章重點整理
 
@@ -1161,6 +1418,8 @@
     <img src="https://img.youtube.com/vi/qycxA-xX_OY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】大模型 + 大資料 = 神奇結果？(2/3)：到底要多少資料才夠
 
 
 </details>

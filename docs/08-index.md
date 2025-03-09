@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】大模型 + 大資料 = 神奇結果？(3/3)：另闢蹊徑 — KNNLM
+
 
 </details>
 
@@ -17,6 +19,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】GPT-4 來了! GPT-4 這次有什麼神奇的能力呢？
+
 
 </details>
 
@@ -27,6 +31,8 @@
     <img src="https://img.youtube.com/vi/z83Edfvgd9g/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】速覽圖像生成常見模型
 
 ### 影像常用生成模型速覽：核心概念與整理
 
@@ -87,6 +93,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】淺談圖像生成模型 Diffusion Model 原理
+
 # 文章整理：基於擴散模型的文字輔助去噪算法研究
 
 ## 1. 核心主題
@@ -126,6 +134,8 @@
     <img src="https://img.youtube.com/vi/JbfcAaBT66U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】Stable Diffusion、DALL-E、Imagen 背後共同的套路
 
 ### 總述
 本文介紹了一種基於擴散模型（Diffusion Model）的文字到圖像生成框架，提出了一個三階段的文字影像生成方法，並詳細解構了每個階段的核心技術與實現方式。
@@ -212,6 +222,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】Diffusion Model 原理剖析 (1/4) (optional)
+
 
 </details>
 
@@ -222,6 +234,8 @@
     <img src="https://img.youtube.com/vi/73qwu77ZsTM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】Diffusion Model 原理剖析 (2/4) (optional)
 
 
 </details>
@@ -234,6 +248,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】Diffusion Model 原理剖析 (3/4) (optional)
+
 
 </details>
 
@@ -245,6 +261,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】Diffusion Model 原理剖析 (4/4) (optional)
+
 
 </details>
 
@@ -255,6 +273,8 @@
     <img src="https://img.youtube.com/vi/rK_rZFew1yc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】窮人如何低資源復刻自己的 ChatGPT
 
 ### 核心主題  
 文章圍繞貧困條件下如何利用低資源複合自己的Chain GPT展開討論，探討了在有限資源背景下，通過知識遷移、自我一致性和增強學習等方法提升語言模型性能的策略。
@@ -303,6 +323,8 @@
     <img src="https://img.youtube.com/vi/G44Lkj7XDsA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI】讓 AI 村民組成虛擬村莊會發生甚麼事？
 
 ### 核心主題
 - **Agent-Based Simulation**：基於代理的_simulation_用於模擬多agent系統的互動。
@@ -372,6 +394,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI】ChatGPT 可以自我反省!
+
 # 大型語言模型自我反省能力研究
 
 ## 核心主題  
@@ -406,6 +430,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【機器學習2023】語音基石模型 (助教張凱為講授) (2/2)
+
 
 </details>
 
@@ -416,6 +442,8 @@
     <img src="https://img.youtube.com/vi/m7Be7ppR6q0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【機器學習2023】語音基石模型 (助教張凱為講授) (1/2)
 
 
 </details>
@@ -428,6 +456,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI 2023】用語言模型來解釋語言模型 (上)
+
 
 </details>
 
@@ -438,6 +468,8 @@
     <img src="https://img.youtube.com/vi/OOvhBIIHITE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI 2023】用語言模型來解釋語言模型 (下)
 
 
 </details>
@@ -450,6 +482,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI 2023】讓 AI 做計劃然後自己運行自己
+
 
 </details>
 
@@ -460,6 +494,8 @@
     <img src="https://img.youtube.com/vi/vxxPtDCb9Go/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI 2023】FrugalGPT: 來看看窮人怎麼用省錢的方式來使用 ChatGPT (上)
 
 
 </details>
@@ -472,6 +508,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI 2023】FrugalGPT: 來看看窮人怎麼用省錢的方式來使用 ChatGPT (下)
+
 
 </details>
 
@@ -483,6 +521,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 80分鐘快速了解大型語言模型 (5:30 有咒術迴戰雷)
+
 
 </details>
 
@@ -493,6 +533,8 @@
     <img src="https://img.youtube.com/vi/AVIKFXLCPY8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第0講：課程說明 (17:15 有芙莉蓮雷)
 
 ### 小節一：課程介紹
 - **核心主題**：本課程為「深層式人工智慧導論」，旨在提供人工智能的基本概念和實踐經驗。
@@ -552,6 +594,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第1講：生成式AI是什麼？
+
 ### 小節結構：
 
 1. **核心主題**
@@ -588,6 +632,8 @@
     <img src="https://img.youtube.com/vi/glBhOQ1_RkE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第2講：今日的生成式人工智慧厲害在哪裡？從「工具」變為「工具人」
 
 # 文章重點整理
 
@@ -659,6 +705,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第3講：訓練不了人工智慧？你可以訓練你自己 (上) — 神奇咒語與提供更多資訊
+
 ### 文章整理重點
 
 #### 一、核心主題
@@ -715,6 +763,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第4講：訓練不了人工智慧？你可以訓練你自己 (中) — 拆解問題與使用工具
+
 ### 小節一：核心主題
 - 探討大型語言模型（LLMs）在工具使用中的能力與挑戰。
 - 分析LLMs如何通過自動生成適當的操作符和指令來調用外部工具。
@@ -769,6 +819,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第5講：訓練不了人工智慧？你可以訓練你自己 (下) — 讓語言彼此合作，把一個人活成一個團隊 (開頭有芙莉蓮雷，慎入)
+
 ### 核心主題
 - 語言模型（LLM）的團隊協作與未來發展。
 - 探討語言模型在複雜任務中的潛力及挑戰。
@@ -813,6 +865,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第6講：大型語言模型修練史 — 第一階段: 自我學習，累積實力 (熟悉機器學習的同學從 15:00 開始看起即可)
+
 ### 文章核心主題
 本篇文章主要探討了大型語言模型（LLMs）在自我學習階段的局限性及其後續改進的可能性。
 
@@ -844,6 +898,8 @@
     <img src="https://img.youtube.com/vi/Q9cNkUPXUB8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第7講：大型語言模型修練史 — 第二階段: 名師指點，發揮潛力 (兼談對 ChatGPT 做逆向工程與 LLaMA 時代的開始)
 
 # 文章重點整理
 
@@ -906,6 +962,8 @@
     <img src="https://img.youtube.com/vi/v12IKvF6Cj8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第8講：大型語言模型修練史 — 第三階段: 參與實戰，打磨技巧 (Reinforcement Learning from Human Feedback, RLHF)
 
 # 文章重點整理：語言模型的訓練與對齊過程
 
@@ -983,6 +1041,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第9講：以大型語言模型打造的AI Agent (14:50 教你怎麼打造芙莉蓮一級魔法使考試中出現的泥人哥列姆)
+
 # 文章重點整理
 
 ## 核心主題
@@ -1029,6 +1089,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [活動宣傳] Webinar Series for Advancements in Audio, Speech and Language Technology
+
 
 </details>
 
@@ -1039,6 +1101,8 @@
     <img src="https://img.youtube.com/vi/uhNsUCb2fJI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第10講：今日的語言模型是如何做文字接龍的 — 淺談Transformer (已經熟悉 Transformer 的同學可略過本講)
 
 ### 一、核心主題：Transformer架構及其Attention機制
 
@@ -1111,6 +1175,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第11講：大型語言模型在「想」什麼呢？ — 淺談大型語言模型的可解釋性
+
 # 文章重點整理
 
 ## 核心主題
@@ -1165,6 +1231,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第12講：淺談檢定大型語言模型能力的各種方式
+
 ### 小節一：核心主題
 - **人工智慧模型的能力評估**：文章探討了如何從多個維度評估人工智慧模型的能力，包括性能、訓練數據泄露等問題。
 - **模型的透明性與可信度**：強調了模型在	evalution	中的透明性和可信度的重要性。
@@ -1212,6 +1280,8 @@
     <img src="https://img.youtube.com/vi/MSnvknLywUc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第13講：淺談大型語言模型相關的安全性議題 (上) — 亡羊補牢、語言模型的偏見、有多少人用 ChatGPT 寫論文審查意見
 
 # 文章整理：語言模型生成文本的檢測與浮水印技術
 
@@ -1261,6 +1331,8 @@
     <img src="https://img.youtube.com/vi/CNTondxaguo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第14講：淺談大型語言模型相關的安全性議題 (下) — 欺騙大型語言模型
 
 # 文章重點整理
 
@@ -1313,6 +1385,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第15講：為什麼語言模型用文字接龍，圖片生成不用像素接龍呢？— 淺談生成式人工智慧的生成策略
+
 ### 小節一：Auto-Regressive Models 的特性與 challange
 1. **核心主題**：
    - Auto-Regressive models 是按部就班地生成序列數據。
@@ -1363,6 +1437,8 @@
     <img src="https://img.youtube.com/vi/MAbGgsWKrg8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第16講：可以加速所有語言模型生成速度的神奇外掛 — Speculative Decoding
 
 ### 核心主題  
 Speculative Decoding：一種利用預言家來加速語言模型輸出的新技術。  
@@ -1417,6 +1493,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
         alt="[Youtube]" width="200">
 </a>
 
+# GPT-4o 背後可能的語音技術猜測
+
 ### 小節一：核心主題  
 - 文章圍繞語音版語言模型的核心能力展開，強調其在多模態交互中的聽、說、看三項主要功能。  
 
@@ -1465,6 +1543,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
     <img src="https://img.youtube.com/vi/5H2bVEmYDNg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI導論 2024】第17講：有關影像的生成式AI (上) — AI 如何產生圖片和影片 (Sora 背後可能用的原理)
 
 # 文章重點整理：文字生影片的生成式AI技術
 
@@ -1517,6 +1597,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI導論 2024】第18講：有關影像的生成式AI (下) — 快速導讀經典影像生成方法 (VAE, Flow, Diffusion, GAN) 以及與生成的影片互動
+
 ### 文章整理：《影像生成模型與實時交互的新突破》
 
 #### 1. 核心主題
@@ -1558,6 +1640,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
         alt="[Youtube]" width="200">
 </a>
 
+# Audio Language Models - Neil Zeghidour (Moshi)
+
 ### 關鍵要點整理
 
 #### 核心主題
@@ -1598,6 +1682,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
     <img src="https://img.youtube.com/vi/ExDfqz8NfnE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Challenges in Developing Universal Audio Foundation Model - Dongchao Yang (CUHK)
 
 ### 文章總結與結構化整理
 
@@ -1651,6 +1737,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
     <img src="https://img.youtube.com/vi/JidtdZVtpkI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# VoiceCraft: Zero-Shot Speech Editing and TTS in the Wild - Shang-Wen Li (Meta)
 
 ### 文章整理：.voicecodec_talk
 
@@ -1743,6 +1831,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
         alt="[Youtube]" width="200">
 </a>
 
+# NeuralAudioCodecs: Recent Progress and a Case Study with SemantiCodec -Wenwu Wang (Univ. of Surrey)
+
 ### 文章結束
 
 ===== 文章結束 =====
@@ -1812,6 +1902,8 @@ Speculative Decoding技術通過引入快速但可能低 accuracy的「預言家
         alt="[Youtube]" width="200">
 </a>
 
+# Future Directions in Neural Speech Communication Codecs - Minje Kim (UIUC)
+
 ### 文章整理與分析
 
 #### 核心主題  
@@ -1862,6 +1954,8 @@ Lot Diffusion Codec 通過結合 diffusion model 和連續性解碼器，在音�
         alt="[Youtube]" width="200">
 </a>
 
+# 【生成式AI時代下的機器學習(2025)】第一講：一堂課搞懂生成式人工智慧的技術突破與未來發展
+
 ### 小節一：模型行為與運作機制  
 1. 模型的核心作用是通過訓練資料學習並生成輸出。  
 2. 模型的行為是由其內部參數決定的，這些參數在訓練過程中被優化以匹配給定的任務需求。  
@@ -1893,6 +1987,8 @@ Lot Diffusion Codec 通過結合 diffusion model 和連續性解碼器，在音�
     <img src="https://img.youtube.com/vi/M2Yg1kwPpts/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# 【生成式AI時代下的機器學習(2025)】第二講：一堂課搞懂 AI Agent 的原理 (AI如何透過經驗調整行為、使用工具和做計劃)
 
 ### 小節歸納
 

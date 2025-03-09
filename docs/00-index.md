@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 2: Where does the error come from?
+
 ### 小節一：核心主題  
 - **核心主題**：在機器學習和人工智慧領域中，.testing set 的使用及其潛在偏見對模型性能評估的影響。  
 
@@ -46,6 +48,8 @@
     <img src="https://img.youtube.com/vi/yKKNr-QKz2Q/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 3-1: Gradient Descent
 
 ### 小節整理：文章重點歸納
 
@@ -97,6 +101,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 1: Regression - Case Study
+
 # 整理後之內容
 
 一、研究背景與目的  
@@ -139,6 +145,8 @@
     <img src="https://img.youtube.com/vi/Dr-WRlEFefw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 6: Brief Introduction of Deep Learning
 
 ### 核心主題  
 - **深度學習（Deep Learning）**：本文探討了深度學習的核心概念及其優勢。
@@ -196,6 +204,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 4: Classification
+
 ### 文章整理：正則化的理論與應用
 
 #### 核心主題
@@ -239,6 +249,8 @@ This summary concisely captures the essence of regularization, its importance, a
     <img src="https://img.youtube.com/vi/ibJpTrp5mcE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 7: Backpropagation
 
 # 文章重點整理
 
@@ -287,6 +299,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 9-1: Tips for Training DNN
+
 ### 文章重點整理
 
 #### 核心主題：
@@ -330,6 +344,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 10: Convolutional Neural Network
+
 ### 核心主題  
 - **計算機視覺與深度學習結合**：文章探討了如何將卷積神經網絡（CNN）應用於不同領域，特別是計算機視覺和自然語言處理。  
 
@@ -371,6 +387,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/XsC9byQkUH8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 11: Why Deep?
 
 ### 核心主題：深度學習的必要性與其理論基礎
 
@@ -435,6 +453,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/fX_guE7JNnY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 12: Semi-supervised
 
 ### 文章整理：深度學習中的平滑性 assumption 與圖表示方法
 
@@ -505,6 +525,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 13: Unsupervised Learning - Linear Methods
+
 ### 小節一：核心主題  
 - 文章主要探討了**.dimension reduction（維度降低）. 和 **.topic analysis（主題分析）. 的基本概念與方法。  
 - 這些技術在人工智慧和機器學習中用於降維數據並提取潛藏主題，以提高可解釋性和計算效率。
@@ -553,6 +575,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/Tk5B4seA-AU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 16: Unsupervised Learning - Auto-encoder
 
 ### 核心主題
 - **自動編碼器（Autoencoder）**：文章主要探討了自.Autoencoder 的結構和應用，強調其在.Dimension Reduction 和數據壓縮方面的能力。
@@ -608,6 +632,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 14: Unsupervised Learning - Word Embedding
+
 # 文章重點整理
 
 ## 核心主題
@@ -658,6 +684,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 17: Unsupervised Learning - Deep Generative Model (Part I)
+
 ### 文章整理：基於變自動編碼器（VAE）的生成模型及其應用
 
 #### 核心主題
@@ -705,6 +733,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/8zomhgKrsmQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 18: Unsupervised Learning - Deep Generative Model (Part II)
 
 # 文章整理：生成式對抗網路（GAN）的核心概念與挑戰
 
@@ -761,6 +791,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/GBUEjkpoxXc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 15: Unsupervised Learning - Neighbor Embedding
 
 # 文章整理：t-分布鄰近度降維（t-SNE）及其在數據可視化的應用
 
@@ -819,6 +851,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 19: Transfer Learning
+
 ### 小結
 
 #### 核心主題  
@@ -865,6 +899,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/QSEPStBgwRQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 20: Support Vector Machine (SVM)
 
 ### 核心主題
 - 支持向量機器（Support Vector Machine, SVM）的核心原理與應用。
@@ -932,6 +968,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Structured Learning 1: Introduction
+
 
 </details>
 
@@ -942,6 +980,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/HfPw40JPays/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Structured Learning 2: Linear Model
 
 
 </details>
@@ -954,6 +994,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Structured Learning 3: Structured SVM
+
 
 </details>
 
@@ -964,6 +1006,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/W8XF3ME8G2I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 23-1: Deep Reinforcement Learning
 
 ### 文章重點整理
 
@@ -1053,6 +1097,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Structured Learning 4: Sequence Labeling
+
 
 </details>
 
@@ -1064,6 +1110,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 27: Ensemble (no "pointer" version)
+
 
 </details>
 
@@ -1074,6 +1122,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/rTqmWlnwz_0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 21-2: Recurrent Neural Network (Part II)
 
 ### 核心主題
 - **深度學習與結構化學習的結合**：文章探討了如何將生成對抗網絡（GAN）與結構化學習模型相結合，尤其是在任務型模型如語音識別中的應用。
@@ -1115,6 +1165,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/xCGidAeyS4M/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 21-1: Recurrent Neural Network (Part I)
 
 # 文章整理：LSTM 的核心概念與應用
 
@@ -1160,6 +1212,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/hSXFuypLukA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 5: Logistic Regression
 
 ### 文章整理：深度學習中多層邏輯斯回歸網路的應用
 
@@ -1220,6 +1274,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Deep Learning for Language Modeling
+
 
 </details>
 
@@ -1230,6 +1286,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/IzHoNwlCGnE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Review: Basic Structures for Deep Learning Models (Part I)
 
 
 </details>
@@ -1242,6 +1300,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Computational Graph & Backpropagation
+
 
 </details>
 
@@ -1252,6 +1312,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/SoCywZ1hZak/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Spatial Transformer Layer
 
 
 </details>
@@ -1264,6 +1326,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Highway Network & Grid LSTM
+
 
 </details>
 
@@ -1275,6 +1339,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Review: Basic Structures for Deep Learning Models (Part II)
+
 
 </details>
 
@@ -1285,6 +1351,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/Lx3l4lOrquw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 8-1: “Hello world” of deep learning
 
 # 文章重點整理
 
@@ -1340,6 +1408,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Conditional Generation by RNN & Attention
+
 
 </details>
 
@@ -1350,6 +1420,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/z0uOq2wEGcc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Recursive Network
 
 
 </details>
@@ -1362,6 +1434,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Generative Adversarial Network
+
 
 </details>
 
@@ -1372,6 +1446,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/KSN4QYgAtao/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Improved Generative Adversarial Network
 
 
 </details>
@@ -1384,6 +1460,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# 機械学習で美少女化 ~  あるいはNEW GAME! の世界
+
 
 </details>
 
@@ -1394,6 +1472,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/pbQ4qe8EwLo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# RL and GAN for Sentence Generation and Chat-bot
 
 
 </details>
@@ -1406,6 +1486,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Evaluation of Generative Models
+
 
 </details>
 
@@ -1416,6 +1498,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/rOho-2oJFeA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Imitation Learning
 
 
 </details>
@@ -1428,6 +1512,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Video Generation by GAN
+
 
 </details>
 
@@ -1438,6 +1524,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/1DlTX9srmvE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Ensemble of GAN
 
 
 </details>
@@ -1450,6 +1538,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# Energy-based GAN
+
 
 </details>
 
@@ -1460,6 +1550,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/1_HBTJyWgNA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 3-2: Gradient Descent (Demo by AOE)
 
 ### 核心主題：.Gradient Descent 算法的理解與應用
 
@@ -1501,6 +1593,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# ML Lecture 3-3: Gradient Descent (Demo by Minecraft)
+
 ===== 文章結構 =====
 
 1. 核心主題  
@@ -1538,6 +1632,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
         alt="[Youtube]" width="200">
 </a>
 
+# A3C
+
 
 </details>
 
@@ -1548,6 +1644,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/1UqCjFQiiy0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 1: Regression - Demo
 
 ### 小節歸納
 
@@ -1595,6 +1693,8 @@ Backpropagation 是訓練深度學習模型的核心算法。它通過正向傳�
     <img src="https://img.youtube.com/vi/CXgbekl66jc/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ML Lecture 0-1: Introduction of  Machine Learning
 
 # 文章重點整理
 

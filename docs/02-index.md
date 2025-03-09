@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# HW2 (presented by 毛弘仁, 王克安, 林哲賢)
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/fs7fNqEqwnE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW4 (presented by 林宗穎, 林益璟, 陳唯之)
 
 
 </details>
@@ -28,6 +32,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# HW3 (presented by 康家瑋, 曾彥青, 林俊樑)
+
 
 </details>
 
@@ -38,6 +44,8 @@
     <img src="https://img.youtube.com/vi/n6rcXu9R23s/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW2 (presented by 卓伯鴻, 陳景由)
 
 
 </details>
@@ -50,6 +58,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# HW4 (presented by 王行健, 謝議霆)
+
 
 </details>
 
@@ -60,6 +70,8 @@
     <img src="https://img.youtube.com/vi/N5wfwAnVZlk/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW4 (presented by 許秉鈞, 蔡丞昊, 楊正彥)
 
 
 </details>
@@ -72,6 +84,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# HW3 (presented by 許秉鈞, 蔡丞昊, 楊正彥)
+
 
 </details>
 
@@ -82,6 +96,8 @@
     <img src="https://img.youtube.com/vi/oITx1yP2hxE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# HW2 (presented by 張家銘, 張承洋, 張景程)
 
 
 </details>
@@ -94,6 +110,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 1: What are we going to learn?
+
 
 </details>
 
@@ -104,6 +122,8 @@
     <img src="https://img.youtube.com/vi/ZexDYHpmID8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 2: System of Linear Equations
 
 
 </details>
@@ -116,6 +136,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 3: Vector
+
 
 </details>
 
@@ -126,6 +148,8 @@
     <img src="https://img.youtube.com/vi/FInagysEI0o/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 4: Matrix
 
 
 </details>
@@ -138,6 +162,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 5: Matrix-vector Product
+
 
 </details>
 
@@ -148,6 +174,8 @@
     <img src="https://img.youtube.com/vi/-E67rZSjTNI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 6: Having Solution or Not
 
 
 </details>
@@ -160,6 +188,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 7: How many solutions?
+
 
 </details>
 
@@ -170,6 +200,8 @@
     <img src="https://img.youtube.com/vi/zuTH1WdREkY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 8: Solving System of Linear Equations (part 1)
 
 
 </details>
@@ -182,6 +214,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 9: Solving System of Linear Equations (part 2)
+
 
 </details>
 
@@ -192,6 +226,8 @@
     <img src="https://img.youtube.com/vi/yO8lDzf4jMs/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 14: Matrix Multiplication
 
 
 </details>
@@ -204,6 +240,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 10: What can we know from RREF? (part 1)
+
 
 </details>
 
@@ -214,6 +252,8 @@
     <img src="https://img.youtube.com/vi/G-afSDZgEVI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 11: What can we know from RREF? (part 2)
 
 
 </details>
@@ -226,6 +266,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 12: What can we know from RREF? (part 3)
+
 
 </details>
 
@@ -236,6 +278,8 @@
     <img src="https://img.youtube.com/vi/mSMh27SxKbM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 13: What can we know from RREF? (part 4)
 
 
 </details>
@@ -248,6 +292,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 15: Inverse of Matrix
+
 
 </details>
 
@@ -258,6 +304,8 @@
     <img src="https://img.youtube.com/vi/vV2ff0xFPbw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 17: How to find the Inverse of a Matrix
 
 
 </details>
@@ -270,6 +318,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 16: Invertible
+
 
 </details>
 
@@ -280,6 +330,8 @@
     <img src="https://img.youtube.com/vi/pXtXnY2b2-E/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 18: Subspace
 
 
 </details>
@@ -292,6 +344,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 20: Column Space, Null Space, Row Space
+
 
 </details>
 
@@ -302,6 +356,8 @@
     <img src="https://img.youtube.com/vi/GB48DyvC14o/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 19: Basis
 
 
 </details>
@@ -314,6 +370,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 21: Coordinate System
+
 
 </details>
 
@@ -324,6 +382,8 @@
     <img src="https://img.youtube.com/vi/IrAdVhE6VqI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 22: Linear Function in Coordinate System
 
 
 </details>
@@ -336,6 +396,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 23: Formulas of Determinant
+
 
 </details>
 
@@ -346,6 +408,8 @@
     <img src="https://img.youtube.com/vi/005nG8ZZVDE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 24: Properties of Determinant
 
 
 </details>
@@ -358,6 +422,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 25: Eigenvalues and Eigenvectors
+
 
 </details>
 
@@ -368,6 +434,8 @@
     <img src="https://img.youtube.com/vi/TsB5_BiMFoo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 26: Diagonalization
 
 
 </details>
@@ -380,6 +448,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 27: Diagonalization for Linear Transformation
+
 
 </details>
 
@@ -390,6 +460,8 @@
     <img src="https://img.youtube.com/vi/pSg9TG_U_fY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 28: PageRank
 
 
 </details>
@@ -402,6 +474,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 30: Orthogonal Projection
+
 
 </details>
 
@@ -412,6 +486,8 @@
     <img src="https://img.youtube.com/vi/hxI7stenqaw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 29: Orthogonality
 
 
 </details>
@@ -424,6 +500,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 31: Orthogonal Basis
+
 
 </details>
 
@@ -434,6 +512,8 @@
     <img src="https://img.youtube.com/vi/PzqVLldlHTE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 31: Gram-Schmidt Process
 
 
 </details>
@@ -446,6 +526,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 32: Orthogonal Matrix
+
 
 </details>
 
@@ -456,6 +538,8 @@
     <img src="https://img.youtube.com/vi/0ijUQ-RfN3I/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 33: Symmetric Matrix
 
 
 </details>
@@ -468,6 +552,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 36: Singular Value Decomposition
+
 
 </details>
 
@@ -478,6 +564,8 @@
     <img src="https://img.youtube.com/vi/o4dPfMkz_lw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Linear Algebra Lecture 34: General Vectors (Part I)
 
 
 </details>
@@ -490,6 +578,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Linear Algebra Lecture 35: General Vectors (Part II)
+
 
 </details>
 
@@ -501,6 +591,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# The Next Step for Machine Learning
+
 
 </details>
 
@@ -511,6 +603,8 @@
     <img src="https://img.youtube.com/vi/gDp2LXGnVLQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Anomaly Detection (1/7)
 
 # 文章重點整理
 
@@ -569,6 +663,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Anomaly Detection (2/7)
+
 ### 文章整理與分析
 
 #### 核心主題
@@ -618,6 +714,8 @@
     <img src="https://img.youtube.com/vi/ueDlm2FkCnw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Anomaly Detection (3/7)
 
 ### 文章整理：異常檢測（Anomaly Detection）的核心與挑戰
 
@@ -699,6 +797,8 @@
     <img src="https://img.youtube.com/vi/XwkHOUPbc0Q/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Anomaly Detection (4/7)
 
 ### 文章重點整理
 

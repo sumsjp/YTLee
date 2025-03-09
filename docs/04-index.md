@@ -6,6 +6,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Network Compression (5/6)
+
 
 </details>
 
@@ -16,6 +18,8 @@
     <img src="https://img.youtube.com/vi/f0rOMyZSZi4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Network Compression (6/6)
 
 
 </details>
@@ -28,6 +32,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# GAN (Quick Review)
+
 
 </details>
 
@@ -38,6 +44,8 @@
     <img src="https://img.youtube.com/vi/ugWDIIOHtPA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Transformer
 
 
 </details>
@@ -50,6 +58,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Meta Learning - Train+Test as RNN
+
 
 </details>
 
@@ -60,6 +70,8 @@
     <img src="https://img.youtube.com/vi/UYPa347-DdE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# ELMO, BERT, GPT
 
 
 </details>
@@ -72,6 +84,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# Flow-based  Generative Model
+
 
 </details>
 
@@ -82,6 +96,8 @@
     <img src="https://img.youtube.com/vi/c9TwBeWAj_U/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# Machine Learning (2020): Course Introduction
 
 
 </details>
@@ -94,6 +110,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Recognition (1/7) - Overview
+
 
 </details>
 
@@ -104,6 +122,8 @@
     <img src="https://img.youtube.com/vi/nER51ZyJaCQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Deep Learning for Human Language Processing (Course Overview)
 
 
 </details>
@@ -116,6 +136,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Recognition (2/7) - Listen, Attend, Spell
+
 
 </details>
 
@@ -126,6 +148,8 @@
     <img src="https://img.youtube.com/vi/CGuLuBaLIeI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Speech Recognition (3/7) - CTC, RNN-T and more
 
 
 </details>
@@ -138,6 +162,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Recognition (4/7) - HMM (optional)
+
 
 </details>
 
@@ -148,6 +174,8 @@
     <img src="https://img.youtube.com/vi/5SSVra6IJY4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Speech Recognition (5/7) - Alignment of HMM, CTC and RNN-T (optional)
 
 
 </details>
@@ -160,6 +188,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Recognition (6/7) - RNN-T Training  (optional)
+
 
 </details>
 
@@ -170,6 +200,8 @@
     <img src="https://img.youtube.com/vi/dymfkWtVUdo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Speech Recognition (7/7) - Language Modeling
 
 
 </details>
@@ -182,6 +214,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Voice Conversion (1/2) - Feature Disentangle
+
 
 </details>
 
@@ -192,6 +226,8 @@
     <img src="https://img.youtube.com/vi/eybCCtNKwzA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] Graph Neural Network (1/2) (由助教姜成翰同學講授)
 
 ### 本文重點整理
 
@@ -268,6 +304,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] Graph Neural Network (2/2) (由助教姜成翰同學講授)
+
 ### 核心主題
 - **圖神經網路（Graph Neural Networks, GNNs）**：研究如何將圖結構數據引入深度學習模型中，進行各種任務如分類、聚類等。
 
@@ -325,6 +363,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Voice Conversion (2/2) - CycleGAN and StarGAN
+
 
 </details>
 
@@ -335,6 +375,8 @@
     <img src="https://img.youtube.com/vi/tovg5ZxNgIo/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Speech Separation (1/2) - Deep Clustering, PIT
 
 
 </details>
@@ -347,6 +389,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# PyTorch Tutorial (由助教劉記良同學講授)
+
 
 </details>
 
@@ -357,6 +401,8 @@
     <img src="https://img.youtube.com/vi/4pUmZ8hXlHM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] Optimization for Deep Learning (1/2) (由助教簡仲明同學講授)
 
 ### 文章整理：SGD 收斂性改進方法研究
 
@@ -407,6 +453,8 @@
     <img src="https://img.youtube.com/vi/e03YKGHXnL8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] Optimization for Deep Learning (2/2) (由助教簡仲明同學講授)
 
 ### 小節一：核心主題
 - 探討深度學習中優化器（Optimizer）的選擇與應用。
@@ -482,6 +530,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Synthesis (1/2) - Tacotron
+
 
 </details>
 
@@ -492,6 +542,8 @@
     <img src="https://img.youtube.com/vi/G0O1A7lONSY/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Speech Separation (2/2) - TasNet
 
 
 </details>
@@ -504,6 +556,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speaker Verification
+
 
 </details>
 
@@ -514,6 +568,8 @@
     <img src="https://img.youtube.com/vi/LsdiOt0wiWM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] More about Explainable AI (由助教楊書文同學講授)
 
 
 </details>
@@ -526,6 +582,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Speech Synthesis (2/2) - More than Tacotron
+
 
 </details>
 
@@ -536,6 +594,8 @@
     <img src="https://img.youtube.com/vi/PaHhMlxFPyU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] More about Adversarial Attack (2/2) (由助教黃冠博同學講授)
 
 # 文章重點整理
 
@@ -602,6 +662,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] More about Adversarial Attack (1/2) (由助教黃冠博同學講授)
+
 ### 小節一：核心主題  
 - 文章介紹了差分進化（Differential Evolution, DE）算法及其在單像素攻擊（One Pixel Attack）中的應用。  
 - 重點討論了DE算法的基本原理、實現步驟以及其在圖像對抗攻擊中的具體應用。
@@ -652,6 +714,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] Vocoder (由助教許博竣同學講授)
+
 
 </details>
 
@@ -662,6 +726,8 @@
     <img src="https://img.youtube.com/vi/tFBrqPPxWzE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Overview of NLP Tasks
 
 
 </details>
@@ -674,6 +740,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] BERT and its family - Introduction and Fine-tune
+
 
 </details>
 
@@ -684,6 +752,8 @@
     <img src="https://img.youtube.com/vi/cnZdfLSqwiE/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ICASSP 2020] TOWARDS UNSUPERVISED SPEECH RECOGNITION AND SYNTHESIS (Speaker: Tao Tu)
 
 
 </details>
@@ -696,6 +766,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ICASSP 2020] META LEARNING FOR END-TO-END LOW-RESOURCE SPEECH RECOGNITION (Speaker: Jui-Yang Hsu)
+
 
 </details>
 
@@ -706,6 +778,8 @@
     <img src="https://img.youtube.com/vi/6gtn7H-pWr8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ICASSP 2020] WHAT DOES A NETWORK LAYER HEAR? (Speaker: Chung-Yi Li)
 
 
 </details>
@@ -718,6 +792,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ICASSP 2020] ONE-SHOT VOICE CONVERSION BY VECTOR QUANTIZATION (Speaker: Da-Yi Wu)
+
 
 </details>
 
@@ -728,6 +804,8 @@
     <img src="https://img.youtube.com/vi/JlOSyRNFjOw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ICASSP 2020] MOCKINGJAY: UNSUPERVISED SPEECH REPRESENTATION LEARNING (Speaker: Andy T. Liu)
 
 
 </details>
@@ -740,6 +818,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ICASSP 2020] Defense against adversarial attacks on spoofing countermeasures (Speaker: Haibin Wu)
+
 
 </details>
 
@@ -750,6 +830,8 @@
     <img src="https://img.youtube.com/vi/1j46kdawA4Q/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ICASSP 2020] ASR WITH WORD EMBEDDING REGULARIZATION AND FUSED DECODING (Speaker: Alexander H. Liu)
 
 
 </details>
@@ -762,6 +844,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ICASSP 2020] INTERRUPTED AND CASCADED PIT FOR SPEECH SEPARATION (Speaker: Gene-Ping Yang)
+
 
 </details>
 
@@ -772,6 +856,8 @@
     <img src="https://img.youtube.com/vi/qf0j0A0-SVM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [ICASSP 2020] TRAINING CODE-SWITCHING LANGUAGE MODEL WITH MONOLINGUAL DATA (Speaker: Shun-Po Chuang)
 
 
 </details>
@@ -784,6 +870,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [DLHLP 2020] BERT and its family - ELMo, BERT, GPT, XLNet, MASS, BART, UniLM, ELECTRA, and more
+
 
 </details>
 
@@ -794,6 +882,8 @@
     <img src="https://img.youtube.com/vi/lluMBz5AoOg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [TA 補充課] Transformer and its variant (由助教紀伯翰同學講授)
 
 
 </details>
@@ -806,6 +896,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [ICLR 2020] Language Modeling for Lifelong Language Learning (Speaker: Fan-Keng Sun)
+
 
 </details>
 
@@ -816,6 +908,8 @@
     <img src="https://img.youtube.com/vi/jvyKmU4OM3c/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Non-Autoregressive Sequence Generation (由助教莊永松同學講授)
 
 
 </details>
@@ -828,6 +922,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] Network Compression (2/2): Network Pruning (由助教劉俊緯同學講授)
+
 
 </details>
 
@@ -839,6 +935,8 @@
         alt="[Youtube]" width="200">
 </a>
 
+# [TA 補充課] Network Compression (1/2): Knowledge Distillation (由助教劉俊緯同學講授)
+
 
 </details>
 
@@ -849,6 +947,8 @@
     <img src="https://img.youtube.com/vi/WROBoprE0js/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
+
+# [DLHLP 2020] Text Style Transfer and Unsupervised Summarization/Translation/Speech Recognition
 
 
 </details>

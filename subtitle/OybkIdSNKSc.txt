@@ -1,0 +1,169 @@
+hello everyone
+this is a brief introduction of the
+paper entitled earth or error rate but
+beta blue leveraging world invading as
+intermediate in multitask
+and to end speed translation i'm shin po
+chang
+and this is the joint work with zuwai
+song alexander liu
+and hong li we are from national tower
+university
+speech translation which is abbreviated
+as s
+t in this presentation and submit the
+speech in the source language to the
+text in the target language
+and there are various approaches to
+achieve this goal
+one of the approaches is multitask
+learning
+which learns the st model with an
+additional source language decoder
+or we can set it as a speech recognition
+module
+and we usually use word error rate to
+measure the recognition quality
+and blue score to measure the
+translation quality
+however old error rate do not
+necessarily correlate to the blue score
+st is a translation task we wonder if
+there is another feature is more
+important than the recognition quality
+maybe the semantic information will be
+the one to help on the final translation
+quality
+for example a guangzhou sentence
+is the food in taiwan is really tasty
+then we have two recognition cases in
+different
+or error rate the first is a low or
+error rate recognition result
+the food in taiwan is really tasty
+the second is high water rate
+recognition result
+the food taiwan tasty
+it is obvious that the high wall error
+rate case
+is more semantically correct to the
+ground truth
+so at least work we explore whether
+semantic information
+is more suitable to apply in a
+multi-task model
+considering a normal recognition
+decoding process
+a hidden state from the source language
+decoder will be multiplied by a linear
+magic
+and the softmax function is applied to
+obtain a word probability distribution
+the optimization process aims to make
+this distribution
+close to the ground truth
+our idea is to make the hidden state
+closer to the ground truth pretend or
+invading
+because what invadings have showed some
+good features
+such as the context information semantic
+or syntactic relations in recent nlp
+research
+we use it as a training target it may
+make less magnetic error
+furthermore wooden buildings are trend
+for monolingual text
+so we don't need the paired speech data
+and we can train the world debating from
+additional textual data
+and here is the proposed method we fix a
+set of pre-trained wording buildings
+and these word embeddings will not be
+updated
+during training we firstly compute the
+consent similarity
+between the hidden state and the protein
+wording ratings
+and we obtain a similarity distribution
+which is bounded between negative one to
+positive one
+softmax function is applied sequentially
+finally we optimize lacrosse entropy
+loss between the ground truth and the
+probability distribution from the
+softmax function
+after finishing the training process the
+hidden state would be similar to the
+corresponding protein or invading
+here we introduce the structure of the
+multitask st model
+we use the triangle structure proposed
+previously
+the encoder firstly comes in a speech
+signal
+and output a sequence of hidden state
+and the source language decoder will
+attend on the blue hidden state
+for source language decoding a
+recognition laws can be computed
+and the target language decoder will
+attend on the blue
+and green hidden state for final
+translation decoding
+the translation laws can also be
+computed
+finally the objective function is the
+summation of the recognition
+and translation laws and we name it as
+the multi-task loss
+and in our proposed method we just
+simply replace the
+recognition laws to the consensus of max
+laws
+the following is our experiment we use
+feature spanish corpus for our
+experiment
+the source language is spanish and the
+target language
+is english
+we firstly verify our proposed method
+can map speech signal
+to the project or invading
+we use the predicted word invading which
+is from the source language decoder
+to retrieve the corresponding pretrained
+word invading using consent similarity
+as we can see the cosine softmax method
+achieved higher precision than the
+original multitask loss
+it indicates that it is possible to
+predict ordering buildings from speech
+and this is the measurement of
+translation quality we use blue score as
+the metric
+single text results set a baseline of
+the table
+and multi-text model makes a little
+improvement from the baseline
+then the consent softmax method reaches
+the best performance in the table
+which indicates a proposed method helps
+under translation quality
+we further observe the word error rate
+of the source language decoder
+the table shows the blue score of the
+multi-task st
+and consensus of max method the scores
+are the same as the previous slide
+the orange table shows their world error
+rate
+as we can see lower error rates do not
+guarantee a better translation quality
+these results shows that liberating
+world embedding us intermediate helps
+more than purely decode the
+transcription
+more details can be found in the paper
+thanks for
+listening

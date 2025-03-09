@@ -1,0 +1,125 @@
+hi everyone
+i am fang khan sun and i'm going to
+present our work
+lemmo language modeling for lifelong
+language learning
+this is a work by ben ken son chiang hao
+ho and professor hongi lee from national
+taiwan university
+lifelong learning is the process of
+learning multiple tasks
+sequentially the model will first learn
+task 1
+then task 2 then test 3 and so on and so
+forth
+however for most machine learning
+algorithms the model can't learn
+multiple tasks sequentially due to
+catastrophic formatting
+that is the model will forget about task
+1 after learning on task 2
+and forget about test 1 and task 2 after
+learning on
+task 3. in this work we aim for lifelong
+language learning
+we want our model to learn different nlp
+tasks
+sequentially without catastrophic
+forgetting
+these nlp tasks include sentiment
+classification
+semantic role labeling goal oriented
+dialogue
+question answering and semantic parsing
+a branch of methods for solving lifelong
+learning is the database method
+these methods need a separate data
+generator model to generate
+pseudo data so the main model is able to
+train on
+data for current tasks and sudo data for
+previous tests
+our method is also databased however
+a big advantage of our method is that
+we only need one model a language model
+so this language model is able
+to solve tasks and generate student data
+simultaneously
+in order to achieve that we adopt the
+squad like format transformation to
+transform
+all input output pairs from different
+energy tasks into the same format
+the context question and answer format
+for example in sentiment classification
+the input might be
+one long string of cliches and the
+output is
+negative after transformation the
+context
+is one long string of chase the question
+is
+is this sentence positive or negative
+followed by a special answer token
+and the answer is negative
+as mentioned we want our model to
+generate pseudo data
+and solve tasks simultaneously so in
+pseudo-data generation
+given a special generation token our
+model should output
+context question answer sequence and in
+task solving
+given context and question our model
+should output answer
+to achieve that in training we feed the
+context question answer sequence into
+the model in two ways
+training for generation and training for
+task solving
+for generation our model should output
+the whole context question answer
+sequence and
+loss as calculated on the whole sequence
+in test solving our model should only
+output answer
+any loss is only calculated on the
+answer
+here is the experiment on three data
+sets
+these three data sets are sst srl and
+woz
+we compared our method with previous
+state-of-the-art methods ewc
+mas gm on all six order and
+take the average of it we can see that
+them of greatly outperforms previous
+state-of-the-art methods
+also the performance of our method is
+quite close to that of multitask
+which in this case is considered as an
+upper bound
+additionally we found that adding's
+test-specific tokens
+help the performers that is we change
+the
+special generation token into a task
+specific token for each tasks
+in this way during pseudo-data
+generation the model is able to know
+which test-specific data to generate
+in this experiment we use squad
+wikisq sst-sr and wlc and train the
+models in this
+order we can see that adding test
+specific tokens
+help with the performance especially
+when there are more tasks
+also our performance is again quite
+close to that of multitasks
+in conclusion lemo is a simple yet
+effective method for level language
+learning
+more details and experiments are shown
+in the paper
+thank you for your listening

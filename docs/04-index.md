@@ -1319,7 +1319,7 @@ Extensive experiments demonstrate that our proposed methods significantly reduce
 </details>
 
 <details>
-<summary>245. [TA 補充課] Transformer and its variant (由助教紀伯翰同學講授)</summary><br>
+<summary>245. [2020-05-07] [TA 補充課] Transformer and its variant (由助教紀伯翰同學講授)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=lluMBz5AoOg" target="_blank">
     <img src="https://img.youtube.com/vi/lluMBz5AoOg/maxresdefault.jpg" 
@@ -1328,11 +1328,65 @@ Extensive experiments demonstrate that our proposed methods significantly reduce
 
 # [TA 補充課] Transformer and its variant (由助教紀伯翰同學講授)
 
+### 文章重點整理
 
+#### 核心主題
+- **Reformer 模型**：介紹了一種新型Transformer架構，旨在改進計算效率和記憶體使用。
+- **BERT模型變體**：討論了BERT的兩種主要實現方式及其差異。
+- **Style GAN在動漫生成中的應用**：展示了一種GAN在生成高質量動漫圖像方面的突破。
+
+#### 主要觀念
+1. **Reformer模型的核心思想**
+   - 通過分桶注意力（Bucketing Attention）降低計算複雜度。
+   - 強調可逆層（Reversible Layer）以節省記憶體和計算資源。
+
+2. **BERT模型的實現差異**
+   - 基於Transformer架構的不同變體在實踐中的表現和優化。
+
+3. **Style GAN的能力展示**
+   - 在生成高質量動漫圖像方面的成功案例及其藝術價值。
+
+#### 問題原因
+- **計算複雜度**：傳統Transformer的注意力機制導致O(n²)時間複雜度，限制了大規模數據處理。
+- **記憶體需求**：深度模型的訓練需要存儲多層激活值，增加了記憶體開銷。
+
+#### 解決方法
+1. **Reformer的.bucketing Attention**
+   - 將序列分桶，每個元素只與其桶內及其他有限桶內的元素交互。
+   - 複雜度從O(n²)降至O(n log n)，節省計算資源。
+
+2. **Reversible Layer**
+   - 通過殘差連接和可逆性質，只需存儲當前層激活值即可反向傳播。
+   - 顯著降低記憶體需求，適合大規模模型訓練。
+
+3. **BERT的優化策略**
+   - 使用更深的網絡結構和有效的注意力機制來提升性能。
+   - 適用不同數據集時進行參數調整以平衡效果和效率。
+
+#### 總結與主旨
+- **主旨**：介紹Reformer模型在Transformer架構中的創新，並展示BERT和Style GAN在自然語言處理和生成模型領域的最新進展。
+- **總結**：
+  - Reformer通過分桶注意力和可逆層設計，有效降低了計算複雜度和記憶體需求，適合大規模數據處理。
+  - BERT展示了深度Transformer模型在自然語言理解中的強大能力，而Style GAN則在生成模型領域開闢了新的可能性。
+
+#### 各段落之間的對應性
+- 第一部分（Reformer）介紹了新穎的架構設計及其優勢，為後續BERT和GAN的討論奠定了技術背景。
+- 第二部分（BERT）展示了如何將Transformer應用於具體任務，並探討其優化策略。
+- 第三部分（Style GAN）則轉向生成模型，展示人工智能在藝術領域的潛力。
+
+---
+
+### 文章主旨與總結
+本文主要圍繞三項重要的人工智能技術展開：Reformer模型、BERT及其變體，以及Style GAN。作者通過詳細介紹每種技術的核心思想、實現方法及實際應用，強調了這些技術在提升計算效率和生成質量方面的突破。文章最後以一個具體案例展示了GAN在藝術生成中的成功，進一步凸顯了人工智能的多樣性與潛力。
+
+---
+
+### 總結
+本文圍繞Reformer模型、BERT變體和Style GAN展開，介紹了各項技術的核心思想、問題來源、解決方案及實際效果。文章結構清晰，從計算效率到具體應用均有涉獵，最後以一個藝術生成案例點明人工智能的創新能力。
 </details>
 
 <details>
-<summary>246. [ICLR 2020] Language Modeling for Lifelong Language Learning (Speaker: Fan-Keng Sun)</summary><br>
+<summary>246. [2020-05-07] [ICLR 2020] Language Modeling for Lifelong Language Learning (Speaker: Fan-Keng Sun)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=cW04Sb02lU4" target="_blank">
     <img src="https://img.youtube.com/vi/cW04Sb02lU4/maxresdefault.jpg" 
@@ -1341,7 +1395,34 @@ Extensive experiments demonstrate that our proposed methods significantly reduce
 
 # [ICLR 2020] Language Modeling for Lifelong Language Learning (Speaker: Fan-Keng Sun)
 
+### 核心主題
+- **終身語言學習（Lifelong Language Learning）**：研究模型在學習多個NLP任務時，能夠逐步掌握而不導致災難性忘記的能力。
+- **Lemmo 方法**：提出了一種基於語言模型的輕量級方法，用於解決終身學習中的災難性 forgetting 問題。
 
+
+### 主要觀念
+1. **終身學習的挑戰**：傳統機器學習算法在學習多個任務時易受災難性忘記影響。
+2. **NLP 任務範圍**：涵蓋情感分類、語義角色標注、目標導向對話、問題解答和語義解析等多種任務。
+
+
+### 問題原因
+- **災難性 Forgetting**：模型在學習新任務後，舊任務的知識_recall 效果差。
+- **數據生成需求**：傳統數據庫方法需要額外的數據生成模型，增加複雜度。
+
+
+### 解決方法
+1. **Lemmo 方法**：利用 Squad 格式轉換將多樣化的輸入輸出對統一為上下文、問題和答案格式。
+2. **單一語言模型**: 一個模型用於任務解讀和假數據生成，降低複雜度。
+
+
+### 優化方式
+1. **任務特定令牌**：引入任務-specific令牌，在假數據生成時提高模型的目標識別能力。
+2. **Squad 格式轉換**：將不同任務的數據格式化為統一的上下文、問題和答案格式，便於模型理解和生成。
+
+
+### 結論
+- **實驗結果**：Lemmo 方法在三個數據集上的表現優於先前的最先進方法，並接近多任務學習的上限。
+- **未來方向**：進一步研究如何通過任務-specific令牌提高模型性能，特別是 задач數量增加時。
 </details>
 
 <details>

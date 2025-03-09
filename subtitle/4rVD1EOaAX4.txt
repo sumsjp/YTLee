@@ -1,0 +1,1345 @@
+Okay, let's talk about
+explainable machine learning.
+So far,
+we have trained many, many models.
+We have trained a model for image recognition,
+Give it a picture.
+It will give you the answer.
+But we are not satisfied with this.
+Next, we want the machine to give us
+the reason it gets the answer.
+This is explainable machine learning.
+Ok, before start introducing
+the technology,
+we need to talk about
+why explainable machine learning
+is an important issue.
+I think the essential reason is
+even if the machine can get the correct answer today,
+it does not mean it must be very smart.
+As an example,
+There used to be a horse that was very smart.
+So everyone called it the god horse Hans.
+What could this god horse Hans do?
+It could do math problems.
+For example,
+you asked what the root of 9 was.
+Then it started to calculate the answer.
+How did it tell you its answer?
+It would stomp the floor with its horse hooves.
+So if the answer was 3,
+it knocked three times
+then stopped,
+which meant it got the correct answer.
+Then the people next to it would cheer for it.
+So this was the god horse Hans.
+Then a bunch of people
+watched it solve math problems.
+Later, someone was very skeptical and asked
+why Hans could solve mathematical problems.
+It's just a horse.
+Why could it understand mathematical problems?
+Later someone found out that
+as long as no one was watching,
+Hans would not be able to answer math problems.
+When no one looked at it,
+and you asked it a mathematical question,
+it would keep knocking its horseshoes.
+It didn't know when to stop.
+So it actually only detected
+the subtle emotional changes of the human next to him
+to know when it's going to stop stomping horseshoes.
+So that it got carrots to eat.
+It’s not really learning to solve mathematical problems.
+Today, we see various applications of artificial intelligence.
+Is it possible to be in the same situation as the god horse Hans?
+Today, in many real applications,
+explainable machine learning,
+explainable models are often necessary.
+For example,
+the banks may use machine learning models today
+to determine whether to lend to a certain customer.
+But according to the law,
+to use machine learning models to make automatic judgments,
+it must give a reason.
+So this time,
+we don’t just train machine learning models.
+We also need machine learning models
+to be explainable.
+Machine learning
+will also be used for medical diagnosis.
+But medical diagnosis is a matter of life.
+If the machine learning model is just a black box
+without giving a reason for the diagnosis,
+then how do we believe
+it is correct?
+Today, some people want to
+apply machine learning models to the law.
+For example, to help the judge decide the case.
+To help the judge decide the case automatically that
+can a prisoner be released on parole or not.
+But how do we know that the machine learning model
+is fair?
+How do we know that when it is making judgments,
+there are no other problems such as racial discrimination?
+So we hope that the machine learning model
+not only can provide answers
+but also can give us a reason for the answer.
+One step further,
+self-driving cars may run all over the street in the future.
+When the self-driving car suddenly stops today,
+even causing injuries to passengers in the car,
+is there any problem with this self-driving car?
+It may depend on the reason for the sudden stop.
+If it sees an old lady crossing the road,
+so it stops,
+then maybe self-driving is right.
+But suppose it's just for no reason.
+It suddenly goes crazy and wants to stop quickly.
+Then there is a problem with this model.
+So for self-driving cars'
+various behaviors and various decisions,
+we want to know the reason behind the decision.
+Go further.
+If the machine learning model
+has explanatory power,
+then in the future, we can rely on the result of the explanation
+to modify our model.
+Today, when using these deep learning techniques,
+the situation is often like this.
+Someone says that
+this is your machine learning system.
+Yes, I just throw the data into it.
+There is a multiplication of many matrices.
+Next, it will
+come up with the results.
+If the result is not as expected,
+what to do?
+Now, everyone knows, adjusting the hyperparameters, right?
+Changing the learning rate, right?
+Adjusting the architecture of the network, right?
+You don't know what you are doing, right?
+Just adjust the network architecture.
+I just mess this bunch of math,
+this bunch of linear algebra up again,
+and see if the result is better.
+Then others who have not done deep learning
+will be surprised.
+How can this be done?
+But in fact, for today’s deep learning model,
+to improve the model,
+you need to adjust some hyperparameters.
+But we look forward to the future.
+When
+the deep learning model makes mistakes.
+We know where the mistakes are.
+We know why it makes mistakes.
+Maybe we can have a better way,
+a more efficient way,
+to improve my model.
+Of course, this is the future goal.
+We want to use
+Explainable Machine Learning to improve model.
+There is still a long way to go.
+Some people might say that
+we are so concerned about
+Explainable Machine Learning today.
+Deep Neural Network
+Maybe it’s because
+itself is a black box.
+Can we use other
+machine learning models?
+If you don’t use deep learning models,
+use other models that are easier to interpret.
+Do we need to study
+Explainable Machine Learning?
+For example,
+suppose we use Linear Model
+its interpretation ability
+is relatively strong.
+We can easily know what
+the Linear Model is doing
+based on the weight
+of each feature in a Linear Model.
+After training your Linear Model,
+you can know
+how the model generates its result.
+The biggest problem with the Linear Model is that
+it is not very powerful.
+We told you in the first class that
+the Linear Model has huge limitations.
+We quickly go to the Deep Model.
+But the drawback of the Deep Model is that
+it is not easy to explain.
+Everyone knows Deep Neural Network
+is a black box.
+It’s hard for us to know
+what happened inside the black box.
+Although Deep Model is better than Linear Model,
+its interpretation ability
+is far worse than Linear Model.
+Many people will
+come to a conclusion.
+You may often hear the idea that
+we shouldn’t use Deep Model.
+We should not use these more powerful models
+because they are black boxes.
+In my opinion,
+this kind of thinking is actually to cut the feet and fit the shoes.
+Do we discard
+a very powerful model
+because it is not easy to explain?
+Shouldn’t we think of ways
+to make it interpretable?
+I heard a story told by Yann LeCun.
+This is from Yann LeCun.
+This is an old story.
+Everyone has heard of it.
+There is a drunk
+who is looking for the key under the street light
+Everyone asked him
+if his key fell under the street light.
+He said it wasn't
+because there was light here.
+So we insist on using
+simple but easily explainable models.
+It’s like we insist on
+finding the key
+under the street light.
+We insist on using
+more interpretable models.
+Although it's not good
+we still insist on using it.
+It's like you must find the key under the street light.
+You will never find a powerful model
+The powerful model may be
+outside the scope of the street light.
+What we have to do now is
+to change the range of street lights.
+Can we change the direction of lighting
+and make these more powerful models
+to be placed under street lights?
+Make the powerful model
+more Interpretable, more Explainable.
+Actually Interpretable and Explainable...
+Although the terms Interpretable and Explainable
+are often used alternatively in the literature.
+They are slightly different.
+Explainable usually refers to
+giving the original black box model
+the ability to explain.
+This is called Explainable.
+Interpretable usually refers to
+a model is not a black box.
+Someone has digged into this model.
+It is not a black box at all.
+We have already understood its content.
+This is called Interpretable.
+However, these two are mixed-used in the literature,
+so we don’t overemphasize
+the difference between Explainable and Interpretable.
+Speak of both Interpretable and Powerful model,
+isn't Decision Tree
+a good choice?
+Decision Tree is a more powerful model
+compared to Linear Model.
+Another benefit of
+Decision Tree is that
+it is very Interpretable.
+It is straightforward
+when looking at the structure of a Decision Tree
+we can know how every branch
+affects the final decision.
+We are not going to talk about
+the Decision Tree in this course.
+Even if you are not familiar with the Decision Tree.
+It’s not hard
+for you to imagine
+how Decision Tree works.
+We have a lot of nodes on tree.
+Each node will ask a question, and
+then decide to go left or right.
+Answer all of the questions.
+You walk to the Leaf Node
+and make the final decision.
+You can trace through
+all questions and answers.
+You can know
+why the model makes this decision.
+What kind of characteristics
+lead to the final decision.
+From this perspective
+the Decision Tree
+is both powerful and interpretable.
+So this lecture can stop right here
+with the conclusion that a decision tree is all you need.
+The end.
+Well,
+but is a decision tree all we need?
+Think about it again.
+Decision trees can also be very complicated.
+For example,
+I found someone asked a question
+on the Internet.
+He said he has such a complicated decision tree
+that he can't understand what the decision tree is doing.
+He asked if anyone has any
+explainable machine learning methods
+to simplify this decision tree.
+Three or four years have passed and
+no one answered this question.
+If someone sees it,
+Maybe you can help answer it.
+But on the other hand,
+think about this,
+how do you use decision trees practically?
+I know many students will say
+when competing on Kaggle,
+deep learning is not the best to use.
+Decision tree
+is the best.
+That's the ace in the Kaggle competition.
+But think about it,
+when you are using decision trees,
+are you using only one decision tree?
+Actually not.
+The technique you really use is called Random Forest, right?
+The technique you use,
+in fact, is the result of the joint decision of many decision trees.
+With one decision tree,
+you can rely on the question and answer of each node
+to know how it makes the final judgment.
+But when you have a forest,
+when you have 500 decision trees,
+it's hard for you to know
+how these 500 decision trees
+make a judgment together.
+So decision tree is not the final answer.
+The problem of explainable machine learning
+is not solved
+even if we have decision trees.
+Okay, before we dig deeper into
+the technique of explainable machine learning,
+another question here is
+what is the goal of explainable machine learning?
+In each of our previous assignments,
+we all have a leaderboard.
+That means we have a clear goal,
+either lower the error rate
+or improve accuracy.
+We always have a clear goal.
+But what exactly is the goal of being explainable?
+What result can be considered as the best explanation?
+The goal of explanation is actually very ambiguous.
+Because the goal is not clear,
+you will find out that the homework on explainable machine learning
+does not have a leaderboard.
+Because there's no leaderboard,
+we can only use multiple choice questions
+to let everyone learn some knowledge.
+We can only do so much.
+But what is the ultimate goal
+of explainable machine learning?
+What is the best explanation?
+The following is my personal opinion.
+This doesn't mean it is right.
+You may not agree with me,
+and I won't argue with you.
+This is just my personal opinion.
+Many people have a misunderstanding
+about explainable machine learning.
+They think a good explanation
+should tell us
+what the model is doing in its entirety.
+We need to understand everything about the model.
+We need to know what it is.
+We have to fully understand
+how it makes a decision.
+But think about it,
+is this really necessary?
+We say because machine learning’s model,
+a deep network, is a black box,
+we can't trust it.
+However,
+there are so many black boxes in the world
+by your side.
+Isn’t the human brain also a black box?
+We don’t know exactly
+how the human brain works,
+yet we can trust
+a decision made by another person.
+The human brain is also a black box
+and you can trust the human brain to make a decision.
+Why when the black box is a deep network,
+you can't trust
+the decisions made by it?
+Why are you so scared of deep networks?
+I think for people,
+if we want to be
+reassured,
+if we can accept it,
+reasons are very important.
+The following
+is a psychology experiment
+completely unrelated to machine learning.
+This experiment was done in the 1970s
+by a Harvard University professor
+named Ellen Langer.
+This experiment is very famous.
+The experiment is like this.
+It is an experiment related to printers.
+The printer in the Harvard University Library
+often has a long queue.
+Many people are queuing to print.
+At this time,
+if someone tells the person in front of him,
+"Please let me print first,
+I just need to print 5 pages."
+Would people accept it?
+Will they let him print first?
+60% of people will let this person print first.
+So it feels like the students at Harvard
+are pretty nice.
+This acceptance level is higher than I expected.
+You told someone to let you print first,
+60% of people will say yes.
+But this time,
+if you change the wording of the question...
+You only said if you could let me print first previously.
+Now, you say,
+"Can you let me print first?
+I'm in a rush."
+Whether he is really in a rush,
+no one knows.
+But when you have a reason,
+and ask others to let you print first,
+the acceptance rate becomes 94% now.
+In addition,
+even if you slightly change your reason.
+For example,
+some people ask you to let him print first
+because he has to make copies.
+Even with this reason,
+the acceptance rate also becomes 93%.
+It is interesting that
+people just need a reason.
+Why do you want to print first?
+You just have to give a reason.
+Even if your reason is that you have to make copies,
+everyone will accept.
+Is explainable machine learning
+the same as it?
+That's why we need explainable machine learning.
+This is my definition
+of a good explanation.
+If there is a explanation
+that is acceptable for everyone,
+then it is a good explanation.
+People just need a reason to make themselves happy.
+And who do we want to make happy?
+This person
+may be your client,
+because hearing that
+deep network is a black box
+will make him feel bad.
+But if you tell him that it is explainable
+and give him a reason,
+he will be happy.
+Also he might be your boss.
+The boss may read a lot from content farms
+and thinks that deep learning is a black box which is not good.
+If you tell him that it is explainable,
+he would also be happy.
+Or today, you want to
+convince yourself.
+You think that it is a black box.
+Deep Network is a black box.
+You can't go over.
+If it can give you a reason of its decision,
+You will be happy.
+So I think a good explanation
+is an explanation that makes everyone happy.
+That is a good explanation.
+Actually you will find that
+in many researches,
+when we are designing these methods,
+it is similar to what I just talk about.
+A good explanation
+is an explanation that makes everyone happy.
+This idea
+is quite similiar to the progress of this technology.
+So the goal of explainable machine learning
+is like what I just said,
+which is giving us a reason.
+We could divide explainable machine learning
+into two categories.
+The first category is called local explanation.
+The second category is called global explanation.
+Local explanation is like this.
+Suppose we have an image classifier,
+we give it a picture and
+it says that it is a cat.
+Then the question we want to ask
+or
+the machine has to answer is
+the reason why this picture is a cat.
+If it answers questions based on a certain picture,
+it is called local explanation.
+There is another category,
+which is global explanation.
+Global examination is like this.
+Without giving any picture to classifier,
+we want to know that
+for a classify,
+what kind of picture will be classified as a cat.
+We are not using any specific image
+to analyze.
+We want to know that
+when we have a model
+which has a lot of parameters,
+for these parameters,
+what kind of object is called a cat.
+So there are two categories of explainable machine learning.
+Let's look at the first category.
+The first category is asking that
+why you think this image is a cat.
+We can ask this question
+more specifically.
+Give the machine a picture,
+and when it say it was a cat,
+which component
+makes the model think it is a cat.
+Are they the eyes?
+Or the ear?
+Maybe cat's feet
+make the machine think it saw a cat.
+Or speak more generally,
+suppose the input of our model is called x.
+This x may be an image,
+or some texts.
+And x
+can be split into multiple components.
+From x1 to xN.
+For an image,
+each component
+could be a pixel.
+And for text,
+each component
+could be a word
+or a token.
+Then the question we want to ask is,
+inside these tokens,
+inside these components,
+it is a token for texts,
+and for an image, it may be a pixel,
+inside these components
+which one is the most important
+for the machine to make the final decision.
+So how to know the importance of a component?
+The basic principle is like this.
+We select each of the components
+and modify them,
+or delete them.
+If we modifying or deleting a component
+make the output of Network change dramatically,
+it shows that
+this component is critical.
+It is important.
+If a component was deleted,
+the output of network has changed dramatically.
+The phenomenon represents that this component
+is neccessary to the network.
+Then, this component
+is an important component.
+To be more specific,
+if we want to know
+the importance of each area in the picture,
+there is a very simple approach to deal with it.
+We input a picture
+to the network and
+the network recognize this as a Pomeranian.
+Next, in this picture,
+when we put this gray square in different positions,
+your network will output different results.
+Look at this picture,
+These colors represents
+that the probability of network outputting Pomeranian.
+The blue color means the probability of Pomeranian is high.
+Oh, I was wrong.
+Blue color means the probability of Pomeranian is low.
+Red color means the probability of Pomeranian is high.
+And every position here
+represents that we put the gray square there.
+In other words,
+when we moving the gray square to the position of Pomeranian’s face,
+your image classifier today
+do not think that the picture is related to Pomeranian.
+If you put the gray square
+around the Pomeranian,
+at this time, the machine recognize
+it as a Pomeranian.
+So we know that
+the model do not recognize Pomeranian by
+the ball or the pattern of floor or the pattern of wall.
+So the model recognize Pomeranian
+by the pattern of the dog’s face.
+There is also the same example here.
+We move the gray square on this picture.
+You will find that
+when the gray square move to position of the tire,
+the machine cannot recognize the tires.
+So the machine really knows what the pattern of the tire looks like.
+For this phenomenon,
+we know that the model correctly recognize tire by the corresponding pattern of the tire.
+The model do not just guess the corrent answer.
+But it knows that
+the pattern of tire appears in this position.
+Let's see another picture.
+Then, there are two people in this picture
+and a Afghan Hound dog.
+But does the machine actually recognize dog by the pattern of the Afghan Hound
+or it recognize dog by the pattern of people?
+At this time, you can put this gray box
+slide over this picture.
+Then you find that when we put this gray box
+on this person's face,
+the machine still feels
+it has seen the Afghan Hound dog.
+But when you put the gray box
+in this position,
+the machine feels that it did not
+see the Afghan Hound dog.
+So it really recognize Afghan Hound dog by the corresponding pattern of Afghan Hound dog
+It knows that this pattern is related to Afghan Hound dog.
+It do not misunderstand the pattern of people as the Afghan hound dog.
+So this is the simplest
+approach to know the importance of component.
+Okay, there is a more advanced method.
+It need to calculate gradient.
+Suppose we have a picture,
+we write it as x 1 to x N.
+Every x here
+represents a pixel.
+Next,
+let's calculate the loss of this picture,
+we use symbol of lowercase e here.
+This symbol of lowercase e is that the distance of ground truth and the prediction
+of model when we input this picture.
+The distance is related to cross entropy.
+The bigger the e is,
+the worse the model prediction becomes now.
+Ok! so
+now how to know the importance of a certain pixel
+in the image recognition task?
+Then you can input the value of a certain pixel
+and change the value a litte.
+We add a delta x on the value.
+Then, we can see
+how much does our loss value change?
+If you making a small change on the certain pixel today,
+loss value has a huge change.
+It means that this pixel
+is important for image recognition task.
+Otherwise, if delta x is added,
+this delta e approaches zero.
+It means that the pixel in this position
+is not important for the image recognition task.
+Then, we can use the ratio of delta e to delta x
+to represent the importance of pixel x N.
+In fact, the meaning of the term delta e divided by delta x
+is to do partial differentiation of x N on your loss.
+It is okat if you don’t know what partial differentiation is.
+Anyway, the ratio of delta x to delta e
+represents the importance of this x N.
+The greater the ratio is,
+the more important x N is.
+Then, we calculate the ratio
+of every pixel in the picture.
+So, we get a new picture which represent through the ratio value
+and we called this picture saliency map.
+It is also in our homework.
+You will have many opportunities
+to draw all kinds of saliency map.
+So the pictures at the bottom
+are the
+saliency maps
+of the corresponding pictures above.
+On this map,
+a whiter point indicates a larger ratio.
+That is, the pixel at this position is more important.
+For example,
+when the machine is given this buffalo picture,
+it doesn't see the grass
+nor the bamboo,
+but sees the most important part
+which is the buffalo,
+and it is able to identify the correct position of the buffalo.
+It thinks that
+the pixels corresponding to the white points
+are the most important in
+deciding the type of animal in the picture.
+Then, by the shape of the points,
+it outputs "buffalo" as the answer.
+If the machine sees this picture.
+Said it saw a monkey.
+Where is the monkey?
+Monkey is on the treetop.
+It does not idenify the leaves as monkeys.
+It knows what appears at this position.
+Is its criterion for judging the correct answer.
+I give it this picture
+and it knows a dog
+appeared in this position.
+So
+this is the
+Saliency Map technique.
+Let me show you a
+practical applicaion of it.
+This application is related to Pokémon and Digimon.
+I don’t know if you guys know what that Digimon is.
+The one on the left is Pokémon,
+and the one on the right is called Digimon.
+Please raise your hand now if you know Digimon.
+Wow, that's actually a lot.
+Good. Hands down.
+So I don't need to explain.
+For classmates who don't know digimon,,
+it’s just another animal anyway.
+Hey, I'm not lying.
+Pokémon and Digimon
+are just different kinds of animals.
+So one day when I was surfing the Internet,
+I came across
+a classifier for Digimon and Pokémon
+with very high accuracy.
+So I decided to do this experiment myself
+to see why the model achieved such a high accuracy.
+You can go online
+to find a Pokémon Gallery
+and a Digimon Gallery.
+So you end up with a bunch of Pokémon pictures
+and Digimon pictures, and you want to classify them.
+This should not be a problem for you now, right?
+This is simply binary classification.
+Just randomly use any model you like
+to train a classifier.
+You can just modify the code of homework 3,
+simply change the number of categories
+from 11 to 2.
+That's it!
+Of course,
+you have to test the model
+with pictures that the machine hasn’t seen before.
+So you can't use all the pictures you found
+for training.
+You have to save some of them
+for the testing set
+to see whether your model
+can obtain the correct answer.
+Let's first see
+if humans
+can answer correctly.
+Everyone,
+do you think this is a Pokémon or a Digimon?
+If you think it is a Pokémon, raise your hand.
+Ok, hands down.
+Now raise your hand if you think it’s a Digimon.
+Good.
+Hands down.
+Honestly, I don't know the answer either.
+As you can see,
+Pokémon and Digimon
+are hard to distinguish.
+It is even hard
+for human beings like you
+to determine whether the picture
+is a Pokémon or a Digimon.
+How about the machine's performance?
+Okay, here we have a casually trained model
+with only a few layers.
+Let's train it.
+Wow, the training accuracy is 98.9%.
+This is very high.
+But don't be happy too early
+this might be overfitting
+Maybe the model only memorized the training data
+and is unable to generalize further.
+Because we only have a few thounsand pictures
+for both Digimon and Pokémon,
+so there might be overfitting.
+Let's test it with the testing set.
+The correct rate is 98.4!
+This is incredible.
+All hail the powerful machine learning.
+Humans can't identify
+the difference between Pokémon and Digimon,
+but the machine can,
+with 98.4% correct rate.
+Then you might be curious about
+the criterion
+the machine used to answer the question.
+That is, how it found the difference between Pokémon and Digimon.
+So let's draw a Saliency Map.
+There are a few animals here.
+Actually,
+they are
+digimons.
+Next,
+I will sketch the Saliency Map of those pictures.
+With the map, the machine will tell me
+why it thinks these are Digimons.
+The answer given by the machine is like this.
+The brighter points here
+are the important patrs identified by the machine.
+This is a little bit weird.
+It seems that the bright dots are distributed in the four corners.
+I don't know what happened.
+Next, I will analyze Pokémon.
+The issue is more obvious.
+You find that the features, which machine cares about,
+are basically away from the Pokémon's body.
+It's all on the background of the image.
+Why is it?
+Because,
+the images of Pokémon are all PNG files,
+and the images of Digimon are all JPEG files.
+After the PNG file is read in,
+the background will be all black.
+So, the machine only needs to look at the background
+to know if a picture is a Pokémon or a Digimon.
+It's solved like this.
+Great!
+So, this example tells us that
+explainable AI is a very important technology.
+You may feel a little bit ridiculous about the example I just gave to you.
+Maybe, it won't happen in regular applications.
+But, will it really not happen?
+There is a real example.
+There is a Benchmark Corpus,
+called PASCAL VOC 2007.
+There are all kinds of objects inside.
+Machine needs to learn to classify images.
+When the machine sees this picture,
+it knows it's a picture of a horse.
+But, if you draw Saliency Map,
+you will realize the result like this.
+It only cares about the lower-left corner of the horse.
+Why?
+Because that there is a string of English in the lower-left corner.
+Pictures of horses in this gallery
+are from a certain website,
+and the lower left corner of them all have the same string of English.
+So, when the machine sees this string of English in the lower-left corner,
+it will know it is a horse.
+It doesn't have to learn what a horse looks like.
+So, in this real application today,
+on Benchmark Corpus,
+a similar situation will occur.
+So, it tells us that
+this Explainable Machine Learning technique
+is very important.
+OK, is there any method
+to draw Saliency Map
+for Explainable Machine Learning better?
+The first method
+is the SmoothGrad just mentioned by the TAs.
+What does it mean?
+This picture refers to a gazelle.
+Then, you expect that,
+when you are doing Saliency Map,
+the machine will focus
+on the gazelle.
+If you use the method we just mentioned
+to draw the Saliency Map directly,
+the result you get may look like this.
+Indeed,
+there are many bright spots near the gazelle,
+but there are also some noises in other places
+to make people look a little uncomfortable.
+So, there is the SmoothGrad method.
+SmoothGrad will make your Saliency Map
+with few noises.
+If, on this example,
+you will find out that most of the bright spots
+concentrate on the gazelle.
+How does the SmoothGrad method work?
+It's very simple.
+To put it bluntly, it's worthless.
+it's that, on your picture,
+you add various noises.
+Pictures with different noises mean different pictures!
+On each picture,
+we calculate the Saliency Map.
+Then, if you have 100 kinds of noises to add,
+there will be 100 Saliency Maps.
+By averaging them,
+you can get the result of SmoothGrad.
+That's it.
+Of course, someone might ask that
+how you know this SmoothGrad
+must give better result than the original one.
+Maybe, for the machine,
+it really thinks these grasses are very important.
+It really thinks this sky is very important.
+It really thinks this background is very important.
+Maybe,
+it's like what I said at the beginning.
+The most important goal of Explainable Machine Learning
+is just to make people feel good.
+When you draw this picture,
+your boss will feel unpleasant.
+He will feel that
+this model is a little bit suck.
+This model seems to be hard to explain.
+So, you will draw it as SmoothGrad like this
+and then tell others that,
+please look at this model,
+it really knows the gazelle is the most important.
+So,
+this model is good.
+And,
+this Explainable Machine Learning method is also good.
+Good, but
+actually by just looking at gradient,
+it could not fully reflect the importance of a component.
+how should I say?
+Here is an example for your reference.
+Okay! This horizontal axis represents the length of the nose
+of elephant, or a certain creature.
+The vertical axis represents the probability that this creature is an elephant.
+We all know the characteristic of elephants
+is long nose.
+So, for a creature,
+The longer its nose,
+the more likely it is an elephant.
+But, when its nose is long enough to a limitation,
+making it even longer
+won't make it more like an elephant.
+Elephant with long nose
+is just an elephant with a very long nose.
+So, when an elephant's nose gets longer
+beyond a certain range,
+you won't think it becomes more like an elephant.
+So,
+the length of a creature's nose is irrelevant to the possibility that it is an elephant.
+Its relevance
+may be at first when the length is relatively short.
+As the length gets longer,
+there is a growing possibility that this creature is an elephant.
+But, when the length of the nose reaches a certain level,
+even longer nose
+won't make it more like an elephant.
+At this time,
+if you calculate the length of the nose
+and do the partial differential of the probability of an elephant,
+the partial differential you get in this place
+might approximate to 0.
+So if you only look at gradient
+and only look at the saliency map.
+You may come to a conclusion that
+the length of the nose
+has nothing to do with whether it’s an elephant or not.
+The length of the nose is not an indicator of whether it is an elephant.
+Because the change in the length of the nose
+with respect to changes in the possibility of being an elephant
+is close to 0.
+So the nose is not
+an important indicator for judging whether it is an elephant at all.
+Is it reasonable?
+Actually you know it's not like this.
+So if we only look at gradient
+and the results of partial differentiation,
+it may not tell us completely
+the importance of a component.
+Hence, there are other ways.
+There is a method called Integrated Gradient.
+Its abbreviation is called IG.
+Here,
+I’m not going to elaborate on how IG works.
+We just leave the file here.
+There is also an IG implemented in the teaching assistant’s program.
+Then if you are interested,
+you can study by yourself to see how IG works.
+If you are not interested,
+then you press enter
+and you get the result of the IG analysis.
+Okay, just now we were looking at network.
+We just looked at an input
+and tell which parts of it are more important.
+Then the next question we have to ask is
+when we show an input to network,
+how does it handle this input?
+How does it process the input
+and got the final answer?
+Ok, there are different ways.
+The first method is most intuitive.
+You see
+what happened in network with your own eyes.
+In the homework,
+I want you to see what happened in BERT
+that is related to text.
+For the example given in class.
+Let’s take the voice, for example.
+In homework two,
+you have trained a network.
+This Network is just inputting a short piece of sound
+and judging that this voice
+is belong to which phoneme
+and which KK phonetic?
+and then
+suppose your first layer has 100 Neurons.
+The second layer also has 100 Neurons.
+The output of the first layer
+can be seen as a 100-dimensional vector.
+The output of the second layer
+can also be seen as a 100-dimensional vector.
+By analyzing these vectors,
+maybe we can know that
+what happened in a network.
+But a 100-dimensional vector is
+not easy to read, not easy to observe, and not easy to analyze.
+So what to do?
+You have many ways.
+You can take a 100-dimensional vector
+and reduce it to two dimensions.
+Then what is the method?
+We won't go into details here.
+In short, there is a basket of methods that can be used.
+After reducing the 100 dimension to two dimensions,
+you can draw on the picture.
+Then you can observe it carefully.
+See what you can observe.
+The following
+are examples of voice.
+Then this example comes from a paper in 2012.
+You will find Hinton,
+the father of deep learning,
+is also the author of this article.
+What does this article do.
+This article,
+to be honest,
+This article is your homework two, do you know that?
+It is exactly the same as the data you used for homework 2.
+So suppose you travel through time and space to ten years ago.
+You show Hinton the result of your homework 2.
+He would be shocked .
+You can tell him that by the way,
+this is just one of our 15 assignments.
+He was shocked.
+You can also tell him that
+oh for this one
+I only train for an hour and then the train is finished.
+At that time training something like this
+you have to train for more than a week.
+Then Hinton would be shocked.
+So seeing these past articles,
+I really can only say that
+the era has changed.
+How troublesome it is to train network used to be.
+Now the era have really changed.
+In fact, Deep Belief’s Network was used at that time.
+Is Deep Belief Network
+a Deep Neural Network?
+Not like this.
+What is this?
+We won't talk about it.
+Because no one is using this thing anymore.
+Okay, but the result it got
+is still worth seeing today.
+Actually in homework two,
+you should be possible to observe similar results.
+Okay, what are you doing here?
+What we are doing here is we
+get the input of the model first,
+which is the Acoustic Feature,
+which is MFCC.
+Then we reduce it to two dimensions
+and draw on a two-dimensional plane.
+On this picture,
+each point represents a small sound signal.
+Every color
+represents a speaker
+someone who speaks.
+In fact, the information we threw to this network
+has many sentences repeated.
+Someone said...
+A said how are you.
+B also said how are you.
+C also said how are you.
+Many people said the same sentence,
+but you can’t tell from this picture.
+From the acoustic feature, we can see that
+the same sentence with the same content
+spoken by different people
+cannot be told apart.
+Sentences spoken by the same person were more similar to each other.
+Even if it's the same sentence,
+as long as it's spoken by different people,
+the results won't be aligned.
+So, judging from this result,
+people will think that
+voice recognition is too difficult
+to be done
+since the features
+of the same sentence spoken by different people
+looks very different from one another.
+How is the task of voice recognition
+possible to be done?
+Things are different
+when we look at the middle layers of the network.
+This is the output of the 8th layer of the network.
+What can we see?
+We can see that there are many lines,
+each with no specific color.
+What do the lines here represent?
+Each one represents a certain sentence of the same content.
+So, we can see that
+the same sentence spoken by different people
+cannot be told apart on MFCC.
+After it passes through the 8th layer of the network,
+the machine knows that these sentences have the same content.
+Although the audio signal looks different
+because it was spoken by different people,
+they have the same content.
+It can align sentences with the same content
+that were spoken by different people
+together.
+So, we can get accurate classification results in the end.
+Okay, we just talked about directly analyzing the output
+of the neurons.
+We can also analyze the attention layer.
+Self-attention is widely used nowadays,
+and we can also see what the network actually learned
+by looking at the result of the attention.
+In the homework,
+we also asked you guys to take a look at BERT's attention.
+But, when you decide to use attention,
+there are still things that you need to pay attention to.
+Intuitively, you'd think that attention should be very explanatory.
+The attention should show us
+how much some words are related.
+In the homework,
+we also picked some examples that
+show relevance more obviously
+for everyone to implement.
+However,
+we can actually find papers like this one:
+"Attention is not Explanation".
+Attention isn't always explainable.
+Of course, some people have published papers like this one:
+"Attention is not not Explanation".
+So, we can see that
+this field of research is progressing very fast.
+Soon, maybe someone will publish a paper claiming
+"Attention is not not not Explanation".
+So, the questions of
+whether attention is explainable or not,
+when is it explainable,
+or when is it not explainable,
+are still problems that require further research.
+In addition to observing with human eyes,
+there is another technology called probing.
+Probing means using probes
+to probe into the network
+and see what happens.
+For example,
+suppose now we want to know
+what a certain layer of BERT has learned.
+Observing with the naked eye
+has its limits.
+There may be many phenomena that we didn't observe.
+Besides, there is no way for us to look through a large amount of data at once.
+So, what should we do?
+We can train a probe.
+The probe is actually a classifier.
+For example,
+we train a classifier
+that decides the POS tag of a phrase,
+which is its part of speech,
+according to a feature,
+which is a vector.
+We pass the embedding of BERT
+to the POS classifier
+to train the POS classifier.
+It will try to use these embeddings
+to decide the parts of speech
+of the embeddings.
+If the POS classifier has a high accuracy,
+it means that there's a lot of information
+regarding the parts of speech of the embeddings.
+If the POS classifier has a low accuracy,
+it means that there isn't much information
+regarding the parts of speech of the embeddings.
+Or, you train a NER classifier,
+which stands for "Name Entity Recognition".
+Then,
+it determines
+whether the vocabulary it sees now
+is a name for a person, a name for a place,
+or not a proper noun at all.
+Through the accuracy of the NER classifier,
+we can know whether these features contain
+names,
+addresses,
+or any information about the person's name, etc.
+However, there's one thing you have to be careful with
+when using this technique.
+What is it?
+Be careful with the strength of the classifier you're using.
+Why is that?
+Suppose your classifier has a very low accuracy.
+Is it guaranteed that these features that we input,
+which are the embeddings of BERT,
+contain no information that we want to classify?
+Not necessarily.
+Why's that?
+Because it's possible that your classifier wasn't trained correctly,
+right?
+You all have a lot of experience with training networks,
+and we know we can't guarantee
+the classifier to be trained successfully.
+Perhaps, the accuracy of the classifier
+is very low after training.
+It's not owing to these features
+which don't contain the information we need
+but the learning rate which wasn't adjusted properly.
+Perhaps there's a mistake somewhere along the line
+that made the training fail.
+Could that be the case?
+It might be, sometimes.
+So, when using the probing model,
+you have to be careful not to jump to conclusions too quickly.
+Sometimes you will get some conclusions,
+just because your classifier is not well trained.
+Or, your model is so good that
+the accuracy of your classifier
+can not be treated as a basis for judgment.
+Okay, I know this class will be over soon.
+Time really flies.
+We have finished talking about a special probing example of voice.
+and then end the class.
+The probing model does not have to be a classifier.
+I will give you an example that
+probing has all kinds of possibilities.
+For example,
+one attempt in our laboratory is
+to train a speech synthesis model.
+The input of general speech synthesis models is a paragraph of text,
+and the model output the corresponding sound signal.
+The input of our speech synthesis model is not a paragraph of text.
+Its input is the embedding of the network output.
+It takes embedding of network output as input
+and then tries to output a sound signal.
+In homework two,
+you trained a classifier.
+You trained a phoneme classifier.
+We will take out your network,
+get the output of a certain layer
+and input it to the TTS model
+to train this TTS model.
+The goal of our training
+is to make the TTS model
+have the ability to reproduce the network input.
+The input of the network is this audio signal.
+I hope that it can generate embeddings
+after passing these layers.
+After inputting the embeddings to TTS,
+it can restore the original sound signal.
+What is the use of such an analysis?
+You might want to say that
+we train this TTS to generate the original sound signal,
+which is the same
+as the original sound signal.
+The one it inputs.
+Why?
+The interesting part here is that
+assuming this network
+is to remove information, such as the speaker.
+For this TTS model,
+the output of layer 2
+has no speaker information.
+No matter how hard it tries,
+it can not restore the characteristics of the speaker.
+Although the content is "Hi"
+with a boy's voice,
+you will find that
+maybe after a few layers,
+the output of the TTS model,
+which is the sound it produces,
+will become "Hi"
+but you can’t tell who said it.
+You can know that
+this network,
+a model for speech recognition,
+learned to erase the characteristics of the speaker
+in the process of training.
+It keeps the content.
+It only keeps the content of the audio signal.
+The following is a real example,
+after finishing this example, we will dismiss the class.
+Okay, this example looks like this.
+There is a 5-layer Bi-directional LSTM.
+Its input is the sound signal.
+The output is text.
+It is a model of speech recognition.
+Now, we give it a sound signal as input.
+It's a girl's voice.
+Next, let it listen to another content
+with a boy's voice.
+It sounds like this.
+Next, we put these sound signals
+into this network,
+then put the embedding of this network
+into the TTS model to restore the original sound signal.
+Let's see what we hear.
+The following is the result of the first layer of LSTM.
+You will find that the sound signal is a bit distorted,
+but basically the same as before.
+The boy's voice is like this.
+It is the same as before.
+But what happens after passing the 5th layer of LSTM?
+The sound signal becomes like this.
+So originally a sentence was spoken by a boy,
+and a sentence is spoken by a girl.
+After passing the 5th layer of LSTM,
+I can't tell who said it.
+It makes the voices of two people
+become the same.
+You might say
+Hinton already knows it
+10 years ago
+through visualization.
+What's great about this research?
+The greatness of this research is that it is trendy.
+We can listen to the voice
+heard by the network.
+Here is one last example.
+The input audio signal is noisy
+with piano sound.
+Okay, our network now has several layers of CNN in front.
+There are several layers of Bi-directional LSTM behind.
+After passing through the first CNN layer,
+the sound signal becomes like this.
+You can still hear the piano.
+The sound in the last layer
+before the LSTM layer
+is like this.
+You still hear the piano.
+But after passing the first layer LSTM,
+it's different.
+It sounds like this.
+You will find that
+the piano's voice suddenly became much lower.
+So know that
+the noise of this piano,
+which is the noisy sound signal,
+is filtered out
+on the first layer
+of LSTM.
+The CNN layers in front
+do not seem to play a role in filtering out the noise.
+This is what this analysis can tell us.
+Okay, we just end here.
+Let's dismiss the class.
+If you have any questions, you can stay and discuss them.
+Thank you all, thank you.

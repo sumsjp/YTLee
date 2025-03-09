@@ -362,14 +362,53 @@
 </details>
 
 <details>
-<summary>67. ML Lecture 23-2: Policy Gradient (Supplementary Explanation)</summary><br>
+<summary>67. [2018-01-18] ML Lecture 23-2: Policy Gradient (Supplementary Explanation)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=y8UPGr36ccI" target="_blank">
     <img src="https://img.youtube.com/vi/y8UPGr36ccI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章重點整理
 
+#### 核心主題
+文章圍繞強化學習（Reinforcement Learning）中的策略梯度方法展開討論，特別是將強化學習問題轉化為分類問題進行處理的方式。
+
+#### 主要觀念
+1. **策略梯度方法**：通過最大化期望獎賞來更新策略網絡參數。
+2. **分類問題的轉化**：將強化學習中的每個狀態-行動對視為一筆分類數據，並給其加權.reward(τⁿ)。
+3. **批量訓練與在線訓練**：強調了強化學習中數據收集和模型訓練的反覆迭代特性。
+
+#### 問題原因
+1. **\data dependencies**: 狡猾的策略網絡可能過早鎖定優行動，影響探索效率。
+2. **\data imbalance**: 不同獎賞值的數據對模型更新的影響不均衡。
+
+#### 解決方法
+1. **加權分類**：將每筆數據按其reward值進行加權，以反映其重要性。
+2. **批量訓練**：定期收集數據後集中訓練模型，避免\data dependencies並提高學習效率。
+
+#### 優化方式
+1. **_reward weighting**: 根據獎勵值調整數據的影響力，確保高獎勵數據對模型更新起更大作用。
+2. **_data augmentation**: 通過複製數據來增加低獎勵數據的代表性，平衡數據分布。
+
+#### 理論支持
+- **策略梯度**：利用概率梯度法最大化期望獎賞。
+- **分類框架**：將強化學習問題重新表述為加權分類任務，借鑒分類算法進行處理。
+
+#### 實現方法
+1. **數據收集**: 在每一個_episode_中收集狀態和行動對，並記錄相應的_reward_值。
+2. **數據加權**: 對每筆數據按照其_reward_值進行加權。
+3. **模型訓練**: 使用加權數據批量訓練策略網絡，然後再利用更新後的網絡進行新一輪數據收集。
+
+#### 結論
+1. **方法可行性**：將強化學習問題轉化為分類問題是可行的，並且可以利用現有的深度學習框架（如Keras）實現。
+2. **優勢**: 通過加權和批量訓練，可以有效提高策略網絡的學習效率和性能。
+3. **挑戰**: 強化學習需要反覆迭代數據收集和模型訓練，這增加了計算開銷，但現代計算資源可以充分支撐其實現。
+
+---
+
+### 總結
+文章提出了一種將強化學習問題轉化為加權分類問題的方法，詳細探討了其核心思想、實現步驟及優化策略。該方法利用現有深度學習框架，通過數據加權和批量訓練提高了學習效率，展示了強化學習在實際應用中的可行性和有效性。
 </details>
 
 <details>
@@ -461,14 +500,41 @@
 </details>
 
 <details>
-<summary>58. ML Lecture 9-3: Fizz Buzz in Tensorflow (sequel)</summary><br>
+<summary>58. [2017-11-18] ML Lecture 9-3: Fizz Buzz in Tensorflow (sequel)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=F1vek6ULo9w" target="_blank">
     <img src="https://img.youtube.com/vi/F1vek6ULo9w/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 核心主題
+- 人工智慧在Fizz Buzz問題上的應用。
+- 探討深度學習模型在模式識別任務中的表現。
 
+### 主要觀念
+1. **硬訓練（Hard Training）**：指將看似不能訓練的任務通過訓練方法來實現。
+2. **Fizz Buzz задача**：一個簡單的程式問題，要求根據數字的整除性輸出特定字符串。
+3. **深度學習模型**：使用TensorFlow和神經網絡架構解決Fizz Buzz問題。
+
+### 問題原因
+- 原始模型（10個輸入單元、100個隱藏層單元）在訓練集上的準確率僅爲76%，未能有效擬合數據。
+- 模型的容量不足，無法充分學習複雜的模式。
+
+### 解決方法
+1. **增加網絡容量**：將隱藏層單元數從100增加到1000，提升模型的學習能力。
+2. **調整訓練參數**：使用Adam優化器和Softmax激活函數，確保模型能夠更好地擬合數據。
+
+### 優化方式
+- 通過增加網絡層數或單元數來提高模型的複雜度，使其能夠捕捉更細微的數據特徵。
+- 使用適當的訓練策略（如交叉驗證）進一步優化模型性能。
+
+### 結論
+1. **初始模型表現有限**：原始深度學習模型在處理Fizz Buzz問題時表現出較低的準確率，表明其結構可能過於簡單。
+2. **網絡容量的重要性**：通過增加隱藏層單元數，模型能夠顯著提升準確率至100%，證明了網絡容量對任務適應性的影響。
+3. **深度學習的有效性**：儘管看似簡單的任務可以通過複雜的模型解決，但選擇合適的架構和參數是關鍵。
+
+### 參考資料
+- 文章提供了一個使用TensorFlow實現的簡單神經網絡結構，展示了如何通過調整模型結構來提高性能。
 </details>
 
 <details>
@@ -483,14 +549,67 @@
 </details>
 
 <details>
-<summary>56. ML Lecture 22: Ensemble</summary><br>
+<summary>56. [2017-11-18] ML Lecture 22: Ensemble</summary><br>
 
 <a href="https://www.youtube.com/watch?v=tH9FH1DH5n0" target="_blank">
     <img src="https://img.youtube.com/vi/tH9FH1DH5n0/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章整理： ensemble methods in machine learning
 
+#### 1. 核心主題
+- **Ensemble Learning**: 利用多個學習器（模型）的集體智慧來提升整體性能。
+- **STACKING、BOOSTING、BAGGING**等集成技術在機器學習中的應用。
+
+#### 2. 主要觀念
+- **STACKING (堆疊)**:
+  - 將多個基模型的輸出作為高級模型的輸入，形成分層結構。
+  - 基模型可以是任何類型的學習器，如 Decision Trees、Neural Networks 等。
+  - 最後一層通常使用簡單的分類器（如 Logistic Regression）來整合各基模型的結果。
+
+- **BOOSTING**:
+  - 通過迭代提升弱學習器的性能，最終形成強大learner。
+  - 每次迭代根據前一次分類錯誤的樣本調整權重，逐步改進模型。
+  - Adaboost 是一種常見的Boosting算法。
+
+- **BAGGING (包裝)**:
+  - 使用_bootstrapping_技術生成多個訓練數據集，並基於每個數據集訓練一個基模型。
+  - 最後通過投票或平均的方式來決定最終結果。
+  - 主要用於降低過度擬合和提升模型的泛化能力。
+
+#### 3. 問題與挑戰
+- **Base Learners 的性能**:
+  - 基模型可能存在性能差異，甚至有些模型可能表現不佳或完全失效。
+  
+- **數據分配問題**:
+  - 在STACKING中，若基模型過度擬合訓練數據，可能影響最終分類器的性能。
+
+#### 4. 解決方法與優化方式
+- **STACKING 的改進**:
+  - 將訓練數據集分為多個部分，一部分用於訓練基模型，另一部分用於訓練最終的整合分類器。
+  - 這樣可以避免最終分類器過度依賴基模型的性能。
+
+- **BOOSTING 的優化**:
+  - 確定適當的學習速率（learning rate）和弱learner數量，防止模型過度擬合。
+  - 使用正規化技術來控制模型複雜度。
+
+- **BAGGING 的改進**:
+  - 增加訓練數據集的多樣性，確保每個基模型都能夠捕獲不同的特徵信息。
+  - 結合其他集成方法（如STACKING）進一步提升性能。
+
+#### 5. 啟發與結論
+- **Adaboost 的啟示**:
+  - Adaboost 可以被看作是一種Gradient Descent算法，通過反覆調整模型權重來最優化解題。
+  
+- **STACKING 的實用性**:
+  - 在多團隊或多模型的情況下，STACKING 可以有效整合各個模型的結果，提升整體性能。
+  
+- **ensemble方法的靈活性**:
+  - 集成學習方法具有高度的靈活性，可以根據不同的任務和數據特性進行調整和優化。
+
+#### 6. 總結
+Ensemble Learning 是機器學習中一項重要的技術，通過將多個基模型的結果整合起來，往往能夠顯著提升模型的性能和泛化能力。STACKING、BOOSTING 和 BAGGING 分別從不同角度提供了有效的集成方案，而 Adaboost 則展示了如何通過.gradient descent的方式來優化ensemble模型。STACKING 的實用性在於它可以有效地整合各個模型的結果，特別是在團隊合作或多模型的情況下，這對於提升最終性能具有重要意義。
 </details>
 
 <details>

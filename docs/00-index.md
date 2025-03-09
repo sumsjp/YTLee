@@ -43,14 +43,43 @@
 </details>
 
 <details>
-<summary>46. ML Lecture 3-2: Gradient Descent (Demo by AOE)</summary><br>
+<summary>46. [2017-09-21] ML Lecture 3-2: Gradient Descent (Demo by AOE)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=1_HBTJyWgNA" target="_blank">
     <img src="https://img.youtube.com/vi/1_HBTJyWgNA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 核心主題：.Gradient Descent 算法的理解與應用
 
+#### 主要觀念：
+1. **Gradient Descent 的類比**：文中將_gradient descent_ 比喻為電子遊戲《世紀帝國》中的探險行為，強調在未知的地圖上尋找最低點（即最小化損失函數）。
+2. **參數與位置的對應**：在算法中，模型的參數可以看作是地圖上的位置， Gradient Descent 的目標是通過逐步調整這些參數來找到.loss function_ 的最小值。
+3. **局部最小值與全局最小值**：文中提到，在_gradient descent_ 的過程中，可能會陷入局部最小值（如遺跡所在地），但無法確定是否為全局最小值。
+
+#### 問題原因：
+1. **信息不完整性**：在_gradient descent_ 開始時，並未了解完整的地圖信息，導致無法立即判斷最低點的位置。
+2. **算法的局限性**：缺乏全局視野（如天眼），使得算法只能依賴局部梯度信息逐步調整參數。
+
+#### 解決方法：
+1. **隨機初始位置**：選定一個隨機的起始點，開始_gradient descent_ 的過程。
+2. **梯度下降步驟**：根據當前位置的梯度方向，逐步移動到地圖上相對低洼的位置。
+3. **局部最小值檢測**：在每一次移動後，檢查是否已進入局部最小值，以決定是否停止或進一步調整步長。
+
+#### 優化方式：
+1. **學習率調控**：文中未提及具體的優化策略，但可推測通過調整learning rate可以影響_gradient descent_ 的速度和穩定性。
+2. **全局視野的重要性**：開天眼（比喻為擁有全局信息）能幫助判斷是否已達成全局最小值。
+
+#### 結論：
+1. **局部最小值的限制**：在-gradient descent_ 的過程中，算法可能無法保證找到全局最小值，這取決於起始點和地圖的地形特性。
+2. **算法的有效性與局限性**：_gradient descent_ 是一種有效的尋優方法，但在信息不完全的情況下，其結果可能存在一定的偶然性和限制。
+
+#### 関聯概念：
+- 損失函數（Loss Function）
+- 梯度（Gradient）
+- 學習率（Learning Rate）
+- 局部最小值（Local Minimum）
+- 全局最小值（Global Minimum）
 </details>
 
 <details>
@@ -175,14 +204,57 @@
 </details>
 
 <details>
-<summary>34. ML Lecture 8-1: “Hello world” of deep learning</summary><br>
+<summary>34. [2017-03-23] ML Lecture 8-1: “Hello world” of deep learning</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Lx3l4lOrquw" target="_blank">
     <img src="https://img.youtube.com/vi/Lx3l4lOrquw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理
 
+## 核心主題
+- **_mini-batch 訓練法則**：探討 mini-batch 在深度學習中的應用及其優勢。
+- **GPU 加速機制**：分析 GPU 如何透過並行處理提升模型訓練效率。
+- **Keras 模型管理**：介紹 Keras 在模型保存、加載及評估方面的功能。
+
+## 主要觀念
+1. **Mini-batch 的定義與作用**：
+   - Mini-batch 是將一批樣本共同進行前向傳播和反向傳播，以提升訓練效率。
+2. **GPU 的並行處理能力**：
+   - GPU 能夠高效處理大規模矩陣運算，特別是在批量數據上表現出色。
+3. **Keras 的模型操作**：
+   - Keras 提供了簡單易用的接口來保存、加載和評估模型。
+
+## 問題原因
+- **批處理不足**：單一樣本訓練效率低，網絡更新頻繁但幅度小。
+- **GPU 潛力未釋放**：未使用 mini-batch 導致 GPU 並行能力無法充分發揮。
+- **模型管理需求**：需要有效工具來保存、加載和評估訓練好的模型。
+
+## 解決方法
+1. **Mini-batch 訓練**：
+   - 使用一批數據共同更新模型參數，平衡計算效率和記憶體使用。
+2. **GPU 加速**：
+   - 利用 GPU 的並行處理能力，將批量矩陣運算交由 GPU 高效完成。
+3. **Keras 模型管理**：
+   - 使用 Keras 的 `save` 和 `load_model` 函數來保存和加載模型。
+   - 通過 `evaluate` 方法進行模型評估。
+
+## 優化方式
+1. **批量大小的選擇**：
+   - 選擇合適的 batch size，平衡訓練速度和模型穩定性。
+2. **充分發揮 GPU 性能**：
+   - 確保使用 mini-batch 以最大化 GPU 的並行處理能力。
+3. **Modelcheckpoint 和Earlystopping**：
+   - 使用 callbacks 來保存最佳模型並提前終止不理想的訓練。
+
+## 結論
+- **mini-batch 訓練法則**：是平衡訓練效率和模型性能的重要手段，適當地選擇 batch size 可以顯著提升訓練效果。
+- **GPU 加速機制**：通過矩陣運算的並行化，GPU 在深度學習中扮演了至關重要的角色。
+- **Keras 模型管理**：提供了高效且易用的工具來完成模型的保存、加載和評估，簡化了模型生命周期的管理。
+
+## 參考文獻
+- 文章內容。
 </details>
 
 <details>
@@ -252,14 +324,62 @@
 </details>
 
 <details>
-<summary>27. ML Lecture 5: Logistic Regression</summary><br>
+<summary>27. [2017-01-29] ML Lecture 5: Logistic Regression</summary><br>
 
 <a href="https://www.youtube.com/watch?v=hSXFuypLukA" target="_blank">
     <img src="https://img.youtube.com/vi/hSXFuypLukA/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章整理：深度學習中多層邏輯斯回歸網路的應用
 
+---
+
+#### 核心主題  
+- 深度學習（Deep Learning）的基本概念及其在人工智慧領域的重要性。  
+- 多層邏輯斯回歸網路（Neural Networks）作為實現深度學習的核心結構。  
+
+---
+
+#### 主要觀念  
+1. **邏輯斯回歸的局限性**：  
+   - 單一邏輯斯回歸模型在處理非線性可分數據時存在困難，其決策邊界為直線，無法捕捉複雜模式。  
+2. **多層網路的引入**：  
+   - 通過將多個邏輯斯回歸模型串接成網路（Neural Network），可以實現非線性分類任務。  
+3. **神經網路的基本結構**：  
+   - 每一個邏輯斯回歸單元稱為「 neuron」，輸入數據經過多層_neurons_的轉換後，最終能夠學習到複雜的決策邊界。  
+
+---
+
+#### 問題原因  
+- 對於某些非線性可分數據集（如文檔中提到的四個點），單一邏輯斯回歸模型無法有效分類，因其決策邊界受限為直線。  
+
+---
+
+#### 解決方法  
+1. **引入多層網路**：  
+   - 使用多個邏輯斯回歸模型（ neuron）串接，形成神經網路結構。  
+2. **.Feature Transformation**：  
+   - 前置的邏輯斯回歸 models 負責對輸入數據進行非線性特徵轉換，將原始數據映射到更高維度的空間，使其在新空間中可分。  
+3. **分段學習**：  
+   - 每一個 neuron 學習不同的特徵或模式，最終通過多層網路共同完成複雜任務。  
+
+---
+
+#### 優化方式  
+1. **網路深度的增加**：  
+   - 增加神經網路的深度（ deeper layers）可以進一步提升模型的表達能力，適應更複雜的數據模式。  
+2. **激活函數的選擇**：  
+   - 使用非線性激活函數（如 Sigmoid、ReLU）來實現非線性特徵轉換，增強網路的學習能力。  
+3. **訓練算法的優化**：  
+   - 通過反向傳播（Backpropagation）和梯度下降等算法優化神經網路參數，提升模型性能。  
+
+---
+
+#### 文章結論  
+- 多層邏輯斯回歸網路（Neural Network）能夠克服單一模型的局限性，實現對複雜數據模式的學習與分類。  
+- 通過串接多個 neuron，神經網路在深度 learning 中展現出強大的功能，成為人工智慧領域的核心技術之一。  
+- 深度學習的基本思想是模擬人腦的結構和功能，利用多層感知器進行.feature extraction_ 和模式識別，從而實現高級的人工智能任務。
 </details>
 
 <details>

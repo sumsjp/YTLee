@@ -25,14 +25,14 @@ idx,id,title,url,date
 24,QsO2zyED7Lw,"ML Lecture 27: Ensemble (no ""pointer"" version)",https://www.youtube.com/watch?v=QsO2zyED7Lw,unknown
 25,rTqmWlnwz_0,ML Lecture 21-2: Recurrent Neural Network (Part II),https://www.youtube.com/watch?v=rTqmWlnwz_0,2017-01-18
 26,xCGidAeyS4M,ML Lecture 21-1: Recurrent Neural Network (Part I),https://www.youtube.com/watch?v=xCGidAeyS4M,2017-01-25
-27,hSXFuypLukA,ML Lecture 5: Logistic Regression,https://www.youtube.com/watch?v=hSXFuypLukA,unknown
+27,hSXFuypLukA,ML Lecture 5: Logistic Regression,https://www.youtube.com/watch?v=hSXFuypLukA,2017-01-29
 28,Jvigef51rqk,Deep Learning for Language Modeling,https://www.youtube.com/watch?v=Jvigef51rqk,unknown
 29,IzHoNwlCGnE,Review: Basic Structures for Deep Learning Models (Part I),https://www.youtube.com/watch?v=IzHoNwlCGnE,unknown
 30,-yhm3WdGFok,Computational Graph & Backpropagation,https://www.youtube.com/watch?v=-yhm3WdGFok,unknown
 31,SoCywZ1hZak,Spatial Transformer Layer,https://www.youtube.com/watch?v=SoCywZ1hZak,unknown
 32,dxB6299gpvI,Highway Network & Grid LSTM,https://www.youtube.com/watch?v=dxB6299gpvI,unknown
 33,JKWqPO3d6kQ,Review: Basic Structures for Deep Learning Models (Part II),https://www.youtube.com/watch?v=JKWqPO3d6kQ,unknown
-34,Lx3l4lOrquw,ML Lecture 8-1: “Hello world” of deep learning,https://www.youtube.com/watch?v=Lx3l4lOrquw,unknown
+34,Lx3l4lOrquw,ML Lecture 8-1: “Hello world” of deep learning,https://www.youtube.com/watch?v=Lx3l4lOrquw,2017-03-23
 35,f1KUUz7v8g4,Conditional Generation by RNN & Attention,https://www.youtube.com/watch?v=f1KUUz7v8g4,unknown
 36,z0uOq2wEGcc,Recursive Network,https://www.youtube.com/watch?v=z0uOq2wEGcc,unknown
 37,0CKeqXl5IY0,Generative Adversarial Network,https://www.youtube.com/watch?v=0CKeqXl5IY0,unknown
@@ -44,7 +44,7 @@ idx,id,title,url,date
 43,TN8cJiomk_k,Video Generation by GAN,https://www.youtube.com/watch?v=TN8cJiomk_k,unknown
 44,1DlTX9srmvE,Ensemble of GAN,https://www.youtube.com/watch?v=1DlTX9srmvE,unknown
 45,gFaqKdcCdOE,Energy-based GAN,https://www.youtube.com/watch?v=gFaqKdcCdOE,unknown
-46,1_HBTJyWgNA,ML Lecture 3-2: Gradient Descent (Demo by AOE),https://www.youtube.com/watch?v=1_HBTJyWgNA,unknown
+46,1_HBTJyWgNA,ML Lecture 3-2: Gradient Descent (Demo by AOE),https://www.youtube.com/watch?v=1_HBTJyWgNA,2017-09-21
 47,wzPAInDF_gI,ML Lecture 3-3: Gradient Descent (Demo by Minecraft),https://www.youtube.com/watch?v=wzPAInDF_gI,unknown
 48,O79Ic8XBzvw,A3C,https://www.youtube.com/watch?v=O79Ic8XBzvw,unknown
 49,1UqCjFQiiy0,ML Lecture 1: Regression - Demo,https://www.youtube.com/watch?v=1UqCjFQiiy0,unknown

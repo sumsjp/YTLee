@@ -25,7 +25,7 @@
 </details>
 
 <details>
-<summary>353. 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (三) - Actor-Critic</summary><br>
+<summary>353. [2021-06-05] 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (三) - Actor-Critic</summary><br>
 
 <a href="https://www.youtube.com/watch?v=kk6DqWreLeU" target="_blank">
     <img src="https://img.youtube.com/vi/kk6DqWreLeU/maxresdefault.jpg" 
@@ -34,11 +34,62 @@
 
 # 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (三) - Actor-Critic
 
+# 文章整理：強化學習中的價值函數與策略優化
 
+## 小節一：核心主題
+- 強化學習（Reinforcement Learning, RL）的核心目標是通過試錯來學習 optimal 策略。
+- 價值函數（Value Function）在.rl中扮演關鍵角色，用於估計某個 states 的期望累積獎勵。
+
+## 小節二：主要觀念
+1. **價值函數的定義**：
+   - 儀值函數 V(S) 表示從狀態 S 出發，按照策略 π 累積獎勵的期望值。
+   - Q-價值函數 Q(S, A) 表示在狀態 S 下執行行動 A 後的期望累積獎勵。
+
+2. **策略優化的目標**：
+   - 策略 π 的目標是最大化每一步的即時獎勵，最終提升整體的累積獎勵。
+   - 策略可以表示為條件機率分布，描述在每個狀態下採取各個行動的概率。
+
+3. **樣本的重要影響**：
+   - 強化學習的效果高度依賴於_sampling_ 的質量。良好的樣本能有效提升學習效果，反之則可能導致訓練失敗。
+
+## 小節三：問題原因
+1. **樣本不足的限制**：
+   - 在某些情況下，特定狀態轉移（如 Sa 後面接 Sb）缺乏足夠的樣本，影響模型的學習能力。
+   
+2. **環境隨機性的挑戰**：
+   - 環境中的不確定性導致價值函數 V(S) 代表的是期望值，而非固定的結果。這增加了估計的複雜性。
+
+3. **行動分佈的理解不足**：
+   - 理解_actor_ 的行動分佈至關重要。Actor 通過.softmax函數將行動分數轉換為機率分佈，根據此分佈進行抽樣。
+
+## 小節四：解決方法
+1. **增加樣本多樣性**：
+   - 利用探索策略（如 ε-greedy）或 randomness 增加不同狀態轉移的樣本數量。
+   
+2. **價值函數的期望估計**：
+   - 面對環境隨機性，價值函數 V(S) 使用期望值來捕獲所有可能結果的平均獎勵。
+
+3. **_actor_ 分佈的建模**：
+   - 將.Actor 看作條件機率分佈，在每個狀態下根據.softmax分佈進行行動抽樣，模擬人類的策略選擇。
+
+## 小節五：優化方式
+1. **Rainbow 方法**：
+   - Rainbow 是一種知名的 DQN 變體，整合了七種改進技術，提升算法的穩定性和性能。
+   
+2. **經驗回放機制**：
+   - 使用回放記憶庫儲存歷史樣本，隨機抽取進行訓練，增強樣本多樣性並降低短期相關性影響。
+
+3. **軟最大值技術**：
+   - 在.Actor 的行動分佈建模中使用Softmax函數，將分數轉換為溫和的機率分佈，平衡探索與利用。
+
+## 小節六：結論
+- 強化學習的成功依賴於價值函數的精準估計和Actor 分佈的有效建模。
+- 樣本的多樣性和環境的不確定性是影響學習效果的重要因素。
+- Rainbow 等先進算法為提升.rl性能提供了有效途徑，未來研究可進一步優化這些方法。
 </details>
 
 <details>
-<summary>354. 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (四) - 回饋非常罕見的時候怎麼辦？機器的望梅止渴</summary><br>
+<summary>354. [2021-06-05] 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (四) - 回饋非常罕見的時候怎麼辦？機器的望梅止渴</summary><br>
 
 <a href="https://www.youtube.com/watch?v=73YyF1gmIus" target="_blank">
     <img src="https://img.youtube.com/vi/73YyF1gmIus/maxresdefault.jpg" 
@@ -47,11 +98,45 @@
 
 # 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (四) - 回饋非常罕見的時候怎麼辦？機器的望梅止渴
 
+### 小節一：核心主題
+- **Curiosity-BasedRewardShaping**  
+  探討如何利用好奇心 механизみな.rl算法中，激發學習機器探索新環境的能力。
 
+### 小節二：主要觀念
+1. **獎勵塑造（RewardShaping）**  
+   在原始.reward之外，加入額外的獎勵信號以引導學習過程。
+2. **好奇心驅動的學習**  
+   機器被設計為偏好探索新奇或未知的事物，從而主動發現環境結構。
+3. **稀疏獎勵（SparseRewards）**  
+   在某些任務中，正向獎勵信號出現頻率低，限制了傳統RL算法的學習效率。
+
+### 小節三：問題原因
+1. **稀疏獎勵的挑戰**  
+   異常.reward sparse使得Agent難以有效學習，尤其是在複雜環境下。
+2. **無意義的新奇性**  
+   一些看似新奇但對任務無助的刺激（如畫面雜訊）可能幹擾 learning process。
+
+### 小節四：解決方法
+1. **Curiosity-BasedRewardShaping**  
+   結合原始.reward和探索獎勵，激發Agent主動發現環境結構。
+2. **有意義的新奇性檢測**  
+   遴自製限新奇性的定義，確保Agent探索的目標具備實質價值。
+
+### 小節五：優化方式
+1. **CuriosityMechanism**  
+   設計特定機制以量化新奇性，並將其轉換為可操作的獎勵信號。
+2. **環境適應性**  
+   確保新奇性檢測能有效區分有意義和無意義的新刺激。
+
+### 小節六：結論
+- **Curiosity-BasedRL的潛力**  
+  通過激發好奇心，Agent能在缺乏明確.reward的情境下自發學習。
+- **未來研究方向**  
+  需進一步優化新奇性檢測方法，並探索其在不同環境中的應用效果。
 </details>
 
 <details>
-<summary>355. 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (五) - 如何從示範中學習？逆向增強式學習 (Inverse RL)</summary><br>
+<summary>355. [2021-06-05] 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (五) - 如何從示範中學習？逆向增強式學習 (Inverse RL)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=75rZwxKBAf0" target="_blank">
     <img src="https://img.youtube.com/vi/75rZwxKBAf0/maxresdefault.jpg" 
@@ -60,7 +145,55 @@
 
 # 【機器學習2021】概述增強式學習 (Reinforcement Learning, RL) (五) - 如何從示範中學習？逆向增強式學習 (Inverse RL)
 
+### 核心主題：.inverse Reinforcement Learning (IRL) 的應用與優化
 
+#### 主要觀念：
+1. **Inverse Reinforcement Learning (IRL)**：
+   - IRL 是一種通過示範行為來學習_reward function_的技術，讓機器理解和實現人類的目標。
+   - 基於模仿學習（Imitation Learning）和強化學習（Reinforcement Learning），IRL 能夠從人類的示範中提取隱含的價值判斷。
+
+2. **核心概念**：
+   - **Demonstration**: 機器通過觀察人類的示範行為來學習。
+   - **Reward Function**: IRL 的目標是從示範數據中推導出_reward function_，用以指導機器的決策和行動。
+
+3. **應用場景**：
+   - 教導機械臂完成複雜任務（如擺盤子、倒東西）。
+   - 通過視覺示範教導機器實現目標，無需編寫明確的控制算法。
+
+#### 問題原因：
+1. **傳統方法的限制**：
+   - 基於規則的控制方法需要人工編寫詳細的行動規則，缺乏靈活性。
+   - 強化學習直接在大環境中試錯效率低，且人類示範能提供更高效的教學信號。
+
+2. **IRL 的挑戰**：
+   - 機器可能完全模仿人類行為，限制了創造性和-optimal_解的實現。
+
+#### 解決方法：
+1. **IRL 的實施步驟**：
+   - **收集數據**: 通過示範數據學習_reward function。
+   - **學習_reward function_: 利用算法（如最大熵 IRL 或 GAIL）從示範中推導.reward_函數。
+   - **強化學習優化**: 在已知.reward_函數下，進一步優化行動策略。
+
+2. **具體技術**：
+   - 使用 NIPS 和 ICML 等頂級會議的最新研究成果，提升機器理解和實現目標的能力。
+   - 機器通過自我創建目標並嘗試達成，類似於人類學習和自發性探索。
+
+#### 優化方式：
+1. **超越人類示範**：
+   - 在已學習到.reward_函數的基礎上，增加額外的_reward terms_（如速度、效率）。
+   - 這些額外的限制條件可以激勵機器實現超人類性能。
+
+2. **提升靈活性和創性**：
+   - 避免機器完全受限於人類示範，允許其探索不同的行動策略以尋找更優的解。
+
+#### 結論：
+1. **IRL 的價值**：
+   - IRL 提供了一種高效、直觀的方式來教導機器實現複雜任務。
+   - 它將人類的示範行為轉化為機器可理解的形式，降低了人工編程的難度。
+
+2. **未來發展方向**：
+   - 結合額外的_reward terms_和多目標優化算法，進一步提升機器的能力。
+   - 探索更高效的學習方法，使機器在示範數據基礎上實現超越人類的性能。
 </details>
 
 <details>

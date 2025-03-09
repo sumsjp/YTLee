@@ -93,8 +93,8 @@ idx,id,title,url,date
 92,OAKAZhFmYoI,DRL Lecture 2:  Proximal Policy Optimization (PPO),https://www.youtube.com/watch?v=OAKAZhFmYoI,2018-06-09
 93,rl_ozvqQUU8,DRL Lecture 8: Imitation Learning,https://www.youtube.com/watch?v=rl_ozvqQUU8,2018-06-18
 94,tnPVcec22cg,DRL Lecture 5: Q-learning (Continuous Action),https://www.youtube.com/watch?v=tnPVcec22cg,2018-06-18
-95,-5cCWhu0OaM,DRL Lecture 7: Sparse Reward,https://www.youtube.com/watch?v=-5cCWhu0OaM,unknown
-96,j82QLgfhFiY,DRL Lecture 6: Actor-Critic,https://www.youtube.com/watch?v=j82QLgfhFiY,unknown
+95,-5cCWhu0OaM,DRL Lecture 7: Sparse Reward,https://www.youtube.com/watch?v=-5cCWhu0OaM,2018-06-18
+96,j82QLgfhFiY,DRL Lecture 6: Actor-Critic,https://www.youtube.com/watch?v=j82QLgfhFiY,2018-06-18
 97,LGAMeOgAwU4,"HW1 (presented by 黃文璁,蔡昕宇,許傑盛)",https://www.youtube.com/watch?v=LGAMeOgAwU4,unknown
 98,95hyyAMJieU,"HW1 (presented by 毛弘仁, 王克安, 林哲賢)",https://www.youtube.com/watch?v=95hyyAMJieU,unknown
 99,Lobg0qVR-y0,"HW1 (presented by 劉俊緯, 吳宗翰)",https://www.youtube.com/watch?v=Lobg0qVR-y0,unknown
@@ -145,7 +145,7 @@ idx,id,title,url,date
 144,o4dPfMkz_lw,Linear Algebra Lecture 34: General Vectors (Part I),https://www.youtube.com/watch?v=o4dPfMkz_lw,unknown
 145,7E7ZzTJFeng,Linear Algebra Lecture 35: General Vectors (Part II),https://www.youtube.com/watch?v=7E7ZzTJFeng,unknown
 146,XnyM3-xtxHs,The Next Step for Machine Learning,https://www.youtube.com/watch?v=XnyM3-xtxHs,unknown
-147,gDp2LXGnVLQ,Anomaly Detection (1/7),https://www.youtube.com/watch?v=gDp2LXGnVLQ,unknown
+147,gDp2LXGnVLQ,Anomaly Detection (1/7),https://www.youtube.com/watch?v=gDp2LXGnVLQ,2019-03-07
 148,cYrNjLxkoXs,Anomaly Detection (2/7),https://www.youtube.com/watch?v=cYrNjLxkoXs,unknown
 149,ueDlm2FkCnw,Anomaly Detection (3/7),https://www.youtube.com/watch?v=ueDlm2FkCnw,unknown
 150,XwkHOUPbc0Q,Anomaly Detection (4/7),https://www.youtube.com/watch?v=XwkHOUPbc0Q,unknown

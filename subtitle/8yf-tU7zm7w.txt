@@ -1,0 +1,975 @@
+Ok! last week,
+we talked about the critical point issue.
+Now, I want to tell everyone that
+critical point is not always to be,
+when you are training a network,
+the biggest obstacle you confront.
+Now, in this slide,
+I want to tell everyone that
+there is an technique called adaptive learning rate.
+That is to say, we want to
+give each parameter a different learning rate.
+But why did I say that this critical point may
+not be the biggest obstacle
+during our training?
+Usually,
+when training a network,
+you will record its loss.
+So, you will see that
+your loss is large at first,
+and, when you keep updating of parameters,
+here, we use the horizontal axis to represents the times of update
+the loss will become smaller and smaller
+as you update parameters
+and finally it is stuck at some point.
+"Stuck" means
+your loss no longer reduces.
+At this time,
+most people might guess
+that it has reached the critical point.
+Because the gradient is equal to zero,
+so we can't update the parameters anymore.
+But, is it true?
+When we are saying that we have reached the critical point,
+it means the gradient is very small,
+but have you ever confirmed,
+when your loss no longer reduces,
+the gradient is really that small?
+In fact, most of you
+may not confirm this.
+In this example
+I showed today,
+when our loss no longer reduces,
+gradient doesn't become very small, actually.
+The following is the norm of the gradient,
+which is the vector of the gradient.
+Since gradient is a vector,
+the length of the gradient vector
+changes as the parameters updates.
+You will find that even though the loss no longer reduces,
+the norm of this gradient,
+which is the magnitude of the gradient, may not become very small, actually.
+In fact, at the end of the final training,
+the loss hardly moves
+and decreases,
+but the gradient suddenly increases.
+How does it happen?
+A result like this is actually not hard to guess.
+Maybe, you are in a situation like this.
+This is our error surface,
+and your gradient now
+is between the 2 walls of the error surface valley.
+It oscillates back and forth.
+At this point, your loss will not reduce anymore.
+So, seeing this situation,
+you will feel that
+your loss will not get smaller anymore.
+But, in fact, is it stuck at the critical point?
+Is it stuck at the saddle point?
+Is it stuck in the local minima?
+No!
+Its gradient is still large.
+Only the loss may not decrease anymore.
+So, you have to pay attention to that,
+when you train a network,
+in the end of training, you find out
+your loss no longer decreases.
+Don't just say anything like
+Ah! I'm stuck in the local minima,
+or I'm stuck at saddle point.
+Sometimes, neither of them is true.
+You just encounter a situation where the loss can not decrease any more.
+That's why in homework 2-2,
+there will be an assignment for everyone
+to calculate the norm of the gradient
+in order to know that
+whether you are now stuck at the saddle point
+or critical point.
+Because, in most of the situations,
+when you say that your training is stuck,
+few people actually analyze the root cause of it.
+To give you a strong impression,
+we have an assignment
+for you to analyze
+the cause of the training bottleneck.
+Hence, so far,
+some students might have a question.
+If, during the training process,
+we rarely get stuck at a saddle point
+or local minimum,
+how was this graph produced?
+Do you remember this graph?
+Last time we drew this graph to illustrate
+a scenario where we are training a network.
+After the training, the current parameters
+are around the critical point.
+Then, according to the sign of the eigenvalue,
+we can then judge
+whether this critical point
+is more like a saddle point
+or a local minimum.
+If, in practice,
+it is rather difficult to
+come to a saddle point
+or a local minimum,
+How was this graph produced?
+Let me tell you a secret here.
+If you want to have a result like this.
+You have to train until
+your parameters are very close to the critical point.
+But you can't achieve it
+using the common gradient descend method.
+The common gradient descend
+will give you the following result:
+your loss will fall
+while you still have a big gradient.
+This requires a special method to train.
+So after I've done this experiment,
+I believe that it's actually a difficult task to
+get to a critical point.
+Most of the time,
+before reaching the critical point,
+the training has stopped.
+However, that doesn’t mean
+that critical point is not a problem.
+I just want to tell you,
+as of right now,
+when you use gradient descend
+to optimize your model,
+your true boss,
+the thing you should really blame for
+is often not a critical point
+but other reasons.
+Then why?
+If the problem was not the critical point,
+why is our training stuck?
+Let me give a very simple example.
+I have a
+very simple error surface here.
+We only have two parameters.
+When the two parameters ​​are different,
+the value of the loss is different
+and we can draw an error surface.
+The lowest point of this error surface
+is at this X.
+In fact,
+this error surface is convex.
+If you don't know what convex is,
+it doesn't matter.
+In short,
+its contour is elliptical.
+It's just that on the horizontal axis,
+the gradient is very small.
+The change of the slope is very little.
+It's very smooth.
+So the major axis of this ellipse is very long,
+while the minor axis is relatively short.
+The gradient varies greatly on the vertical axis;
+the slope of the error surface is very steep.
+Now, we start from this point.
+We take this point as the starting point
+and do gradient descend.
+You might think
+it's not so difficult to
+do gradient descend
+on this convex error surface.
+Just slide down all the way
+and maybe walk over here.
+It should be very easy.
+If you try it yourself,
+you will find that,
+even on a convex error surface
+as simple as this one,
+gradient descent won't necessarily
+yield a great result.
+For example, this is the result I got
+from trying it myself.
+When the learning rate is set to 10^-2,
+my parameters were caught between the two cliffs of a canyon.
+Try to imagine
+this side as a cliff,
+and imagine the other side,
+which is outside of this graph, as another cliff.
+My parameters are constantly oscillating between the two cliffs.
+I can't lower my loss
+even if the gradient is still very large.
+You might say that
+it's because the learning rate is too high.
+The learning rate determines
+the step size when updating the parameters.
+If the learning rate is set too high, the step size is going to be too large.
+This way, we won't be able to
+reach the bottom of the canyon.
+Lowering the learning rate
+should easily solve this problem, right?
+Not really.
+When you try to
+adjust the learning rate,
+you will find that doing training
+on a convex optimization problem like this
+is actually a very tedious process.
+The process is quite painful
+and exhausting.
+I tried out some learning rates
+from 10^-2
+all the way to 10^-7.
+After adjusting it to 10^-7,
+it finally stopped oscillating.
+We slid down the slope,
+reached the bottom of the valley, and finally turned left.
+But you can see that
+this training will never reach the goal.
+How come?
+The reason is that the learning rate is too low.
+On this slope,
+we can still update the parameters
+because of the steep slope,
+which provides a large gradient.
+However, the slope becomes very smooth at the bottom of the canyon.
+This stops us from doing further training
+since we set the learning rate too small.
+In fact,
+this spot that is covered with
+black dots
+contains 100,000 dots.
+There are 100,000 dots here.
+With more than 100,000 updates, which is by no means
+a small number,
+it still fails to
+get to the local minima.
+This shows that
+even a convex error surface
+is hard to train with gradient descent.
+Some of you might want to say that
+there must be better ways
+to solve the convex optimization problem
+other than gradient descent,
+which is a relatively primitive method.
+There are indeed other methods.
+But think about it:
+If someday we have a more complicated error surface,
+the only tool we can rely on
+to help us train a deep network
+is gradient descent.
+However, our only tool
+can't even perform well
+on a simple error surface.
+How can we trust it when we have a more complicated error surface,
+right?
+We can't expect it to perform well on harder tasks
+when it can't even solve
+this simple problem.
+That's why we need
+an improved version of gradient descent.
+How can we make gradient descent perform better?
+In the old version of gradient descent,
+all parameters
+have the same learning rate.
+Obviously, this is not enough.
+Every parameter should have
+a customized learning rate.
+So now we are going to talk about
+how to customize the learning rates.
+How to do this?
+How do we customize the learning rate?
+What kind of learning rate
+do we actually need for different parameters?
+From the previous example,
+we can see a fundamental principle.
+The principle is that
+if the value of our gradient
+is very small in one direction,
+which means it is very flat in one direction,
+then we would like to increase the learning rate.
+If it is very steep in a certain direction,
+that is, a steep slope in one direction,
+then we actually expect that
+the learning rate can be set smaller.
+How to automatically adjust the learning rate
+based on the size of this gradient?
+We need to change
+the original formula for gradient descent.
+Here later, while we explain it,
+we only put the updated formula for a certain parameter.
+Before, when we were talking about gradient descent,
+We often talked about
+the updated formula for all parameters.
+Here, in order to simplify this problem,
+we only look at one parameter.
+But you can generalize this method
+to all parameters.
+We only look at one parameter now.
+This parameter is called θᵢ.
+For the value of this θᵢ in the t-th iteration,
+we subtract the gradient calculated by this parameter i
+in the t-th iteration from it
+This gᵢᵗ represents the differentiation of parameter θᵢ to loss
+in the t-th iteration,
+that is, when θ is equal to θᵗ.
+We subtract the learning rate from this θᵢᵗ
+and multiply it by gᵢᵗ. This will update the learning rate to θᵢᵗ⁺¹.
+This is our original gradient descent.
+Our learning rate is fixed.
+Now we want to have
+a customized learning rate,
+a learning rate that is tailored according to the parameter.
+How do we do this?
+We change the original learning rate η
+to η divided by σᵢᵗ.
+You find that this σᵢᵗ has a superscript t
+and a subscript i.
+This means that the parameter σ
+depends on i.
+In short, it is parameter-dependent.
+We have to give a specific σ according to the targeted parameters.
+At the same time, it is also iteration-dependent.
+We will have a different σ for different iterations.
+So when we change our learning rate
+from η to η divided by σᵢᵗ,
+we have a
+parameter-dependent learning rate.
+Next, we are going to look at
+the common calculation methods
+of the parameter-dependent learning rate.
+What kind of method do we use
+to calculate the σ?
+A common type is to count
+the root mean square of the gradient.
+What does that mean?
+This is the formula
+the parameter is going to update.
+We start from θᵢ⁰.
+Later we won't read the "i" out
+since everyone knows what I mean.
+Here we consider a certain parameter,
+so there is a subscript i.
+But later, for the convenience of teaching,
+I won't read the "i" out.
+Subtract the initial parameters θᵢ⁰ by
+gᵢ⁰ multiplied by the learning rate η and divided by σᵢ⁰
+to get θᵢ¹.
+How is this σᵢ⁰ calculated?
+In the first update of the parameter,
+this σᵢ⁰ is the square root of (gᵢ⁰)².
+This gᵢ⁰ is our gradient.
+It is the square root of the square of the gradient.
+What about this one?
+It’s actually the absolute value of gᵢ⁰, right?
+So putting the absolute value of gᵢ⁰ here,
+this gᵢ⁰ and this gᵢ⁰
+actually have the same magnitude.
+So in the first iteration,
+this term is either one or minus one.
+In other words, during the first iteration,
+when we update it from θᵢ⁰ to θᵢ¹,
+we either add η or subtract η.
+It has nothing to do with the norm of the gradient.
+It only depends on the value of η.
+This is the first iteration.
+This iteration is not very important, though.
+So if you can't quite understand it,
+it's fine.
+What are going to do next is more important.
+For θᵢ¹,
+we should subtract gᵢ¹ multiplied by η divided by σᵢ¹ from it.
+Note that in the second iteration,
+we divide by σᵢ¹, not σᵢ⁰.
+But how is σᵢ¹ calculated?
+σᵢ¹ is calculated from
+all the gradient vectors in the past:
+we take the root mean square of them.
+So
+in the first iteration,
+we've calculated gᵢ⁰.
+During the second iteration,
+we calculated gᵢ¹.
+Thus σᵢ¹ is the square root of
+(gᵢ⁰)² plus (gᵢ¹)², divided by 2.
+This is what "Root Mean Square" means.
+After we finished calculating σᵢ¹,
+the learning rate is η divided by σᵢ¹.
+Subtract the learning rate times gᵢ¹ from θᵢ¹
+we obtain θᵢ².
+Then following the same process,
+for the third iteration, you subtract θᵢ² by
+η divided by σᵢ² multiplied by gᵢ².
+In this iteration,
+σ, or σᵢ²,
+is the root mean square of
+ALL the gradients in the past.
+So you should take the square root of
+"gᵢ⁰ square plus gᵢ¹ square plus gᵢ² square and
+divided by three".
+Substitute what you've got into σᵢ²,
+and finish the third iteration.
+We just keep repeating
+the same process.
+When the parameter is updated for the t-th time,
+well, actually the (t + 1)-th time,
+when the parameter is updated for the (t + 1)-th time
+How do you calculate σᵢᵗ?
+Well, the answer is still the same.
+It is simply the root mean square of all gradients,
+that is,
+from gᵢ⁰ to gᵢᵗ.
+Then, divide it by η,
+and use this whole thing as the learning rate
+for the current iteration.
+This trick is actually used in an algorithm called
+"Adagrad".
+You may ask: "Why does this trick work?"
+, or "why can this trick accomplish what we wanted to do?"
+when the slope is relatively large,
+we want the learning rate
+decreases by itself,
+and vice versa?
+Imagine we have two parameters,
+one is θᵢ¹
+and the other one is θᵢ².
+θᵢ¹ has a small slope while θᵢ² has a large slope.
+Because of θᵢ¹'s small slope,
+the gradients of the parameter θᵢ¹
+​​are relatively small.
+Because the gradients are relatively small,
+the σ,
+which is the root mean square
+of the gradients,
+is also small.
+If σ is small, the learning rate will be large.
+On the other hand,
+θᵢ² is a relatively "steep" parameter.
+The loss is more sensitive to the changes in the direction of θᵢ².
+So the gradients are relatively large.
+If the gradient is relatively large,
+its σ is bigger, and, as a result,
+the update of the parameters in one iteration
+becomes smaller.
+So, with the σ term,
+you can adjust the learning rate automatically
+according to the information from
+the each parameters' gradient.
+This is not
+the ultimate version you will use nowadays.
+What are the problems with that version?
+Even if the parameters are the same,
+the learning rate it needs
+will still change over time.
+It assume that
+each of the gradient size
+of the same parameters
+will have similar value within a small range.
+But in fact, it doesn’t have to be like this.
+For example, let’s take a look at
+this crescent-shaped error surface.
+If we consider the horizontal axis,
+or, in other words, consider the direction of the horizontal line,
+you will find that
+the slope is relatively smooth in this place
+and the slope is steeper in this place.
+Therefore, we need a relatively small learning rate.
+But when it comes to the middle section,
+the slope has become smooth again.
+The slope here is steeper,
+and the slope of this side is smoother.
+So in this place,
+we need a relatively large learning rate.
+Even if there are the same parameters in the same direction,
+we also look forward to
+dynamically adjusting the learning rate.
+So, how to do it?
+There is a new trick
+called RMS Prop.
+The RMS Prop method is a bit legendary.
+It's so special that you can't find in a paper,
+where this method comes from.
+Many many years ago, about ten years ago,
+Hinton had a deep learning course
+on Coursera.
+In his course,
+he talked about the RMS Prop method,
+and there is no paper for this method.
+So, if you want to cite the method,
+you need to cite the link to the video.
+This legendary method is called RMS Prop.
+So, how does RMS Prop work?
+The first step is the same as just mentioned,
+to calculate root mean square,
+which is the same as the AdaGrad method.
+They are the same.
+So, we don’t look at the first step.
+We move on to the second step.
+What's the difference in the second step?
+It still needs to calculate σᵢ¹.
+But the way we calculate σᵢ¹ is different from
+the way when calculating root mean square.
+When we calculate root mean square,
+every gradient is equally important.
+But in RMS Prop,
+it allows you to adjust
+the importance of the current gradient
+by yourself.
+In RMS Prop,
+our σᵢ¹ is the same as the previous σ 0,
+and it already contains gᵢ⁰ in the σᵢ⁰ calculated in the previous step.
+The σᵢ⁰ represents the size of gᵢ⁰,
+that is, it is (σᵢ⁰)^2
+multiplied by α, and then add (1-α)
+multiplied by gᵢ¹,
+which is the gradient we just calculated.
+The α is another hyper-parameter,
+just like the learning rate.
+You have to adjust it by yourself.
+It is a hyper-parameter.
+You have to adjust it by yourself.
+You can imagine
+if I set α to be very close to 0,
+it means that I think gᵢ¹ is more important
+than the gradient
+calculated earlier.
+If I set α to be very close to 1,
+it means I think the gᵢ¹
+is less important than
+the gradient calculated earlier.
+When updating parameters for the third time,
+we have to calculate σᵢ², how to do it?
+We take σᵢ¹ out, take the square of it, and multiply it by α.
+There is gᵢ¹ and σᵢ⁰ in σᵢ¹, and there is gᵢ⁰ in σᵢ⁰.
+You know that there is gᵢ¹ and gᵢ⁰ in σᵢ¹.
+gᵢ¹ and gᵢ⁰ will be multiplied by α,
+add 1-α multiplied by (gᵢ²)².
+Therefore, this α will control the influence of gᵢ²
+in the whole σᵢ².
+The same process will continue over and over again.
+σᵢᵗ is equal to the square root of α multiplied by (σᵢᵗ⁻¹)²
+plus (1-α) (gᵢᵗ)².
+You use α to determine
+the importance of gᵢᵗ.
+Okay, this is RMSProp.
+For RMSProp,
+you can use α to
+determine the importance of gᵢᵗ,
+comepared to those values
+from gᵢᵗ to gᵢᵗ⁻¹ in σᵢᵗ⁻¹.
+If you use RMSProp,
+you can adjust σ dynamically.
+Let's start from this place,
+and this black line is our error surface.
+From this place you want to update the parameters.
+You go from here to here.
+Because it's very flat along the way,
+g will be bery small.
+This means that
+σ will also be very small.
+If σ is small, it means
+we will take a bigger step
+when updating the parameters.
+Then, we keep going.
+After reaching here, the gradient becomes larger.
+Adagrad has a slower response
+compared to RMSProp.
+But if you use RMSProp
+and you set α smaller,
+you just
+make those recent gradients have bigger impact.
+Then you can increase the value of σ in a short time.
+It can make your steps smaller simultaneously.
+It's like a brake.
+If you come across
+a very steep slope suddenly,
+RMSProp will quickly pull the brake to
+make the learning rate smaller.
+If you didn't do so,
+the learning rate is too large
+when you go here.
+In the meantime, the gradient is very large as well.
+Multipling two big values
+will make you
+even further from your destination.
+If you keep moving
+and go to a level area again.
+you can adjust α to make the σᵢᵗ
+emphasize on
+the recent calculated gradient.
+So as long as the gradient becomes smaller,
+σ may react quickly
+and its value becomes smaller.
+Therefore, the steps become larger.
+This is RMSProp.
+The optimization strategy
+is also called the optimizer.
+Nowadays, the most common optimization strategy
+is Adam.
+What is Adam?
+Adam is RMSProp plus Momentum,
+which we have talked about last week.
+Here is Adam’s algorithm and the paper's link.
+We won’t go into the details.
+You may worry that you still don't know
+how to use Adam.
+Don't worry.
+Pytorch
+do all the dirty works for you.
+Or you can search "Adam"
+in teaching assistants' code.
+There must be a function about Adam.
+So,
+Don't worry about the optimization problem.
+These deep learning kits
+usually do it for us.
+Note that in these optimizers,
+there are also some parameters need to be adjusted.
+There are some hyperparameters
+need to choose manually.
+But in most cases,
+the default values are good enough.
+If you tune it yourself, it becomes worse sometimes.
+Usually,
+just use Adam in Pytorch directly
+and do not modify those default hyperparameters,
+and you can obatin good results.
+The details about Adam
+are left for everyone to study.
+We just talked about we can't even train
+on this simple error surface.
+Now let's take a look at
+whether we can train or not
+after using the adaptive learning rate.
+The method used here is
+the most primitive Adagrad method.
+The σ
+is simply calculated by
+taking the root mean square of
+all the gradients seen in the past.
+How is the result?
+The result looks like this.
+Ignore this part first.
+You must be surprised
+and wonder what is going on
+when seeing this part.
+What is going on
+in this black area?
+Don't worry about it for now.
+You have no problem walking down here
+and then turn left.
+In this turning left part,
+we updated 100,000 times in the previous version
+and we also updated 100,000 times here.
+In the previous version, we updated 100,000 times
+but are stuck in this place.
+After using Adagrad,
+you can keep on going
+to a point very close to the end.
+Why can we keep going when using Adagrad?
+When you come to this place,
+the gradient along in the left or right direction
+is very small.
+The learning rate will be adjusted automatically.
+The learning rate along the left and right direction
+will automatically become larger.
+So you can increase the step size
+and keep on going.
+The next question is
+why does it explode
+when I get here?
+When we are calculating the σ,
+we take the mean of all the gradients we have seen in the past.
+The direction along the vertical axis
+get a large gradient
+in the initial position,
+but get a very small gradient
+after a long walk
+to here.
+So the direction along the vertical axis
+accumulates a small σ.
+Since we see a lot of small gradients
+along the y-axis,
+we have accumulated a small σ.
+After accumulating for a while,
+the step became very large
+and it exploded.
+However, it's okay even if it explodes
+because there is a way to fix it.
+After it exploded,
+it came to a place
+with a relatively large gradient
+and the σ gradually increases.
+After σ increases,
+the step size of update
+will become smaller.
+You will find that
+it will suddenly explode to the left or to the right.
+However, it will not explode all the times,
+the situation of exploding
+will gradually decrease
+due to the friction.
+Eventually, it will go back to the middle part.
+But after a period of time, it will explode again,
+and then come back slowly.
+There is a potential way to solve this problem.
+It is called "learning rate scheduling".
+What is learning rate scheduling?
+We have a term η here,
+and it used to be a fixed value.
+Learning rate scheduling means that
+the η is associated with time.
+We don't treat it as a constant
+but associate it with time.
+How do we make the learning rate time-varying?
+The most common strategy is learning rate decay,
+which means, as training proceeds,
+namely, as parameters are updated,
+we gradually reduce η's value.
+It's more sensible to do so.
+Why?
+Why should the learning rate be decayed?
+Because we are far from the optimal point at the beginning of training,
+as training proceeds,
+we are getting closer and closer to our goal.
+We have to pull the brakes on the learning rate
+by gradually decreasing its value
+so as to slow down the parameter updating.
+So in this case,
+the solution should be
+learning rate decay.
+After applying learning rate decay
+we can reach the destination smoothly
+as in this graph.
+The η will be very small
+near the end of training.
+In the original case,
+the gradient fluctuates near the destination.
+After multiplied by a small η,
+the gradient is smoothed towards the destination.
+Apart from learning rate decay,
+there is another classic and very common method,
+of doing learning rate scheduling,
+called warm-up.
+I was wondering
+if we have to talk about it today.
+Since we have one BERT-ralated homework,
+where warm-up is required
+for decent performance,
+we still
+have to talk about it today.
+The idea of warm-up
+may seem a little bit confusing.
+Warm-up means that
+the learning rate will
+be increasing at first and start decreasing at some point.
+What's the upper bound of the learning rate?
+And what are the rates of increasing and decreasing?
+They are hyper-parameters.
+You have to tune them by yourself.
+But the general concept of this method is that
+the learning rate must increase first and then decrease.
+This sounds amazing.
+It's a black technology.
+It's been introduced
+in some papers back in ancient times.
+The warm-up method
+gains popularity recently
+because it's common
+in training BERT.
+However, it's not introduced
+later than BERT.
+It exists since ancient times.
+For example,
+warm-up has been used in "Residual Networks".
+Here's the link to
+the residual network paper on arXiv.
+Nowadays, the machine learning reasearch papers
+will usually be published on arXiv first
+before submitted to
+international conferences or journals.
+The papers become more accessible in this way.
+Take a look at this link
+and you will know
+the paper's date of submission.
+Among the first four digits of this link,
+the 15 represents the year,
+which means that the paper of residual network
+was submitted to arXiv in 2015.
+The last two digits represent the month on the other hand.
+So it was submitted in December 2015.
+It's published five years ago
+by the end of 2015.
+In the rapidly evolving field
+of deep learning,
+a time span of 5 years is like a millennium.
+In the ancient times,
+the paper of residual network
+has already introduced the warm-up method.
+It said that they used a learning rate of 0.01
+and then apply warm-up.
+First, set the learning rate to 0.01,
+and then change it to 0.1.
+In the past, the most typical method of
+learning rate scheduling
+is to decrease the learning rate gradually.
+But the residual network,
+specifically noted in the paper, does the opposite.
+It sets 0.01 in the beginning, then 0.1 afterward.
+It also added a special note.
+In the beginning, using 0.1 is not good for training.
+We don't know why and the paper didn't explain that.
+Anyway,
+we need the black technology of Warm-Up.
+And this black technology can also be seen
+in the well-known Transformer.
+I believe many students
+may have heard of Transformer.
+This course will also talk about Transformer.
+This black technology can also be seen in Transformer
+and the paper mentioned it in a formula.
+It has a formula here that says
+its learning rate complies with this
+magic function.
+Its learning rate schedule is based on
+this magical function.
+At first glance, you might feel like wow,
+what does that mean.
+You can try to
+plot this function.
+If you plot the equation,
+you will find that it is actually the "Warm-Up".
+The learning rate will increase first
+and then decrease again.
+So you discover that the technique of Warm-Up is usually included
+in many well-known networks.
+And it is regarded as a black technology.
+It’s not explained in the paper that
+why do we use this.
+But secretly in a small place which
+you didn't notice, it will tell you
+this network needs to use this black technology
+to train it.
+Then why do we need Warm Up?
+This is still
+an open question today.
+I don’t think the reason why Warm-Up is needed
+has been completely answered.
+But one possible explanation here is to
+think that when we are using Adam, RMSProp,
+or Ada grad,
+we will need to calculate σ.
+How did this σ come from?
+It is a statistical result, right?
+It tells us
+how steep or how smooth
+is a certain direction.
+The result of this statistic
+is more accurate
+after seeing enough data.
+So in the beginning, our statistics are inaccurate.
+And our σ is not accurate.
+So we don’t want our parameters
+to be far from the original ones.
+Let them be in the initial state first and
+do something like exploration.
+So the reason that the learning rate is relatively small in the beginning is
+to let it explore and collect
+some information about the error surface
+and statistical data about σ first.
+After σ becomes more accurate,
+we gradually increase the learning rate.
+This is a possible explanation of
+why we need the technique of Warm-Up.
+Then if you want to learn more
+about Warm-Up,
+you can read a paper.
+It is an advanced version of Adam called R Adam.
+There is more understanding
+about Warm-Up in the paper.
+As for the optimization part,
+we will stop here.
+So we started from the Vanilla Gradient Descent
+and evolved to this version.
+And what's in this version?
+The first one is Momentum.
+In other words, we are not
+completely following the direction of the gradient now.
+We are not completely following the calculated gradient direction
+in the current stage
+to update parameters.
+Instead, we sum
+all the previous calculated
+gradient directions
+as the direction of update.
+This is momentum.
+How big should we be updated next?
+We need to divide
+the root mean square of the gradient.
+When it comes to this, some students may feel very confused.
+This momentum is to consider
+all past gradients.
+This σ also considers all past gradients.
+One in the numerator and one in the denominator.
+Consider all past gradients.
+Isn't it just cancel out?
+But in fact, this momentum and this σ,
+use all the previous gradients
+in different manners.
+Momentum is to directly
+add up all the gradients.
+So it takes the directions into consideration.
+It considers the sign of the gradient.
+It considers
+whether the direction of the gradient is left or right.
+But this root mean square
+does not consider the direction of the gradient.
+It only considers the magnitude of the gradient.
+Do you remember when we were calculating σ,
+we all have to take the square term.
+We have to take the square of the gradient.
+We are adding up the results of the squared results.
+So we only consider the magnitude of the gradient
+regardless of its direction.
+So the calculated results of
+momentum and this σ will not cancel each other out.
+Okay then, in the end, we also add
+scheduling of learning rate.
+This is the complete version of
+optimization today.
+However, this optimizer,
+besides Adam,
+which is probably the most common optimizer nowadays,
+there are many variants of this optimizer.
+But in fact, all kinds of variations either
+use a different method to count M
+or use a different method to calculate σ
+or use different
+Learning Rate Scheduling.
+Then if you want to know more
+things about optimization,
+there are videos recorded by teaching assistants before
+for your reference here.
+The video is about two hours long.
+You can know more
+about optimizer.
+In fact, there is still a lot to can be discussed.
+So we won’t talk about it here.
+What have we been talking about so far?
+We said that
+when our error surface is very rugged,
+as rugged as in this example,
+we need some better methods to
+do optimization.
+There is a mountain in front of us.
+We hope we can bypass that mountain.
+It's like "I can’t change the direction of the wind, but I can adjust my sails to always reach my destination."
+You know this gradient.
+and the strange error surface
+are very annoying, right?
+Then what will happen next?
+Next is to use "Shenluo Tianzheng" (しんらてんせい, almighty push)
+to blast this mountain flat.
+So the techniques we will talk about next is that
+Is it possible to
+flatten this error surface directly?
+by changing something in the network,
+such as changing the network architecture, activation function,
+or something else to
+flatten the error surface directly,
+to make it easier to train.
+That is, just directly shovel the mountain
+that stands in front of us.

@@ -1,0 +1,1166 @@
+Let's talk about
+how to get b2 from this row of vectors.
+In fact, the operation to get b1 from this row of vectors
+is exactly the same as
+getting b2 from this row of vectors.
+Let's emphasize again
+how do we get b2 from the input vector.
+Let's review what I said last week.
+What I want to emphasize is that
+b1 to b4
+don’t need to be generated sequentially.
+You don’t need to finish b1 before generating b2,
+and then b3 and then b4.
+From b1 to b4,
+they are calculated simultaneously.
+How do we calculate b2?
+Let's take a look at
+a2.
+a2 will be multiplied by a matrix,
+then transform to
+q2.
+Then you will calculate the attention score
+from a1 to a4
+according to the value of q2.
+How to calculate the attention score?
+Do the dot product of a2 and k1,
+and the dot product of q2 and k2,
+and the dot product of q2 and k3,
+and the dot product of q2 and k4.
+After getting
+these four scores,
+you may have to do a normalization
+such as softmax.
+Then get the final attention score.
+We represent
+the attention score after normalization
+as α'.
+After getting the attention scores,
+which are α2,1 α2,2 α2,3 α2,4
+these four values.
+What do we with these four values?
+We multiply these values
+by v1 v2 v3 v4 respectively.
+We multiply α2,1
+by v1,
+multiply α2,2 by v2,
+multiply α2,3 by v3,
+multiply α2,4 by v4.
+Then sum up to be b2.
+We list the formula of b2 here.
+How is b2 calculated?
+b2 is calculated by
+multiply vi by α
+where vi is v1 to v4.
+Each vector from v1 to v4 has a corresponding α,
+from α2,1 to α2,4.
+Multiply each vi by α,
+then sum them up
+to get b2.
+Here we demonstrate
+how is b2 calculated.
+You can
+multiply a3 by a transform to get q3,
+then get b3,
+multiply a4 from a transform to get q4,
+then get b4.
+Now you know that
+how to calculate b1 to b4 from a1 to a4.
+The process I just take about
+is the operation of self-attention.
+Next, we take a look at the operation
+from the perspective of matrix multiplication.
+How does
+self-attention work?
+We know that from a1 to a4
+each of a must generate q k v respectively.
+a1 has to generate q1 k1 v1,
+a2 has to generate q2 k2 v2,
+and so on.
+Each a generate q k v.
+What does it look like
+if you want to use matrix operations to represent this operation?
+Each of a,
+ai is multiplied by q,
+or multiplied by a matrix
+denoted as wq,
+to get qi.
+Each a is multiplied by wq
+to get qi.
+You can combine these different a
+and treat them as a matrix.
+What does that mean?
+Multiply a1 by wq to get q1.
+Multiply a2 by wq to get q2.
+Similarly, a3 and a4 are also multiplied by wq to get q3 and q4.
+Then you can put a1 to a4 together
+as a matrix
+represented by I.
+The capital letter I
+here
+represent a matrix.
+The matrix has four columns
+consist of a1 to a4.
+Then we denote the matrix I multiply by wq
+as Q.
+The Q is consists of q1 to q4.
+The four columns of Q
+are the four vectors q1 to q4.
+So the process in which
+we obtain q1~q4
+from a1~a4,
+can be viewed as multiplying a matrix
+whose columns are the
+inputs to the self-attention mechanism,
+a1~a4,
+with another matrix Wq.
+Wq is actually a network parameter
+that should be determined by the network itself.
+Multiply I by Wq, we obtain Q.
+The four columns of Q
+is simply q1~q4.
+How about k and v?
+The process is actually the same
+so we will skip the details
+in case you feel bored.
+Multiplying a by Wk,
+we will get the vector k.
+So if we combine the four vectors
+a1 to a4
+into matrix I,
+then after the multiplication with Wk,
+we get another matrix K.
+The four columns
+of the matrix K
+are exactly k1 to k4.
+We can also calculate v in the same way.
+Since vi is
+ai times Wv,
+V can be calculated by
+I times
+Wv.
+Again, the four columns of matrix V
+corresponds with
+v1~v4.
+Summarizing all the above,
+we have three different matrices,
+Wk, Wq and Wv, in our model.
+By multiplying every vector with those matrices,
+you can obtain
+q, k
+and v.
+Now,
+let's proceed to the next step.
+In the next step,
+we take the inner product of
+every q and every k, respectively,
+to calculate the score of attention.
+Can we transform this step into matrix operations?
+Think of it from the perspective of matrix operations.
+Can you transform inner products into matrix operations?
+α1,1
+is the inner product
+of q1 and k1.
+Now,
+let's lay the vector k1 down,
+making it look a bit fatter.
+Do you realize that
+this is the same as doing the transpose operation?
+Hopefully, you do.
+So multiplying q1 by the transpose of k1,
+is exactly the same as taking the inner product of them.
+In both operations, we end up with α1,1.
+Similarly, α1,2
+is the inner product of q1 and k2.
+α1,3 is the inner product of q1 and k3
+α1,4 is the inner product of q1 and k4.
+These four steps
+can be combined into one operation.
+This is simply
+multiplying a matrix and a vector!
+In case you don't understand, I will elaborate.
+The four multiplications above
+are similar to what we've done before.
+We can put k1~k4 together,
+that is,
+place them into a matrix's rows.
+Multiplying this with a vector
+will result in another vector.
+The values of
+the elements in the vector
+are the score of attention,
+α1,1~α1,4.
+Multiply q1 with this matrix,
+you get α1,1~α1,4.
+Okay, but I told you that
+we aren't using only q1 and k1~k4
+to calculate the attention score.
+We also need to consider q2 with k1~k4
+to calculate the attention.
+How do you do that?
+Similarly,
+put q2 here.
+Originally, only q1 was multiplied by k1~k4.
+We now multiply q2 by k1~k4
+and end up with α2,1~α2,4.
+Then, how about q3?
+How about q4?
+The calculations are exactly the same.
+You just multiply q3 by k1 to k4,
+calculate an attention score.
+Then you multiply q4 by k1 to k4
+and do the same thing.
+So, how exactly do we get these attention scores?
+You can think of it as the multiplication of two matrices.
+One matrix with its row,
+k,
+which is k¹ to k⁴,
+and the other matrix with its column, ​​q,
+which is q¹ to q⁴.
+Take the matrix formed by k
+and multiply it by the matrix formed by q,
+we can get these attention scores.
+Since the matrix formed by k
+consists of only one column,
+whose elements are k¹ to k⁴,
+we use the transpose of matrix K
+to match the dimension
+when we're doing the multiplication.
+Multiply the transpose of K by Q
+and we get a matrix called A.
+The attention scores between K and Q
+are stored in matrix A.
+Now, let's normalize
+the attention scores.
+For example, we can pass
+every column through a softmax function
+so that elements in the same column
+add up to 1.
+Like we mentioned before,
+softmax isn't the only option.
+Other functions, such as ReLU,
+are also viable
+and yield a similar result.
+Anyway, after we pass A
+through the softmax function,
+the values change a bit.
+We use A' to represent the result
+after passing A through the softmax function.
+Okay, what's next?
+After we get A',
+what is the next step?
+Oh, there appears to be
+a small error in my slide.
+Did you spot it?
+This should be a'
+instead of â.
+It should be a prime symbol, not a hat symbol.
+Originally, I used the hat symbol.
+Later, when I changed it to the prime symbol,
+I forgot and left out this slide.
+Now, we multiply v,
+which is v¹ to v⁴,
+by a to get b.
+Ok, this is the way
+we get b.
+How exactly is b calculated?
+We can combine v¹ to v⁴
+and treat it as
+the four columns of the V matrix.
+After getting matrix V,
+we multiply v by
+the first column of A'
+to get b¹.
+If you are familiar with linear algebra,
+you'll know that to multiply A' by v,
+we can do matrix multiplication on V
+and the first column of A'.
+By doing matrix multiplication on V
+and the first column of A',
+we get the first column of the output matrix.
+This is the same as calculating
+the weighted sum
+of the V matrix
+and every element in a column
+from the A' matrix.
+For example, we can get b¹
+from this column.
+Multiply v¹ by the weight.
+Multiply v² by the weight.
+Multiply v³ by the weight.
+Multiply v⁴ by the weight.
+We add all those up to get b¹.
+From the perspective of matrix operation, what we're doing
+is simply multiplying the first column of A' by V
+to get b¹,
+and so on.
+I won't explain too much in detail,
+lest you might find it too redundant.
+Following the same logic,
+we multiply the second column of A' by V
+to get b².
+The third column of A' is multiplied by V to get b³.
+The last column of A' is multiplied by V
+to get b⁴.
+Okay, so we have multiplied the matrix A'
+by the matrix V
+and got the matrix O.
+Every column in this O matrix
+is the output of self-attention.
+b¹ to b⁴, to be exact.
+In summary,
+to do self-attention,
+we first calculate the matrices Q, K, and V.
+Then, we use Q to find the related positions.
+Lastly, we calculate the weighted sum of V.
+All in all, these operations
+all boil down to
+series of matrix multiplications.
+Why do I say this?
+Let's review the matrix multiplication we just saw.
+What is I?
+I is our input,
+which is the input of Self-attention.
+The input of Self-attention
+is a bunch of vectors or a row of vectors.
+This row of vectors is assigned as the column of the matrix.
+That is I.
+So, I is the input of Self-attention.
+Then, this input is multiplied by three matrices,
+Wq, Wk and Wv,
+to get the three matrices, Q, K and V.
+Next, Q is multiplied by K^T.
+Q, K and V are all calculated.
+You multiply Q by K^T
+to get the matrix A.
+You may do some processing for the matrix of A
+to get A'.
+Sometimes, we will call this A'
+Attention Matrix.
+Then, you multiply A' by V
+to get O.
+O is the output of the Self-attention layer.
+So, the input of Self-attention is I
+and the output of it is O.
+Then, you will realize that although it is called attention,
+with a very complicated operation here,
+in fact, inside the Self-attention layer,
+the only parameters that need to be learned
+are W^q, W^k and W^v.
+Only W^q, W^k and W^v are the unknown.
+We need to discover them through our training data.
+So, W^q, W^k and W^v are unknown.
+They need to be found out.
+But, there is no unknown parameter in other operations.
+All are being set manually.
+There is no need to find them out through training data.
+Only W^q, W^k and W^v
+are found through training data.
+Okay! Above all are the operations of Self-attention.
+Contents from I to O are about doing Self-attention.
+There is an advanced version of Self-attention
+called Multi-head Self-attention.
+Multi-head Self-attention
+is widely used today.
+In homework 4,
+The original code 4 from TAs contains
+Multi-head Self-attention.
+The number of its head is set to 2.
+The TAs just gave you a hint to
+change the number of heads to 1.
+Then, you can pass it.
+But, it doesn't mean that all tasks
+are suitable for using fewer heads.
+Some tasks,
+for example, translation
+and speech recognition,
+are suitable for more heads
+to get better results.
+As for how many heads are needed,
+it is another hyperparameter,
+which needs your fine-tuning.
+So, why do we need more heads?
+You can think of it as all about the relevance.
+We say that,
+when we are doing this Self-attention,
+we use q to find related k.
+But, there are many different types of relevance.
+There are many different definitions.
+So, maybe we can't have only one q.
+We should have multiple q.
+Different q are responsible for
+different kinds of relevance.
+So, if you want to do Multi-head Self-attention,
+how would you do it?
+You might do it in this way.
+You first multiply a by a matrix to get q.
+Next,
+you multiply q by the other two matrices
+to get q^1 and q^2, respectively.
+Then, there are two superscripts.
+i represents the position.
+These 1 and 2 represent
+the order number of q of this position.
+So, here are q^i,1 and q^i,2.
+It means that we have two heads.
+You can think that, in this issue,
+there are two different relevance,
+so we need to generate two different heads
+to find the two different relevance.
+Since there are two q,
+there will be two k
+and two v as well.
+How can we get q^1 and q^2 from q?
+How can we get k^1 and k^2 from k?
+How can we get v^1 and v^2 from v?
+In fact, we just let q, k and v,
+be multiplied by two matrices, two matrices and two matrices,
+to get different ones,
+to get different heads.
+That's it.
+Okay! So, for another location,
+we do exactly the same thing.
+For another position a, after input,
+it will also get two q, two k and two v.
+Then how to do Self-attention next?
+The operation is the same as the one we talked about before.
+But now,
+We do group 1 together firstly,
+and then do group 2 together.
+In other words, when q^1
+is used to calculate the attention score,
+it doesn't care about k^2.
+It doesn't care about k^2.
+It just cares about k^1.
+So, we use q^(i,1) and k^(i,1) to do attention,
+and use q^(i,1) and k^(j,1) to do attention, too.
+That is, calculate the dot product
+to get the attention score.
+Also, when doing the weighted sum,
+we don't care about v^2 anymore.
+Just look at v^(i,1) and v^(j,1).
+So, multiply this attention score by v^(i,1),
+and multiply this attention score by v^(j,1).
+Then we get b^(i,1).
+When getting b^(i,1),
+only one of the heads is used.
+You will use another head to
+do the same thing.
+So q^2 only attends on k^2.
+q^2 only attends on k^2.
+When they are doing a weighted sum,
+only do a weighted sum on v^2.
+Then you get b^(i,2).
+Furthermore, if you have more heads,
+such as 8 heads or 16 heads,
+that will be the same operation.
+Here we use two heads as an example,
+showing you that how it works
+when there are two heads.
+Now we get b^(i,1) and b^(i,2).
+Then you might concatenate
+b^(i,1) and b^(i,2),
+and then it passes a transform,
+which is multiplied by a matrix.
+Finally, we get b^i
+and then send it to the next level.
+This is multi-head attention,
+a deformation of self-attention.
+So far,
+You may figure out that the self-attention layer
+misses one important piece of information.
+What is this information?
+This information is the location information.
+Think about it for a self-attention,
+for a self-attention layer.
+Every input
+appears at the front of the sequence.
+Or it appears at the back of the sequence.
+It doesn’t have this information at all, right?
+You might say that didn't you just say
+the inputs have position "1 2 3 4"?
+However, the 1 2 3 4 is what we draw and mark on the slide
+to help everyone understand.
+Think about it for the self-attention layer,
+is there any difference among position 1, position 2,
+position3, and position4?
+There is no difference at all, right?
+The operations of these four positions are the same.
+For self-attention, the distance between q^1 and q^4
+isn't particularly far.
+The distance between 1 and 4 isn't far,
+and the distance between 2 and 3 is not close, too.
+It’s like there is no distance in the world.
+The distance between all positions is the same.
+No one position is far away,
+and no position is close.
+No one is at the forefront of the whole sequence,
+And no one is at the end of the whole sequence.
+There may be some problems with this design.
+Because sometimes the location information may be important.
+For example,
+when we are doing POS tagging,
+that is, part-of-speech-tagging,
+maybe you know that verbs are less likely to appear at the beginning of sentences.
+So, if we know
+a certain word is placed at the beginning of the sentence.
+The probability of it being a verb may be relatively low.
+The information about the location may often be useful.
+But so far
+in the operation of self-attention, we have talked about,
+it has no location information at all.
+So, what to do?
+When you perform Self-attention,
+if you think location information is an important thing,
+then you can put the location information into it.
+How to do that?
+Here we need to use one technique
+called positional encoding.
+This technique is like this;
+you set a vector for each position,
+called the positional vector.
+Here we use e^i to represent it.
+The superscript i represents the position.
+Every different position
+corresponds to a different vector.
+That is, e^1 is a vector,
+e^2 is a vector
+and e^128 is still a vector.
+Different locations have their own e.
+Then we add this e to a^i.
+It's all over.
+It equals telling your self-attention
+about the position information.
+If it sees a^i seemed to add e^i,
+it will know the present position
+should be at position i.
+What does this e^i look like?
+The earliest transformer
+in "Attention Is All You Need"
+uses e^i like this.
+In this picture,
+each column represents an e.
+The first position is e1.
+The second position is e2.
+The third position is e3.
+And so on.
+It puts this vector here
+to the first position.
+Add this vector to "a" at the second position.
+Add this vector to "a" at the third position.
+And so on.
+Each position has a unique "e".
+By giving each position a different "e",
+we hope that when your model deals with this input,
+it can know about the position information.
+What does the position information look like?
+The positional vector
+is handcrafted.
+That is, it is set by humans.
+The vector set by humans has many problems.
+Assume that when I determine this vector,
+I only set the length to 128,
+but what if the length of my current sequence
+is 129?
+But the earliest one in
+"Attention Is All You Need"
+has no such a problem.
+Its vector is generated through a certain rule,
+a very magical
+function of sine and cosine.
+Of course, you will have new problems.
+Why are sine and cosine?
+Why not something else?
+Why must it be produced like this?
+Actually, you don’t have to generate
+the handcrafted positional vector like this.
+The positional encoding
+is still a problem to be studied.
+You can create your own new method.
+Also, positional encoding
+can be learned from the data.
+About positional encoding,
+you can refer to the literature.
+This is a question to be studied.
+For example, I quote an article here.
+This is a paper on arxiv last year,
+so you can imagine these are actually very new papers.
+It compared and proposed
+new positional encoding.
+For example, the earliest positional encoding
+is generated by a magical sine function.
+If you treat the value
+in positional encoding
+as part of the network parameters
+and let your model learn it,
+it will look like this.
+This picture is viewed horizontally.
+It is viewed sideways.
+Each row
+represents a position.
+This is the original positional encoding
+generated with the sine function.
+This is learned by the model.
+There are magical methods in it.
+For example,
+this one was generated by RNN.
+The positional encoding is generated by RNN.
+The method proposed in this paper is called FLOATER.
+It is generated by a magical network.
+In short, you have a lot of methods
+to generate positional encoding.
+Currently, we don’t know which method is the best.
+This is a question that remains to be studied,
+so you don't have to worry about
+why Sinusoidal is the best.
+You can always come up with new approaches.
+Okay, this self-attention is widely used.
+We have mentioned "Transformer" many times.
+We all know that
+there is a thing in the field of NLP called BERT.
+Self-attention is also used in BERT.
+The application of self-attention in NLP
+is familiar to everyone.
+But self-attention
+is not only for NLP-related applications,
+it can also be used for many other problems.
+For example, when dealing with speech,
+you can also use self-attention.
+But when dealing with speech,
+you may be concerned about
+using self-attention
+with some small changes.
+For example,
+Because of the huge size of speech,
+if you want to express a sound signal
+as a row of vectors,
+the row of vectors may be very long.
+As we mentioned before,
+when doing speech recognition,
+you have to represent the sound signal as a row of vectors,
+and each vector only represents
+the length of 10 milliseconds.
+So, suppose we have a 1-second audio signal.
+It contains 100 vectors.
+For a 5-second audio signal,
+it contains 500 vectors.
+If you randomly say a word,
+it contains thousands of vectors.
+So, when you want to describe
+an audio signal,
+the length, as this sequence of vectors,
+is very considerable.
+What is the problem if we have
+considerable sequence
+and considerable length?
+Think about it.
+When we calculate this attention matrix,
+its complexity equals the square of its length.
+If you want to calculate the attention matrix A',
+you may need to do the inner product for L squared times.
+And if the value of L is very large,
+it will cost a lot of computational resources.
+If L is large,
+you also need a lot of memory
+to store this matrix.
+Suppose you are doing speech recognition.
+And if you say a word,
+the attention matrix produced by that sentence
+may be too large.
+It's too large to handle it easily
+and also too hard to do the training.
+So what do we do
+when processing audio signals?
+There is a trick called truncated self-attention.
+What truncated self-attention does is that
+we do not focus on the whole sentence
+but only pay attention to a small range
+when we are doing self-attention.
+So how wide should this range be?
+That can be set by people.
+Then, why do we know
+we may only need to concentrate on a small range
+when doing speech recognition?
+That depends on your understanding of the problem.
+Maybe we only need to identify what kind of phoneme
+or what kind of content in this position.
+We don't need every sentence.
+We only need this sentence
+and its context within a certain range
+to do speech recognition.
+So if you are doing self-attention,
+maybe there is no need to read through every sentence.
+Maybe self-attention doesn’t need to consider every sentence.
+You only need to consider a small range of sentences
+to speed up the calculation.
+Okay, that's all for truncated self-attention.
+Self-attention
+can also be applied to images.
+How can self-attention be applied to images?
+So far,
+when we are talking about self-attention,
+we say that this technique can be used
+when the input is a sequence of vectors
+or a vector set.
+It is suitable to use self-attention for those kinds of inputs.
+When we were talking about CNN,
+we told everyone that
+an image
+could be seen as a very long vector.
+But by changing our point of view,
+an image can also be
+seen as a vector set.
+How to see an image as a vector set?
+This is an image with a resolution of 5 times 10.
+We say this image
+can be seen as a tensor.
+The size of this tensor is 5 times 10 times 3.
+3 represents the 3 channels of RGB.
+Then you can regard the pixel in each position
+as a three-dimensional vector.
+So every pixel
+is a three-dimensional vector.
+And the whole image
+is made up of 5 times 10 vectors.
+So we can change our point of view
+on this image.
+So,
+an image can be considered as a vector set.
+Since it can be considered as a vector set,
+you can also apply self-attention to it.
+Does anyone use self-attention to process an image?
+Yes.
+Here are two examples
+that you can refer to.
+So use self-attention on image processing
+is not a very new thing.
+Okay. Then we can compare
+what kind of difference or relevance
+between self-attention and CNN.
+Suppose we
+apply self-attention
+to an image,
+and this is the pixel you want to consider.
+Then it generates query,
+and other pixels
+generate keys.
+This pixel generates query,
+and other pixels generate keys.
+When you are doing an inner product,
+what you have to consider is not a small area of the image
+but the whole image's information.
+But
+when using CNN,
+we mentioned that CNN
+would draw a receptive field last week.
+Each filter,
+every neural will
+only consider the information in the scope of the receptive field.
+So if we compare CNN with self-attention,
+we can say that
+CNN
+can be seen as a simplified version of self-attention.
+Because when doing CNN,
+we only consider the information in the receptive field.
+When doing self-attention,
+we are considering the information of the entire picture.
+So CNN
+is a simplified version of self-attention.
+Or the other way around,
+self-attention is a complicated version of CNN.
+In CNN,
+we have to delineate the receptive field.
+Every neural
+only consider the information in the receptive field,
+and the scope and size of the receptive field
+are determined by people.
+I remember that we spent
+some time talking about the possible designs of
+receptive fields the week before last week.
+For self-attention,
+we use attention
+to find the relevant pixel,
+as if the receptive field is automatically learned.
+The network decides
+the shape of the receptive field.
+The network decides
+which pixels really need to be considered
+or related
+centered on this pixel.
+So the scope of the receptive field
+is no longer manually delineated.
+Instead, let the machine learn it by itself.
+Here we mention the relationship between self-attention and CNN.
+You can read the paper
+called "On the Relationship
+between self-attention and Convolutional Layers".
+In this paper,
+the author proves rigorously in a mathematical way that
+CNN
+is a special case of self-attention.
+Self-attention can do exactly the same thing
+by setting appropriate parameters.
+The function set of CNN looks like this.
+The function set of self-attention looks like this.
+So self-attention
+is a more flexible version of CNN
+and CNN is a restricted version of self-attention.
+Self-attention will become CNN
+only through certain designs,
+certain restrictions.
+Then this is not a very old paper.
+It was uploaded on the Internet
+on November 19.
+So you know that
+the things we talked about today
+are actually very new information.
+Since CNN is a subset of self-attention,
+self-attention is more flexible.
+When we talked about overfitting,
+do you remember that
+a more flexible model
+needs more data.
+If you don't have enough data,
+it is possible to overfitting.
+As for small models
+and more limited models,
+they are suitable for
+preventing overfitting
+on small data.
+If you set this limit well,
+there will be good results.
+If you
+use different amounts of data to
+train CNN and self-attention,
+you can indeed see the phenomenon I just mentioned.
+The result of this experiment
+comes from Google's paper
+"An image is worth 16 times 16 words".
+This is Google’s paper.
+It applies self-attention
+to the image.
+It divides an image
+into 16 by 16 patches.
+It views every patch as
+a word.
+Because generally, self-attention
+is more commonly used on NLP.
+So it imagined
+that every patch is actually a word.
+So the author uses a very fancy title.
+It's called a picture
+worth 16 by 16 words.
+What is this horizontal axis?
+The horizontal axis is the number of training images.
+Then you find out that
+for Google,
+the so-called relatively small data
+is the amount of data you can't use.
+There are 10 million here, which is
+10 million images,
+is a setting with a relatively small amount of data.
+Then what about the setting with a relatively large amount of data?
+There are 300 million pictures.
+In this experiment,
+after comparing the result of self-attention, which is represented by this light blue,
+to the result of CNN, which is represented by this dark gray line,
+you will find that
+as the amount of data increases,
+the result of self-attention
+is getting better.
+Finally, when we maximize the amount of data,
+self-attention can surpass CNN,
+but when we use a small amount of data,
+CNN is better than self-attention
+and will get a better result.
+Then what is the reason?
+You can explain it
+by the flexibility of CNN and self-attention.
+While self-attention is more flexible,
+more training data are needed.
+When training data are scarce,
+overfitting happens.
+While CNN is less flexible,
+when training data are scarce,
+you would get better results.
+But when the amount of training data increase,
+it can not benefit from a larger amount of training data.
+This is the comparison between self-attention and CNN.
+Then you may want to know that
+self-attention and CNN,
+which one is better.
+Which one should I choose?
+In fact, you can use both, right?
+In our homework four,
+if you want to surpass the strong baseline,
+here is a hint.
+You can use the conformer.
+Both self-attention and CNN
+are used in it.
+Okay, let's compare
+self-attention with RNN.
+What is RNN?
+It is the recurrent neural network.
+However, in this course,
+we will not talk about recurrent neural network,
+because, most of the time,
+RNN can be replaced by self-attention.
+So in this course,
+we won’t talk about RNN detailly.
+But what is RNN?
+If you want to know,
+I will go through it quickly.
+RNN is the same as self-attention.
+They are being used to deal with the situation that the input is a sequence.
+This is how RNN works.
+This is your input sequence.
+You have a memory vector
+and also an RNN block.
+This RNN block
+will get the memory vector
+and the first input vector as input
+and will output another vector.
+Then according to the output,
+which we usually call it the hidden,
+according to the hidden,
+we further pass it through this fully connected network,
+and make the prediction you want.
+What is the next step?
+When using the second one,
+the second vector
+of this sequence as input,
+you would make this vector,
+the second vector as input.
+It will also take the output vector of the previous time step
+as input for the next time step.
+After we pass them through the RNN block,
+a new vector will be generated.
+Pass it through the fully connected network,
+and do anything you want.
+When the third vector comes in,
+you put the third vector and the output at the previous time step together,
+and pass them through the RNN block.
+Generate new output.
+And then, at the fourth time step,
+when we input the fourth vector,
+bring the fourth vector and the output
+of the previous time step together.
+Pass them through the RNN block,
+and get new output,
+and pass the output through the fully connected network again.
+This is RNN.
+Recurrent Neural Network.
+You will find that
+RNN and self-attention are doing similar things.
+Their input is a vector sequence.
+The output of self-attention is
+another vector sequence.
+Each vector in it
+has already considered the entire input sequence
+and passed through the fully connected network for further processing.
+What about RNN?
+It will also output another vector sequence.
+This sequence of vectors will also
+pass through the fully connected network for further processing.
+So what is the difference between Self-attention and RNN?
+Of course, a very obvious difference
+you might say is
+that every vector here
+has considered the entire input sequence,
+while each vector in RNN
+only considers the vectors that have already been input on the left.
+They do not consider the vectors on their right.
+This is a good observation.
+But RNN can actually be bidirectional.
+So if you use a bidirectional RNN,
+every hidden output here,
+the output of each memory,
+can also be regarded as considering
+the entire input sequence.
+But suppose we compare the output of RNN
+with the output of Self-attention.
+Even if you use bidirectional RNN,
+there are still some differences.
+For RNN,
+if the yellow vector on the far right
+wants to consider the leftmost input,
+it must have the leftmost input
+stored in memory.
+And without forgetting it,
+take it all the way to the far right
+in order to consider it at the end.
+But for Self-attention, there is no such problem.
+It only needs to output a query here
+and a key here.
+As long as they match,
+it doesn't matter how apart they are.
+You can easily extract information
+from a vector that is very far away
+from the entire sequence.
+So this is the difference
+between RNN and Self-attention.
+There is another major difference.
+When RNN is processing
+a row of input sequences
+to produce a row of output sequences,
+it cannot be parallelized.
+You have to generate this vector first
+before you can generate this vector,
+then this vector, and so on.
+So in RNN, when input is a row of vector to
+output another row of vector,
+it can't handle it all at once.
+There is no way to process all outputs in parallel.
+But Self-attention has an advantage.
+It can process all outputs in parallel.
+When you input a row of vectors
+to output these four vectors,
+they are generated in parallel.
+You don’t need to wait before you can calculate the others.
+In the output vector sequence,
+every vector is generated simultaneously.
+So in terms of
+computational efficiency,
+Self-attention will be more efficient than RNN.
+You may found out
+that many applications are gradually modifying RNN architecture
+to the Self-attention architecture.
+Okay, if you want to know more
+about the relationship between RNN and Self-attention,
+you can read this article called
+"Transformers are RNNs".
+It will tell you
+what to add to Self-attention to
+turn it into RNN.
+And this is not a very old paper.
+This one was put on arXiv in June last year.
+So what I’m talking about today are some very new research results.
+Okay, so we won't go into the details
+on RNN in this course.
+If you are interested in RNN,
+these are videos of the previous course.
+The section on RNN,
+this time I won’t talk about it,
+has an English version.
+Both the Chinese and English version of RNN
+are on YouTube.
+So finally,
+Self-attention can also be used on graphs.
+Remember that at the beginning
+of the lecture, I told you that
+a graph could also be seen as a bunch of vectors.
+If it is a bunch of vectors,
+you can use Self-attention to process it.
+So Self-attention can also be used on graphs.
+But when we use Self-attention
+on graphs,
+what's special?
+In a graph,
+we do not only have nodes that
+can be represented as vectors.
+We don’t only have information on nodes
+but also information on edges.
+We know which nodes are connected,
+that is, which nodes are related.
+We know which vectors are related.
+Before this, when we were doing Self-attention,
+the so-called relevance is found by the network itself.
+But now that information is in the graph.
+With the information on edges,
+the relevance may not need to be found automatically by the machine.
+The edges on this graph have hinted us
+the correlation between nodes.
+Today, when you apply self-attention
+to a graph,
+you have a choice that when you are doing
+attention matrix calculation,
+you can count only the nodes connected by the edge.
+For example, in this picture,
+node 1 is connected to node 8.
+Then we only need to calculate the score of the attention
+between node 1 and node 8.
+Now 1 and 6 are connected,
+so we only need to calculate
+the score of attention between 1 and 6.
+1 and 5 are connected,
+so we only need to calculate the score of attention between 1 and 5.
+2 and 3 are connected,
+so we only need to calculate the score of attention between 2 and 3.
+And so on.
+If there is no connection between the two nodes,
+it is very likely to imply that
+there is no relationship between these two nodes.
+Since there's no relationship between them,
+we don’t need to calculate its attention score.
+We just set it to 0.
+Because this graph is constructed
+based on humans
+with some domain knowledge,
+the domain knowledge told us that
+these two vectors are not related to each other.
+Then we don’t need to use machines to learn this.
+In fact, when we apply self-attention
+with the restriction we talked about here
+on a graph,
+it is a kind of graph neural network,
+which is a kind of GNN.
+I know that GNN
+is also a very fancy topic.
+I won’t say that self-attention includes
+all the varieties of GNN.
+But applying self-attention to a graph
+is a certain type of graph neural network.
+Here,
+we can’t talk about it in detail.
+GNN is also very complicated.
+It has a lot of concepts.
+Here's the link to the teaching assistant’s previous class.
+It took almost three hours
+talking about graph neural networks.
+And he hasn't finished it yet.
+This tells you that graph neural network
+also has a very deep technique.
+It's very complicated.
+It's not what we can finish in one class today.
+Ok, actually, this self-attention
+has a lot of varieties.
+You can read a paper called
+"Long Range Arena".
+It compares various kinds of self-attention
+Because the biggest problem of self-attention is that
+it’s very computationally expensive.
+How to reduce the amount of calculation of self-attention
+is a future point.
+You can see here
+we have various kinds of self-attention.
+The self-attention was first
+used on the transformer.
+So when many people talk about the transformer,
+it actually refers to this self-attention.
+Some people say that transformer in a broad sense
+refers to self-attention.
+So later, all kinds of
+self-attention do this.
+They're all called "XXXformer"—
+for example, Linformer Performer Reformer, etc.
+So the varieties of self-attention
+are now called "XXXformer".
+You can see that
+the horizontal axis represents the speed of its operation.
+There are many kinds of new "XXXformer"
+that are faster than the original transformer.
+But the faster speed brings worse performance.
+This vertical axis represents performance.
+They tend to be worse than the original transformer.
+They have slightly worse performance.
+But the speed will be faster.
+What kind of self-attention
+can be really fast and good?
+This is still an issue to be studied.
+If you are interested in self-attention
+and want to do further research,
+you can also take a look at
+this paper, "Efficient Transformers: A Survey".
+It will introduce
+various kinds of self-attention.
+This is not the thing we can teach in this course.

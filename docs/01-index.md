@@ -1014,36 +1014,131 @@ Ensemble Learning 是機器學習中一項重要的技術，通過將多個基�
 </details>
 
 <details>
-<summary>80. GAN Lecture 5 (2018): General Framework</summary><br>
+<summary>80. [2018-05-11] GAN Lecture 5 (2018): General Framework</summary><br>
 
 <a href="https://www.youtube.com/watch?v=av1bqilLsyQ" target="_blank">
     <img src="https://img.youtube.com/vi/av1bqilLsyQ/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 小節一：核心主題  
+- 本篇文章探討了在生成模型（Generative Models）中使用不同的分散度指標（Divergence Measures）對生成結果的影響，特別是其與模式崩塌（Mode Collapse）現象的關聯性。  
+- 討論了如何通過選擇合適的分散度指標來改善生成模型的性能，並提出了可能的改進方法。
 
+### 小節二：主要觀念  
+1. **分散度指標的作用**  
+   - 分散度指標（如KL散度、反向KL散度和JS散度）用於衡量兩個概率分佈之間的差異。  
+   - 不同的分散度指標會導致生成模型在訓練過程中採取不同的策略，從而影響最終的生成結果。  
+
+2. **傳統GAN的局限性**  
+   - 常見的GAN（Generative Adversarial Networks）通常使用JS散度作為目標函數，這可能導致 generator 產生模式崩塌或模式丟失現象。  
+   - 例如，JS散度促使 generator 集中於某一個特定模式，而忽視其他潛在模式的存在。  
+
+3. **分散度指標的影響**  
+   - 使用不同的分散度指標（如KL散度或反向KL散度）會導致生成模型有不同的優化行為：  
+     - KL散度可能促使 generator 產生更分散的分佈，但結果可能模糊。  
+     - 反向KL散度則可能導致 generator 集中於某一個模式，進一步加劇模式崩塌。  
+
+### 小節三：問題原因  
+- 模式崩塌（Mode Collapse）現象的根本原因是生成模型在優化過程中未能充分探索數據分佈的所有模式。  
+- 這可能是由以下因素導致的：  
+  1. 選用的分散度指標促使 generator 焦點過於集中於某一部分數據分佈。  
+  2. 傅裏葉GAN等模型在訓練過程中缺乏足夠的多樣性來保持生成結果的穩定性。  
+
+### 小節四：解決方法與優化方式  
+1. **選擇合適的分散度指標**  
+   - 選用能夠平衡模式探索和生成質量的分散度指標，例如特定設計的指標或混合策略。  
+
+2. **多樣性增強方法**  
+   - 引入ensemblcing技術：訓練多個 generator 並行工作，每個 generator 能夠捕獲不同的數據模式。  
+   - 結合.Evaluate方法：在訓練過程中引入多樣性評估指標，確保生成結果的多樣性。  
+
+3. **架構改進**  
+   - 對GAN的架構進行優化，例如使用progressive growing of GANs（ProGAN）來逐級提升生成能力，從低分辨率到高分辨率逐步訓練，從而保持模式的穩定性和多樣性。  
+
+### 小節五：結論  
+- 不同的分散度指標對生成模型的性能有顯著影響，特別是與模式崩塌現象密切相關。  
+- 理解和選擇合適的分散度指標對於提升生成模型的效果至關重要。  
+- 通過ensemblcing、架構改進等方法可以有效緩解模式崩塌問題，從而提高生成數據的多樣性和質量。
 </details>
 
 <details>
-<summary>81. GAN Lecture 2 (2018): Conditional Generation</summary><br>
+<summary>81. [2018-05-11] GAN Lecture 2 (2018): Conditional Generation</summary><br>
 
 <a href="https://www.youtube.com/watch?v=LpyL4nZSuqU" target="_blank">
     <img src="https://img.youtube.com/vi/LpyL4nZSuqU/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 核心主題  
+- 生成對抗網路（GAN）在多種數據類型和應用場景中的應用，包括影像、語音和影片。  
 
+### 主要觀念  
+1. **條件生成**：GAN 可以用於條件生成，即根據輸入數據生成符合特定條件的輸出數據。  
+2. **影像處理**：GAN 在影晌處理中可以實現語意分割、風格轉移等任務。  
+3. **語音增強**：GAN 可以用於去噪聲和改善語音品質。  
+4. **影片生成**：GAN 可以用於影片預測和動畫合成。  
+
+### 問題原因  
+1. **模糊問題**：直接訓練生成器時，輸出結果往往會顯得模糊或不清晰。  
+2. **計算資源限制**：訓練大型 GAN 模型需要大量的計算資源和時間。  
+3. **判別器設計**：傳統的判別器設計無法有效評估生成數據與真實數據的匹配程度。  
+
+### 解決方法  
+1. **條件GAN（cGAN）**：引入條件來約束生成器，使其能夠根據輸入數據生成更精確的結果。  
+2. **Patch GAN**：將判別器設計為只檢查圖片的小塊區域，降低模型 complexity 並提高性能。  
+3. **多尺度訓練**：在不同尺度上訓練模型，以提昇生成效果的穩定性和細節豐富性。  
+
+### 優化方式  
+1. **Patch GAN 技術**：將判別器限制為只檢查圖片的小塊區域，稱為 patch GAN，可有效降低計算成本並提高生成效果。  
+2. **多尺度架構**：在不同尺度上訓練模型，以提昇生成效果的穩定性和細節豐富性。  
+3. **聲音 spectogram 轉換**：利用聲音 spectogram 的圖片特性，將音頻數據轉換為圖片形式，以便於使用影像處理技術進行增強。  
+
+### 結論  
+GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特別是通過條件生成、Patch GAN 和多尺度訓練等方法，能夠顯著提昇生成效果並降低成本。未來的研究可以進一步探索這些技術在更多領域中的應用與優化。
 </details>
 
 <details>
-<summary>82. GAN Lecture 1 (2018): Introduction</summary><br>
+<summary>82. [2018-05-11] GAN Lecture 1 (2018): Introduction</summary><br>
 
 <a href="https://www.youtube.com/watch?v=DQNNMiAP5lw" target="_blank">
     <img src="https://img.youtube.com/vi/DQNNMiAP5lw/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章整理：生成式人工智慧模型的對比與分析
 
+#### 1. 核心主題
+- 比較不同類型的生成式人工智慧模型（VAE 和 GAN）在圖像生成任務中的性能差異。
+- 探討GAN的不同變體（如WGAN、LSGAN等）及其效果。
+
+#### 2. 主要觀念
+- **生成式模型**：指能夠學習數據分布並生成新樣本的機器學習模型，常見於圖像生成領域。
+- **VAE (Variational Autoencoder)**：基於概率模型，通過重_PARAM_sampling來學習數據的 latent representation。
+- **GAN (Generative Adversarial Network)**：由生成器和判別器組成，通過 adversarial training 進行競爭學習。
+
+#### 3. 問題原因
+- VAE 在圖像生成方面存在以下問題：
+  - 生成的圖片質量較低，常顯模糊。
+  - 學習過程中對 latent variable 的重_PARAM_sampling 可能導致模式坍塌（mode collapse）。
+- GAN 齊雖然在某些情況下性能穩定，但其訓練過程敏感，參數調整需精確。
+
+#### 4. 解決方法
+- **GAN的優化**：
+  - 引入不同的損失函數（如Wasserstein loss）以改進生成效果。
+  - 使用梯度_penalty 確保判別器和生成器的平衡學習，防止模型崩潰。
+- **VAE 的改進**：
+  - 對 latent space 進行正則化處理，提升生成樣本的多樣性。
+  - 調整重_PARAM_sampling 的方法，降低模式坍塌的風險。
+
+#### 5. 結論
+- GAN 在圖像質量和細節表現上優於VAE。
+- 不同GAN變體在性能上差距不大，但參數敏感性較高。
+- VAE 設計穩定，但在最佳效果上不如GAN。
+- 使用GAN時需仔細調試模型參數，以確保最佳生成效果。
+
+#### 6. 參考資料
+- 文章來源：臺灣大學人工智慧中心課程材料。
 </details>
 
 <details>

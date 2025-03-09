@@ -285,36 +285,173 @@
 </details>
 
 <details>
-<summary>427. 【生成式AI導論 2024】第6講：大型語言模型修練史 — 第一階段: 自我學習，累積實力 (熟悉機器學習的同學從 15:00 開始看起即可)</summary><br>
+<summary>427. [2024-03-23] 【生成式AI導論 2024】第6講：大型語言模型修練史 — 第一階段: 自我學習，累積實力 (熟悉機器學習的同學從 15:00 開始看起即可)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=cCpErV7To2o" target="_blank">
     <img src="https://img.youtube.com/vi/cCpErV7To2o/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章核心主題
+本篇文章主要探討了大型語言模型（LLMs）在自我學習階段的局限性及其後續改進的可能性。
 
+### 主要觀念
+1. **自我學習的瓶頸**：大型語言模型在未受過人類指導的情況下，雖然能從網路上習得知識，但缺乏有效利用這些知識的能力。
+2. **輸出控制的挑戰**：模型在回答問題時往往無法準確作答，可能會反問或提供不相干的答案，顯示出對輸出的控制不足。
+3. **Prompt的重要性**：使用適當的提示詞（Prompts）可以顯著提升模型的回答能力，但依賴於嚴謹的Prompt設計。
+
+### 問題原因
+1. **無監督學習的缺陷**：自我學習模式下，模型僅能模仿數據中的表達方式，卻無法真正理解其含義。
+2. **缺乏明確目標**：模型在未受指導的情況下，不清楚如何將所學知識應用於具體問題。
+
+### 解cision方法
+1. **人類介入指導**：通過設計有效的Prompt和模板，引導模型正確回答問題。
+2. **後螠訓練**：對模型進行額外的微調或指令精煉（Instruction Tuning），使其更擅長理解和執行特定任務。
+
+### 確優化方式
+1. **改進Prompt工程**：不斷優化Prompt的設計，使其更符合模型的輸入需求。
+2. **提升模型可控性**：通過模型架構調整或訓練策略的變化，提高模型輸出的可控性和準確性。
+
+### 結論
+大型語言模型具備潛在的巨大能力，但其自我學習階段存在明顯限制。透過人類的介入和後續改進，這些模型可以更好地發揮其潛力，為各行業帶來更多價值。
 </details>
 
 <details>
-<summary>428. 【生成式AI導論 2024】第7講：大型語言模型修練史 — 第二階段: 名師指點，發揮潛力 (兼談對 ChatGPT 做逆向工程與 LLaMA 時代的開始)</summary><br>
+<summary>428. [2024-03-24] 【生成式AI導論 2024】第7講：大型語言模型修練史 — 第二階段: 名師指點，發揮潛力 (兼談對 ChatGPT 做逆向工程與 LLaMA 時代的開始)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=Q9cNkUPXUB8" target="_blank">
     <img src="https://img.youtube.com/vi/Q9cNkUPXUB8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理
 
+## 核心主題
+本文章主要探討大型語言模型（LLM）的發展、訓練數據的重要性以及如何利用現有資源進行微調（Fine-Tuning），特別是基於Meta發布的Llama模型。
+
+---
+
+## 主要觀念
+1. **大型語言模型的能力**：如ChatGPT等模型能夠執行多種任務，包括文本生成、電子郵件撰寫、摘要生成等。
+2. **訓練數據的重要性**：Instruction Fine Tuning（指令微調）需要高品質的訓練數據來提升模型性能。
+3. **數據來源的限制**：獲得人類標註的高品質數據成本高昂且困難。
+4. **Meta的策略改變**：Meta發布Llama等大型語言模型，降低了進入LLM開發領域的門檻。
+
+---
+
+## 問題原因
+1. **數據匱乏**：缺乏足夠的訓練數據來支持Instruction Fine Tuning。
+2. **高成本**：獲得人類標註的數據需要大量時間和資金。
+3. **技術門檻**：此前缺少免費且易用的基準模型，限制了個人和小團隊進入LLM開發領域。
+
+---
+
+## 解決方法
+1. **逆向工程ChatGPT**：
+   - 通過與ChatGPT交互，生成潛在的任務和問題。
+   - 使用這些生成的數據進行微調。
+2. **利用Llama模型**：
+   - Meta發布了Llama等基準大型語言模型，提供了免費的前期訓練參數。
+3. **小團隊的策略**：
+   - 獲取少量ChatGPT生成的數據，結合Llama進行微調。
+
+---
+
+## 優化方式
+1. **數據質量提升**：儘管逆向工程獲得的數據可能不如人類標註數據優質，但仍可作為替代方案。
+2. **模型共享與合作**：
+   - 學術界和研究機構可以通過合作降低數據收集成本。
+3. **技術生態的開放**：
+   - 基於Llama等模型的微調方法，降低了LLM開發的進入門檻。
+
+---
+
+## 結論
+1. ** democratization of LLM development**：Meta發布Llama後，人人都可以進行大型語言模型的微調，推動了LLM技術的普及。
+2. **未來展望**：
+   - 更多基準模型的發布將進一步降低進入障礙。
+   - 學術研究和實務應用將迎來更多可能性。
+
+---
+
+## 附註
+文章最後鼓勵讀者在作業五和六中親自體驗LLM微調，打造屬於自己的語言模型。
 </details>
 
 <details>
-<summary>429. 【生成式AI導論 2024】第8講：大型語言模型修練史 — 第三階段: 參與實戰，打磨技巧 (Reinforcement Learning from Human Feedback, RLHF)</summary><br>
+<summary>429. [2024-04-12] 【生成式AI導論 2024】第8講：大型語言模型修練史 — 第三階段: 參與實戰，打磨技巧 (Reinforcement Learning from Human Feedback, RLHF)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=v12IKvF6Cj8" target="_blank">
     <img src="https://img.youtube.com/vi/v12IKvF6Cj8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理：語言模型的訓練與對齊過程
 
+## 核心主題
+- **語言模型的訓練與進化**：探討語言模型從初步預訓練到後續微調及增強學習反饋對齊（RLHF）的完整訓練流程。
+- **人類偏好對模型的影響**：分析人類在模型訓練中的角色及其對模型性能的塑造作用。
+
+## 主要觀念
+1. **(language model training phases)** 語言模型的訓練分為三個階段：
+   - **Pre-training（初步預訓練）**：通過大量文本數據進行無監督學習，建立基礎語言能力。
+   - **Fine-tuning（微調）**：引入人類教師的指導，進一步優化模型性能。
+   - **RLHF（增強學習反饋對齊）**：利用人類回饋提升模型在特定任務上的表現。
+
+2. **(human alignment in AI training)** 人為偏好的對齊：
+   - 在微調和RLHF階段，人類教師的偏好和需求被整合到模型訓練中，確保模型行為符合人類期望。
+   - 對齊過程旨在平衡模型能力與人類價值觀，防止模型 deviations from intended behaviors.
+
+3. **(challenges in model training)** 設計與訓練中的挑戰：
+   - 預訓練模型初期性能有限，需後續階段進一步優化。
+   - 人類回饋的主觀性可能引入偏差，影響模型學習方向。
+
+## 問題原因
+1. **(limitations of pre-trained models)** 預訓練模型的局限性：
+   - 雖然預訓練模型具備基本語言能力，但缺乏特定任務的適應性。
+   - 在面對複雜或ambiguous tasks時表現不足。
+
+2. **(subjectivity in human feedback)** 人類回饋的主觀性：
+   - 不同人類教師可能提供不同的反饋，導致模型訓練的一致性問題。
+   - 人類自身對某些問題的理解可能存在偏見，影響回饋的質量。
+
+3. **(future challenges in AI development)** 未來AI發展的挑戰：
+   - 當模型能力超越人類時，如何獲取 accurate feedback 成為難題。
+   - 面對人類無法判斷的複雜問題，模型自我進步的機制尚不明確。
+
+## 解決方法
+1. **(fine-tuning techniques)** 微調技術：
+   - 在預訓練模型基礎上，使用特定數據或任務進行進一步訓練，提升模型在目標領域的性能。
+
+2. **(RLHF mechanisms)** 增強學習反饋對齊機制：
+   - 引入人類專家的實時反饋，指導模型行為，使其更符合人類期望。
+   - 通過.reward shaping 和.policy gradient methods 等技術實現模型優化。
+
+3. **(future research directions)** 未來研究方向：
+   - 探索自動化反饋機制，減少對人類教師的依賴。
+   - 開發更 advanced alignment techniques，應對複雜問題的挑戰。
+
+## 優化方式
+1. **(improving feedback mechanisms)** 提升反饋機制的有效性：
+   - 設計更加客觀和系統化的評分標準，降低主觀性影響。
+   - 利用多方反饋或 consensus methods 確保訓練數據的質量。
+
+2. **(enhancing model capabilities)** 增強模型能力：
+   - 開發更 advanced architectures 和 training algorithms，提升模型理解和判斷能力。
+   - 研究模型自反思和自我修正機制，實現自主學習。
+
+3. **(ensuring ethical AI development)** 確保AI開發的倫理性：
+   - 立明確的倫理框架，規範模型訓練和應用過程。
+   - 加強跨學科合作，平衡技術發展與社會影響。
+
+## 結論
+- **模型訓練的階段性進化**：從初步預訓練到後續微調及RLHF，語言模型的能力逐漸提升，並更加符合人類需求。
+- **人為因素的重要性**：在模型訓練中，人類教師的指導扮演關鍵角色，但其主觀性也帶來挑戰。
+- **未來發展的潛力與挑戰**：隨著模型能力的提升，如何確保其正確使用和進一步進化成為亟待解決的問題。
+
+---
+
+此文整理展示了語言模型訓練過程中的核心要素，強調了人類在模型對齊中的作用，並提出了未來研究的方向和倫理考量。
 </details>
 
 <details>

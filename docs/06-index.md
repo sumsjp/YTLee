@@ -1009,7 +1009,7 @@ Wasserstein GAN 及其改進方法為深度學習中的生成對抗網絡提供�
 </details>
 
 <details>
-<summary>324. 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (三) – 生成器效能評估與條件式生成</summary><br>
+<summary>324. [2021-04-16] 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (三) – 生成器效能評估與條件式生成</summary><br>
 
 <a href="https://www.youtube.com/watch?v=MP0BnVH2yOo" target="_blank">
     <img src="https://img.youtube.com/vi/MP0BnVH2yOo/maxresdefault.jpg" 
@@ -1018,11 +1018,49 @@ Wasserstein GAN 及其改進方法為深度學習中的生成對抗網絡提供�
 
 # 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (三) – 生成器效能評估與條件式生成
 
+# 文章重點整理：Conditional GAN（條件生成對抗網路）的應用與探討
 
+## 核心主題
+1. Conditional GAN 的核心概念及其在多領域中的應用。
+2. 探討GAN模型在生成任務中的優缺點及改進方法。
+
+## 主要觀念
+1. **Conditional GAN (cGAN)** 是一種利用有標籤數據進行訓練的生成對抗網路，能夠基於輸入條件（如圖片、聲音等）生成相應的輸出。
+2. **多模態學習**：通過整合不同類型的數據（如視覺和聽覺），實現跨模態的生成任務。
+3. **混合訓練策略**：結合GAN的對抗訓練與監督學習，以提升模型性能。
+
+## 問題原因
+1. 傳統GAN模型在生成過程中缺乏可控性，易產生不符合條件的結果。
+2. 在多模態數據處理中，存在數據同步與匹配的挑戰。
+3. 模型的創造力可能過度豐富，導致生成內容與實際條件不符。
+
+## 解決方法
+1. **引入條件信息**：在GAN架構中加入條件 VARIABLE，使生成器能夠基於特定條件進行可控生成。
+2. **數據同步技術**：通過爬蟲或錄製影片等方式，收集聲音與影像的配對數據，以支持多模態模型訓練。
+3. **混合訓練策略**：結合GAN的對抗學習與監督學習，使生成器在騙過判別器的同時，也能夠最大限度地逼近標籤數據。
+
+## 優化方式
+1. **聯合訓練**：在同一個模型中整合GAN和監督學習損失函數，以平衡創造力與可控性。
+2. **多模態對齊**：利用同步技術確保不同類型數據在時間或空間上的匹配，提升生成效果。
+3. **後處理技術**：通過額外的修復步驟，進一步優化生成內容，使其更符合實際需求。
+
+## 應用案例
+1. **聲音到影像的生成**：基於聽覺數據生成視覺內容，實現跨模態的感知體驗。
+2. **動畫角色控制**：利用GAN技術讓靜態圖片中的角色開始講話或表達情感。
+3. **藝術創作**：將名畫如蒙娜麗莎轉化為會動的人物形象，展現GAN在藝術領域的潛力。
+
+## 結論
+1. Conditional GAN 在多模態數據生成任務中顯示出巨大的潛力。
+2. 混合訓練策略能夠有效平衡GAN的創造力與可控性，提升模型性能。
+3. 隨著技術進步，GAN在跨模態交互、動畫製作等領域將有更廣泛的應用前景。
+
+---
+
+以上整理涵蓋了文章的核心主題、主要觀念、問題原因、解決方法、優化方式及結論，並以小節形式進行清晰客觀的整理。
 </details>
 
 <details>
-<summary>325. 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (四) – Cycle GAN</summary><br>
+<summary>325. [2021-04-16] 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (四) – Cycle GAN</summary><br>
 
 <a href="https://www.youtube.com/watch?v=wulqhgnDr7E" target="_blank">
     <img src="https://img.youtube.com/vi/wulqhgnDr7E/maxresdefault.jpg" 
@@ -1031,11 +1069,35 @@ Wasserstein GAN 及其改進方法為深度學習中的生成對抗網絡提供�
 
 # 【機器學習2021】生成式對抗網路 (Generative Adversarial Network, GAN) (四) – Cycle GAN
 
+### 小節一：核心主題
+- 本文圍繞生成對抗網路（GAN）在多種跨模態數據轉換任務中的應用展開探討。
 
+### 小節二：主要觀念
+1. GAN的基本原理及其在風格轉換中的運用。
+2. 文本風格轉換，包括正面與負面情感句子的轉換。
+3. 摘要生成與無監督翻譯的實現。
+4. 語音辨識領域中非監督學習的可能性。
+
+### 小節三：問題原因
+- 監督式學習在數據_Labeling上的高成本限制了其廣泛應用。
+- 無監督學習能夠有效利用未標註數據，降低訓練成本。
+
+### 小節四：解決方法
+1. 利用CycleGAN進行無監督風格轉換，實現跨語言翻譯、文本摘要等任務。
+2. 在語音辨識中，結合CycleGAN與爬蟲技術，實現在無標註條件下的聲音到文字的映射。
+
+### 小節五：優化方式
+- 進一步提升GAN模型的穩定性與生成效果，降低訓練過程中的模式崩潰風險。
+- 探索更多跨模態數據轉換的可能性，拓展CycleGAN在不同應用領域的適用範圍。
+
+### 小節六：結論
+1. GAN在無監督學習任務中展示了巨大的潛力，特別是在文本與聲音數據的處理上。
+2. 無標註數據的有效利用為機器學習研究提供了新的方向，未來的研究值得進一步深化。
+3. CycleGAN等模型在跨模態數據轉換中的成功應用，開拓了GAN技術的新疆界。
 </details>
 
 <details>
-<summary>326. 【機器學習2021】自督導式學習 (Self-supervised Learning) (一) – 芝麻街與進擊的巨人</summary><br>
+<summary>326. [2021-04-16] 【機器學習2021】自督導式學習 (Self-supervised Learning) (一) – 芝麻街與進擊的巨人</summary><br>
 
 <a href="https://www.youtube.com/watch?v=e422eloJ0W4" target="_blank">
     <img src="https://img.youtube.com/vi/e422eloJ0W4/maxresdefault.jpg" 
@@ -1044,7 +1106,59 @@ Wasserstein GAN 及其改進方法為深度學習中的生成對抗網絡提供�
 
 # 【機器學習2021】自督導式學習 (Self-supervised Learning) (一) – 芝麻街與進擊的巨人
 
+# 文章整理：Self-Supervised Learning 介紹
 
+## 核心主題
+- **<Self-Supervised Learning (SSL)>**：一種無監督學習方法，利用未標記數據進行模型訓練。
+- **<芝麻街角色命名的模型>**：如ELMO、BERT、ERNIE等SSL模型，均以芝麻街的角色命名。
+
+## 主要觀念
+1. **<Self-Supervised Learning 定義>**：
+   - SSL 無需外部標籤，通過數據本身的結構進行學習。
+2. **<著名 SSL 模型>**：
+   - **ELMO (Embeddings from Language Modeling)**：最早SSL模型之一。
+   - **BERT (Bidirectional Encoder Representation from Transformers)**：最具影響力的SSL模型。
+   - **ERNIE (Enhanced Representation from Knowledge Integration)**：BERT的變體，強調知識整合。
+   - **Big Bird**：專注於處理長序列數據。
+
+## 問題原因
+- **<數據標籤成本高>**：
+  - 監督學習需要大量人工標籤，成本昂貴。
+- **<未充分利用未標記數據>**：
+  - 大量未標記數據未被有效利用。
+
+## 解決方法
+1. **<ELMO 方法>**：
+   - 利用語言模型預測上下文來計算詞嵌入。
+2. **<BERT 方法>**：
+   - 基於Transformer架構，進行雙向編碼。
+3. **<ERNIE 方法>**：
+   - 綫合知識圖譻，提升語義表示。
+4. **<Big Bird 方法>**：
+   - 閲讀窗口機制，降低計算複雜度。
+
+## 優化方式
+1. **<模型規模擴大>**：
+   - BERT參數量：340M。
+   - GPT-2：15B (150億參數)。
+   - Megatron：8B。
+   - T5：11B。
+   - Turing NLG：17B。
+   - GPT-3：175B。
+   - Switch Transformer：1.6T (1,600B)。
+2. **<並行化技術>**：
+   - 使用分布式訓練和張量切分技術提升訓練效率。
+
+## 結論
+- **<SSL 的重要性>**：
+  - 提供了一種高效利用未標記數據的方法。
+- **<未來發展>**：
+  - 模型規模進一步增大，性能更接近人腦。
+  - 更多跨領域應用將被探索。
+
+---
+
+此整理涵蓋了文章的核心主題、主要觀念、問題原因、解決方法、優化方式和結論，並以條列式結構清晰呈現。
 </details>
 
 <details>

@@ -499,7 +499,7 @@
 </details>
 
 <details>
-<summary>286. [INTERSPEECH 2020] VQVC+: One-Shot Voice Conversion by Vector Quantization and U-Net architecture</summary><br>
+<summary>286. [2020-11-03] [INTERSPEECH 2020] VQVC+: One-Shot Voice Conversion by Vector Quantization and U-Net architecture</summary><br>
 
 <a href="https://www.youtube.com/watch?v=JWGVfVSvQwc" target="_blank">
     <img src="https://img.youtube.com/vi/JWGVfVSvQwc/maxresdefault.jpg" 
@@ -508,11 +508,54 @@
 
 # [INTERSPEECH 2020] VQVC+: One-Shot Voice Conversion by Vector Quantization and U-Net architecture
 
+### 核心主題  
+- 語音轉換（Voice Conversion, VC）的研究與改進。
 
+---
+
+### 主要觀念  
+1. **語音轉換的目的**：改變說話者的身份，同時保持內容信息不變。  
+2. **VC系統的分類**：
+   - 幵發數據（Par Data）：說話者.say相同的句子，收集困難但適合模型訓練。
+   - 不相干數據（Unpar Data）： speaker的信息無限制。
+3. **語音轉換方法**：
+   - 直接變換（Direct Transform）
+   - 特徵解耦（Feature Disentangle）
+
+---
+
+### 問題與原因  
+1. **基於特徵解耦模型的問題**：
+   - 如何分別建模內容嵌入和說話者嵌入？
+   - 向量化方法雖能分離信息，但降低音質。
+2. **音質低劣的原因**：
+   - 向量化引入了信息瓶頸，限制了重建能力。
+
+---
+
+### 解決方法與優化方式  
+1. **模型改進**：
+   - 使用更深的架構：增加模型深度以提升表示能力。
+   - 引入條件スキーム（SKI Condition Module）：分層建模，逐步解耦內容和說話者信息。
+2. **數據集**：
+   - 使用Vox-Copus數據集（含9位講話者，共44小時語音）。
+3. **實驗評估**：
+   - 語言識別準確率：模型在-content嵌入中speaker信息被有效去除，accuracy達70%。
+   - 主觀評價：與基線方法（如AutoVC）相比，在自然度和相似性上表現更佳。
+
+---
+
+### 結論  
+1. **SKI架構的優勢**：
+   - 減少信息瓶頸，提升音質。
+2. **進階改進建議**：
+   - 經驗證，增加codebook大小可平衡重建精度與解耦性能。
+3. **未來研究方向**：
+   - 探索更多條件架構以進一步提升語音質量。
 </details>
 
 <details>
-<summary>287. [INTERSPEECH 2020] WG-WaveNet: Real-Time High-Fidelity Speech Synthesis without GPU</summary><br>
+<summary>287. [2020-11-03] [INTERSPEECH 2020] WG-WaveNet: Real-Time High-Fidelity Speech Synthesis without GPU</summary><br>
 
 <a href="https://www.youtube.com/watch?v=rsbT7X2-g7E" target="_blank">
     <img src="https://img.youtube.com/vi/rsbT7X2-g7E/maxresdefault.jpg" 
@@ -521,11 +564,52 @@
 
 # [INTERSPEECH 2020] WG-WaveNet: Real-Time High-Fidelity Speech Synthesis without GPU
 
+### 核心主題  
+- 提出一種快速且輕量級的語音編解碼器（Vocoder）：**WGWebNet**，能夠實時生成高質量的22kHz和44kHz語音樣本，並且不需要GPU支持。  
 
+---
+
+### 主要觀念  
+1. **語音合成的重要性**：語音合成技術在人工智慧、通信和娛樂等領域具有廣泛應用。  
+2. **輕量級模型的需求**：在移動設備和嵌入式系統中，計算資源有限，需要高效的模型來實現實時語音合成。  
+3. **非自回歸模型的優勢**：相對於傳統的自回歸模型，非自回歸模型在生成速度上具有顯著優勢，適合實時應用。  
+
+---
+
+### 問題原因  
+1. **計算資源限制**：移動設備和嵌入式系統通常缺乏足夠的GPU資源來支持基於Transformer的語音合成模型。  
+2. **自回歸模型的瓶頸**：傳統的自回歸模型在生成速度上較慢，無法實現實時語音 synthesis。  
+3. **高_sampling_rate 的挑戰**：44kHz語音樣本需要更高的計算能力，且目前多數模型在生成高_sampling_rate語音時性能不足。  
+
+---
+
+### 解決方法  
+1. **WGWebNet架構設計**：基於Transformer的輕量級模型，優化了編解碼器結構以降低計算複雜度。  
+2. **非自回歸生成**：採用非自回歸策略，顯著提升語音生成速度，實現實時合成。  
+3. **參數調整和優化**：針對不同_sampling_rate（如22kHz和44kHz）進行參數調試，確保在保持語音質量的前提下提升性能。  
+
+---
+
+### 優化方式  
+1. **模型精簡**：通過降低模型參數數量和優化架構設計，實現了輕量化。  
+2. **實時生成策略**：非自回歸機制使得模型能夠在CPU上高效運行，支持實時語音合成。  
+3. **多_sampling_rate 支持**：針對不同_sampling_rate進行參數調試，平衡語音質量和生成效率。  
+
+---
+
+### 結論  
+1. **性能提升**：WGWebNet在22kHz和44kHz語音生成中均實現了實時性能，且語音質量（MOS）接近最佳非自回歸模型。  
+2. **輕量級優勢**：相比其他模型，WGWebNet在保持高語音質量的前提下，具備更快的生成速度和更低的計算資源需求。  
+3. **應用前景**：該模型適合用於移動設備、嵌入式系統等資源受限環境中的語音合成任務。  
+
+---
+
+### 參考資料  
+- 論文中提供的數據和實驗結果已用來支持上述整理內容。
 </details>
 
 <details>
-<summary>288. [INTERSPEECH 2020]  Semi-supervised Learning for Multi-speaker Text-to-speech Synthesis</summary><br>
+<summary>288. [2020-11-03] [INTERSPEECH 2020]  Semi-supervised Learning for Multi-speaker Text-to-speech Synthesis</summary><br>
 
 <a href="https://www.youtube.com/watch?v=3b1S20iVyMY" target="_blank">
     <img src="https://img.youtube.com/vi/3b1S20iVyMY/maxresdefault.jpg" 
@@ -534,7 +618,65 @@
 
 # [INTERSPEECH 2020]  Semi-supervised Learning for Multi-speaker Text-to-speech Synthesis
 
+### 核心主題  
+- 探索半監督學習在現代說話人文本到語音（TTS）合成中的應用。  
+- 目標是通過利用未標記音頻數據，顯著減少高質量語音模型訓練所需的數據量。  
 
+---
+
+### 主要觀念  
+1. **問題陳述**：  
+   - 當前高性能多說話人TTS系統需要大量高質量配對數據（通常超過20小時），數據收集過程耗時且昂貴，限制了其廣泛應用。  
+
+2. **核心挑戰**：  
+   - 數據量不足導致監督學習方法性能受限，特別是在多說話人場景中。  
+   - 未標記音頻數據的利用效率低下，難以有效提升模型表現。  
+
+3. **創新點**：  
+   - 提出一種半監督學習框架，通過引入可學習的代碼本和直通梯度估計器，實現未標記數據的有效利用。  
+   - 驗證了該方法在噪聲環境下的魯棒性，並探討了單說話人與多說話人訓練之間的關係。  
+
+---
+
+### 問題原因  
+- 數據收集成本高昂：高質量語音配對數據需求量大，限制了模型的普及。  
+- 未標記數據難以有效融入監督學習框架，導致模型性能提升受限。  
+- 單說話人與多說話人訓練之間存在輸入不匹配問題，影響模型泛化能力。  
+
+---
+
+### 解決方法  
+1. **半監督學習框架**：  
+   - 利用少量配對數據（1小時）進行監督訓練，結合大量未標記音頻數據進行無監督優化。  
+   - 引入可學習的代碼本，提升編碼器和解碼器的表示能力。  
+
+2. **直通梯度估計器**：  
+   - 允許重建損失通過編碼器傳播梯度，解決傳統半監督方法中編碼器無法有效更新的問題。  
+
+3. **噪聲魯棒性優化**：  
+   - 通過訓練模型處理帶噪未標記數據，驗證其在實際應用場景中的可靠性。  
+
+4. **多說話人與單說話人訓練的平衡**：  
+   - 驗證了基於少量配對數據的模型仍能實現多說話人語音合成，但性能略遜於基於25小時數據的監督學習方法。  
+
+---
+
+### 結論  
+- 提出的半監督學習方法在僅使用1小時配對數據的情況下，生成語音的質量與基於25小時數據的監督方法相當。  
+- 該方法通過有效利用未標記數據，顯著降低了高質量TTS模型的訓練成本。  
+- 實驗結果表明，模型在噪聲環境和多說話人場景中均表現出色，驗證了其泛化能力和實用性。  
+
+---
+
+### 優化方式  
+1. **數據效率提升**：  
+   - 通過半監督學習框架，減少對高質量配對數據的依賴，降低數據收集成本。  
+
+2. **模型魯棒性增強**：  
+   - 驗證了模型在噪聲環境下的性能穩定性，爲實際應用場景提供保障。  
+
+3. **跨說話人適應能力優化**：  
+   - 探討了單說話人與多說話人訓練的平衡點，爲未來研究提供了方向。
 </details>
 
 <details>

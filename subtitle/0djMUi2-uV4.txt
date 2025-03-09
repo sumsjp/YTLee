@@ -1,0 +1,746 @@
+Okay! What are we going to talk about next?
+After finishing CNN,
+we are going to talk about another common network architecture.
+This architecture is called Self-Attention.
+And what is the problem that this Self-Attention
+wants to solve?
+The problem it wants to solve is that,
+so far,
+the input of our network is a vector
+no matter what it is predicting
+like the number of YouTube viewers,
+like image processing,
+and our input can also be regarded as a vector,
+whose output
+can be a number,
+which is a regression problem,
+or can be a class,
+which is a classification problem.
+But, what if we encounter other problems more complicated?
+Suppose that
+the input is a row of vectors,
+and the number of input vectors
+is changable.
+When we talked about image recognition earlier,
+I also emphasized that
+the size of input image
+are all fixd.
+Now supposing that our input
+is changeable.
+Every time the number of input sequences to our model is different,
+and the length of input sequences is also different.
+What should we do now?
+Is there any examples that
+the input is a sequence
+with changeble length?
+The first example
+is word processing.
+Supposing we want the input of network today.
+If it's a sentence,
+the length of each sentence is different.
+The number of words in each sentence is different.
+If we describe every word in a sentence
+as a vector.
+If we expressed it as a vector,
+the input of our model
+will be a vector set.
+And, the size of this vector set
+is different every time.
+If the length of the sentence is different,
+then the size of the vector set will also be different.
+Some may ask
+how to represent a word as a vector.
+The simplest way to do is
+One-hot encoding.
+You just reserve a very very long vector.
+The length of this vector
+will be as many words as there are in the world.
+Suppose English contains one hundred thousand words,
+you will reserve a 100000-dimensional vector,
+and each dimension corresponds to a word, for example,
+apple is [1 0 0],
+bag is [0 1 0],
+cat is [0 0 1]
+and so on.
+But, this kind of representation comes with a severe problem.
+What kind of serious problem does it have?
+We assume that there is no relation
+between every words.
+From these vectors, there's no implication
+that because cat and dog are both animals,
+the resulting vectors will be closer to each other.
+Cat and apple, on the other hand,
+are less similar because
+one is an animal and the other is a plant.
+There's no such implication from the word vector.
+These vectors
+do not contain any semantic information.
+There is another method called Word Embedding.
+In word embedding,
+we assign each word a vector,
+which contains semantic information.
+If you draw the word embedding out,
+you will find
+that all the animals may cluster into one group.
+All the plants may be one cluster and
+all the verbs may be another.
+How did word embedding achieve this?
+This is not the focus of today's lecture.
+If you are interested,
+you can take a look at the video below.
+Anyway, you can download
+something called word embedding on the Internet.
+This word embedding
+will assign each word a vector.
+So a sentence will be a row of vectors of different lengths.
+Okay. Are there any other tasks
+that we need to take
+a sequence of vectors as input?
+For example, in HW2,
+an audio sequence is actually a row of vectors.
+How?
+We will take a portion of the audio sequence
+and call it a Window.
+We transform the information in this window
+into a vector.
+This vector is called a Frame.
+In audio processing,
+we will call a vector a frame.
+Usually, the length of this window
+is 25ms.
+So how do we transform this small portion of an audio signal
+into a frame,
+or into a vector?
+There are hundreds of methods
+and I won’t go into the details here.
+There are many ways
+to use a vector
+to describe a short audio signal that is 25ms long.
+Then,
+in order to describe the entire audio signal,
+you will shift this window to the right a bit.
+Usually, you shift the window by 10ms.
+Someone might ask,
+"Why 25 here and why 10 here?"
+It’s a difficult question to answer.
+Ancient sages have decided it for you,
+you know?
+It will usually be worse if you choose other values.
+People have tried almost all the possibilities
+and this comes up with the best result.
+So that's all.
+Okay, anyway,
+you can represent an audio signal
+with a set of vectors.
+And because every time the window is
+shifted 10ms to the right,
+How many vectors will there be in a one-second audio signal?
+There will be 100.
+So a one-minute audio signal
+will have 100 times 60,
+6000 vectors.
+So, audio analysis is actually very complicated.
+A short audio clip actually
+contains a large amount of information.
+Now we know audio signals are also a bunch of vectors.
+What else also has a bunch of vectors?
+A graph.
+A graph can also be represented
+by a bunch of vectors.
+How come?
+We know that a social network can be represented by a graph.
+Every node on the social network
+represents a person.
+The edges between one node and another
+represent the relationship
+between the two people,
+and every node
+can be seen as a vector.
+You can use someone's information,
+such as the information in his profile, to build a graph.
+Extract his gender, his age,
+his job, and his posts as the information,
+and then use a vector to represent this information.
+This way, a social network, which is essentially a graph,
+can also be represented by a bunch of vectors.
+What other examples are related to graphs?
+For example,
+a molecule
+can also be viewed as a graph.
+Nowadays, the application of drug discovery
+is of greater and greater importance,
+especially during Covid-19 pandemic.
+Many people anticipated that
+we might have some breakthroughs on drug discovery
+if we apply machine learning to this subject.
+In this case,
+the model needs to take the molecule
+as the input.
+Each molecule is represented by a graph.
+Every ball in the molecule
+is an atom,
+which can be represented by a vector.
+How can we represent an atom by a vector?
+We can use one-hot vectors to achieve this.
+We can use the vector [1 0 0 0] to represent the hydrogen atom,
+[0 1 0 0] to represent the carbon atom,
+and [0 0 1 0] to represent the oxygen atom.
+We can use one-hot vectors
+to represent each atom.
+This way, we can use a graph to represent the molecule,
+since the molecule is just a bunch of vectors.
+Now, what is the output of our model?
+We have just explained that the inputs are a bunch of vectors,
+which can be texts,
+audio signals,
+or graphs.
+What kind of output
+can we expect from these inputs?
+There are three possibilities.
+The first possibility is that
+each vector has a corresponding label.
+In other words, when your model
+takes four vectors as the input,
+it will output four labels,
+and each label
+could be a numeric value.
+, which is a regression problem,
+Or each label represents a class,
+which is a classification problem.
+However, in the first possibility,
+the input and the output have the same length.
+This way, the model doesn't need to worry about
+how many labels it needs to output,
+or how many scalars it needs to output.
+If we take four vectors as the input,
+we should also output four vectors.
+If we take five vectors as the input,
+we should also output five vectors.
+This is the first possibility.
+What kind of applications
+will use the first type of output.
+For example, in word processing,
+suppose what you are going to do today is POS tagging.
+What is POS tagging?
+POS Tagging is part of speech tagging.
+You have to let the machine automatically decide
+what kind of part of speech each vocabulary has,
+whether it is a noun, or a verb, or an adjective, etc.
+This task
+is actually not easy.
+For example,
+now you see a sentence like
+"I saw a saw".
+This is not a mistake.
+It’s not "I saw(v.) a saw(v.)"
+but "I saw(v.) a saw(n.)".
+When the second "saw" is used as a noun,
+it is not the saw that is similar to "looking".
+It's a saw that can saw things.
+Do you understand?
+Okay, so the machine should know that
+the first "saw" is a verb.
+The second "saw", though it is also a "saw",
+is a noun.
+Every input vocabulary
+must have a corresponding output part of speech.
+This task is
+the case that the length of input and output are the same.
+This is the output of the first type.
+If it is speech,
+it's our homework two.
+Although our homework two
+does not give everyone a complete sequence.
+We give
+the separated vector to everyone.
+But when they are concatenated together, it’s a bunch of vectors
+in an audio signal.
+For every vector, you have to decide
+which phonetic type it is,
+or which phonetic type it belongs to.
+Just think of it as a phonetic transcription,
+which is a phonetic symbol.
+Of course, this is not the real speech recognition.
+This is a simplified version of speech recognition.
+Or, if it's a social network,
+a graph will be given.
+Given a social network,
+your machine
+and your model
+needs to determine what characteristics
+each node has,
+for example, to predict whether this person will buy a certain product.
+We can then recommend a certain product to him
+based on the prediction.
+Ok, so above
+is an example of the same number of inputs and outputs.
+And this is the first possible output.
+What about the second possible output?
+The second possible output is,
+outputting only one label for an entire sequence.
+Here is an example.
+Suppose we are doing some text analysis,
+for example, Sentiment Analysis.
+What is Sentiment Analysis?
+Sentiment Analysis is to have the machine determine
+whether a sentence
+is a positive one or a negative one.
+You can imagine how useful this kind of application can be.
+Suppose your company
+has launched a new product recently.
+Surely you would like to know about your customers' opinions.
+But it is impossible for you to look at every comment.
+This is where you can apply this technique,
+Sentiment Analysis.
+When you receive a comment related to your product,
+you let your computer determine
+whether it is a positive feedback or a negative feedback.
+Then you can understand
+how your customers think of your product.
+So, in Sentiment Analysis, given a sentence,
+we only need one label,
+either positive or negative.
+This is exactly the second type of output.
+The input can also be an audio.
+For example, in homework 4, we will do speaker recognition.
+The machine listens to a sound
+and determine the speaker of the sound.
+This is also an example of the second type of output.
+The input can be a graph as well.
+You might want to predict
+if a given molecule
+is toxic or not,
+or determine its hydrophilicity.
+So given a graph, the machine outputs a label.
+, which is also an example of the second type of the problem.
+But there is still a third kind of output
+In this kind of output,
+we don’t know beforehand how many labels the machine to output,
+and we allow the machine to decide by itself
+how many labels it should output.
+Your input may be N vectors,
+and the output may be N' labels.
+Why N'?
+Because the machine decides what N' actually is.
+This kind of task
+is refer to as "sequence to sequence".
+We will deal with
+sequence to sequence in homework 5.
+So we will talk about it again in the future.
+You can think of translating
+as an example of sequence to sequence task.
+Because the input and the output are written in different languages,
+the number of words in a sentence won't necessarily be the same.
+Another example, speech recognition
+is also a sequence to sequence task.
+You give the machine an audio clip,
+then it outputs a passage.
+This is also a sequence to sequence task.
+We will discuss the third type in the future.
+Today we will only focus on the first type
+and the second type.
+You can take a look
+at homework 4's source code
+to have a taste of
+how we handle the problems of the first type.
+Because the class time is limited,
+therefore in this class,
+we will only talk about the first type today.
+That is, there is eqaul number of inputs and outputs.
+The situation that there are as many inputs as outputs
+is called "sequence labeling".
+You have to give each vector in the sequence
+a label.
+How to solve the problem of sequence labeling?
+The intuitive idea is
+the same as homework two.
+Let’s use a fully connected network.
+Although the input is a sequence,
+we just divide and conquer them
+without considering the dependency.
+Ignore the fact that it is a sequence.
+Just divide and conquer.
+Put each vector
+into the fully connected network respectively,
+and then
+the fully connected network will give us the output.
+Let's take a look at
+what you want to do is either a regression or a classification,
+and then produce the corresponding output.
+That's all.
+Obviously, there is a big flaw in this process.
+What kind of big flaw?
+Suppose that the problem is
+a part-of-speech tagging.
+You give the machine a sentence.
+"I saw a saw."
+For a fully connected network,
+the first and second "saw" are
+exactly the same.
+They are the same word.
+If you input the same word into the fully connected network,
+it has no reason to output different labels.
+But in fact,
+you expect the first saw is "verb"
+and the second saw is "noun".
+But it’s impossible for the network.
+Because these two "saws" are exactly the same.
+If you make this output "verb"
+and make that output "noun",
+the model will be very confused.
+and don't know what to do.
+So what to do?
+Is it possible to make fully connected network
+consider more information,
+such as context?
+It is possible.
+How to do it?
+You just concatenate this vector
+with the previous and the following vectors.
+and then input it to a fully connected network.
+In homework two,
+the TA has already done that.
+In homework two,
+We do not just look at a frame to
+determine which phonetic kind this frame belongs to,
+that is, which phonetic symbol it belongs to.
+we look at the previous and following five frames of this frame.
+We will see a total of eleven frames to
+decide which phonetic symbol it belongs to.
+So, we can give fully connected network
+the information about the entire window
+to make it consider the context
+of this given vector
+and other adjacent vectors.
+But there are limits on this method.
+In fact, for our homework 2,
+this practical method is good enough.
+Even if the sequence information were given
+in our homework 2,
+it is still quite difficult for you to do better.
+For our homework 2, you can obtain the very good results
+by merely considering the five frames before and after.
+So, if you want to pass through the strong baseline,
+the point is not to consider the entire sequence.
+You don't need to do that.
+By using the data provided by the teaching assistants,
+you can easily pass the strong baseline.
+However,
+if someday we have a specific task
+that can’t be solved by considering a window;
+it’s about considering a whole sequence to solve it.
+What should we do then?
+Someone might say that this is easy.
+We can make the window larger,
+which is large enough to cover the entire sequence.
+Isn't it over?
+But don’t forget that
+the length of sequences is not fixed.
+We just said that
+the length of the input sequence of our model
+may be different every time.
+If you really want to create a window to
+cover the entire sequence,
+you should study your training data.
+and find out the length of the longest sequence
+in your training corpus.
+Create a window longer than the longest sequence.
+Then you are able to cover the entire sequence.
+But creating such a big window
+means that your fully-connected network
+requires a lot of parameters.
+It may not only be computationally expensive
+but also be prone to overfit.
+So is there any better way
+to consider the information of the entire input sequence?
+Self-attention, which will be introduced here,
+can address this issue.
+How does self-attention work?
+The information of whole input sequences
+is treated as the input of self-attention.
+It will output exactly the same number of output vectors
+as the number of input vectors.
+For example, the dark blue vector here represents the input,
+self-attention will give you another vector.
+Given a light blue vector,
+it will output another vector.
+Given four vectors here,
+it will output four vectors.
+Is any special about these 4 vectors?
+These four vectors were generated after
+considering the whole sequence.
+Later, I'll talk about
+how self-attention consider the information of an entire sequence.
+Here, for those vectors
+with the black frame,
+they are not an ordinary vectors.
+Rather, it is obtained by considering the entire sentence.
+Then using these vectors
+as the input of a fully-connected network,
+models are able to
+yield the correct output.
+Using this method,
+your fully connected network
+does not only consider a small range
+or a small window.
+Instead, it considers the information of the entire sequence
+in order to decide what kind of results should be output now.
+Then, this is self-attention.
+Then, self-attention can not only be used once.
+You can use it multiple times.
+For instance,
+the output of my self-attention,
+after passing through a fully connected network,
+gets the output of the fully connected network.
+This network output
+can do self-attention again,
+as well as a fully connected network.
+Do self-attention again
+Consider the information of the entire input sequence again.
+And then pass it into another fully connected network.
+Finally, get the final result.
+so you can put the fully connected network.
+and used alternately with self-attention.
+It is self-attention that processes the information of the entire sequence.
+fully connected network.
+focus on processing information in a certain location.
+Then you can use self-attention
+to process the entire sequence information again.
+Then, use self-attention and fully connected network again and again.
+The articles related to self-attention,
+The most well-known related articles
+is "Attention is all you need".
+In this paper,
+Google proposed a network architecture called Transformer
+and the name comes from the movie Transformers.
+So when it comes to this network,
+we will have the pictire of Transformers in our mind
+We will not talk about the Transformer today.
+But we will talk about
+one of the most important modules in transformer
+, which is self-attention.
+It is the spark for the Transformers
+It has a powerful name.
+Its powerful name is Attention is all you need.
+In fact, the self-attention architecture,
+I wouldn’t say it first appeared in the paper of
+"Attention is all you need".
+Because in fact, many earlier papers
+has been proposed similar structure
+It’s just not common called self-attention.
+For example, it is called self matching
+or other names
+But "Attention is all you need"
+make the self-attention module
+well-known and become dominant.
+How does self-attention work?
+The input of self-attention
+is a bunch of vectors.
+These vectors could be the input of your entire network.
+They may also be the output of a hidden layer.
+So we don’t use x to represent them here.
+We use "a" to denote it
+, meaning that it may have been processed beforehand,
+for example, the output of a hidden layer.
+After inputing a row of vector a,
+self-attention needs to output another row of vector b.
+What is b? Each b
+is generated after considering all a.
+So I draw a lot of arrows here to
+tell you that b1 is generated after considering a1 to a4.
+b2 is also generated after considering a1 to a4.
+The same goes for b3 and b4.
+They are all generated after considering
+the entire input sequence.
+Next, I am going to explain
+how to generate the vector b1.
+If you know how to generate the vector b1,
+you know how to generate the remaining vector b2 b3 b4.
+How to generate the vector b1?
+The first step
+is to find out other vectors related to a1 in this sequence
+according to a1.
+We know the purpose of using self-attention
+is to consider the entire sequence.
+But we don’t want to put the information of
+the entire sequence in one window.
+So we have a special mechanism.
+This mechanism is based on the vector a1 to
+find out the important parts in the
+entire long sequence.
+It looks for the parts that determines
+a1's label and
+finds out the parts that used to determine the class of a1
+or find out the information needed for
+determining the regression value of a1.
+The extent of correlation between each vector and a1
+is represented as a value called α.
+The next question is how to automatically determine
+the correlation between two vectors in this self-attention module.
+Given two vectors a1 and a4,
+how does it determine the degree of relevance between a1 and a4
+and give it a value α?
+You need a module to calculate attention.
+This module for calculating attention
+takes in two vectors as input
+and it outputs the value of α.
+Then you view α
+as the degree of correlation between the two vectors.
+So, how do we calculate α?
+There are many ways.
+A common practice
+is dot product
+How to perform the dot product?
+You multiply two different matrices
+to these two vectors respectively.
+The vector on the left is multiplied by the matrix Wq.
+The vector on the right is multiplied by the matrix Wk.
+Then we get the two vectors, q and k.
+Then you do dot product between q and k,
+which is to do element-wise multiplication,
+and sum them up. You will then get a scalar
+after doing a dot product on
+q and k.
+This scalar is α.
+This is a way to calculate α.
+There are other methods to calculate.
+For example, on the right,
+there is another calculation method called additive attention.
+It is calculated by passing
+the 2 vectors through wq and wk to
+get q and k.
+But we are not using a dot product.
+We concatenate it together,
+get through an activation function,
+pass through a transform,
+and obtain α.
+In short, there are many different methods
+to calculate attention,
+calculate the value of this α,
+or calculate the degree of their relation.
+But we will only focus on
+the method on the left side hereafter.
+This is also the most commonly used method today.
+It is also the method adopted by Transformer.
+Next, we will talk about
+how to calculate this α.
+After finishing this,
+we can have a short break
+and see if anyone has questions to ask.
+In short, we use these 2 vectors
+to calculate α.
+Then how to apply this to self-attention?
+You will have to match a1 here with a2, a3, and a4 here
+to calculate the correlation between them respectively,
+that is, to calculate the α between them.
+How to do it?
+You multiply a1 by Wq to get q1.
+Then this q has a name.
+We call it Query.
+It's like you have to search by keywords
+when you use the search engine
+to search for related articles.
+So that's why we call it Query.
+Then,
+you have to multiply a2, a3, and a4 by Wk
+to obtain the vector k.
+The vector k has a name called Key.
+Then you use this Query q1
+and this Key k2
+to calculate the inner product and obtain α.
+We use α12 to represent
+the relationship between 1 and 2.
+The Query is provided by 1 and
+the Key is provided by 2.
+We use α12 to represent this.
+The α or the correlation also has a name
+called attention score.
+It is called attention score.
+Okay, then for q1 and k2,
+or a1 and a2.
+After we calculate their attention score
+or their correlation,
+we have to calculate with a3 and a4 next.
+How to calculate with a3 and a4?
+You just multiply a3 by Wk to obtain k3
+which is another key.
+a4 are multiplied by Wk to get k4
+to obtain another key.
+Then you use the key k3 to
+do the inner product with the query q1 and
+get the correlation between 1 and 3
+or the attention score between 1 and 3.
+You can use k4 and q1 to do the dot product
+and obtain α14
+or the correlation between 1 and 4.
+You just use a1 to calculate its correlation with a2, a3, and a4.
+This relevance is represented by the attention score α.
+Actually, in practice,
+q1 will compute correlation with itself.
+So you will also multiply a1 by Wk to get k1.
+Calculate the correlation between q1 and k1.
+Compute correlation with itself.
+How important is it to calculate the correlation with itself?
+You can try it while doing your homework.
+Check if this step matter.
+Okay, after we calculate
+the relationship between a1 and each vector,
+we will do the soft-max operation.
+The soft-max here
+is exactly identical to the soft-max we used in the classification.
+We simply take the exponent of all the α,
+then sum up the exponent value
+and normalize,
+then we get α'.
+So the output of soft-max is a row of α.
+Originally there was a row of α,
+after passing throught the soft-max function, we gets α'.
+Then you may ask why we use the soft-max function here.
+I have said that there are some reasons
+for using the soft-max function in classification.
+Does it make sense to use the soft-max here?
+There is no particular reason here.
+You don’t have to use soft-max here.
+You can use other functions. No problem.
+For example, someone tried to use the ReLU function here.
+Pass through the ReLU function here.
+It turns out that the result is better than that of soft-max.
+So you don’t have to always use soft-max here.
+Here you can use whatever activation functions you want.
+It's your decision.
+You can try different activation functions.
+But Soft-max is the most common one.
+You can try it yourself,
+whether you can get better results than soft-max.
+Okay,
+after getting this α'
+we will extract the important information in this sequence
+according to this α'.
+According to this α, we already know
+which vectors are most relevant to a1.
+Next, we have to extract important information
+according to
+the attention score.
+How to extract important information?
+We will multiply each vector from a1 to a4
+by Wv to get a new vector,
+which are represented by v1 v2 v3 v4 here.
+Next, multiply each vector from v1 to v4
+by the attention score,
+which is α',
+and then sum it up.
+We write the formula here.
+Multiply each v by α'
+to get b1.
+Then you can imagine that
+if a certain vector gets a higher score,
+for example, if the correlation between a1 and a2 is very high,
+the value of this α' is very large
+then after doing a weighted sum,
+the value of b1
+is much closer to v2.
+So the vector v of the one that has the highest value here
+or the biggest attention score,
+will dominanate the result of your extraction.
+Okay, so here we will talk about
+how to get b1 from a whole sequence.

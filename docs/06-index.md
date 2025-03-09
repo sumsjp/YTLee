@@ -485,7 +485,7 @@
 </details>
 
 <details>
-<summary>310. [ML 2021 (English version)] Lecture 10: Self-attention (1/2)</summary><br>
+<summary>310. [2021-03-18] [ML 2021 (English version)] Lecture 10: Self-attention (1/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=0djMUi2-uV4" target="_blank">
     <img src="https://img.youtube.com/vi/0djMUi2-uV4/maxresdefault.jpg" 
@@ -494,11 +494,45 @@
 
 # [ML 2021 (English version)] Lecture 10: Self-attention (1/2)
 
+### 核心主題
+- **注意力機制（Attention Mechanism）**：文章探討了如何通過注意力機制來提取序列中最相關的信息。
 
+### 主要觀念
+1. **注意力分core思想**：
+   - 通過計算序列中每對元素的注意力分core（attention score），確定哪些元素相互之間具有強烈關聯。
+2. **Softmax函數的作用**：
+   - 將原始的注意力分core值轉換為概率分佈，確保所有分core值之和為1，從而實現加權求和的操作。
+
+### 問題與原因
+- **信息過載問題**：在處理長序列數據時，直接提取所有信息可能導致模型性能下降，且計算量過大。
+- **重要性識別不足**：傳統方法缺乏有效手段來識別並強調序列中最重要的部分。
+
+### 解決方案
+1. **注意力分core的引入**：
+   - 計算每對元素的注意力分core，量化它們之間的相互作用。
+2. **Softmax函數的應用**：
+   - 將原始分core值轉換為概率分佈，實現加權求和，從而提取序列中最相關的信息。
+
+### 優化方式
+1. **激活函數的選擇**：
+   - 軟件的最大（Softmax）是最常用的激活函數，但也可以嘗試其他函數（如ReLU）以獲得更好的性能。
+2. **自注意力的計算**：
+   - 除了計算序列中元素之間的相互作用，還可以考慮元素自身的注意力分core，進一步提升模型的表達能力。
+
+### 結論
+- 注意力機制為序列數據處理提供了一種有效的信息提取方法。通過計算注意力分core並應用Softmax函數，模型能夠聚焦於最相關的信息，從而提高性能和效率。
+
+---
+
+### Title (英文標題)
+"Attention Mechanism: A Comprehensive Overview"
+
+### Abstract (英文摘要)
+This article provides a detailed exploration of the attention mechanism, focusing on its core principles and practical applications. By calculating attention scores between elements in a sequence and applying softmax function to normalize these scores, the mechanism effectively extracts relevant information from complex data. The discussion includes key concepts such as self-attention, the role of activation functions, and optimization strategies for improving model performance.
 </details>
 
 <details>
-<summary>311. 【機器學習2021】類神經網路訓練不起來怎麼辦 (五)： 批次標準化 (Batch Normalization) 簡介</summary><br>
+<summary>311. [2021-03-26] 【機器學習2021】類神經網路訓練不起來怎麼辦 (五)： 批次標準化 (Batch Normalization) 簡介</summary><br>
 
 <a href="https://www.youtube.com/watch?v=BABPWOkSbLE" target="_blank">
     <img src="https://img.youtube.com/vi/BABPWOkSbLE/maxresdefault.jpg" 
@@ -507,11 +541,49 @@
 
 # 【機器學習2021】類神經網路訓練不起來怎麼辦 (五)： 批次標準化 (Batch Normalization) 簡介
 
+# 文章整理：Batch Normalization 的核心與爭議
 
+## 核心主題  
+- **Batch Normalization（BN）**：一種常見於深度學習中的正規化技術，旨在加速訓練並提升模型性能。  
+
+## 主要觀念  
+1. **工作原理**：
+   - 在每一批數據上進行均值和方差的正規化。
+   - 通過調整參數，使輸出的分布更加穩定。
+
+2. **理論支持**：
+   - 改善錯誤表面（error surface），使其更不崎嶇，利於優化算法 convergence。  
+
+3. **實驗證據**：
+   - 多項研究顯示 BN 可顯著提升訓練速度與模型性能。  
+
+## 問題原因  
+- **Internal Covariate Shift**：早期假說認為，訓練過程中前一層輸出的分佈變化會干擾後一層的訓練，導致 gradient 計算方向不一致。  
+
+## 解決方法  
+- **Batch Normalization**：
+  - 在每個 mini-batch 上計算均值和方差，並對輸出進行正規化。
+  - 引入學習率的調整（如 γ 和 β 的學習），使模型適應不同的分佈變化。  
+
+## 優化方式  
+- **Parameter Adjustment**：通過可學習的參數（γ 和 β）使 BN 適應不同數據分佈，提升模型 flexibility。
+- **Error Surface 改善**：BN 使錯誤表面更平滑，降低梯度震盪，加速 convergence。  
+
+## 紛爭與辯論  
+1. **Internal Covariate Shift 的有效性**：
+   - 近期研究質疑 Internal Covariate Shift 是否為訓練的主要問題。
+   - 實驗表明，即使分佈變化較大，gradient 方向影響不大。
+
+2. **Batch Normalization 的意外效果**：
+   - 有研究指出 BN 的優異性能可能源於其對錯誤表面的偶然改進，而非最初假說。  
+
+## 結論  
+- **有效性**：BN 在多數情況下顯著提升訓練效果，但其具體機制仍需進一步研究。
+- **未來方向**：探索其他方法來改善錯誤表面，並深入理解 BN 的作用機理。
 </details>
 
 <details>
-<summary>312. 【機器學習2021】Transformer (上)</summary><br>
+<summary>312. [2021-03-26] 【機器學習2021】Transformer (上)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=n9TlOhRjYoc" target="_blank">
     <img src="https://img.youtube.com/vi/n9TlOhRjYoc/maxresdefault.jpg" 
@@ -520,7 +592,49 @@
 
 # 【機器學習2021】Transformer (上)
 
+### 文章整理：Transformer 模型中的	layer normalization	及其優化研究
 
+#### 1. 核心主題
+- **主題**：探討 Transformer 模型中(encoder) 中的 layer normalization (LN) 的設計、問題及優化方法。
+
+#### 2. 主要觀念
+- **原始 Transformer 架構中的 LN 設計**：
+  - 在每個 encoder block 內，先進行 self-attention 和 feed-forward 網絡，然後在輸出端進行 residual 連接和 layer normalization。
+  
+- **LN 的作用**：
+  - Layer normalization 用於穩定網絡的訓練過程，通過標準化特徵值，減少內部協變量偏移。
+
+#### 3. 問題原因
+- **原始設計的問題**：
+  - 原始 Transformer 架構中將 layer normalization 放在 residual 連接之後，可能導致梯度消失或不穩定。
+  
+- **Batch Normalization 的局限性**：
+  - Batch normalization 在 Transformer 中表現不佳，因爲其依賴於小批量數據，而Transformer通常處理長序列，難以有效利用批次信息。
+
+#### 4. 解決方法
+- **優化 LN 的位置**：
+  - 將 layer normalization 移至 residual 連接之後，即在每個 sub-layer 輸入端進行標準化，而非輸出端。
+  
+- **引入 Power Normalization**：
+  - 提出一種新的歸一化方法——Power Normalization，旨在替代傳統的 batch 或層歸一化，通過調整冪次參數來提高模型性能。
+
+#### 5. 優化方式
+- **重新設計 encoder block**：
+  - 在每個 sub-layer 的輸入端進行 layer normalization 和 residual 連接，以提升訓練的穩定性。
+  
+- **Power Normalization 的實現**：
+  - 引入可學習的冪次參數，通過自適應調整歸一化方式，增強模型對不同特徵分布的適應能力。
+
+#### 6. 結論
+- **改進後的效果**：
+  - 將 layer normalization 移動到 residual 連接之後可以顯著提高訓練速度和模型性能。
+  
+- **Power Normalization 的優勢**：
+  - 在某些任務中，Power Normalization 可以提供比傳統層歸一化更好的性能，尤其是在特徵分布變化較大的情況下。
+
+#### 7. 展望
+- **未來研究方向**：
+  - 探索更多適應 Transformer 架構的歸一化方法，結合可學習參數和自適應機制，進一步提升模型的泛化能力和訓練效率。
 </details>
 
 <details>

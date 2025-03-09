@@ -1,0 +1,800 @@
+Today,
+we are going to talk about two training techniques,
+Batch and Momentum.
+I hope we can finish it within the remaining 30 minutes.
+The first one is batch.
+Many classmates had asked me
+why we should use the batch technique.
+Why use it for training?
+At first, I didn't plan to talk about it
+in the first week.
+Because I knew that
+everyone will have a lot of questions afterwards.
+The reason is that batch is not something that
+you'll naturally come up with.
+But because there is a batch-related part
+in TA's source code,
+so I've decided to teach you beforehand.
+So how does batch work?
+Last time, I told you that
+when we are calculating the derivatives,
+you don't actually use the loss with all data.
+What you actually do is dividing the data into batches.
+Some people call it mini-batch,
+but I call it batch.
+Those two terms refer to the same thing.
+In TA's slides,
+they use the term mini-batch.
+Each batch contains
+B pieces of data.
+Everytime we update the model's parameters,
+we pick a batch, which contains B pieces of data,
+calculate the loss
+and the gradient,
+and update the parameters.
+Then, we take another B pieces of data,
+calculate another loss
+and another gradient,
+and update parameters again.
+And so on.
+So we will not calculate the loss with all the data at once.
+We will only use one batch of data at a time
+to calculate the loss.
+When we finish processing all batches once,
+we say that we have finished
+an Epoch.
+Actually,
+when you are dividing the data,
+when you are dividing the data into batches,
+you should conduct the "Shuffle" technique.
+There are many ways to implement shuffle.
+A common method is:
+before every epoch starts,
+all the data will be divided into batches,
+and specifically,
+every epoch's batches may be different.
+That is, in the first epoch,
+we divide the data in some way;
+but in the second epoch,
+the dividing is different.
+So the fact that
+for each epoch, each piece of data may belong to different batches,
+is called Shuffle.
+Actually, shuffle is also mentioned
+in TA's source code.
+Ok. The next question is:
+why should we use batch?
+Let's explain the reason we use it first,
+then talk about what advantages batch gives us while training.
+So why should we use batch?
+Let’s compare the two cases on the left and right.
+Let’s say we have 20 examples.
+Moreover,
+the case on the left doesn't use batches.
+In other words, my batch size equals
+the number of examples.
+This is called Full Batch,
+which doesn’t use any batch.
+The case on the right
+has a batch size equal to 1.
+These are the two extreme cases.
+Let’s take a look at the case on the left first.
+In this case,
+because batches are not used,
+we have 20 training data.
+Our model must...
+Our program must read all 20 examples
+before it calculates loss;
+before it calculates gradient.
+So we have to read all the examples,
+all 20 of them,
+before our parameters can be updated once.
+Suppose we start here,
+after reading all the data,
+we update the parameters and move from here to here.
+Okay. What would happen if there's only 1 batch?
+If there's only 1 batch;
+if the batch size is equal to 1,
+it means that every time we update the parameters,
+we only need to look at one example at a time.
+Batch size being 1
+means that we only need to take one example to calculate the loss
+and update our parameters.
+So every time we update the parameters,
+just look at a single example.
+So we start here,
+read an example and update the parameters,
+read another example and update the parameters.
+If there are a total of 20 examples,
+then in one epoch,
+our parameters will be updated 20 times.
+However,
+because we only look at one example
+before we update the parameters,
+the loss we calculated will
+obviously be noisier.
+So you will find out
+that the direction of the update is tortuous.
+If we compare the left one with the right one,
+which one is better?
+What's the difference between them?
+You will discover that the left one,
+the one not using batches,
+takes a longer time to charge.
+It takes a longer time to cool down.
+You have to go through all the data to
+be able to update the parameters once.
+And the method on the right,
+when batch size is equal to 1,
+charges in a shorter time.
+Every time it sees an example...
+Every time it sees one data,
+it will update the parameters.
+So suppose there are 20 examples,
+after going through all of them,
+you have already updated the parameters 20 times.
+But the method on the left has an advantage.
+The step it takes here is steady.
+On the other hand,
+the steps are not stable on the right.
+Which one is better, the right one or the left one?
+It seems that
+each has its own pros and cons.
+The left one has a longer cooldown
+while being more powerful.
+The right one takes less time for cooldown
+but is relatively inaccurate
+as its direction is highly unpredictable.
+Which is better?
+It may seem difficult to answer due to the tradeoffs.
+Usually we tend to believe that
+the left one has a longer cooldown
+compared to the right one.
+It would be different if you consider parallel computing.
+The left one's cooldown is not necessarily longer
+with parallel computation.
+What should I say?
+Well.
+Here is a real-world experiment result.
+In fact,
+the computation time
+of a large batch size
+for calculating the loss
+and then the gradient
+is not necessarily longer than that of a small batch size.
+The following experiment
+is conducted on a corpus called MNIST.
+MNIST is a dataset of handwritten digits.
+What the machine does is that
+when given a handwritten image,
+it should make a prediction
+of the digit on that image.
+It's a classification task of handwritten digits.
+MNIST is the fruit fly of machine learning (as in biology research).
+Suppose that
+you've never done any machine learning tasks before.
+One of the first machine learning task you are going to try
+will often be handwritten digit recognition on MNIST.
+And then we...
+Here we just performed an experiment,
+in which we'd like to know
+when given a batch,
+how long it takes
+for the machine to
+calcute the gradient and then update its parameters.
+Here is the graph of computation time
+for batch sizes of 1, 10, 100 and 1000 respectively.
+You will find that there's almost no difference
+between the computation time of batch size 1 and 1000.
+But why?
+You might say that since there are 1000 pieces of training data,
+wouldn’t it take 1000 times longer (for batch size 1000)
+than batch size 1 does
+for calculating the loss and then the gradient?
+But it's actually not the case
+because we have GPUs
+for parallel computation
+when doing calculations.
+These 1000 data are processed in parallel
+on the GPU,
+so the time for batch size 1000
+will not be 1000 times that of batch size 1.
+Well, of course, a GPU still have its limits.
+When the batch size is extremely large,
+the computation time of a batch
+for calculating the gradient
+will still increase
+as the batch size grows.
+So if the batch size is...
+The computation time is almost the same
+if the batch size is from 1 to 1000.
+But when you increase the batch size to 10,000
+or further increase to 60,000,
+you will find out that the time GPU takes to
+compute the loss of
+all the data in the batch
+and then to calculate the gradient
+gradually increases as the batch size increase.
+The GPU used in this experiment is V100,
+which is pretty powerful.
+Feed it with 60,000 pieces of data.
+In a single batch,
+the GPU finishes the computation of gradient
+with 60,000 pieces of data
+within 10 seconds.
+Actually, I do the experiment of
+the relationship between the batch size and the computation time each year.
+I put the old slides here.
+If you are interested, you can take a look at it.
+What can you expect?
+You can see the evolution of the era.
+The GPU used in 2017 is 980.
+The GPU used in 2015 is 760.
+The 980 GPU takes a few minutes to
+compute a batch with a batch size of 60,000.
+Now it only takes 10 seconds to finish.
+You can see the evolution of technology.
+Although the GPU has the ability to perform parallel operations,
+the parallel computing power has its limit after all.
+So when the batch size is really big,
+the time will increase eventually.
+In practice,
+because of the ability of parallel computing,
+the time takes to finish one epoch
+with a small batch size
+is actually longer than
+the time takes with a large batch size.
+How to say?
+Assume that we have 60,000 pieces of training data,
+we need 60,000 updates to finish an epoch
+when the batch size is set to 1.
+We need 60 updates to finish an epoch
+when the batch size is set to 1000.
+The time difference to calculate gradient between
+batch size 1 and batch size 1000
+is almost the same.
+Then the difference between
+60,000 updates and 60 updates
+is very considerable.
+The figure on the left is to update the parameters once,
+which is the time required to
+take a batch of data and calculate the gradient.
+The figure on the right is
+the time required to
+finish an entire epoch.
+You will find the figure on the left and the figure on the right
+has an opposite trend.
+Suppose your batch size is set to 1
+you have to update the parameters 60,000 times
+for an epoch.
+The time it takes is considerable.
+But if your batch size is set to 1000,
+you only need to run 60 updates
+for an epoch.
+The time to run an epoch
+or the time to see all the data
+is actually shorter
+when batch size is set to 1000.
+The time to see all the data
+is shorter for a batch size of 1000
+compared to a batch size of 1.
+So, if we take a look at the graph on the right,
+we can see that
+using a larger batch size is more efficient
+at seeing all data once.
+Isn't it a bit counterintuitive?
+When parallel computing is not taken into consideration,
+you'll think that large batches are slower.
+But in reality,
+when parallel computing is taken into consideration,
+it takes less time to process one epoch using a larger batch size.
+So,
+if we want to compare the differences of using different batch sizes,
+using the skill cooldown as the comparison
+might be inappropriate.
+It seems that in terms of the skill cooldown,
+the larger batch size doesn't really suffer that much.
+It even has some advantages.
+So, in reality,
+if you're using a GPU,
+there might be no difference in time,
+whether you choose to update once using 20 pieces of data,
+or update 20 times using 1 piece of data.
+They might be the same after all.
+So, it would seem that
+the larger batch size
+doesn't really
+have a longer skill cooldown.
+Thus, you might think that
+the disadvantage of using a larger batch size has disappeared.
+After all,
+it seems that
+using a larger batch size would make the updates more stable,
+whereas using a smaller batch size
+would make the updates
+noisier and less stable.
+Judging from that,
+using a larger batch size should be better
+than using a smaller batch size,
+as the disadvantages
+can be mitigated by parallel computing.
+It would seem that
+it has no drawback.
+The thing is, a noisy gradient
+can actually be helpful to our training,
+which is also quite counterintuitive.
+If you use different batch sizes to train your model,
+you might get results that look like this.
+On the left, we have the task on the MNIST dataset.
+On the right, we have the task on the CIFAR-10 dataset.
+Both of the datasets
+are used on the image recognition task.
+The horizontal axis
+represents the batch size,
+which gradually increases from left to right.
+The vertical axis represents the accuracy,
+which gradually increases from bottom to top.
+Of course, the higher the accuracy, the better.
+Let us focus on the validation accuracy for now.
+If we take a look at
+the validation accuracy on these tasks,
+we can see that
+the larger we set the batch size,
+the more the validation accuracy drops.
+But is this overfitting?
+This is not overfitting.
+If we take a look at our training process,
+we will see that setting a larger batch size
+also makes our training result worse.
+Remember, we are still using the same model.
+The same model,
+and the same network.
+Theoretically,
+the functions they can represent are exactly the same.
+However, it is amazing that
+using a bigger batch size
+during training
+often brings you worse results.
+So where is the problem?
+While we are using the same model,
+the problem is not coming from the model bias.
+It comes from optimization.
+It means when you use a large batch size,
+there may be problems with your optimization.
+Using a small batch size,
+the results of optimization are better instead.
+Why is it so?
+Why does using a small batch size
+enable obtaining better results on the training set?
+Why does the noisy update,
+the noisy gradient obtained during training,
+give us better results?
+One possible explanation is like this.
+Assuming you are using the full batch,
+then when you update your parameters,
+you just follow a loss function to update the parameters.
+Today when I went to a local minimum while updating,
+or walked to a saddle point,
+we would stop.
+Gradient is equal to zero.
+If you don’t use Hessian,
+then while using the gradient descent
+you can’t update your parameters anymore.
+But if you use a small batch,
+if you use batch,
+what will happen?
+When we pick one batch every time,
+and compute its loss,
+it is equivalent to,
+equal to that every time you update your parameters,
+you use different loss funtions.
+When you choose the first batch,
+you use L1 to calculate your gradient.
+When you choose the second batch,
+you are using L2 to calculate your gradient.
+Suppose you use L1 to calculate gradient,
+and find that the gradient is equal to zero.
+It is stuck.
+But the function L2 is different from L1.
+So when L1 is stuck,
+L2 probabily doesn’t get stuck.
+So it’s okay if L1 gets stuck.
+Change to the next batch
+and use L2 to compute gradient.
+You can still train your model.
+It can still make your loss lower.
+So this noisy update method
+turns out to be helpful
+for training.
+There is another more amazing thing here.
+What is this amazing thing?
+This amazing thing is that,
+in fact, a small batch is also helpful for testing.
+Suppose we are doing training today,
+and with either a big batch or a small batch,
+we train them to be equally good.
+In the previous case,
+it is already hard to train.
+Suppose you have some methods,
+like trying hard to increase the learning rate for the big batch.
+Then find ways to train the model using the big batch
+as good as another one using the small batch.
+As a result, you will find that using a small batch
+is actually better in testing.
+The following experimental results are quoted from this paper,
+"On Large-Batch Training For Deep Learning
+Generalization Gap And Sharp Minima".
+The experimental results are quoted from this paper.
+In this paper,
+the author train six networks with CNN and
+with fully connected networks
+on different corpus to
+show that this experiment is very general.
+The same results have been observed in many different cases.
+There are small batches.
+There are 256 examples in a batch.
+The size of big batch is the size of the data set multiplied by 0.1.
+The size of the data set multiplied by 0.1.
+There are 60,000 records in the data set,
+which means there are 6,000 records in one batch.
+Okay, he found a way to
+get similar accuracies in training
+with both big batch and small batch.
+The result we just saw is that
+when the batch size is large,
+the training accuracy is already bad.
+Here, he found a way to
+get similar accuracies
+with big batch and small batch.
+But even the results are almost the same in training,
+in testing,
+the small batch is actually worse than the large batch.
+They are all good in training,
+but the small batch is bad in testing.
+What does that mean?
+Over-fitting.
+This is over-fitting.
+Okay, why is there such a phenomenon?
+An explanation is also given in this article.
+Its explanation looks like this.
+Supposed this is our training loss curve.
+In this training loss curve,
+there may be many local minima.
+There are more than one local minima.
+The losses of these local minima are very low.
+Their loss may be close to 0.
+But among these local minima,
+there are still good minima and bad minima.
+What are good minima and bad minima?
+We would think
+if a local minimum is in a valley,
+it's a bad minimum.
+If it's on a plain,
+it is a good minimum.
+Why is there such a difference?
+Supposed that there is a mismatch
+between training and testing.
+The loss function in training and the one in testing
+are different.
+Why different?
+One possible reason is that
+your training and testing distribution
+are not the same.
+Another reason is that in training and testing,
+you are calculating the loss from the sampled data,
+and the sampled data possibly are not the same
+in training and testing.
+So there is a little gap
+between the calculated losses.
+We assume that the gap between training and testing
+is to shift the training loss
+to right a little bit.
+Then, you will realize that,
+for the minima on the left side,
+for the minima on the plateau,
+the results of training and testing
+are not shwing much difference.
+Only a little bit difference.
+But, for Minima on the right in the valley,
+there is a great difference.
+From this training set,
+the calculated loss is very low.
+But, because of the difference between training and testing,
+when it comes to testing,
+, wow, when the error surface changes,
+the calculated loss becomes very large.
+And, many people believe that this big batch size
+will make us to tend to walk toward the valley.
+In contrast, the small batch size
+will make us to tend to walk toward the basin.
+Intuitively, the thought is that
+a small batch
+comes with a lot of loss,
+and it updates with different directions each time.
+So, if the valley is very narrow,
+it is prone to jump out accidentally.
+Because the directions of every updates are different,
+the updated direction harbors randomness.
+So, a small valley
+can not trap a small batch.
+If the valley is small,
+it may jump out once moving,
+and it may stop while arriving at a big basin.
+It will stop.
+For a large batch size,
+anyway, which just follows the rules to update,
+it is very likely
+to walk into a relatively small valley.
+But, this is just one explanation.
+Not everyone believe it.
+To be honest, this is a problem that remains to be studied.
+Okay, here is a comparison.
+Big batch or small batch.
+Okay, the first column on the left is the small batch;
+the second column is the big batch.
+If there is no parallel operation,
+we will think that a small batch is better,
+and the big batch
+is more time-consuming for one update.
+But, if we have parallel operations,
+between small batch and big batch,
+there is not much difference in computing time.
+Unless your big batch is really big,
+the difference will be ignored.
+But, for an epoch,
+it takes longer for small batche;
+it takes shorter for big batch.
+So, judging from the time required for an epoch,
+the big batch actually is superior,
+and the small batch
+will update the direction more noisy.
+The direction will be updated relatively stably in the big batch.
+But, the noisy update of directions
+turns out to be superior under optimization
+and testing.
+So, for the big batch and the small batch,
+they both have their own advantanges.
+So, batch size
+becomes another hyperparameter.
+About this Hyperparameter,
+you had better to consider.
+This is also
+a hyperparameter you need to adjust.
+Here, someone may think that
+whether we can take both their advantages?
+Can we take both the advantages of larger batch size
+and the advantages of smaller batch size?
+We use a large batch size for training
+and use parallel computing to increase the efficiency of training.
+But it's possible that the result we get after training
+is also very good.
+It is possible.
+There are many articles discussing this issue.
+We won't go into details today.
+We list these references here for your reference.
+Then you will find what these paper
+often wants to do is like this.
+Wow, 76 minutes for BERT training.
+15 minutes for ResNet training.
+One minute for Imagenet training, and so on.
+Why can they do it at such a high speed?
+Because their batch size is really big.
+For example, in the first paper,
+there are 30,000 examples in one batch.
+With a huge batch size,
+the result can be computed very quickly.
+You can see a lot of data in a short period.
+However, they need some special methods to solve
+the disadvantages that large batch size may bring to.
+Okay, before the end of class,
+I want to share another technique with you:
+momentum.
+This is another technique that
+may be able to deal with saddle point
+or local minimum.
+How does momentum work?
+Momentum works like this.
+For its concept,
+you can imagine it in the physical world.
+Assuming that the error surface is the real slope.
+And our parameter is a ball.
+You roll the ball down the slope.
+If today is the normal gradient descent,
+it stopped when it reaches the local minimum or
+saddle point.
+But in the physical world, would a ball act like this?
+Assume a ball rolls down from a slope.
+It rolls to the saddle point.
+If there is inertia,
+after rolling down from the left side,
+it will continue to roll to the right side.
+Even when it goes to a local minimum,
+it will continue to go to the right side
+if it has enough momentum today.
+It may even climb over this small slope and continued to go to the right side.
+Today in the physical world,
+when a ball rolls down from a high place,
+it will not get stuck at saddle point
+or local minimum.
+It will not get stuck at saddle point
+or local minimum.
+Can we integrate this concept
+into gradient descent?
+This is what we will talk about later,
+which is momentum.
+Okay, let's review it quickly.
+What does the original gradient descent look like?
+This is a vanilla gradient descent.
+The word vanilla means general.
+Its literal translation is vanilla.
+But it just means general.
+What does a vanilla gradient descent look like?
+The vanilla gradient descent means
+we have an initial parameter called θ⁰.
+Let's calculate the gradient.
+Then after calculating this gradient,
+we go in the opposite direction of the gradient to update the parameters.
+After we obtain the new parameters,
+calculate the gradient again.
+Go in the opposite direction of the gradient,
+and update the parameters again.
+The gradient will be calculated again after reaching the new position.
+Go in the opposite direction of the gradient to update the parameter.
+This process just keeps going like this.
+Okay, if you add the momentum,
+what will it look like?
+After adding the momentum,
+the gradient descent becomes like this:
+Every time we update our parameters,
+we are not just going to use the gradient descent,
+we are not just updating the parameters in the opposite direction of the gradient.
+In the vanilla gradient descent,
+we all update the parameters in the opposite direction of the gradient.
+But now it’s not just moving the parameters in the opposite direction of the gradient,
+we are in the opposite side of the gradient
+plus the direction of the previous step.
+Utilize the results of these two together to
+adjust our parameters.
+It's like this in detail:
+Find an initial parameter,
+and then we assume that at the beginning, potentially,
+the amount of change from the previous step.
+The amount of the update of the parameters in the previous step
+is set to 0.
+And then, at the next θ⁰,
+you want to calculate g⁰.
+Calculate g⁰.
+Calculate the direction of the gradient.
+Then you have to decide how to go next.
+Then we said how to go next.
+It is the direction of the gradient plus the direction of the previous step.
+But because the previous step is exactly 0,
+it’s just the beginning, so the previous step is 0.
+So the direction of the update
+is the same as the vanilla gradient Descent.
+There is nothing interesting about it.
+But from the second step,
+after adding Momentum, it will be different.
+Start from the second step,
+we calculate g¹.
+Then the direction of our update
+is not the opposite of g¹.
+But based on the direction of the last update,
+that is, m¹ - g¹,
+as the direction of our new update,
+written here as m².
+If you look at the mathematical formula and feel a little vague,
+then we look at the picture on the left:
+g¹ tells us,
+the gradient tells us to go this way,
+but we don’t just listen to the gradient
+after adding momentum.
+We are not just based on the opposite direction of the gradient to
+adjust our parameters,
+but we will also look at the direction of the previous update.
+If you said you want to go in this direction last time
+but the gradient said you should go in that direction,
+just add these two together,
+a compromise between these two.
+That is, to go in this direction.
+So we moved m²,
+go to the place θ²,
+and then repeat the same process over and over again.
+We calculate the gradient at this position.
+But we don’t just go in the opposite direction of the gradient.
+Instead, we consider the previous step.
+The previous step is in this direction.
+In the direction of this blue dotted line.
+We add the blue dotted line and the red dotted line,
+(the direction indicated by the previous step and the direction indicated by the gradient,)
+as the direction we are going to move.
+And so on.
+Repeat the same operation.
+The gradient said to go in this direction.
+The previous step said to go in this direction.
+Combining these two, we go toward the down left.
+So this method is different from the vanilla Gradient Descent.
+We are not looking only at the direction of the gradient to adjust the parameters.
+We also consider the direction of the previous movement to adjust the parameters.
+Okay, we use "m" to represent
+every step we moved.
+"m" can actually be written as the weighted sum
+of all the previous calculated gradient.
+Why?
+From the formula on the right,
+it can be easily understood.
+m0 is set to 0.
+m1
+m1 is m0 - g0.
+m0 is 0.
+So m1 is g0 * -η.
+m2
+m2 = λ * m1.
+λ is another parameter.
+It needs to be adjusted just like the learning rate.
+You can think of η as the learning rate, we need to adjust it.
+λ is another parameter.
+This also needs to be adjusted.
+m2 = λ * m1,
+- η * g1.
+Where is m1?
+m1 is here.
+You put m1 in this equation.
+You will know that m2
+equals to -λ * η * g0
+- η and * g1.
+It is the weighted sum of g0 and g1.
+And so on.
+So you will find out that
+after adding momentum,
+one interpretation is that momentum is
+the negative direction of the Gradient plus the direction of the previous movement.
+But another way of interpretation is
+the so-called momentum.
+When momentum is added,
+the direction of our update
+not only depends on the current gradient,
+but depends on the sum of all gradients in the past.
+Okay, suppose you don’t have a good understanding here either.
+Here is a simpler example.
+Hope to help you understand what is going on with momentum.
+Okay, let’s update the parameters here.
+According to gradient’s direction,
+we should update parameters to the right.
+Currently, we have no direction for the previous update.
+So we just follow the instructions given by gradient.
+Move parameters to the right.
+Okay, then our parameters
+move a little to the right and arrived at this place.
+The gradient becomes very small,
+telling us to move to the right.
+But only a little bit to the right.
+But the previous step is to move to the right.
+We use the dotted line to indicate the direction of the previous step.
+Put it here.
+We add the direction of the gradient
+and the direction of the previous step.
+We then get the direction to the right.
+Keep heading right, we arrive at a local minimum.
+Logically, if we enter a local minimum,
+Gradient Descent can’t help us move anymore.
+Because there is no gradient direction.
+The same goes for Saddle Point.
+Without the direction of gradient, we can no longer go forward.
+But it doesn't matter.
+If there is momentum,
+you still have a way to keep going.
+Because momentum considers not only the gradient.
+Even if the gradient is 0,
+You still have the direction of the previous step.
+The direction of the previous step tells us to go right.
+We continue to go right.
+Even if you go to this kind of place,
+the gradient tells you to go left.
+But suppose the influence of your previous step
+is larger than gradient.
+You might still go right.
+Even going over a small hill.
+Maybe you can go to a better local minimum.
+This is the possible benefit of momentum.
+Okay, these are the things I want to tell you today.

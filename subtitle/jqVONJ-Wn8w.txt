@@ -1,0 +1,478 @@
+Next,
+we are going to talk about how to do classification.
+Here we only talk about a shorter version.
+Because the time is limited,
+let's talk about
+a version that can be finished in 20 minutes.
+There is a longer version.
+If you want to see the longer version,
+you can take a look at the video of previous years.
+It is two hours,
+or maybe three hours for the longer version.
+For classification,
+I will tell you how to do classification
+as short as possible.
+How to do the classification? We have already talked about it.
+Regression means you use a vector as the input
+and then get the output value.
+We want the output value and a certain label,
+which is what we want to learn,
+to be as close as possible.
+Some students may ask
+"why is there a hat symbol in the target label
+but not in the predicted label?"
+You may have seen it elsewhere that
+there is a hat in the predicted label.
+There are no certain rules
+for the notation.
+If you take my machine learning class first,
+you may ask other teachers
+why there is a hat in the predicted label,
+and no hat in the target label.
+In this course,
+if it is the correct answer, add a hat.
+If it is the output of the model, don't add it.
+There is a possibility that
+if you can use regression,
+we can treat classification
+as a regression.
+How to say that? Although the method is not a good method,
+it is a tricky method, you can still use it.
+After using a vector as the input,
+our output is still a scaler,
+and it's y.
+We want to make y and the correct answer
+as close as possible.
+But, y is a number.
+How can we make it as close to the class as possible?
+We must also transform the class into a number.
+For example, class 1 is number 1,
+class 2 is number 2,
+and class 3 is number 3.
+What we are going to do next is
+we hope that y can be as close to the class number
+as possible.
+But, would it be a good solution?
+If you think about it thoroughly,
+under certain conditions,
+it may be imperfect
+because
+if you assume that class 1 is number 1,
+class 2 is number 2,
+and class 3 is number 3,
+it means that you consider class 1 and class 2
+are closer.
+than class 1 and class 3.
+The class representation, like this,
+sometimes works, but sometimes it doesn't.
+Supposing, among class 1, 2 and 3,
+there are some kinds of relations. For example,
+based on a person’s height and weight,
+you want to predict what grade a primary school student is.
+First grade? Second grade? Or third grade?
+In this situation, the first grade may actually be closer to the second grade,
+and the first grade may actually be further to the third grade.
+But, supposing, among these 3 classes,
+there is no specific relation,
+assigning that class 1 as 1,
+and class 2 as 2, and class 3 as 3
+is weird.
+Because you hypothesize that
+1 and 2 have a relatively close relation,
+and 1 and 3 have a relatively far relation.
+So, what should we do?
+When you are doing classification tasks,
+a common approach is to represent your class
+as an one-hot vector.
+For the one-hot vector,
+we saw it in homework 1, right?
+In homework 1, I mentioned that we transformed the states of the United States
+into one-hot vectors.
+For the same reason,
+we can use one-hot vectors to
+represent different classes.
+If there are three classes,
+our label, ŷ,
+is a three-dimensional vector.
+If it’s class 1, it’s [1 0 0],
+if it's class 2, it is [0 1 0],
+and if it's class 3, it is [0 0 1].
+You use a one-hot vector to
+represent a class.
+And if you do so,
+we won't say that class 1 and class 2 are closer
+and class 1 and class 3 are further.
+If you use one-hot vectors to
+calculate the distance,
+the distances between any two classes are the same.
+Okay, what's next?
+If our goal, ŷ,
+is a vector,
+ŷ is a vector with
+three elements.
+Then our network
+should also output three numbers.
+The networks we've mentioned before
+are only output one value.
+Because what we did in the past are
+regression problems,
+networks only output a number.
+How to make it output three values?
+Actually,
+it is the same.
+As long as you can output one value,
+you can output three values.
+Repeat the operation
+three times,
+You multiply a₁ a₂ a₃ by
+three different weights and plus bias,
+you can get y₁.
+Multiply a₁ a₂ a₃ by other three weights
+and add another bias to get y₂.
+Then, multiply a₁ a₂ a₃ by another set of weights
+and add another bias to get y₃.
+In this way, you can generate three numbers.
+So you can input a feature vector,
+produce y₁ y₂ y₃,
+and expect that y₁ y₂ y₃
+are close to our goal.
+Ok, so now we know
+how regression works.
+We input x and make the output (y) and the label (ŷ)
+as close as possible.
+What if it is classification?
+We just said that input x
+may be multiplied by a W,
+plus b, and be sent into an activation function.
+Then we multiply by W' and add b' to get y.
+Note that our current y is not a number
+but a vector.
+So, when doing classification,
+we will often pass y to
+a function called Softmax first to get y'.
+Then we calculate
+the distance between y' and ŷ.
+In other words, we have to make y' and ŷ
+as close as possible.
+Why do we use softmax?
+There's a relatively simple explanation.
+I actually thought about it for a long time.
+How can I finish this part in 10 minutes?
+In the past lectures,
+I took a long time
+to tell you why softmax is used here
+and what the assumptions behind it are.
+We would start with the generative model first.
+Then we went all the way to logistic regression
+to let everyone know why we put a softmax here
+and what the historical background it has.
+We are not following that path anymore.
+So it suddenly becomes difficult to explain
+why we put a softmax here.
+Here is a quick explanation to get this over with.
+The value in ŷ
+contains both 0 and 1, right?
+It is a one-hot vector;
+therefore, the values ​​inside are only 0 and 1.
+How about y? It can have any value.
+Our goal is only 0 and 1
+but y can have any value.
+Can we normalize
+this value first?
+Move them to the iterval between 0 and 1.
+This way, it is easier to calculate the similarity with the label.
+This is a relatively simple way of explanation.
+If you really want to know
+the reason we use softmax,
+You can refer to previous lesson videos.
+If you don't want to know,
+you just remember one thing.
+Things that this softmax does
+is to change any value in y
+to some value between 0 and 1.
+How does softmax work?
+This is the block of this softmax.
+Enter y₁ y₂ y₃.
+It will produce y₁' y₂' y₃'.
+The operation inside is like this.
+We first take all y with an exponential.
+So no matter if y is positive or negative,
+after taking exponential,
+It's all positive, right?
+Even if it’s a negative number, a value less than 0
+it also becomes positive after taking exponential.
+Then you normalize it.
+Divide the sum of all exponential values ​​of y.
+Then you get y'.
+The graphical explanation looks like this.
+y₁ takes exponential. y₂ takes exponential. y₃ takes exponential.
+Sum them up.
+We get a summation.
+Place the summation in the denominator.
+Next, divide exponential y₁ by the summation.
+Divide exponential y₂ by the summation.
+Divide exponential y₃ by the summation.
+We get y₁' y₂' y₃' and that’s it.
+With this formula,
+you will find out that this y₁',
+this yᵢ' y₁' y₂' y₃',
+they are all between 0 and 1.
+For this y₁' y₂' y₃',
+their sum will be 1.
+We can give an example.
+Originally, y1 = 3, y2 = 1,
+and y3 = -3.
+When we take the exponential of these numbers,
+we have the following: e³ is 20,
+e¹ is 2.7,
+and e⁻³ is 0.05.
+After normalization is done,
+we have 0.88, 0.12, and 0.
+So, this is what the softmax function is used for.
+In addition to normalization,
+which makes all the y'
+stay in the range of 0 and 1 and sum up to 1,
+it also has an added bonus.
+It makes the gap between large values and small values
+even larger.
+So, originally we have the value of e⁻³.
+That value approaches 0
+after it's normalized.
+The inputs of the softmax function
+are often called the "logits".
+For the sake of convenience,
+we gave it a name called "logit".
+In this particular case, there are three classes.
+What if there are only 2 classes?
+If there are only two classes, it is still totally fine
+to use the softmax function.
+But, perhaps the method you hear more often is
+instead of using the softmax function,
+we use the sigmoid function
+when there are only 2 classes.
+So, when there are only two classes,
+what is the difference between
+using the softmax function and using the sigmoid function?
+You can try to figure it out yourself.
+If you think about it,
+these two methods are actually equivalent.
+I know that because we showed the softmax function on the slides,
+it implies that the softmax function should also work just fine with two classes.
+There's no doubt about it.
+However, when there are only two classes,
+it is more common to use the sigmoid function.
+You might wonder
+what the differences are between these two, and which one is better.
+Let me tell you that they are exactly the same.
+You can calculate the derivation by yourself
+and you will find that these two things are the same.
+So after we input x
+to a network and generate y,
+we will get y' through softmax,
+then we calculate the distance between y'and ŷ.
+This distance is denoted by e.
+There is more than one way to calculate
+the distance between y' and ŷ.
+For example, if
+I want this distance to be the mean square error,
+which is exactly the same distance as we use the homework 1.
+We take every element of y' out
+and also take every element of ŷ out
+Then we calculate the square of their element-wise difference and sum them up as the error.
+This is a practical way to
+calculate the distance between two vectors.
+In other words, by minimizing
+the mean square error,
+we can make ŷ equal to y' in the end.
+But there is another more practical and more common way,
+which is called cross entropy.
+The formula may seem weird
+at first glance.
+What does this cross entropy mean?
+Let's take a look now.
+What does this cross entropy formula look like?
+It is a summation over all i.
+Then, we take out the i-th element of ŷ
+and multiply them by the natural log of the the i-th element of y',
+and sum them up.
+This is called the cross entropy.
+When ŷ is exactly the same as y',
+you can minimize the value of cross entropy.
+When ŷ is exactly the same as y',
+the value of Mean Square Error will also be the smallest
+and the error of cross entropy will also be the smallest, too.
+But why do we have such an odd formula
+called cross entropy?
+To make the long story short,
+we can say that:
+minimizing cross entropy is
+actually equvalent to maximizing likelihood.
+You may have heard the word
+"likelihood" in many places.
+So in this class,
+we remove the word "likelihood".
+We now
+don't have the word "likelihood".
+So we can’t explain it in this way.
+We can’t say why minimizing the cross-entropy
+is equivalent to maximizing the likelihood.
+We no longer know what likelihood is.
+But these two things are actually equivalent.
+So suppose someone asks you one day:
+If we are doing a classification problem today,
+what's the relationship between
+maximizing likelihood and
+minimizing cross-entropy.
+Please don’t answer that they are actually very similar
+but with a very subtle difference.
+It's not like this.
+They are exactly the same thing.
+It’s just a different way of saying the same thing.
+When we are training a classifier,
+if maximizing the likelihood is acceptable,
+minimizing the cross-entropy
+should also be acceptable.
+But we didn't talk about it,
+how can I convince you that
+we should use cross-entropy?
+The next slide tells you that cross-entropy,
+from the perspective of optimization,
+is more suitable for classification
+than mean square error.
+Cross-entropy
+is more commonly used in classification
+than mean square error.
+How commonly it is used?
+It is so commonly used in PyTorch that
+cross-entropy and soft-max
+are tied together.
+They are a set.
+As long as you call the cross-entropy function,
+soft-max is automatically included in the function.
+So if you look closer at the program for TA's assignment two,
+you will not find any soft-max function.
+Originally, Softmax should be part of the network.
+When you define the network,
+you should also define the Softmax function.
+But you find that in the TA's sample code,
+you can't find any softmax. Why?
+Because it is integrated in the "Cross-entropy" function.
+When you use Cross-entropy
+in PyTorch,
+PyTorch will automatically help you add softmax
+to the last layer of your network.
+So if you are using PyTorch today,
+when you add softmax to the network
+and use Cross-entropy at the same time,
+it will do the softmax function twice.
+This design is interesting in PyTorch.
+So this fact shows that
+softmax is often combined with Cross-entropy.
+They are a set and
+will usually be used together.
+Next,
+I will tell you
+why Cross-entropy is more commonly used in classification
+Compared to Mean Square Error
+from the perspective of optimization.
+For that part,
+you can prove it by mathematics.
+But in my slides,
+I will explain this with examples.
+If you want to see the mathematical proof,
+I put the link here.
+You can watch the video from previous years.
+If you don't want to know,
+then we will give you an example to show you
+why Cross-entropy is better.
+Okay, suppose we have to do a three-classes classification,
+and my Network first outputs y1, y2, and y3.
+After passing softmax,
+it will output y1', y2', and y3'.
+Let’s assume that our correct answer is 100.
+We are going to calculate the distance between
+the vector of 100 and y1', y2', and y3'.
+Then we use е to denote this distance.
+е can be Mean square error
+and also Cross-entropy.
+Okay, let’s take a look at the e,
+which is set to mean squared error.
+What is the difference
+in the error surface
+compared to the cross entropy?
+Assume that y₁ changes from -10 to 10,
+and y₂ also changes from -10 to 10.
+y₃ is set to -1000.
+Because y₃ is very small,
+after taking soft-max, y₃' is very close to 0.
+It is very close to the correct answer,
+and it has little influence on our results.
+In short, we set a fixed value for y₃,
+and only observe when y₁ and y₂ change.
+The loss is calculated by
+adding up a lot of e.
+What kind of influence does it have on our loss?
+These two pictures below
+are the loss corresponding to the change of y₁ and y₂
+or the impact on the error surface
+when e is set to mean squared error
+and cross entropy respectively.
+If y₁ is large
+and y₂ is small,
+then y₁' will be very close to 1.
+y₂' will be very close to 0
+When y₁ is large and y₂ is small, the loss is small
+for both mean square error
+and cross entropy.
+Color red here represents a large loss.
+and color blue represents a small loss.
+In the upper left corner,
+y₁ is small and y₂ is large.
+If y₁ is small and y₂ is large,
+then y₁' is 0 and y₂' is 1.
+The loss is larger in this situation.
+The loss is large in the upper-left corner
+and small in the lower-right corner in both pictures.
+So we expected that
+when the training ends
+the parameters should go to the lower-right corner.
+But, what if we
+start from the upper left corner?
+If we choose Cross-Entropy as the loss function,
+the slope is non-zero
+at the upper left corner.
+So it is possible for you to
+follow the gradient vector and reach the lower right corner.
+However, if you choose mean square error,
+you're stuck!
+Mean square error's shape is very flat
+at places where the loss is large.
+In other words, at those places, its gradient is very small.
+If you started there,
+you are far away from your goal,
+since the magnitude of the gradient is too small,
+and you will have a hard time going to the lower right corner
+by gradient descent.
+So if you choose mean square error as the loss function,
+you are very likely
+to fail in training a classification model.
+But if you have a good optimizer,
+it is a different story.
+If you are using Adam,
+whenever you are at places where the gradient is too small,
+the optimizer itself
+automatically increases the learning rate for you,
+maybe you still have a chance to reach the bottom right corner.
+But still,
+this choice of loss function
+may make your model
+harder to train.
+This is a good example
+in which tells us
+the choice of the loss function
+may affect the difficulty of training.
+I had told you about using the
+"Shenluo Tianzheng" (almighty push) to smooth the error surface.
+Here we have a good example that
+changing the loss function
+surprisingly affects the difficulty of optimization.

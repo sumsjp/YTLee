@@ -1,0 +1,1399 @@
+We are going to talk about the network architecture.
+We start from discussing the design of the network architecture.
+The first variants of the network architecture
+I want to talk about
+is convolutional neural network.
+Its abbreviation is CNN.
+The CNN
+is used especially for processing images.
+I hope that through this example of CNN,
+you can understand the network architecture,
+and the insight behind the design.
+Why design the network architecture ?
+Can it make our network perform better?
+Okay, the next example we are going to talk about is related to images.
+Imagine that
+we have to classify images.
+That is, give the machine an image,
+and let the machine decide what kind of things are in this image.
+How to do it?
+We have already told you how to do classification.
+In the following discussion,
+We assume that the size of the input image of our model
+is fixed.
+For example, we fix the size of the input image
+to 100 × 100.
+We assume that all images have the same size.
+It is a common assumption today
+when doing image recognition.
+Even if deep learning is so popular today,
+We still need to assume that
+the sizes of input images for a model are the same.
+You may wonder that there are bigger or smaller images,
+and not all images are square.
+What if the input is a rectangular image?
+Here is the common processing method.
+The processing method is to
+rescale all images to the same size
+before using it as the input of the image recognition system.
+What should the output of our model be?
+The goal of our model is classification.
+So, we will express each category
+as a one-hot vector.
+Our goal is called y^.
+In this one-hot vector,
+supposed for the category of cat,
+the value of the corresponding dimension to the cat
+is 1.
+The value of the other dimensions are 0.
+The length of this dimension can determine
+the number of different objects that your model can recognize.
+If the length of your vector is 2000,
+it means your model
+can identify 2000 different objects.
+Typically, a strong image recognition system
+can identify more than 1,000 objects,
+or up to tens of thousands of different objects.
+If you want your image recognition system
+can identify tens of thousands of objects,
+then your label will be a one-hot vector
+with tens of thousands of dimensions.
+After a softmax layer,
+the output is denoted as y'.
+We hope the cross-entropy between y'and y^
+is as small as possible.
+We have already talked about
+cross-entropy,
+so I believe there's no problem with that.
+The next question is how to use an image
+as an input to a model.
+Let’s take a look at
+what is an image for the computer.
+For a machine,
+an image is a three-dimensional tensor.
+What is a tensor?
+If you don’t know what tensor is,
+you just think of it as a matrix with the dimension greater than 2.
+The dimension of the matrix is two.
+The one whose dimension is more than two
+is called "tensor".
+An image is a three-dimensional tensor.
+What three dimensions are?
+One is the width of the image,
+another one is the height of the image,
+and the other is the number of channels.
+What do the channels mean?
+There are a lot of pixels
+in a colorful image,
+and they are composed of three colors of RGB.
+These three channels represent the three colors of RGB.
+The length and the width represent the resolution of the image,
+and they determine the total number of pixels
+in this image.
+Then, we will straighten
+this three-dimensional tensor.
+After straightening,
+we can use it as the input of the network.
+So far, the input of the network we have talked about
+is a vector.
+As long as we can turn an image into a vector,
+we can use it as the input of the network.
+How to turn this three-dimensional tensor into a vector?
+The most intuitive way is to straighten it.
+How many numbers are there in a three-dimensional tensor?
+There are 100 × 100 × 3 numbers in this example.
+So an image
+is composed of 100 × 100 × 3 numbers.
+Take these numbers out and arrange them in a row,
+then we can get the huge vector.
+This vector can be used as the input of the network
+In this vector,
+the value stored in each dimension
+is a pixel,
+and it is the intensity of a certain color.
+Each pixel is composed of three colors, namely RGB.
+Each color has a numerical value that represents the intensity of the color.
+In this vector,
+the value of each dimension represents the intensity of a certain color
+at a certain position.
+For this vector,
+we can think of it as an input of a network.
+So far,
+we only talked about fully connected network.
+If we use the vector as the input of the network,
+the length of the feature vector
+is 100 × 100 × 3.
+It is a very long vector.
+Let's suppose that our model
+has 1000 neurons in the first layer.
+Can you calculate the number of weights
+in the first layer?
+Each neuron
+comes with a weight
+corresponds to each value in the input vector.
+So, if the input shape of vector is 100 × 100 × 3,
+and there are 1000 neurons,
+then the number of weight we now have of the first layer
+is 1000 × 100 × 100 × 3,
+which is 3 × 10 to the power of 7.
+It is a very large number.
+What kind of problems with a huge number of parameters?
+Although with the increase of parameters,
+we can increase the flexibility of the model,
+and we can also increase its capabilities.
+But, we increase the risk of overfitting at the same time.
+About the flexibility of the model
+and how the Overfitting happend,
+teacher Wu, Pei-yuan will, mathematically,
+give everyone a very clear proof next week.
+Here, we only talk about it conceptually.
+The more flexible the model is,
+the more possible it is to overfit.
+How should we do to reduce so many parameters,
+when doing image recognition?
+Considering the characteristics of image recognition problem,
+we don’t need fully-connected network actually.
+Considering the characteristics of image itself,
+we don’t need every neurons actually.
+There is a weight with each input dimension.
+In other words,
+the followings are, some observations of the characteristics
+of the image recognition problem.
+The first observation is that,
+for the problem of image recognition,
+suppose we want to know
+if there is an animal in this picture,
+say, a bird.
+For an image recognition system,
+the neuron that recognizes the object,
+or the neural network that recognizes an image,
+has to detect whether, in this picture,
+there are any important patterns,
+which represent some kind of patterns of the objects.
+For example, a certain neuron said
+"I saw the pattern of the beak"
+and another neuron said
+"I saw the pattern of the eyes"
+and another neuron said
+"I saw the pattern of bird claws",
+maybe, combining them together, it means that
+we saw a bird.
+A neural network can tell you
+because I saw these patterns,
+so I saw a bird.
+You may say
+looking at patterns and deciding what it is
+seems not so smart.
+But, if you think deeper about it,
+you will realize that people also use the same method
+to judge whether there is a bird in a picture.
+For example,
+I'm not sure if
+you have seen animals here?
+You see! There is a beak here.
+There is an eye here.
+It looks like a crow.
+But, it is actually a cat.
+If you think it is a bird,
+then you should put down the wine glass
+because it is a cat.
+So, even if it is a human,
+while judging an object,
+he often catches the most important features.
+By seeing these characteristics,
+you will feel that, very intuitively,
+you saw something.
+For the machine,
+maybe it is also a effective way
+to judge what objects are in the image.
+But, suppose what we are doing with neurons
+is to judge whether there are any patterns appearing,
+maybe we don’t need every neurons
+to see a complete picture
+because for these important patterns
+like beak, eyes and bird's claws,
+we don’t need to look the whole picture
+to get the information.
+If you want to know whether there is a beak,
+you only need to look at a small area, actually.
+You don't need to look at the whole picture.
+So, maybe, we don't necessarily needs that much neurons
+that take the whole picture as input.
+They only need to take a small part of the picture as input,
+which is enough for them to detect whether there exists
+some critical patterns.
+This is the first observation.
+Based on this observation,
+we can do the first simplification. How do we simplify it?
+Originally, each of our neuron
+needs to see through the complete picture.
+In the picture, we put each pixel,
+which has 3 numbers,
+and all information to a neuron
+to make it confused.
+This is what fully-Connected network does.
+But, now we have observed that
+maybe we don’t need to let a neuron see the complete picture.
+We only need to let it look at a small part of the picture.
+Then, through this observation,
+how do we design our neural network?
+There is an approach in CNN.
+We will set an area called receptive field.
+Every neuron only cares about the things happening
+in its own receptive field.
+For example, you will first define this blue neuron that
+it is responsible for this receptive field.
+Then, there are 3 × 3 × 3 values ​​in this receptive field.
+Okay! There are 3 × 3 × 3 values ​​in the small cube.
+For the blue neuron,
+it only needs to care about this small area,
+and not to care about what's in the whole picture.
+It only cares about the things happening
+in its own receptive field.
+Then, how does this neuron
+know, in its receptive field,
+anything happens?
+What it has to do is
+to straighten the value of 3 × 3 × 3.
+to become a vector with a length of 3 × 3 × 3, which is 27-dimension.
+Then, we use these 27-dimensional vectors as the input of this neuron.
+This neuron will
+assign a weight to each dimension of the 27-dimensional vector.
+So this neuron has 27 (3×3×3) weights.
+With the bias and the weigths,
+This neuron can output a new vector, which is used as the input of the neuron of the next layer.
+For every neuron,
+it only considers its own receptive field.
+How can we define this receptive field?
+Maybe you have to ask yourself.
+For instance, here is a blue neuron
+which just cover the range in the upper left corner
+and this is its receptive field.
+Here is another yellow neuron,
+which covers the 3×3×3 area in the lower right corner.
+I can't draw this three-dimensional figure.
+I draw a square here to represent the range of 3×3×3.
+This is the receptive field of the yellow neuron.
+Note that the receptive fields can also overlap.
+For example, I draw a receptive field now.
+This part is the receptive field of the green neuron.
+There is some overlap between the blue one and the yellow one.
+This is also fine.
+Receptive fields can overlap with each other.
+You can say that the receptive field of the two neurons overlaps with each other.
+Then you can even use two different neurons
+to cover the same range.
+Maybe using a single neuron
+is not sufficient to detect all critical patterns.
+There can be multiple neurons in the same range.
+We can use several neurons
+with the same receptive field.
+Then you might have some new ideas.
+For example,
+Can we have receptive fields with different sizes?
+Because the sizes of patterns are not fixed.
+Some patterns can be detected
+with a 3×3 receptive field;
+some may need a 11×11 receptive field
+to be detected successfully.
+Can we have receptive fields with different sizes?
+This is actually a common trick.
+Or, can we make receptive fields
+only consider certain channels?
+Here, it seems that the receptive field
+considers three channels (RGB).
+But maybe some patterns
+only appear in the red channel.
+Maybe some patterns
+only appear in the blue channel.
+Can I have some neurons only consider one channel?
+Yes.
+I will talk about that
+in the chapter of network compression in the future.
+For general CNN, we seldom use this
+but you can still do that.
+Someone might note that the receptive fields here
+are all square.
+The previous examples,
+3×3 and 11×11, are also square.
+Can it be rectangular?
+Of course.
+It all depends on you.
+Receptive Field is designed by you.
+You can decide the shape and the size of the receptive fields
+based on the problem you want to address.
+There may be some kinds of weird ideas.
+You might want to make
+the receptive fields not be adjacent?
+Can we design a neuron
+with the receptive field only cover the upper left corner
+and the bottom right corner of the image?
+It's possible theoretically.
+But you have to think about why you want to do this.
+Will there be any pattern
+that can only be detected
+in this manner?
+If not,
+this kind of receptive field is useless.
+The reason why the receptive fields are adjacent
+is because
+we think that
+a specific pattern will appear adjacently
+with the picture when we do the detection.
+It will not appear
+at many different places in the picture
+and therefore
+the receptive field
+is usually adjacent.
+But if you want to design a very weird receptive field to
+solve some special problems,
+that's still fine.
+It's all up to you.
+Although we can design the receptive field arbitrarily,
+here I want to tell everyone
+the most classic receptive field.
+What is the most classic receptive field?
+The first one is covering all channels.
+Generally, for image recognition,
+we don't think
+some patterns only appear in a certain channel.
+Consequently, we will make the receptive field cover all channels.
+Since the receptive field will cover all channels,
+we only need to point out the height and the width
+when we describe the receptive field.
+We don't need to talk about its depth.
+Anyway, the depth must consider all channels
+The height and the width of the receptive field together is called the kernel size.
+In this example,
+the kernel size is 3×3.
+In general, our kernel size will not be too large.
+A 3×3 kernel is usually enough
+for image recognition.
+A kernel with 7×7 9×9
+is quite big.
+Usually we do 3×3.
+You may ask
+if the kernel size is all 3×3,
+does it means that we think
+all the important patterns are only in the small range of 3×3
+in image recognition?
+It sounds weird.
+Some patterns may be very big.
+Maybe the 3×3 kernel cannot detecte them.
+We will answer this question later.
+For now, I will just tell you
+that the usual way to set up receptive fields
+is to use a 3x3 kernel size.
+Generally, a receptive field
+will have a group of neurons to look after it.
+So after you draw a receptive field,
+there won’t be just one neuron to take care of it.
+There won’t be just one neuron to process this receptive field.
+Instead, there will be a group of neurons,
+maybe 64 or 128 neurons, to look after
+the receptive field.
+Okay, so far we only talked about one receptive field.
+What is the relationship
+between different receptive fields?
+You will take the receptive field in the upper left corner,
+and shift it to the right a little bit to
+create a new region to look after,
+creating another receptive field.
+The amount of movement
+is called Stride.
+In this example, the stride is equal to 2.
+Stride is a hyper-parameter decided by you.
+You have to adjust the hyper-parameter yourself.
+But you often won’t set it to be too large.
+Usually, 1 or 2 is enough
+because you want the receptive fields to
+overlap with other receptive fields.
+Why do we want
+receptive fields to overlap?
+Because if receptive fields do not overlap at all
+and a pattern appears
+exactly at the junction of the two receptive fields,
+then there will not be any neuron to detect it
+and you might miss this pattern.
+So we hope that the receptive fields
+can have a high degree of overlapping.
+Suppose we set stride to two,
+the first receptive field is here,
+then the second one will be here.
+For the third one, we shift two more spaces to the right.
+We shift two more spaces to the right and place the third one right here.
+Here comes the problem.
+What should I do if it exceeds the scope of the image?
+Someone might say
+don’t put a receptive field here.
+But you will miss the edge if you do that.
+If there is a pattern on the fringe of the image,
+you won’t have neurons to take care of those patterns.
+There will not be any neurons to detect the patterns on the fringe.
+So usually we will have to consider the fringe.
+But what should I do if it is outside the image?
+If it's outside the image, do some padding.
+What is padding?
+Padding is to add 0.
+Okay, so if you have a part of the receptive field
+that exceeds the fringe of the image,
+then treat it as if the values there are all 0.
+In fact, there are other ways to do padding.
+Padding only means to fill values
+and there are other ways to do it.
+For example, someone would say,
+"I don’t want to add 0 here,
+I will pad with the average of all values ​​in the image."
+Yes, you can. Or you would say,
+"I will take out these numbers on the fringe and use it to pad
+where there are no values."
+Sure. There are a variety of different padding methods.
+Okay, on the other hand, except for shifting horizontally,
+you will also shift vertically.
+You will have this vertical movement.
+Here, we also set the vertical stride to 2.
+So you have a receptive field here,
+shift two spaces vertically,
+and place a receptive field here.
+You follow this method and
+scan the entire image.
+So in this whole image,
+every part is covered by a certain
+receptive field.
+That is, for every position in the image,
+there are a group of neurons detecting whether
+certain patterns exist.
+Okay, so this is the first approach to simplify
+a fully connected network.
+What's the second observation?
+The second observation is
+that the same pattern
+may appear in different regions of the image.
+For example, the pattern of the beak.
+It may appear in the upper left corner of the image
+or in the middle of the image.
+Although they all have the same shape, say, they are all beaks,
+they may appear in
+different parts of the picture.
+According to what we just discussed,
+having the same pattern
+appearing at different places
+doesn't seem to be a big problem.
+Because the beak in the upper left corner
+must fall in a certain receptive field,
+since receptive fields cover the entire image.
+So there are no places in the picture
+that are not located within a certain neuron’s responsible region.
+So these places
+must be located within a neuron’s receptive field.
+Suppose in this receptive field
+there is a neuron whose job
+is to detect the beak,
+the beak will be detected.
+Okay, so even if the beak appears in the middle,
+it doesn't matter.
+It must locate in a certain
+receptive field and
+in that receptive field,
+there must be a group of neurons taking care of the region.
+Suppose there exists a neuron
+that can detect the beak,
+the beak appearing in the middle of the image
+will also be detected.
+But the problem here is
+that these neurons that detect beaks
+are doing exactly the same thing.
+The only difference is the location.
+Since what they do are the same and
+only their responsible locations are different,
+do we really need to put a neuron that detects beaks
+at every receptive field?
+What they do is fundamentally the same.
+Only their responsible regions are different.
+If we have neurons that detects beaks
+in every receptive field,
+don’t you think it have too many parameters?
+This concept is like,
+why does the Academic Affairs Office hope
+to promote large courses.
+Assume that each department
+needs programming-related courses,
+or every department needs
+machine-learning-related courses.
+Do we have to open machine learning courses
+in every departments separately?
+Or we just open a larger class.
+Let people from all departments take the courses.
+This is the idea of why the Office of Academic Affairs promote large-scale courses.
+Okay, if it is applied to image processing,
+how is it?
+if it is applied to image processing,
+can we make
+neurons of different receptive fields
+share parameters?
+That is parameter sharing,
+which shares parameters.
+What does parameter sharing mean?
+To be more specific here,
+the so-called parameter sharing is that
+these two neurons and their weights
+are exactly the same.
+I especially use color to tell you
+that their weights are exactly the same.
+The first weight of this neuron above
+is called w1.
+The first weight of the neuron below is also w1.
+They are the same weights.
+I use yellow to indicate it here.
+The second weight of the neuron above is w2.
+The second weight of the Neuron below is also w2.
+They are all indicated in yellow.
+And so on.
+The neuron at the top and the neuron at the bottom
+look after different receptive fields.
+But their parameters are exactly the same.
+Someone might ask.
+Since their parameters are exactly the same,
+will they always output the same?
+No. Why?
+Because their inputs are different.
+The parameters of these two neurons are indeed the same,
+but their scopes are different.
+The neuron above,
+we say its input is x1 x2.
+The neuron below,
+we say its input is x1' x2'.
+What are their outputs?
+The output of the neuron above is
+x1 × w1 + x2 × w2.
+Sum them all and add a bias.
+Then get the output through the activation function.
+Although the neuron below also has w1 and w2.
+But w1 and w2 are multiplied by x1' and x2'.
+So its output
+won't be the same as the neuron above.
+Because the input is different.
+So even if two neurons share parameters,
+their output will not be the same.
+Then you can infer that
+you won't make two neurons serve exactly the same
+receptive field share parameters.
+Because if this happens,
+their output
+must always be the same.
+If the ranges of the two neurons are not the same,
+even if their parameters are the same,
+their output will not be the same.
+So this is the second simplification.
+We allow some neurons to share parameters.
+As for how to share,
+it can be decided by yourself.
+And this is something you can decide by yourself.
+But I still have to tell everyone
+the common sharing methods on image recognition
+and how is it set.
+We just talked about
+every receptive field
+has a group of neurons in charge of it.
+For example, if there's 64 neurons
+the receptive field
+will also has 64 neurons.
+How do they share parameters with each other?
+We use the same color
+to indicate that these two neurons
+share the same parameters.
+So in fact, every receptive field
+have only one set of parameters.
+That is, the first neuron of
+this receptive field
+will share parameter with the first neuron
+of this receptive field.
+Its second neuron
+shares parameters with its second neuron.
+Its third neuron
+shares parameters with its third neuron.
+So every receptive field
+has only one set of parameters.
+These parameters form a "filter".
+So, these two neurons
+share the same set of parameters,
+which is called filter1.
+Similarly, these two neurons share a set of parameters,
+which is called filter2. Following the same logic, we have filter3, filter4,
+and so on.
+Okay, this is the second simplification method.
+We have already talked about two simplification methods.
+Let's briefly summarize it.
+This is the fully connected network,
+which is the most flexible.
+Then, we proposed that it's not necessary to look at the whole image.
+Looking at a small part of the image
+and detecting important patterns might suffice.
+Thus, we have the concept of the receptive field.
+When we force a neuron to
+only look at one small area in an image,
+it becomes less flexible.
+For a fully connected network,
+it can decide
+whether it wants to look at the whole image or only a small area.
+If it only wants to look at a small area,
+it can set most of the weights to be 0
+to achieve this.
+So the fully connected layer can decide by itself
+whether it wants to look at the whole image or only a small area.
+But, after introducing the concept of the receptive field,
+we no longer have a choice.
+We can now only see a small area of the image at once,
+which we think would be enough anyway.
+After we add the receptive field,
+the area we can look at gets smaller,
+making our network less flexible.
+What's next?
+Next, we talk about parameter sharing.
+Parameter sharing
+further limits the flexibility of the network.
+Originally, during the learning phase,
+it can decide
+the individual parameters of these two networks.
+Each neuron can have different parameters,
+no matter how similar or how different
+these parameters may be.
+But after adding parameter sharing,
+we force certain neurons
+to have parameters that are exactly the same.
+The freedom to
+learn different parameters is no longer there.
+This adds even more restrictions on the neurons.
+Combining receptive field and parameter sharing,
+we get a convolutional layer,
+which is what people often hear.
+Networks that use convolutional layers
+are called convolutional neural networks,
+or CNN for short.
+From this image,
+we can clearly see that
+CNN models have larger biases.
+It has a larger model bias.
+You might think that
+having a larger model bias is a bad thing.
+Well, having a larger model bias is not necessarily a bad thing.
+When the model bias is small,
+the model is highly flexible,
+which could easily lead to overfitting.
+The fully connected layer
+can do all kinds of stuff.
+While it has various variants for various applications,
+it may not be suitable for
+every specific task.
+As for the convolutional layer,
+it was designed to deal with images.
+Receptive field and parameter sharing
+are designed to deal with images based on observations.
+Since the convolutional layer
+was designed to deal with images,
+its performance on image-related tasks is exceptional.
+Although the model has a large model bias,
+it is not a problem in image-related tasks.
+But, you might want to think twice
+if you want to use it on other tasks.
+You have to consider
+whether those tasks and image-related tasks
+are similar in nature.
+Well, that was actually a certain way of introducing CNN.
+Now, we are going to talk about another way of introducing CNN.
+The second way of introducing CNN
+is exactly the same as the first way.
+It's the same story
+told in different ways.
+You can decide which version you prefer.
+This second version
+is the more common way to explain CNN.
+The second version of the story
+and the first version of the story
+are exactly the same.
+So, if you didn't quite get it
+when you listened to the first version,
+you can listen to the second version.
+Here starts the second version.
+What is a convolutional layer?
+Inside a convolutional layer
+are many different filters.
+These filters have the shape of
+3 x 3 x channel.
+What is a channel?
+For a color image,
+we have three channels, which are RGB channels.
+For a black and white image,
+we only have one channel.
+What about the convolutional layer?
+Inside a convolutional layer
+is a row of filters.
+Each filter is a tensor with the shape of
+3 x 3 x channel.
+The purpose of each filter
+is to capture a pattern
+in the image.
+Of course, these patterns
+need to have sizes within
+3 x 3 x channel
+in order to be captured by these filters.
+How do these filters
+capture the patterns in the image?
+Let me give you an example.
+In the following example,
+we assume the channel count to be 1.
+In other words, the image is a black and white image.
+Then we assume that the parameters of these Filters are known.
+Recall that a filter is a tensor.
+The values in this tensor
+are already known.
+In fact, the values ​​of these tensor
+is the parameter in the model.
+The values ​​in these filters
+are actually unknown.
+It will be found through training.
+Now we assumed that
+the values ​​in these filters have already been found.
+Let's take a look at how these filters
+do operation with a picture
+and how to detect patterns in a picture.
+Okay. This is our picture.
+It is a picture of size 6 by 6.
+Okay, so how do these filters
+interact with this picture
+to detect patterns?
+Below, we show the details.
+First, put the filter in the upper left corner of the picture,
+then put all the values ​​in the filter.
+There are nine values ​​here.
+Take these nine values,
+Multiply the nine values ​​in this range in the upper left corner.
+That is to say, the nine values ​​in this filter
+will do the inner product with
+the nine values ​​in this range.
+How much is it? The result is three.
+Okay, what about this filter?
+Originally, it is placed in the upper left corner.
+Then it is moved a little bit right.
+The moving distance is called stride.
+When I told the story of the first version,
+our stride is set to two.
+The case in this version,
+our stride is set to one.
+Okay, move a little to the right,
+then compute the inner product
+between this filter
+and the values ​​in this range. How much is it?
+Is it minus one.
+Okay, this case is too simple.
+This is a very simple mathematics.
+Then, we move it a little bit to the right again.
+There is one here, there is one here, there is one.
+Okay here minus one, minus one, minus one,
+What is the result? Minus three.
+And so on.
+Move a little to the right and count again.
+Then, after scanning all over here,
+just move down a little bit and count
+And so on.
+Repeat it until the filter reaches in the lower right corner.
+What is the result here?
+Here one one one here minus one, one, minus one
+The answer is minus one and that's it.
+Anyway, how does this filter detect pattern?
+Well, in this filter.
+The values in the diagonal are all one.
+So what kind of pattern
+or what thing in the image
+will make the result of this filter the largest.
+When you see three ones in the image,
+its value will be the largest.
+So you will find that
+in the output here,
+the upper left corner has the largest value.
+The value in the lower left corner is the largest one.
+That just tells us
+that three appears in the upper left corner of this picture.
+This pattern appears in the upper left corner.
+Pattern of three ones connected together
+appears in the lower left corner.
+This is the first filter.
+Okay, what's next?
+We tell each filter
+to repeat this process.
+For example, there is a second filter here.
+A filter is obviously
+detecting the situation when one is in a line
+We start by placing the second filter
+to the upper left corner
+and get a value
+Move a little to the right to get another value.
+Move a little to the right again to get another value.
+Repeat the same process.
+Repeat the same operation
+until the whole picture is scanned.
+We get another group of values.
+So every filter
+will give us a bunch of numbers.
+The red filter gives us a bunch of numbers.
+The blue filter gives us a bunch of numbers.
+If we have 64 filters,
+We get 64 groups of numbers.
+This group of numbers,
+has another name.
+It’s called Feature Map
+So when we put a picture
+through a convolutional layer.
+which contains a bunch of filters,
+we will produce a feature map.
+Suppose that in this convolutional layer,
+it has 64 filters.
+Then the feature map we generated
+has 64 sets of numbers.
+Each group is four by four in this example,
+which means that the first filter produces four times four numbers
+The second filter also produces four times four numbers
+The third one also produces four times four numbers
+and so on for all the 64 filters
+So what is the meaning of the feature map?
+You can think of this feature map as
+another new picture.
+The difference is that the number of the channel of this picture.
+is 64.
+Each channel corresponds to a filter.
+Originally, a picture has three channels.
+Through a convolution layer,
+it becomes a new picture
+that has 64 channels.
+Okay, this convolutional layer
+of course can be stacked multiple times.
+Here, i just stacked the first layer.
+What will happen if you add the second layer?
+In the second layer of convolution,
+there are also a bunch of filters.
+For each filter,
+we set its size to 3 x 3.
+for its height,
+It must be set to 64.
+Why? We know that
+the height of the filter
+is the channel of the image that it is processing.
+So with the first convolution layer,
+assume that the input image is black and white, and the channel is one,
+then the height of our filter is one.
+If the input image is in color, and the channel is three,
+then the height of the filter is three.
+In the second layer,
+We will also get an image.
+For the second convolutional layer,
+its input is also an image.
+What is the channel of this image?
+The channel of this image is 64.
+Where does 64 come from?
+This 64 is from the number of the filter
+from the previous convolutional layer.
+For the previous convolutional layer,
+if its filter number is 64,
+it has 64 channels in its outputs.
+So for the second layer,
+assume that you want to use this image as input,
+the height of your filter should also equal to 64.
+Okay, so there is also a bunch of filters in the second layer,
+only that the height of these filters are 64.
+Okay, the next question we want to answer is
+if the size of our filter is always set to 3 × 3,
+will our network
+be unable to look at a larger range of patterns?
+Actually, it won't.
+Because you think it this way:
+if we are in the second layer of the convolutional layer
+and the size of our filters is the same as 3 × 3,
+what will happen?
+If we set up 3 × 3 filters as well,
+when we look at the value in the upper left corner,
+the value in the upper left corner corresponds to this range
+on the image.
+The value in the lower right corner corresponds to this range
+on the image.
+So when we look at the 3 × 3 range
+and the output of the first convolutional layer
+of this feature map,
+which is also 3 × 3 range,
+we actually consider a 5 x 5 range
+on the original image.
+So although our filter is only 3 × 3,
+the range of its consideration on the image
+is 5 × 5, which is bigger.
+So today, the deeper your network is,
+with the same size of 3 × 3 filters,
+the larger range it can see.
+So if the network is deep enough,
+you don't need to worry that you cannot detect larger patterns.
+It can still detect a large pattern.
+Okay, so far, we have just talked about two stories.
+The two versions of the story
+are exactly the same.
+In the first version of the story,
+we've mentioned that there're some neurons.
+These Neurons will share parameters.
+These shared parameters
+are the filters in the second version of the story.
+Here we have 3 × 3 × 3 parameters in this set of parameters.
+There are 3 × 3 × 3 numbers in this filter.
+Here I deliberately use color to
+circle these numbers.
+so as to tell you that this weight is this number.
+This weight is this number.
+This weight may be this number.
+And so on.
+Here, I remove the bias.
+The neuron has a bias.
+Does this filter have a bias?
+Actually, it has.
+It’s just not mentioned in the story.
+In the general implementation,
+the filters of your CNN
+still have the bias.
+Then in the first version of the story.
+We say that different neurons
+can share weight
+to cover different ranges.
+And for weight-sharing,
+it's actually the filter scanning through an image.
+The filter scanning through an image
+is actually called convolution.
+This is why the convolutional layer
+is called the convolutional layer.
+Because the thing about the filter scanning through an image
+is actually convolution.
+The so-called filter scanning through an image
+is actually the different receptive field.
+The neurons can share parameters.
+And this set of shared parameters
+is called a filter.
+Okay, today we use two different aspects to
+tell you about CNN.
+I hope it can help you have a deeper understanding of CNN.
+Okay, so we say that
+the reason to use CNN is based on two observations.
+The first observation is that we don’t need to look at the whole image.
+For the first story version of the neuron,
+it's that
+neuron only looks at a small part of the image.
+For the filter’s story, it's that
+We have a set of filters.
+Each filter only looks at a small range.
+It only detects small patterns.
+Then we say the same pattern
+may appear in different places in the image,
+so neurons can share parameters.
+For the filter’s story, it's that
+a filter must scan through the entire image.
+This is the convolutional layer.
+When a convolutional layer
+does image recognition,
+actually, there is a third commonly used thing
+called pooling.
+Where does pooling come from?
+Pooling comes from another observation.
+This observation is that
+we do subsampling on a larger image.
+For example, if you remove all even columns
+and all odd rows,
+the image will become 1/4 of the original one.
+But it won't affect the content of the image
+if we zoom-in in a large image.
+This is a bird, and
+it still looks like a bird in the smaller image.
+So there is a design called pooling.
+How does pooling work?
+One thing about pooling is that
+it has no parameters.
+So it is not a layer.
+There are no weights in pooling.
+It has nothing to learn.
+So someone will say that
+pooling is more like an activation function.
+It's more like sigmoid and ReLU
+because there is nothing to learn in pooling.
+It is an operator
+whose behavior is fixed.
+There is no need to learn anything based on data for pooling.
+There are many different versions of pooling.
+We are talking about Max Pooling here.
+How does Max Pooling work?
+We just said that each filter generates a bunch of numbers.
+Each filter produces a bunch of numbers.
+When doing pooling,
+we just put these numbers in a few groups.
+In this example, we have 2×2 numbers
+in a group.
+We will choose a representative number from each group.
+In max pooling,
+the representative number we choose is the maximum one.
+Then you may ask why you choose the maximum one.
+You don't necessarily have to choose the maximum one.
+This is what you can decide by yourself.
+In max pooling, we choose the maximum one.
+However, for example, there is also min pooling.
+We choose the minimum number for min pooling.
+I have also seen average pooling.
+So there are various methods of pooling.
+And do we have to group 2×2 numbers in a group?
+Not really.
+This one is also what you can decide by yourself.
+You can also do 3×3, 4×4,
+or whatever you want.
+Okay, so after a convolutional layer,
+usually, it is followed by pooling.
+What pooling does is make the image smaller.
+After finishing the convolutional layers, we will obtain an image.
+There are many channels in this image.
+After doing pooling,
+we just leave the channel of this image unchanged.
+All 64 channels remain unchanged.
+But we will make the image a little narrower.
+In the previous example,
+a 4×4 image,
+if we group the value of output
+into 2×2 values per group,
+the 4×4 image will become a 2×2 image.
+This is what pooling does.
+Generally, in practice,
+Convolution and pooling are often used together.
+You may do convolutional layers several times
+and do pooling once.
+For example, two convolution layer and one Pooling layer.
+That is, do convolution twice and pooling once.
+But you can observe that
+pooling can still do a little harm
+to your performance.
+Suppose what you want to detect is a very subtle thing.
+Then if you just do subsampling,
+the performance may be slightly worse.
+So in recent years, you will find
+people often start to throw away pooling
+in the network of image classification.
+They would do things like
+the fully convolutional network.
+It means the entire network contains only convolutional layers
+but no pooling.
+That’s because computing power has become much stronger in recent years.
+The main reason for pooling is to reduce the amount of computation.
+Do subsampling and
+reduce the size of images and the amount of computation.
+So if your computing resources are
+enough to support you,
+many network architecture designs
+often exclude pooling today.
+They will try the fully convolutional network
+which includes only convolutional layers.
+Then see if the network can learn something and
+see if we can do better.
+But generally,
+your architecture will be convolutional layers plus pooling.
+But just like what I have said before, pooling is optional.
+Many people today may choose not to use pooling.
+Next,
+if you have passed through several convolutional layers?
+How do we get the final result in the end?
+You will do one thing with the output of pooling.
+It's called flatten.
+The word "flatten" was mentioned in Homework 2
+by the teaching assistant. The so-called flatten means that
+in this image,
+values that were originally arranged in a matrix form are
+straightened into a "flat" vector.
+Then we put this vector
+into the fully connected layer.
+You may have to do a softmax afterwards.
+And finally, we get the result of image classification.
+This is a classic image classification network.
+The network typically contains
+convolutional layers,
+pooling, flatten operation.
+, and passsing through a few more
+fully connected layers and softmax,
+and finally obtain the result of image classification.
+We will practice an image classification problem in homework 3.
+Okay, besides image recognition,
+you may have heard of CNN in the other most common and
+most familiar application.
+CNN can be used to play "Go".
+Today, if I teach a machine learning class
+without mentioning AlphaGo,
+didn't everyone think that you had said nothing, right?
+So let’s mention a little about AlphaGo.
+So how do you use this CNN to play Go?
+We say that playing Go is a classification problem.
+The input to your network
+is the position of black and white on the Go board.
+Your output is where the next step should be.
+But we already know that
+the input of the network is a vector.
+How to represent the chessboard as a vector.
+No problem at all.
+There are 19 × 19 positions on the chessboard.
+Then we express a chessboard
+as a 19 × 19 dimensional vector.
+In this vector,
+if there is a black stone in a certain position,
+we fill in 1 for that position.
+If there is a white stone, we fill in -1.
+If there is no black or white stone, we fill in 0.
+Then we can
+tell the network
+what does the game on the chessboard looks like now.
+We can use a 19 × 19 dimensional vector
+to describe a chessboard.
+Of course, it doesn’t have to be done like this.
+It doesn’t have to be 1 for a black stone and -1 for a white stone.
+and 0 for no stone.
+This is just a possible representation.
+You can think of other more mysterious expressions.
+In short, we have a way to describe the game on the chessboard
+with a vector.
+Feed the network with this vector,
+and then
+you can treat Go as a classification problem.
+Call this network to predict
+where is the best place for the next step.
+So playing Go
+is a classification problem with 19 × 19 categories.
+The network will output
+which category is the best choice
+within these 19 × 19 categories.
+Where you should choose to place the next step
+can be solved completely by
+a fully connected network.
+But the performance of using CNN is better.
+Why is it better to use CNN?
+First of all, you can view a chessboard
+as a picture.
+A chessboard
+can be seen as a picture with a resolution of 19 × 19.
+Generally, the picture resolution is much larger.
+Normal pictures with a resolution of 100 × 100
+are considered small pictures.
+But the chessboard is a tiny picture.
+The resolution of this image is only 19 × 19.
+Every pixel in this picture
+represents a place on the board where you can place it.
+What about the channel?
+The channel of the general picture is RGB.
+RGB represents a color.
+Then what is every channel
+on the Go board?
+In AlphaGo’s original paper, it tells you that
+each position or pixel
+of the Go board
+is described with 48 channels.
+In other words, for every position on the board,
+use 48 numbers
+to describe what happened at that location.
+So why are these 48 numbers?
+This is obviously designed by a master of Go.
+Those 48 numbers include,
+for example, is this position going to be eaten?
+Or is there a different color stone next to this location, etc?
+Each location is described like this.
+So you will use 48 numbers
+to describe a position on the Go board.
+The Go board is a 19×19 resolution picture.
+Its channel number is 48.
+Okay, but why can CNN be used to play Go?
+We just emphasized that CNN
+doesn't perform best in every case.
+It is designed for images.
+If a question
+doesn’t have any characteristic in common with images.
+You shouldn't use CNN.
+Since you can use CNN to play Go,
+what does it imply?
+It means that Go and images have something in common.
+What are the common characteristics?
+We just said that the first observation on the image is that
+you only need to look at a small area to know
+the important patterns.
+Is this in common with Go?
+For example, you don’t have to look at the whole Go board,
+you can know what happened here
+by only looking at this pattern.
+The white stone was surrounded by black ones.
+If the black stone place here,
+then you can take the white stone away.
+The white stone will have to place here
+to not be taken away.
+In fact, the filter size
+of the first layer in AlphaGo
+is 5 × 5.
+So obviously the people who are designing this network suggest that
+looking at the range of 5 × 5 on the board
+can know many important patterns.
+Next, we said that the second observation on the image is
+the same pattern that may appear in different positions.
+Is it the same in Go?
+This particular pattern
+can appear anywhere on the board.
+It can appear in the upper left corner.
+It can also appear in the lower right corner.
+From this point of view,
+images have a lot in common with playing Go.
+But what makes people wonder is
+when dealing with images, we often use pooling.
+Subsampling an image
+will not affect our interpretation of the objects in the image.
+But is the Go board like this?
+If you remove the odd-numbered rows and even-numbered columns on the board,
+is it still the same game?
+It doesn't make sense.
+Playing Go is a delicate task,
+if you take out a column or a row,
+the whole game situation is different.
+It's impossible that removing a row and a column
+causes no issues.
+So some people said that
+CNN has to have pooling.
+Pooling is used for image recognition.
+So AlphaGo must also have pooling.
+So it means AlphaGo sucks.
+One can attack the weakness of pooling,
+then you can easily beat it.
+Is it really？
+AlphaGo is so strong，
+so obviously it does not have such obvious weakness.
+This question bothers me a bit.
+So I read through
+the paper about AlphaGo.
+In fact, AlphaGo's Paper on Nature
+isn't very long.
+If I remember correctly,
+it only has five or six pages.
+So I also recommend you to go through the article.
+Interesting as it is,
+the network architecture isn't even mentioned
+in the text.
+The details are only covered
+in the appendix.
+So I read the appendix carefully
+to understand AlphaGo’s network architecture.
+Let's take a look!
+Here is how the network is described
+in the appendix:
+First,
+let's transform the Go board
+into an image of 19 × 19 × 48 size.
+I already told you that
+we are seeing the chessboard as a picture.
+Next, the appendix says that they did Zero Padding.
+I also taught you this before.
+That is, if your filter exceeds the range of the image, add redundant zeros.
+Zero Padding means adding zeros outside the range.
+The appendix also specified the filter's size.
+The Kernel Size, or Filter Size, is 5 × 5.
+There are k filters,
+here k is set to
+192.
+Of course this is some experimental number.
+They also tried 128 and 256 and concluded that 192 is the best.
+All of the above belongs to the first layer.
+Then, Stride=1.
+We have just explained what Stride is.
+Then they applied Rectifier Nonlinearity.
+What is this?
+This is simply ReLU.
+This is just ReLU.
+From the second layer to the twelfth layer,
+all of the layers contain Zero Padding.
+All of those layers have the same kernel size 3 × 3
+and the same number of filters.
+That is, each layer has 192 filters.
+For Stride, it is still the same, which is 1.
+After stacking a lot of layers,
+they applied a Softmax on the last layer,
+because this is a classification problem.
+Ok, finished. Have you found anything strange?
+They didn't use Pooling!
+That's the strange thing I am talking about.
+So this is a good example of the fact that
+designing neural networks doesn't always have a
+golden guiding principle.
+Don't think Pooling is always good
+merely because we've used it a lot before.
+Pooling is not suitable for playing Go.
+So you have to think clearly.
+When you use a network architecture,
+you need to think about the meaning of this architecture,
+and determine whether the network is suitable for the current task.
+Back to CNN.
+In addition to playing Go and processing images,
+it has also been used in voice recognitions
+and language processing recently.
+We won't go into details here.
+But if you want to use CNN to do voice recognition
+and language processing,
+you must take a closer look at the methods in the literature.
+The design of receptive fields
+and parameter sharing,
+are very different
+between image processing
+and speech processing.
+So you have to think clearly!
+The Receptive Fields which are used in speech
+are specially designed based on the characteristics of languages,
+so they are very different from those used in image processing.
+So don’t think that the CNN for images
+works naively on other things.
+It may not work.
+You have to think clearly about
+the characteristics of voice and images,
+to determine how you should design a suitable Receptive Field.
+Ok. Now I'm going to tell you a great weakness of CNN.
+CNN cannot handle
+image scaling
+and image rotations.
+How is that?
+Suppose you give a CNN lots of dogs with the same size,
+surely it can recognize that this is a dog.
+When you zoom in this picture,
+can CNN still recognize it?
+Well, possibly not.
+You may think that this is very peculiar.
+Aren't the shapes exactly the same?
+Why can't CNN recognize it when the picture is zoomed in?
+Is CNN that stupid?
+Sadly, it is.
+Even though two pictures
+have exactly the same shape,
+the values are totally different
+if you transform them into vectors.
+Therefore CNN can't handle this problem.
+Although you can easily see that the two pictures are the same,
+it’s very different for the perspective of the network.
+So actually,
+CNN can't handle image scaling
+and image rotations.
+Suppose it has learned to recognize
+some similar objects of a small size,
+then it will most likely fail
+if you zoom in the objects.
+So CNN is not as powerful as you think.
+That’s why we often need to do Data Augmentation
+in image recognition.
+To do Data Augmentation,
+you can pick some parts of the images out
+and enlarge them,
+or add random rotations as well,
+so your CNN is familiar to
+different sizes and different angles
+of the same object.
+This way, you can achieve better results with CNN.
+Then you might ask: "If CNN can’t handle scaling
+and rotations,
+does there exist any network architecture
+which can deal with this problem?"
+Actually yes.
+There is an architecture called Special Transformer Layer.
+We won't talk about it,
+so I put the link of this video here
+for your reference.

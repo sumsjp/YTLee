@@ -1105,7 +1105,7 @@
 </details>
 
 <details>
-<summary>241. [ICASSP 2020] ASR WITH WORD EMBEDDING REGULARIZATION AND FUSED DECODING (Speaker: Alexander H. Liu)</summary><br>
+<summary>241. [2020-05-04] [ICASSP 2020] ASR WITH WORD EMBEDDING REGULARIZATION AND FUSED DECODING (Speaker: Alexander H. Liu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=1j46kdawA4Q" target="_blank">
     <img src="https://img.youtube.com/vi/1j46kdawA4Q/maxresdefault.jpg" 
@@ -1114,11 +1114,37 @@
 
 # [ICASSP 2020] ASR WITH WORD EMBEDDING REGULARIZATION AND FUSED DECODING (Speaker: Alexander H. Liu)
 
+### 核心主題  
+- 提出一種新型的正規化方法（Word Embedding Regularization）來改進序列到序列的自動語音辨識（ASR）模型。
 
+### 主要觀念  
+1. **_SEQUENCE TO SEQUENCE ASR**：基於序列到序列架構，利用編碼器和解碼器進行語音轉錄。  
+2. **WORD EMBEDDINGS**：使用詞嵌入作為目標，以捕獲語言的語義信息。  
+3. **UNPAIRED DATA**：在低資源情況下，利用未配對的文字數據來提升模型性能。  
+
+### 問題原因  
+1. **DATA SCARCITY**：在低資源設置中，可用的配對數據（audio-text pairs）量有限，限制了模型的訓練效果。  
+2. **LANGUAGE MODEL LIMITATIONS**：傳統語言模型在某些情況下無法充分提升ASR性能。  
+
+### 解決方法  
+1. **WORD EMBEDDING REGULARIZATION**：在解碼器中引入詞嵌入正規化項，將未配對的文字數據融入模型訓練。  
+2. **FUSION DECODING**：結合相似性基於的分佈和語言模型，在解碼過程中進一步提升性能。  
+
+### 優化方式  
+1. **LIGHTWEIGHT APPROACH**：提出的方法計算開銷小，可輕易整合到現有架構中。  
+2. **COMPATIBILITY**：與其他解碼技術兼容，可疊加使用以獲得最佳效果。  
+
+### 結論  
+1. **IMPROVEMENT RESULTS**：在高資源和低資源設置下，提出的方法均顯著降低了WER（Word Error Rate）。  
+2. **DEPENDENCE ON WORD EMBEDDINGS**：詞嵌入算法的選擇對性能有顯著影響，使用BERT等高性能詞嵌入算法可進一步提升效果。  
+3. **STACKABLE NATURE**：方法可與其他技術結合使用，實現累積性能提升。  
+
+### 總結  
+本文提出了一種新型的正規化方法，充分利用未配對的文字數據來改進序列到序列ASR模型，在低資源和高資源設置下均展示了顯著的效果提升，且具備輕量化和兼容性的優勢。
 </details>
 
 <details>
-<summary>242. [ICASSP 2020] INTERRUPTED AND CASCADED PIT FOR SPEECH SEPARATION (Speaker: Gene-Ping Yang)</summary><br>
+<summary>242. [2020-05-04] [ICASSP 2020] INTERRUPTED AND CASCADED PIT FOR SPEECH SEPARATION (Speaker: Gene-Ping Yang)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=RUhkc6ihyYI" target="_blank">
     <img src="https://img.youtube.com/vi/RUhkc6ihyYI/maxresdefault.jpg" 
@@ -1127,11 +1153,80 @@
 
 # [ICASSP 2020] INTERRUPTED AND CASCADED PIT FOR SPEECH SEPARATION (Speaker: Gene-Ping Yang)
 
+### 文章整理：Interrupted and Cascade Permutation Invariant Training for Speech Separation
 
+---
+
+#### 一、核心主題  
+- 探討語音分離任務中基於排列不變性訓練（Permutation Invariant Training, PIT）的方法及其改進方案。
+
+---
+
+#### 二、主要觀念  
+1. **排列不變性訓練的基本原理**：  
+   - 在語音混合數據中，模型輸出的兩個聲道需要與真實的地面.truth進行匹配。  
+   - 由於存在多種可能的對應關係（綠色和棕色），PIT通過最小化所有排列的可能性來訓練模型。
+
+2. **存在的問題**：  
+   - PIT方法在初始化階段容易陷入局部最優，導致性能不穩定。  
+   - 模型在第一階段的隨機初始化可能導致不良的學習方向。
+
+3. **提出的方法**：  
+   - **階段一**：使用原始PIT進行訓練，獲取初步的標籤分配（label assignment）。  
+   - **階段二**：基於階段一的結果，固定標籤分配並進一步優化模型。  
+   - **階段三**：在階段二的基礎上，再次啟用PIT訓練，以提升最終性能。
+
+---
+
+#### 三、問題原因  
+- 隨機初始化模型參數可能導致PIT訓練初期的不穩定性和次優解。  
+- 初期的標籤分配（label assignment）可能無法充分反映數據的真實結構，影響模型的學習效果。
+
+---
+
+#### 四、解決方法  
+1. **固定標籤分配訓練**：  
+   - 在第一階段使用PIT獲得初步的標籤分配後，在第二階段固定該分配並進行進一步訓練。  
+   - 通過固定標籤分配，避免了初始化階段的不穩定性，使模型朝著更好的方向優化。
+
+2. **分段訓練策略**：  
+   - 分為三階段：  
+     1. 使用原始PIT進行初步訓練。  
+     2. 基於第一階段的結果，固定標籤分配並進行第二階段訓練。  
+     3. 再次啟用PIT訓練，進一步提升性能。
+
+---
+
+#### 五、優化方式  
+- 在第二階段固定標籤分配後，模型參數已朝著更好的方向優化。  
+- 第三階段再啟用PIT訓練時，初始模型參數更穩定，導致標籤分配的.switch率顯著降低，性能提升。
+
+---
+
+#### 六、實驗結果  
+1. **基於固定標籤分配的訓練效果**：  
+   - 使用不同L值（如L=10, L=80）進行第二階段訓練，最佳模型在L=80時取得17.66 dB的SDR性能。  
+
+2. **與基線對比**：  
+   - 與PIT基線相比，固定標籤分配後的模型性能提升約1.54 dB。
+
+3. **最終性能**：  
+   - 第三階段訓練後，模型在驗證集上的SDR性能達到17.99 dB，在測試集上也取得顯著提升。
+
+---
+
+#### 七、結論  
+- 提出了一種分段訓練方法，通過固定標籤分配優化模型初始化問題。  
+- 該方法可顯著提高語音分離性能，SDR增益約1.54 dB。  
+- 本研究的方法具有普適性，可用於其他語音分離模型的改進。
+
+--- 
+
+此整理結構清晰地總結了文章的核心內容、問題、解決方案及實驗結果，並以正式的學術用語進行表達。
 </details>
 
 <details>
-<summary>243. [ICASSP 2020] TRAINING CODE-SWITCHING LANGUAGE MODEL WITH MONOLINGUAL DATA (Speaker: Shun-Po Chuang)</summary><br>
+<summary>243. [2020-05-04] [ICASSP 2020] TRAINING CODE-SWITCHING LANGUAGE MODEL WITH MONOLINGUAL DATA (Speaker: Shun-Po Chuang)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=qf0j0A0-SVM" target="_blank">
     <img src="https://img.youtube.com/vi/qf0j0A0-SVM/maxresdefault.jpg" 
@@ -1140,7 +1235,74 @@
 
 # [ICASSP 2020] TRAINING CODE-SWITCHING LANGUAGE MODEL WITH MONOLINGUAL DATA (Speaker: Shun-Po Chuang)
 
+### 核心主題  
+- 探討如何利用單語數據訓練多語言模型（Coastal Region Language Model, CRLM）。  
+- 研究代碼切換任務中的數據不足問題，並提出解決方案。  
 
+---
+
+### 主要觀念  
+1. **代碼切換任務的挑戰**：  
+   - 代碼切換是指在單一文本中交替使用多種語言的現象，常見於多語社區。  
+   - 數據不足是代碼切換任務（如機器翻譯、語言識別）的主要瓶頸。  
+
+2. **單語數據的優勢與局限性**：  
+   - 單語數據廣泛可用，但直接用於多語言模型訓練效果有限。  
+   - 需要通過技術創新充分利用單語數據提升模型性能。  
+
+---
+
+### 問題原因  
+- 傳統方法在利用單語數據進行多語言建模時面臨以下挑戰：  
+  1. **信息不足**：單語數據缺乏跨語言的上下文關係，難以捕捉代碼切換模式。  
+  2. **模型偏差**：僅依賴單語數據可能導致模型對某一種語言過於偏好，忽視其他語言的特徵。  
+
+---
+
+### 解決方法  
+1. **僞代碼切換數據生成**：  
+   - 利用句法和語義相似性規則，從單語數據中自動生成僞代碼切換句子。  
+   - 示例：將英文句子「今天天氣真好」轉換爲「Today 天氣真好」。  
+
+2. **正則化約束**：  
+   - 引入對稱KL散度作爲正則化項，約束投影矩陣的分布差異，減少語言間偏差。  
+
+3. **歸一化技術**：  
+   - 對隱藏層表示進行L2歸一化處理，增強模型對不同語言特徵的區分能力。  
+
+---
+
+### 優化方式  
+1. **實驗驗證**：  
+   - 使用混合語料庫（單語文本 + 僞代碼切換文本）進行訓練，顯著降低困惑度（Perplexity）。  
+   - 結果顯示，結合正則化約束和歸一化技術的模型性能最優。  
+
+2. **可視化分析**：  
+   - 通過PCA降維技術，展示投影矩陣在二維空間中的分布變化。  
+     - 基線模型：語言間特徵可分但距離較遠。  
+     - 使用僞代碼切換數據訓練：語言間距離縮小且無過度重疊。  
+     - 應用對稱KL散度約束：語言特徵完全重疊，表徵能力顯著增強。  
+
+3. **語義對齊實驗**：  
+   - 測試模型對跨語言語義相似性任務的性能（如檢索同義詞）。  
+   - 實驗表明，應用正則化和歸一化技術後，語義映射精度提升明顯。  
+
+---
+
+### 結論  
+- 提出了一種基於單語數據的多語言建模新方法，有效解決了代碼切換任務中的數據不足問題。  
+- 通過僞代碼切換數據生成、正則化約束和歸一化優化，顯著提升了模型在代碼切換場景下的表現。  
+- 實驗結果表明，結合多種優化技術的模型性能最優，爲跨語言自然語言處理提供了新的研究方向。  
+
+---
+
+### 英文摘要  
+This paper addresses the challenge of training a multi-language model using monolingual data, particularly focusing on code-switching tasks. We identify the limitations of conventional methods in leveraging monolingual data and propose innovative solutions to enhance model performance. Key contributions include:  
+1. A novel approach to generating pseudo-code-switching sentences from monolingual data using syntactic and semantic similarity rules.  
+2. Regularization techniques, including symmetric KL divergence constraints, to reduce language biases.  
+3. Normalization methods to improve the distinguishability of cross-language features.  
+
+Extensive experiments demonstrate that our proposed methods significantly reduce perplexity and enhance semantic mapping accuracy. The results highlight the potential of monolingual data in multi-language modeling and provide new insights for code-switching natural language processing research.
 </details>
 
 <details>

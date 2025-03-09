@@ -1,0 +1,769 @@
+Hi, lets have class.
+Besides auto-encoder for different downstream tasks,
+I also want to talk about
+how auto-encoder is used for other interesting applications.
+I will talk about feature disentanglement.
+What is feature disentanglement?
+Or, what is disentanglement?
+Disentanglement is
+to separate things that have become joined or confused.
+This is called disentanglement.
+Then, why do we study feature disentanglement?
+Let's first think about
+what auto-encoder does.
+An auto-encoder turns an image,
+for example,
+into a code
+and then recovers the image from the code.
+Since the image can be recovered from the code,
+it means that the code
+contains a lot of information
+or contains all the information of an image.
+For example,
+important information of an image,
+such as color and texture, and so on.
+Besides the image, auto-encoder can also
+be used in speech processing.
+You can input a segment of utterance into the encoder
+to obtain a vector and then recover the original input
+with the help of the decoder.
+That vector contains
+all the important information in the utterance,
+including linguistic information of the utterance,
+or we called it content.
+As well as who spoken the utterance,
+we called it the speaker information.
+For text,
+if we input an article into the encoder for a vector,
+the decoder recovers the original article with that vector.
+What may be in this vector?
+There may be
+the syntactic information of the article
+and semantic information as well.
+However, these pieces of information are all entangled in a single vector.
+We do not know what exactly is in a specific dimension
+of a vector.
+For example,
+if we input a segment of an utterance to the encoder,
+it gives a single vector.
+However, in this vector,
+which dimensions are for the content of the utterance?
+Which dimensions for the speaker information?
+We do not know.
+Feature disentanglement is thus a solution.
+When training an auto-encoder,
+we would like to figure out
+that for a representation,
+or an embedding,
+or code,
+these are just the same thing,
+what information is encoded
+in a specific dimension.
+Is it possible to make the encoder output,
+for example, a 100-dimensional vector
+where the first 50 dimensions are for the content of the utterance,
+while the last 50 dimensions are for the speaker information?
+Such a technique is called feature disentanglement.
+Actually, there are many kinds of approaches
+to achieving feature disentanglement.
+I wanted to talk about
+the details of these approaches.
+But I think
+it is okay to skip this for now.
+In this part, we are just telling you
+feature disentanglement is feasible.
+As for how it is achieved,
+I will list a few papers here
+so whoever is interested can refer to them.
+If you have no interest in them,
+you can just believe that Feature Disentangle is feasible.
+The chances are that we can probe the information
+encoded in each dimension of the Auto-Encoder.
+Okay, what are the applications of the Feature Disentangle?
+Of course, you can think about what kind of applications are there.
+There is a speech application that utilizes Feature Disentangle.
+This application is called Voice Conversion.
+What is Voice Conversion?
+Voice Conversion is called 語音轉換 in Chinese.
+You may not hear Voice Conversion before.
+However, you must have seen its application.
+It's Conan's Voice-Changing Bowtie,
+which is invented by Dr. A Li twenty years ago.
+In the past,
+he needed paired voice signals for the Voice Conversion.
+In other words,
+suppose you want to convert the voice of A into the voice of B.
+You must find both A and B.
+Then, ask them to say exactly the same sentences.
+A says, "How are you"
+and B says, "How are you" as well.
+A said "Good morning"
+and B says "Good morning", too.
+They have to say exactly the same sentences.
+Suppose we have one thousand sentences that said by A and B;
+what is next?
+It's nicely done.
+It is a supervised learning problem.
+You have paired data so that you can train a supervised model.
+Your model takes A's voice as input and produces B's voice.
+It's over.
+However, it is unrealistic to ask A and B to say a lot of sentences.
+For example, I want to convert my voice into that of Yui Aragaki.
+I have to bring Yui Aragaki here.
+To say the least,
+even if I really bring her here.
+She can't speak Chinese.
+Accordingly, she can’t say exactly the same sentences as I do.
+However, our machine may be more powerful
+with the Feature Disentangle technology.
+We can just give it the voice of A and give it the voice of B,
+and A and B don’t need to say the same sentence.
+They don’t even need to speak the same language.
+The machine may also learn how to transfer the sound of A into the sound of B.
+How is it actually done?
+Suppose we collect a lot of human voices,
+then we utilize these voices to train an Auto-Encoder.
+At the same time, we perform the Feature Disentangle in the Auto-Encoder,
+so we can know which dimensions of the output of the Encoder encode the content of the voice
+and which dimensions encode the characteristics of the speaker.
+In addition, we can perform the voice conversion.
+How do we do it?
+We already know the parts representing content information
+and the parts representing speaker characteristics
+in the latent of the Encoder.
+Followingly,
+we can swap the content information
+and speaker information of the two voices.
+For example, here I say, "How are you".
+After feeding it into the Encoder,
+we can get some information.
+In this encoder, we know that some dimensions
+represent the content of "How are you",
+and some dimensions represent my speaker characteristics.
+If you feed the voice of your wife into the Encoder,
+it knows certain dimensions represent what your wife said,
+while certain dimensions represent
+the characteristics of your wife's voice.
+We just need to take out the content that I said
+and extract the voice feature
+of your wife.
+Concatenate them together.
+Fed it into the Decoder.
+Then, we will have an utterance of
+your wife saying the content "How are you?"
+Is this really possible?
+The following is a real example.
+It sounds like this,
+"Do you want to study for a Ph.D.?"
+Okay, so this is my voice
+asking if you want to study Ph.D..
+Oh, By the way,
+in this course, I will keep encouraging you to study Ph.D. unawares.
+Okay, let's come back here.
+After feeding my utterance into the Encoder,
+you can imagine that in the Encoder,
+we know which dimensions represent the content
+and which dimensions represent my voice.
+For simplicity,
+just imagine that
+the Encoder outputs a 100-dimensional vector;
+the first 50 dimensions represent the content
+and the last 50 dimensions represent the characteristics of the speaker.
+Next, there is another sentence said by your wife.
+[Japanese]
+I'm not sure what she is talking about.
+It's Japanese.
+We feed this utterance into the Encoder.
+Similarly, the first 50 dimensions represent the content,
+and the last 50 dimensions represent the characteristics of your wife’s voice.
+And then,
+take out the first 50 dimensions of my utterance,
+which is the part of the content.
+As for your wife's utterance,
+feed it into the Encoder
+and extract the last 50 dimensions.
+Concatenate them
+to become a 100-dimensional vector
+Feed it into the decoder.
+Take a look at the output utterance.
+Is it actually your wife saying "Do you want to study for a Ph.D."?
+In fact, it sounds like this,
+"Do you want to study for a Ph.D.?"
+Did you hear that?
+Now you should rush into applying to a doctoral program!
+Furthermore, we can actually do it conversely.
+Take out the content of the Japanese.
+And then extract the characteristics of my voice.
+Concatenate them together into a 100-dimensional vector.
+Feed it into the decoder.
+It sounds like this.
+[Japanese]
+I don't know what I'm talking about.
+Okay. Overall, it is possible to do Voice Conversion
+by using Feature Disentangle.
+Besides, no matter whether in the computer vision domain
+or the NLP domain.
+We can adopt the same approach.
+Hence, you can think about
+what Feature Disentangle can do.
+Okay, the next topic I want to tell you
+is called Discrete Latent Representation.
+So far, we have assumed that
+the Embedding is a vector.
+We have a string of numbers here,
+which is, specifically, Real Numbers.
+However, can it be something else?
+For example,
+can it be a binary number?
+What are the benefits of using a binary number?
+One of the benefits is that
+every dimension of the Embedding
+can represent the presence or absence of a certain characteristic.
+For example,
+if the input
+is an image of a girl,
+then we will have the first dimension to be 1.
+As for a boy, the first dimension is 0.
+If you wear glasses, the third dimension will be 1.
+If you don't wear glasses,
+the third dimension will be 0.
+We simplify the embedding by setting
+all dimensions in the embedding as binary.
+All dimensions in the embedding become a number with only 0 and 1.
+We can explain the embedding easier with simplification.
+Is it possible that make the vector becomes a one-hot vector?
+Only one dimension is 1,
+and the others are zero.
+We force the embedding to be a one-hot vector.
+That is, input a picture into the encoder,
+you will obtain an embedding in which
+only one dimension can be 1
+and the others are zero.
+What kind of effect can it achieve?
+It may achieve unsupervised classification.
+For example, you want to train a classifier to
+recognize the handwritten number.
+Suppose you have a lot of pictures from 0 to 9 without labels.
+You can use all the pictures to train an auto-encoder.
+You force the latent representation
+in the middle of the auto-encoder
+must be a one-hot vector.
+And, you set the dimension of the latent representation as exactly 10.
+There are 10 possible in this 10 dimensions latent representation.
+Maybe every dimension in the latent representation will correspond to a number.
+If you use a one-hot vector as your embedding,
+the machine may learn how to classify without label data.
+Let the machine automatically learn to classify.
+Many other technologies also use discrete representation.
+One of the most well-known is VQVAE,
+which is vector quantized variational auto-encoder.
+How does VQVAE work?
+You input a picture into the encoder and output a vector.
+In a common case, the vector is continuous.
+Then, you have a row of vectors which we call codebook.
+You can make the model learn the code by itself.
+You calculate the similarity between
+the output of the encoder with all vectors in the codebook.
+You maybe notice that we only calculate the similarity.
+You will find it is similar to calculating self-attention, right?
+The output of the encoder is a query,
+and these vectors are keys.
+It's very similar to self-attention.
+When we spoke about self-attention,
+we spend a lot of effort explaining query, key, and value.
+So this is the query.
+This is key.
+Next, let’s look for which vector in the codebook is the most similar to the output of the encoder.
+Then you take out the vector which is most similar to the query.
+In the VQVAE, the keys and values share the same vectors.
+If you use self-attention as a metaphor,
+it means the key and value are the same.
+Input the vector into the decoder.
+Then, make the decoder output a picture you want.
+During training,
+we want to make the input to output as close as possible.
+This Decoder,
+this Encoder,
+and this Codebook
+are all learned from the data.
+The advantage of doing this is that
+you can have a discrete Latent Representation.
+That is to say, the input of the Decoder here
+must be one of the vectors in
+the Codebook here.
+We assume there are 32 vectors in your Codebook.
+The input of your Decoder
+could only have 32 possibilities.
+It's like that you make your Embedding
+discrete
+and not having endless possibilities.
+It only has thirty two possibilities.
+Actually, for a technology like this,
+if you apply it to voice,
+you just input a voice signal
+through the Encoder to generate a vector.
+What's next?
+You calculate this similarity
+and select the most similar vector to throw into the Decoder
+to output the same voice signal.
+At this time, you will realize that your Codebook
+may be able to learn the most basic parts of pronunciation.
+For example,
+the most basic unit of pronunciation,
+which is also called Phonetic.
+If you don't know what Phonetic is,
+you could think of the KK phonetic transcription.
+Then, you will realize that
+Each vector in this Codebook
+corresponds to a certain pronunciation
+and a certain symbol in the KK phonetic transcription.
+This is VQVAE.
+There are actually more crazy ideas.
+Does Representation have to be a vector?
+Can it be something else?
+For example,
+can it be a piece of text?
+Yes, it can.
+For example,
+we are going to do an Auto-Encoder of text.
+In text, the concept of Auto-Encoder
+is not different from the concept in audio or video.
+That is, you have an Encoder,
+and you throw an article in it.
+It may generate a vector.
+Then, you throw this vector to the Decoder
+to reconstruct the original article.
+But, can we not use vectors
+as Embedding now?
+Can we say our Embedding
+is a string of text?
+If we turn Embedding into a string of text,
+what are the benefits?
+Maybe, this string of text is the abstract of the article
+because you can think about it,
+you throw an article into the Encoder
+and it outputs a string of text.
+By using this string of text,
+you can reconstruct the original article through the Decoder.
+It means this text
+is the essence of this article,
+which is the most critical content of this article.
+That is to say, it is the abstract of this article.
+However, the Encoder here
+needs to be a Seq2Seq Model, obviously,
+for example, Transformer,
+because our input here is an article
+and the output here is a string of text.
+The decoder input is a string of text
+and the output is an article.
+So, it's all about inputting a sequence of things
+and outputting a sequence of things.
+It's all about inputting a sequence of words and outputting a sequence of words.
+So, the Encoder and the Decoder
+must be a Seq2Seq Model, obviously.
+So you can imagine
+that this is a Transformer you trained for homework 5.
+This is also another Transformer.
+Both of them read a piece of text
+and output another piece of text.
+So this whole auto-encoder
+is not an ordinary auto-encoder,
+it is a seq2seq2seq auto-encoder.
+It turns a long sequence into a short sequence,
+then restores the short sequence back to the long sequence.
+And when this auto-encoder is training,
+data does not need to be labeled.
+Because training an auto-encoder
+only requires lots of documents.
+You only need lots of unlabeled data.
+In this case, lots of documents will do.
+If you can successfully train this model,
+if this string of text can really be the summary,
+you have enabled the machine to learn to do summarization automatically.
+The machine has learned to do
+unsupervised summarization automatically.
+But is it really that easy?
+In fact, when you start training,
+you'll find that this won't work.
+Why?
+Because the encoder and the decoder
+will invent their own secret code.
+So it will generate a piece of text,
+which you can’t understand.
+You can't read the text,
+but the decoder can understand
+and restore the original article.
+But since people can't understand,
+it’s not a summary at all.
+How do we solve this?
+We can apply the concept of GAN
+by adding a Discriminator.
+The discriminator has read sentences written by people.
+So it knows what sentences written by people look like.
+These sentences
+don’t need to be the abstracts of these articles.
+They can be another bunch of sentences.
+So it knows what sentences written by people look like,
+and then,
+this encoder must find a way to fool the discriminator.
+The encoder must find a way to generate a sentence
+that can not only be used by the decoder to
+restore the original document,
+but also let the discriminator feels like it's a sentence written by a human.
+We expect by using this method,
+we can force the encoder to
+generate a summary that people can understand
+instead of some cryptic text.
+Then you might ask,
+"How to train this network?"
+This output is a string of text,
+how to connect this text to the discriminator
+and the decoder?
+I'll tell you,
+when you see a problem that you can’t train,
+just use RL to do it.
+So here you use RL, and it's over.
+Ok, so
+after the network has been trained,
+you might feel this concept is a bit like CycleGAN.
+Indeed, you can think of this as a CycleGAN,
+where this is a generator,
+this is another generator,
+and this is a discriminator.
+You want the input and output to be as close as possible.
+This is essentially a CycleGAN.
+We are just looking at the idea of CycleGAN
+from an auto-encoder point of view.
+Okay, what is the actual result?
+The following is the output of the real network.
+You give it an article to read,
+and it uses the auto-encoder way
+to train for 3 million articles.
+Then you give it a new article
+and see
+if the encoder's output
+is a human-readable summary.
+For example,
+if we show this article to the encoder,
+the output is
+"Australia strengthens drug testing outside of sports competitions",
+which looks fine.
+Here's a more remarkable example.
+The article is about
+the Chinese Taipei Olympic Committee
+receiving an invitation letter for the 1992 Winter Olympics that day.
+After passing the article to the encoder,
+it outputs "The CTOC received Winter Olympics invitation".
+It somehow learned the abbreviation of the organization,
+which is CTOC.
+For some unknown reason,
+it picked up this knowledge by itself.
+Of course, a lot of times
+it still makes mistakes.
+I especially like the ridiculously wrong examples.
+For example,
+if you input the article about
+the rain that's been going on for days in the Indonesian island of Sumatra,
+what will the machine's output be?
+The output of the encoder is
+"Flooding in Indonesumatra"
+What does "Indonesumatra" mean?
+Perhaps it is the abbreviation of "Indonesian island of Sumatra".
+Maybe in the sentences written by humans,
+abbreviations like that
+appear quite often,
+to the point that
+the encoder feels like "Indonesian island of Sumatra"
+can be abbreviated to "Indonesumatra".
+Sometimes it produces inexplicable sentences.
+For example, after passing this article to the machine,
+the output of the encoder is
+"Hefei’s leading cadres at the grassroots level do business, welcome and send to the regulations."
+Although it does resemble the structure of a sentence,
+the content is total gibberish.
+So, this example is just here to illustrate that
+it is totally possible
+to take a piece of text as embedding.
+In fact, there are even crazier cases.
+I've seen someone take the tree structure
+as embedding.
+Someone turned a piece of text into a tree structure
+and used the tree structure to restore a paragraph of text.
+I've listed the references here in case you're interested.
+Next,
+we'll talk about more applications of auto-encoders.
+What else can the auto-encoder do?
+For example,
+the examples we've mentioned so far have been using the encoder.
+In fact, the decoder is also quite useful.
+If we single out the decoder,
+isn't it some kind of generator?
+Don't generators
+take a vector as the input
+and output something
+like an image?
+Isn't that exactly
+what the decoder does?
+So, the decoder
+can also be used as a generator.
+We can sample from a known distribution,
+a Gaussian distribution, for example.
+We can sample a vector,
+pass it to the decoder,
+and see if it can output an image.
+In fact,
+back when we were talking about the generative model,
+we mentioned that in addition to GAN,
+there are two other generative models.
+One of them is called VAE,
+which stands for variational auto-encoder.
+Judging from the name,
+it is obvious that it is related to the auto-encoder.
+It actually takes out the decoder of an auto-encoder
+and uses it as a generator.
+While there are, of course, other implementation details and
+techniques that made it possible,
+I'll leave it for you to look it up.
+So you are given a decoder
+after training the auto-encoder.
+Auto-Encoder can also be used for data compression.
+As you already know,
+technologies such as JPEG compression
+compress the data
+when the data size is too big.
+Auto-Encoder can also be used for data compression.
+It is perfectly fine to take the output of the encoder
+as the result of compression.
+A picture is originally
+a very high-dimensional vector.
+Usually, the output of the encoder
+is a low-dimensional vector.
+Thus you can take that vector
+as the result of compression.
+So the encoder
+compresses the data,
+and the decoder
+decompresses it.
+But this compression method
+is lossy.
+That is the compression results in distortion.
+Because it is impossible to
+exactly recover the input image
+from the output image
+while training the encoder,
+so there will be a loss of information.
+Therefore the compression technology
+using the auto-encoder
+inevitably results in distortion,
+just like JPEG images.
+Auto-encoder compression
+suffers from the same problem.
+Ok. Now we are going to talk about
+a technique used in your homework.
+In the assignment, we will use Auto-Encoder
+to do Anomaly Detection.
+Originally,
+I just wanted you to use Auto-Encoder once in your homework.
+Out of many technologies related to it,
+I chose Anomaly Detection
+because it is a technique
+that can be applied in many different scenarios.
+Let's talk about the task.
+Suppose you are given
+a large amount of training data
+labeled as X1 to XN.
+For better understanding,
+"Anomaly detection" is usually translated to "finding irregularities" in Chinese.
+In this task,
+we are given some new data,
+and you have to answer the following question:
+"Is it similar to the data you had seen before?"
+More specifically,
+the goal is to train an anomaly detection system.
+It is trained with
+a large amount of data.
+Given a new piece of data,
+if it is similar to
+the previous dataset,
+the new piece of data is called "normal";
+if it doesn’t look like the previous dataset,
+the new piece of data is called "abnormal".
+Actually,
+there are many other words
+that can replace the word "anomaly".
+For example, outlier,
+novelty,
+or exceptions
+all refer to the same thing.
+The main goal is to determine whether a new piece of data
+is similar to the data it had seen before.
+But similarity
+does not have a well-defined definition.
+The criterion may vary,
+depending on the application.
+For example,
+if the training data contains only Raiqiu,
+then Pikachu might be considered an anomaly.
+But assuming that all animals in your training data
+are Pikachu,
+then Raiqiu is abnormal.
+So we don't say that
+something must be normal,
+or something must be abnormal.
+We don’t say that something must be normal or abnormal.
+Whether it is normal or abnormal
+depends on what your training data look like.
+Assuming that your training data
+are Pokémon,
+then Naraiqiu and Pikachu are normal,
+and maybe so do Digimon.
+Do you know Agumon?
+This should be Agumon, right?
+Agumon is abnormal.
+Ok, what kind of application
+does this anomaly detection have?
+For example,
+it can do fraud detection.
+Assuming that there are many credit card transaction records
+in your training data,
+and we can imagine
+most credit card transactions are normal,
+then you take the normal transaction records
+to train an anomaly detection model.
+When a new transaction record comes in,
+you can let the machine help you judge
+whether it is normal or abnormal.
+So, the anomaly detection technique
+can be used for fraud detection.
+It can also be used for this intrusion detection of the network.
+For example,
+you have a lot of connection log data,
+and you believe most connections are normal.
+Their behaviors are normal.
+Most people are good people.
+You have collected a lot of normal connection records.
+When a new connection comes in,
+you can train an anomaly detection model
+with the normal connection in the past
+and use it to detect the new connection.
+Is it a normal connection or an abnormal connection?
+Is it offensive or a normal connection?
+It may also have applications in medicine.
+You have collected a lot of data on normal cells
+and use these data to train an anomaly detection model.
+When seeing a new cell,
+the model can know if this cell has mutations.
+Maybe there is a mutation,
+or it is a cancer cell, and so on.
+When it comes to this, some people might ask
+can we treat anomaly detection
+as a problem of binary classification.
+You said you want to do fraud detection.
+You just collect a lot of normal credit card records
+and a bunch of fraudulent credit card records,
+and then you train a binary classifier.
+It's over.
+Just like this, isn't it?
+The most difficult is the data collection.
+The difficulty of this anomaly detection problem
+is the data collection.
+Usually, you have a better way to collect normal data.
+You are less likely to collect abnormal data.
+You may have a lot of records of credit card transactions,
+but most credit card transaction records may be normal.
+Abnormal data may be very little
+compared to normal data.
+There are even some abnormal data mixed in the normal data.
+You may be unable
+to detect it at all.
+So, in this kind of anomaly detection problem,
+we tend to assume that
+we have a lot of normal data,
+but we have almost no abnormal data.
+So, it is not a general classification problem.
+This classification problem is also called a one-class classification problem.
+That is, we only have one category of data.
+So how do you train a model?
+Because if you want to train a classifier,
+you have to have two types of data
+to train the classifier.
+If there is only one category of data,
+then what can we train?
+This is where auto-encoder
+comes in handy.
+For example,
+suppose we want to make a system now.
+This system is to detect a picture.
+For example,
+whether it is a real human face.
+Then you can find a lot of pictures
+that are all real human faces.
+Then we take the faces of these real people
+to train an auto-encoder.
+For example,
+this is a picture of your wife.
+You can say this is my wife. Please remove the photo.
+This is a picture of your wife.
+Then you can use it to train an auto-encoder.
+After you train this auto-encoder,
+while testing
+if the input is also your wife's picture
+because it has seen such photos during training,
+it can be restored smoothly.
+You can calculate how much this photo changes
+after it passes through the encoder
+and the decoder.
+You can calculate the difference between
+this input photo
+and this output photo.
+If the difference is small enough that
+your decoder can smoothly restore the original photos,
+it represents this type of photo
+is seen during training.
+But on the other hand,
+suppose there is a photo that was not seen during training.
+For example, this is not a picture of a person at all.
+She is a human. She is the leader.
+The leader is Haruhi Suzumiya.
+But she is not a real person.
+She is an animated character.
+She is a character of two dimensions.
+For a picture of a two-dimensional character,
+after inputting it into the encoder and the decoder,
+because this is something it hasn't seen.
+This is a photo it hasn’t seen during training.
+Your decoder
+is difficult to restore it back.
+If you calculate the difference between input and output
+and find that the difference is very big,
+that means
+the input photo for the encoder now
+may be an abnormal situation.
+It may be a situation that has not been seen during training.
+So you can watch the loss of reconstruction.
+The quality of this reconstruction
+decides that when you are testing,
+whether you've seen
+the same type of photos during training.
+This is
+what we want everyone to do
+in homework.
+Okay, this anomaly detection
+is another subject.
+We don’t have time to talk about it in class.
+Anomaly detection is not limited to auto-encoder technology.
+The auto-encoder technology
+is just one of many possible methods.
+We use it as the homework of auto-encoder
+because I believe
+you will have a lot of opportunities in the future to use anomaly detection technology.
+In fact, for a complete introduction to anomaly detection,
+we put the video of the past class here
+for your reference.
+Okay, the above is the part about auto-encoder.
+Before we ask the teaching assistant to talk about the homework,
+let's see if you have any questions you want to ask.
+Hey, do you have any questions?
+No?
+Ok, if there is no problem for the time being,
+then we will ask the teaching assistant to talk about the next assignment.

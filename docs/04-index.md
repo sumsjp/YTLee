@@ -746,7 +746,7 @@
 </details>
 
 <details>
-<summary>235. [ICASSP 2020] TOWARDS UNSUPERVISED SPEECH RECOGNITION AND SYNTHESIS (Speaker: Tao Tu)</summary><br>
+<summary>235. [2020-05-03] [ICASSP 2020] TOWARDS UNSUPERVISED SPEECH RECOGNITION AND SYNTHESIS (Speaker: Tao Tu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=cnZdfLSqwiE" target="_blank">
     <img src="https://img.youtube.com/vi/cnZdfLSqwiE/maxresdefault.jpg" 
@@ -755,11 +755,72 @@
 
 # [ICASSP 2020] TOWARDS UNSUPERVISED SPEECH RECOGNITION AND SYNTHESIS (Speaker: Tao Tu)
 
+### 文章整理：基於共享表徵的語音自監督學習框架
 
+---
+
+#### 核心主題  
+本文提出了一種基於共享表徵的語音自我監督學習架構，旨在 simultaneou 語音重建、語音識別和文本到語音合成（TTS）。該方法利用少量帶標籤數據和多部分訓練目標來提升模型性能。
+
+---
+
+#### 主要觀念  
+1. **共享表徵架構**：(encoder 和 decoder 共享同一對稱表示，橋接重建、識別和合成模塊。)  
+2. **三重_training 設計**：
+   - **重建部分**：無需標籤數據，學習語音表示。
+   - **識別部分**：使用CTC損失，將表徵與音素對齊。
+   - **合成部分**：使用少量標籤數據،訓練.decoder 將離散表徵轉換為語音。  
+3. **多模塊協作**：重建、識別和合成模塊通過共享表徵實現相互提升。
+
+---
+
+#### 問題分析  
+1. **數據匱乏問題**：文本到語音合成傳統方法依賴大量帶標籤數據，限制了實用性。  
+2. **孤立學習問題**：傳統模型的重建、識別和合成模塊缺乏共享表徵，導致性能瓶頸。
+
+---
+
+#### 解決方案  
+1. **提出共享表徵架構**：(encoder 和 decoder 共享同一對稱表示，實現多模塊協作。)  
+2. **三重_training 框架**：
+   - 利用無標籤數據進行語音重建。
+   - 使用少量帶標籤數據訓練語音識別和合成模塊。
+3. **橋接重建與合成**：通過共享表徵，將語音重建與文本到語音合成有機結合。
+
+---
+
+#### 優化方式  
+1. **自監督學習**：利用無標籤數據進行語音重建，降低對帶標籤數據的依賴。  
+2. **多任務學習**：三重訓練目標（重建、識別、合成）共同提升模型性能。  
+3. **共享表徵設計**：通過(encoder-decoder)共用表徵，實現模塊之間的相互增益。
+
+---
+
+#### 結論與實驗結果  
+1. **表示能力**：
+   - t-SNE 證據表示在 IPA 元音圖上與 linguistic 知識一致。
+2. **語音識別性能**：
+   - 在不同標籤數據量下，模型性能超越基準模型。
+3. **語音合成質量**：
+   - 使用少量標籤數據（20 分鐘），生成語音的MLS指標接近上限。
+4. **實時演示效果**：
+   - 模型在語音識別和文本到語音合成任務中表現出色，與真值高度一致。
+
+---
+
+#### 未來方向  
+1. **擴展數據集**：進一步驗證模型在多說話人或多語言環境下的性能。  
+2. **優化架構設計**：探索更高效的共享表徵結構。  
+3. **提升合成質量**：研究如何利用更多語音特徵（如情感、語調）進一步提高合成效果。
+
+---
+
+### 總結  
+本文提出了一種基於共享表徵的語音自我監督學習框架，同時實現語音重建、識別和合成。通過三重_training 和模塊協作，該方法在數據匱乏的情況下取得了優異的性能，為自監督學習在語音領域的應用提供了新思路。
 </details>
 
 <details>
-<summary>236. [ICASSP 2020] META LEARNING FOR END-TO-END LOW-RESOURCE SPEECH RECOGNITION (Speaker: Jui-Yang Hsu)</summary><br>
+<summary>236. [2020-05-03] [ICASSP 2020] META LEARNING FOR END-TO-END LOW-RESOURCE SPEECH RECOGNITION (Speaker: Jui-Yang Hsu)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=goav0eXKPwg" target="_blank">
     <img src="https://img.youtube.com/vi/goav0eXKPwg/maxresdefault.jpg" 
@@ -768,11 +829,63 @@
 
 # [ICASSP 2020] META LEARNING FOR END-TO-END LOW-RESOURCE SPEECH RECOGNITION (Speaker: Jui-Yang Hsu)
 
+### 文章整理與分析
 
+---
+
+#### **1. 核心主題**
+本文圍繞**多語種自動語音識別（ASR）模型的跨語言遷移學習**展開研究，重點探討如何利用來源語言數據提升目標語言的性能，特別是在資源受限的情況下。
+
+---
+
+#### **2. 主要觀念**
+- **多語種ASR模型**：通過訓練一個能夠處理多種語言的模型，實現跨語言遷移學習。
+- **SOURCE LANGUAGE AND TARGET LANGUAGE PAIRS (SLTPs)**：來源語言和目標語言對的研究是核心，用於驗證不同語言之間的遷移效果。
+- **LIMITED LANGUAGE PACK (LLP) 和 FULL LANGUAGE PACK (FLP)**：研究中使用了兩種數據集，分別代表資源受限和資源充足的場景。
+
+---
+
+#### **3. 問題與原因分析**
+- **問題**：在資源匱乏的情況下（如目標語言只有少量數據），ASR模型的性能受限。
+- **原因**：
+  - 少數語言的數據不足，導致模型訓練效果差。
+  - 多語種模型的遷移能力未被充分驗證。
+
+---
+
+#### **4. 解決方法**
+- **多語種訓練策略**：利用來源語言（如 Bengali, Tagalog, Zulu）的豐富數據，訓練一個多語種ASR模型，然後將其遷移到目標語言。
+- **META-SOCKET TRAINING APPROACH (MSTA)**：一種改進的訓練方法，考慮到適應過程中的潛在優化，提升遷移效果。
+- **跨語言遷移學習**：通過來源語言和目標language pairs的研究，驗證模型的遷移能力。
+
+---
+
+#### **5. 優化方式**
+- **數據資源利用**：
+  - 使用FULL LANGUAGE PACK (FLP) 和LIMITED LANGUAGE PACK (LLP) 過多語言對進行訓練。
+  - 對LLP進行交叉驗證，提升模型的泛化能力。
+- **性能評估指標**：
+  - 使用字符錯誤率（Character Error Rate, CER）作為主要評估指標。
+  - 測試遷移學習的效果，降低過擬合風險。
+
+---
+
+#### **6. 結論**
+- **實驗結果**：
+  - META-SOCKET TRAINING APPROACH (MSTA) 的性能優於隨機初始化（Random Initialization），字符錯誤率更低。
+  - 對來源語言和目標語言對的遷移效果進行了多種測試，結果一致顯示MSTA的效果更佳。
+- **未來工作**：
+  - 延伸研究更多語言對，提升模型的 robustness。
+  - 探索更多應用場景，如文本到語音合成（Text-to-Speech, TTS）等。
+
+---
+
+#### **7. 總結**
+本文提出了一種基於多語種ASR模型的跨語言遷移學習方法，並通過實驗驗證了其有效性。研究結果表明，META-SOCKET TRAINING APPROACH (MSTA) 能顯著提升目標語言的性能，特別是在資源匱乏的情況下。此方法具有廣泛的應用潛力，可進一步優化以應對更多多樣化的語言場景。
 </details>
 
 <details>
-<summary>237. [ICASSP 2020] WHAT DOES A NETWORK LAYER HEAR? (Speaker: Chung-Yi Li)</summary><br>
+<summary>237. [2020-05-03] [ICASSP 2020] WHAT DOES A NETWORK LAYER HEAR? (Speaker: Chung-Yi Li)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=6gtn7H-pWr8" target="_blank">
     <img src="https://img.youtube.com/vi/6gtn7H-pWr8/maxresdefault.jpg" 
@@ -781,7 +894,44 @@
 
 # [ICASSP 2020] WHAT DOES A NETWORK LAYER HEAR? (Speaker: Chung-Yi Li)
 
+# 文章重點整理
 
+## 核心主題
+- 提出一種分析語音恢復（Speech Recognition, SR）的新方法，通過探查模型的隱藏狀態來了解模型行為。
+- 方法具有模型agnostic性，適用於不同類型的模型架構。
+
+## 主要觀念
+1. **問題焦點**：語音恢復模型在處理Noise corrupted audio時的能力與限制，特別是對話音特徵（如Prosody和韻律）的影響。
+2. **探查隱藏狀態的作用**：通過分析不同層次的隱藏狀態，揭示模型如何逐層提取和消除信息，特別是語音特徵和Noise。
+
+## 啟發與方法
+- 使用生成的語音片段來模擬真實場景，並利用Speaker Verification指標（如ER）來衡量模型性能。
+- 通過STOI（Short Time Objective Intelligibility）評估恢復語音的可懂度，量化 distortion 的影響。
+
+## 問題原因
+1. **語音特徵的逐層消除**：模型在深度學習過程中，Prosody和韻律等語音特徵逐漸被削弱或移除。
+2. **Noise對Baseline模型的幹擾**：在低信噪比（SNR）環境下，基線模型無法有效抑制Noise，導致語音恢復效果差。
+
+## 解決方法與優化
+1. **提出新分析框架**：
+   - 採用探查隱藏狀態的方式，提供直觀的模型行為洞察。
+   - 方法具備通用性，可廣泛應用於不同模型架構。
+2. **改進語音恢復能力**：
+   - 開發Noise-Robust SR模型，提升在 noisy 環境中的性能。
+   - 通過STOI測量揭示modelo的局限性，為未來研究提供方向。
+
+## 測試與結果
+1. **語音特徵保留度**：
+   - CN部分：主要負責頻譜提取，保留語音信息，但未顯著影響Prosody和韻律。
+   - TCN層：Prosody逐漸被削弱，導致Speaker Verification指標ER值上升。
+2. **Noise抑制能力**：
+   - Noise-Robust模型在低SNR條件下表現 superior，Noise被有效消除。
+   - 基線模型在高Noise幹擾下性能下降明顯。
+
+## 結論
+- 提出的探查隱藏狀態方法為理解SR模型提供新視角，具有重要研究價值。
+- Noise-Robust SR模型在實際應用中展現出更好的 robustness 和性能。
+- 未來研究可進一步優化模型架構，提升語音特徵保留和Noise抑制能力。
 </details>
 
 <details>

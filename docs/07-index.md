@@ -186,36 +186,164 @@
 </details>
 
 <details>
-<summary>368. [ML 2021 (English version)] Lecture 35: Network Compression (1/2)</summary><br>
+<summary>368. [2021-06-14] [ML 2021 (English version)] Lecture 35: Network Compression (1/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=CB0a3aBwND8" target="_blank">
     <img src="https://img.youtube.com/vi/CB0a3aBwND8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 小節整理：文章重點歸納
 
+#### 1. 核心主題
+- 探討網絡剪枝（Network Pruning）的效果及其背後的理論機制。
+- 比較兩種主要假設：**Lottery Hypothesis** 和 **Weight Agnostic Networks (WAN)**。
+
+#### 2. 主要觀念
+##### a. Lottery Hypothesis（ lottery hypothesis）
+- 提出大網絡中存在「贏家通喫」的參數，這些參數在剪枝後的小網絡中能夠保持較好的性能。
+- 剪枝過程通過借用大網絡中的隨機參數來提升小網絡的性能。
+
+##### b. Weight Agnostic Networks (WAN)
+- 表明即使網絡的所有參數都是隨機初始化或固定爲常數（如1.5），也可以在一定程度上實現良好的性能。
+- 指出網絡的結構設計可能比參數本身更重要。
+
+#### 3. 主要問題
+##### a. Lottery Hypothesis 的局限性
+- **Rethinking The Value Of Network Pruning** 這篇文章提出了相反的觀點，指出Lottery Hypothesis的現象可能僅在特定條件下成立。
+- 實驗表明，當學習率較高時，無法觀察到Lottery Hypothesis的效果。
+
+##### b. 剪枝後網絡訓練的挑戰
+- 直接訓練小網絡（從隨機初始化開始）通常被認爲性能不如先訓練大網絡再進行剪枝的方法。
+- 但實驗發現，如果給予足夠多的訓練 epochs，直接訓練的小網絡可以達到與剪枝後網絡相當甚至更好的性能。
+
+#### 4. 解決方法
+##### a. 針對 Lottery Hypothesis 的質疑
+- **Rethinking The Value Of Network Pruning** 提出通過增加學習率或調整剪枝策略（如結構化剪枝）來驗證Lottery Hypothesis的普適性。
+- 強調實驗條件（如學習率、訓練 epochs 等）對結果的重要影響。
+
+##### b. 直接訓練小網絡
+- 建議直接訓練小型網絡，並給予足夠的訓練.epoch數，可以避免對大網絡剪枝的依賴。
+- 指出剪枝的優勢可能更多地來源於模型搜索（model search）而非簡單的參數保留。
+
+#### 5. 結論與展望
+##### a. Lottery Hypothesis 的適用性
+- Lottery Hypothesis 可能在特定條件下成立，但其普適性仍需進一步研究。
+- 不同的剪枝策略和訓練參數可能影響其效果。
+
+##### b. WAN 的啟發
+- 網絡性能不一定完全依賴於精細調控的參數，結構設計的重要性不容忽視。
+
+##### c. 未來研究方向
+- 探討不同學習率和訓練策略對Lottery Hypothesis的影響。
+- 研究結構化剪枝（如通道剪枝）是否能更好地支撐Lottery Hypothesis。
+- 深入分析直接訓練小型網絡的可行性與優勢。
+
+#### 6. 參考文獻
+- Lottery Hypothesis: ICLR 2019
+- Rethinking The Value Of Network Pruning: ICLR 2019
+- Weight Agnostic Networks: Arxiv （早期版本）
+
+---
+
+### 總結
+文章主要圍繞網絡剪枝的效果展開討論，探討了Lottery Hypothesis 和 WAN 的核心觀念及其局限性。實驗結果表明，Lottery Hypothesis 的效果可能受限於特定條件（如學習率、訓練epochs等），而直接訓練小型網絡在某些情況下可以取得不俗的性能。未來的研究需要進一步驗證這些假說的普適性並探索更有效的剪枝策略。
 </details>
 
 <details>
-<summary>369. [ML 2021 (English version)] Lecture 36: Network Compression (2/2)</summary><br>
+<summary>369. [2021-06-17] [ML 2021 (English version)] Lecture 36: Network Compression (2/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=mGRdOGdOZ-4" target="_blank">
     <img src="https://img.youtube.com/vi/mGRdOGdOZ-4/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 重點整理
 
+#### 核心主題
+本文主要探討深度學習模型的.compression技術，旨在在不顯著降低模型性能的前提下，減小模型大小並降低計算開銷，以應對計算資源有限或存儲空間受限的情境。
+
+#### 主要觀念
+1. **模型壓縮的重要性**：隨著深度學習模型規模的增大，模型參數量激增，導致硬件需求和運行成本上升。此背景下，模型壓縮技術成為關鍵。
+2. **核心方法**：
+    - **網絡架構搜索（ Neural Architecture Search, NAS）**：通過自動化搜索最佳網絡結構來降低模型複雜度。
+    - **知識蒸餾（Knowledge Distillation）**：利用 teachers 模型的知識來訓練.student 模型，使.student 模型在保持性能的同時體積更小。
+    - **網絡剪枝（Network Pruning）**：通過移除冗餘神經元或通道來精簡模型結構。
+    - **參數量化（Parameter Quantization）**：降低模型參數的精度，例如使用 8 位整數代替 32 位浮點數。
+3. **動態深度與寬度調控**：根據具體任務需求或環境條件自動調整網絡深度和寬度，以平衡性能與資源消耗。
+
+#### 問題原因
+1. **模型規模過大**：深度學習模型通常包含數百萬甚至十億個參數，這在移動設備等資源受限的平臺上難以部署。
+2. **計算成本高昂**：大型模型需要大量的GPU/TPU資源進行訓練和推理，增加了運行成本。
+3. **_deploy 障礙**：模型體積過大限制了其在邊緣計算、移動終端等場景中的應用。
+
+#### 解決方法
+1. **網絡架構搜索（NAS）**：
+    - 自動化搜索最佳網絡結構， trades off between model complexity and performance.
+    - 通過策略引導搜索過程，例如使用_rewards 基於性能指標。
+2. **知識蒸餾**：
+    - 使用大而精的教師模型訓練小而廉的學生模型。
+    - 維度包括.temperature_scaling、動態	label_smoothing 等技術來提升.student 模型的學習效果。
+3. **網絡剪枝**：
+    - 基於梯度重要性或響應值來移除冗餘神經元或通道。
+    - 可進一步配合低精度量化和修剪後重training 提升壓縮效果。
+4. **參數量化**：
+    - 降低模型參數的精度，如從 FP32 到.INT8，顯著減小模型大小。
+    - 使用昆昆等算法來保持量化後的性能。
+5. **動態深度與寬度調控**：
+    - 根據輸入數據的複雜性自動調整網絡深度和.width。
+    - 維度包括基於特徵相似性或梯度信號決定停止層數。
+
+#### 優化方式
+1. **多技術結合**：將上述方法有機結合，例如先修剪再量化，或在NAS中融入蒸餾策略，可獲得更好的壓縮效果。
+2. **動態調控**：根據具體任務需求或環境條件自動調整網絡結構，實現.runtime 效能優化。
+3. **低精度訓練與推理**：探索更低精度的訓練和推理技術，如混合精度訓練和量化感知訓練，提升量化後的模型性能。
+
+#### 結論
+深度學習模型壓縮技術為實際應用提供了重要突破。通過網絡架構搜索、知識蒸餾、剪枝、量化等多種方法的有機結合，可顯著降低模型複雜度而不犧牲性能。未來研究可在動態結構調控、低精度算法優化等方面進一步探索，以應對日益嚴峻的計算資源挑戰。
 </details>
 
 <details>
-<summary>370. SUPERB: 語音上的自督導式學習模型居然十項全能？</summary><br>
+<summary>370. [2021-10-10] SUPERB: 語音上的自督導式學習模型居然十項全能？</summary><br>
 
 <a href="https://www.youtube.com/watch?v=MpsVE60iRLM" target="_blank">
     <img src="https://img.youtube.com/vi/MpsVE60iRLM/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章重點整理
 
+## 核心主題
+本文圍繞語音自監督學習（Self-Supervised Learning, SSL）在多樣化語音任務中的應用展開討論，特別是通過SUPERBenchmark評估不同SSL模型的性能。文章強調了SSL模型在語音處理領域從專才向通才轉變的可能性，並提出了未來研究的方向。
+
+## 主要觀念
+1. **自監督學習的優勢**： SSL技術利用大量未標註語音數據進行預訓練，顯著提升了模型的通用性與性能。
+2. **SUPERBenchmark的作用**：該benchmark涵蓋了多個語音處理任務，旨在客觀評估SSL模型的效果，並促進研究人員的合作與競爭。
+3. **從專才到通才的轉變**：通過SUPERBenchmark的測試，發現多個SSL模型在10個不同語音任務上均能超越傳統方法。
+4. **未來研究方向**：探討SSL模型如何學習通用表徵，並進一步優化模型結構與訓練策略。
+
+## 問題原因
+1. **傳統特徵提取方法的局限性**：如FBANK等 traditional features在面對多樣化語音任務時表現不足。
+2. ** SSL模型的可解釋性與通用性**：需深入研究SSL模型如何在預訓練階段捕獲語音數據中的通用表徵。
+
+## 解決方法
+1. **引入SUPERBenchmark**：提供了一個綜合性評估平臺，用於測試不同SSL模型在多任務上的性能。
+2. **加權求和策略（Weighted Sum）**：允許下遊模型動態選擇上遊模型的最佳層，提升了最終效果。
+3. **.opendatadrive/SUPERB數據集**：提供公用與隱藏數據集，保障了評估的公正性與可擴展性。
+
+## 優化方式
+1. **激勵研究者參與**：通過公開排行榜吸引更多研究人員加入SSL領域的研究。
+2. **促進跨學科合作**：SUPERBenchmark的工作坊與特刊為研究者提供了交流平臺，推動技術進步。
+3. **持續改進模型架構**：根據Benchmark的反饋結果，不斷優化_ssl算法與模型結構。
+
+## 結論
+1. **SSL模型的通用性顯現**：多個SSL模型在SUPERBenchmark上展現出超越傳統方法的能力，成為語音處理領域的重要工具。
+2. **未來研究方向明確**：需進一步探討 SSL 模型如何學習到更為通用與 robust 的表徵，並探索其在更多實際應用中的可能性。
+3. **研究生態的完善**：SUPERBenchmark及其相關服務為 ssl 領域的研究提供了完善的生態支撐，促進了技術的快速發展。
+
+---
+
+本文通過系統性地介紹_ssl 技術在語音處理領域的最新進展與挑戰，為研究者們提供了重要的參考與啟發。
 </details>
 
 <details>

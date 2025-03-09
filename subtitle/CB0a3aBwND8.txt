@@ -1,0 +1,792 @@
+Ok, in this class,
+I want to talk about Network Compression.
+In this class,
+we have seen a lot of huge models.
+For example, BERT or GPT.
+In this lecture,
+the thing we want to share with you is,
+Can we shrink
+these huge models?
+Can we simplify these models?
+Let it have a relatively small number of parameters,
+but has almost the same performance as the original.
+This is what Network Compression does.
+Why do we care about
+Network Compression?
+Because many times,
+we need to use these models
+in resource-constrained environment,
+in environments with limited resources.
+What kind of environment has limited resources?
+Sometimes you will need to run these machine learning models
+for example, on a smartwatch.
+or on drones.
+On these edge devices,
+on these IoT devices,
+only a small amount of memory is provided.
+There is only a relatively small computing power.
+So if our model is too huge,
+your watch may not run successfully.
+So we will need smaller models.
+When it comes to this, someone may ask,
+why we need to
+run models on these edge devices.
+Why don't we send the data to the cloud,
+and do the calculations directly on the cloud?
+Then we send the result back to the edge device.
+For example, your watch.
+Why do you have to do calculations on the watch?
+The common reason is the latency problem.
+Suppose you need to transfer data to the cloud today.
+After the cloud computing is completed, and we send it back.
+There will be a time difference.
+Suppose your application
+on your edge device
+is a sensor for self-driving cars.
+Then maybe the sensor of a self-driving car
+need to make a very immediate response.
+You need to transfer the data to the cloud and then back.
+The latency is too long.
+Perhaps it is too long to be acceptable.
+Then someone will ask again.
+Will the latency be ignored at all
+in the 5G era in the future?
+Then someone
+will give you another reason for
+running models on
+the edge device.
+This reason is privacy.
+If we need to transfer data to the cloud,
+the system owner in the cloud
+can see our information.
+Maybe what I don’t want
+cloud system owners to know what I'm doing.
+So to protect privacy,
+the calculations are done directly on the smartwatch,
+and decisions are made directly on the smartwatch,
+which is a way to protect privacy.
+Ok,
+I just tell everyone
+various reasons for Network Compression.
+In this slideshow,
+I will introduce five technologies
+for Network Compression to you.
+These five technologies
+are software-oriented.
+We are work on the software to
+compress the network.
+We don’t consider the hardware acceleration part.
+Of course, another branch of the study does
+think of ways to speed up the calculation of the model on the hardware,
+making edge device run
+deep learning more efficient.
+But this is another direction of research.
+We won't discuss
+anything related to hardware here.
+We only discuss things related to software.
+Okay, the first one I want to share with you
+is the method called Network Pruning.
+After we finish Network Pruning,
+we will call it a day.
+Network Pruning, literally,
+is that we need to cut of
+some parameters in Network.
+Pruning means cutting of.
+We select some parameters in Network
+and cut them off.
+Why can we cut off
+some parameters in Network?
+Because there is a saying goes,
+"There's a black sheep in every flock."
+In such a big network,
+there are many parameters.
+Not every parameter is useful.
+When there are so many parameters,
+maybe many parameters
+are useless.
+They don't have any functions.
+They do nothing.
+The parameters that are useless,
+are just take up space.
+They waste our computing resources.
+Why not just cut them off?
+So the basic concept of Network Pruning
+is to find out those useless parameters
+in a big network,
+and cut them off.
+When I was a kid,
+maybe not that young,
+in my high school,
+I saw this picture in the biology textbook.
+It has some relation with Network Pruning.
+This picture tells us that
+when a human was born,
+there is nothing in our brain.
+These pictures
+are the neurons of the brain.
+There is nothing in our brain.
+There are few connections between neurons and neurons.
+A lot of connections will appear at the age of six.
+But with aging,
+some connections slowly disappeared.
+There are lots of similarities between this thing
+and Network Pruning.
+Actually, Network Pruning
+is not a new concept.
+Back in the 90s,
+Yann Le Cun had a Paper
+which talked about Network Pruning.
+The Title of the Paper is "Optimal Brain Damage".
+He said that
+Network Pruning,
+which cut off some weight, could be seen as a kind of brain damage.
+A damage of brain.
+Here, Optimal means that
+we want to find the best pruning method.
+Even some weights are cut off,
+the damage to this brain is small.
+Okay, how does Network Pruning
+work?
+Its Framework looks like this.
+First of all,
+we train a largest network.
+We train a big network.
+And then,
+in this big network, you measure the importance
+of every parameter,
+or every Neuron.
+To check that whether there are any parameters
+which don't do nothing.
+Or are there any Neurons
+doing nothing?
+How to evaluate whether a parameter is doing something?
+How to evaluate the importance of a parameter?
+Perhaps the easiest way
+is to check its absolute value.
+If the absolute value of this parameter is large,
+it may have a great impact
+on the entire network.
+If the absolute value is closer to zero,
+it may have less impact
+on the entire network.
+You can borrow ideas
+from lifelong learning.
+Do you remember that in lifelong learning,
+we also want to find
+which parameters are more important?
+There are a lot of methods
+to find the importance of parameters.
+And then determine
+the bi of the parameters.
+Maybe we can calculate the bi of each parameter,
+and then we can know which parameter is more important.
+We can prune less important parameters.
+We can also evaluate the importance of a neuron.
+We can also use neurons as pruning units
+How do we evaluate the importance of a neuron?
+You can count
+the number of times the neuron output is not 0.
+There are many ways to judge
+whether a parameter or a neuron is important.
+We won't go into details here.
+Prune unimportant neurons
+or unimportant parameters.
+Remove them from the model,
+and you will get a relatively small network.
+After you finish this pruning,
+your accuracy
+will usually drop a little.
+Because some parameters have been pruned,
+this network is damaged.
+The accuracy rate drops a little.
+We will find a way to
+make the correct rate rise again.
+How to make the accuracy rate rise again?
+We can fine-tune
+the relatively small network
+on those remaining parameters.
+Use our training data
+to retrain this
+relatively small network.
+After retraining,
+you can re-evaluate
+the model accuracy.
+You can prune more parameters
+after retraining.
+and then re-fine-tuning.
+This process
+can be repeated many times.
+Why don't we cut out a large number of parameters at once?
+In experiments,
+pruning a large number of parameters at once
+does too much damage to your network.
+It might be too big to recover by fine-tuning.
+Prune a few parameters at a time.
+For example, prune 10% of the parameters
+and then retrain.
+Then prune 10% of the parameters again
+and retrain again.
+Repeat this process
+can prune more parameters
+After your network is small enough,
+the whole process stops.
+You get a relatively small network.
+The accuracy of this smaller network
+may not be much different from
+that of the larger network.
+We just talked about that
+the pruning unit can be
+either parameters or neurons.
+What is the difference between using the two units?
+There will be a significant difference
+in the implementation of using the two as a unit.
+What will happen
+if we take the parameter as the unit?
+Suppose we want to decide
+whether a certain parameter should be removed.
+Can a certain parameter, which is not important for the whole task,
+be removed?
+And after we remove this unimportant parameter,
+we might get a network
+which is irregular.
+What does "irregular" mean?
+For example, let’s look at the red Neuron.
+It connects to three green Neurons.
+However, the second red Neuron
+only connects to two green Neurons.
+Moreover, this red Neuron
+only gets inputs from two blue Neurons
+but this red Neuron, on the other hand,
+has four.
+Hence, if you prune the parameter as a unit,
+you might get a irregular network
+after pruning.
+What kind of the problems can the irregular shape cause?
+The biggest problem is that it is hard to implement.
+Think about it,
+there is no way
+you can implement the irregularly shaped network
+using PyTorch.
+In PyTorch,
+when you are defining a network,
+what you need to do is to
+specify the number of Neurons on each layer.
+You specify how many inputs are for each layer.
+How many Neurons in the input layer.
+And how many Neurons in the output layer.
+What is the dimension of the input
+and what is the dimension of the output.
+So it's hard to implement such a network
+with irregular shape.
+It's hard to implement by yourself.
+Even if you eventually implement such a network,
+you might find it hard
+to use the GPU acceleration.
+The acceleration of GPU
+is to consider the calculation of Network
+as matrix multiplications,
+so when the network is irregular,
+it becomes difficult to speed up with matrix multiplication.
+Actually, in practice,
+you can simply assign zero
+to the weights pruned
+when doing Weight Pruning.
+That is to say,
+it still exist
+but the value is zero.
+It turns out that your implementation is easier.
+It’s easier for you to use GPU acceleration
+However, another problem emerges.
+The problem is
+you didn’t really make your network smaller at all
+You assign a zero
+to the parameter
+in your Network.
+Then the parameter is still saved
+The parameter is still
+located in your memory.
+You didn't really make the network smaller.
+You just make it smaller in your imagination.
+You are getting hyped by yourself!
+You think this network has become smaller
+but actually it hasn't.
+So this is the problem you will encounter
+when doing Pruning in the units of parameters.
+The experiment is only to show you
+what kind of problems you will encounter
+when doing Pruning by the units of parameters
+We first look at the purple line here.
+The purple line here
+is Sparsity as it says.
+What does this Sparsity mean?
+This Sparsity means the percentage of parameters,
+which are dropped by pruning.
+Then, you find out that
+the value of this purple line here
+is very close to 1.
+What does it mean?
+It means that there are nearly 95% of the parameters,
+which are dropped by pruning.
+This Network Pruning method
+is actually a very efficient method.
+Usually, you can prune off more than 95% of the parameters
+with only 1~2% accuracy dropping.
+So, parameters are pruned here.
+They are pruned severely.
+95% of the parameters are pruned.
+Originally, since 95% of the parameters are pruned,
+and only 5% of the parameters remain,
+this network should become very small,
+and its operation should be sped-up.
+But, in fact, it is not much sped-up at all.
+We can even say that it is not sped-up at all.
+If you look at these bar graphs,
+these bar graphs show,
+on three different computing resources,
+the speed-up level,
+which is how fast your speed-up level is.
+The speed-up level must be greater than 1 to be recognized as speed-up.
+If the speed-up level is less than 1, it actually slows down.
+You found out that,
+in most cases, there is no speed-up at all.
+In most cases, it actually slows down.
+Thus, you prune some weights off;
+as a result, the shape of your network becomes irregular,
+and then, when you use the GPU to accelerate,
+you can't really speed it up.
+So, Weight Pruning
+might not be an effective method.
+Then Neuron Pruning,
+which is pruning in units of neurons,
+might be a much effective method.
+If we use neurons as a unit to prune,
+after forsaking some neurons,
+the architecture of your network is still regular.
+In brief, it's easier to be implemented for you while using PyTorch.
+When you are going to implement it,
+you only need to change the input and output dimension
+of each layer.
+So, it's easier for you to implement it.
+It's also easier to accelerate it with GPU.
+During the implementation of Network Pruning, they are
+issues that you may encounter.
+Okay! We would take a look at the questions if anyone asked.
+Let's see.
+Pruning.
+Some students asked about this pruning.
+Should it be the Chinese character of scissoring,
+or reducing?
+In my opinion, it is a scissoring.
+But, if I make a mistake,
+please correct me.
+A classmate asked that
+if I do pruning in CNN,
+which will prune some parameters off in the mask,
+is the computation unchanged?
+I'm sorry. I don't understand this problem very well.
+What is "prune some parameters off in the mask"?
+I can't get it here.
+Maybe, you can re-formulate your question,
+and I'll look at it later.
+Another classmate asked that
+the efficiency of this pruning is a matter of the function library.
+Yes, it's a matter of the function library.
+If you can think of a way to build
+an effective function library
+for irregular network,
+you can use Weight Pruning.
+But, the problem is
+everyone doesn't want to build their own function library.
+All you do is calling PyTorch.
+So, if you use Weight Pruning, there is no way to speed up.
+If you think about it in another way,
+when dealing with a task,
+will gradually expanding the network
+perform better than using the big network directly?
+A classmate asked,
+"If we train a small network first,
+then gradually make it bigger,
+would it be better?"
+We just said
+in network pruning, large network
+gets smaller gradually.
+If we train the small network first
+then make it bigger, will it be better?
+The answer is no.
+We will answer your question on the next slide.
+A student said, "Scalable network is inherently difficult to train."
+Yes, a scalable network is inherently difficult to train.
+OK.
+Now, we have to ask a question.
+We said we train a big network first
+then make it smaller.
+Moreover, the small network and the large network
+have similar accuracy.
+Then why don't we
+train a small network directly?
+Train a small one directly
+is more efficient, right?
+Why train a large network then make it smaller?
+It's unnecessary.
+Why not directly train the small network?
+Well, the general answer is
+bigger networks are easier to train.
+You will find that
+if you train a small network directly,
+you often can't get
+the same accuracy as the big network.
+You can train a big network first
+and make it smaller,
+the accuracy won't drop too much.
+But going directly to the small network,
+you can't get the same accuracy as
+the one you get after
+pruning the big network.
+As for why the big network is easier to train,
+you can refer to this link below.
+I have attempted to explain this in past courses.
+Okay, but why is a big network easier to train?
+There is a hypothesis called the Lottery Ticket Hypothesis.
+Since it is called a hypothesis,
+it is not fully proven.
+It's not a theory.
+If it has been proven,
+then it is a theory.
+But it's just a hypothesis now.
+How does this lottery ticket hypothesis explain
+why a large network is easier to train?
+And why training a small network directly
+can't get the same result as
+training a big network
+then prune it to become smaller?
+The lottery ticket hypothesis says that.
+We know that luck is very important
+in training networks.
+Having done so much homework now,
+I believe you must have experienced a lot of sweat and tears
+and you know that training network is all about luck.
+The results of the training may not be the same every time.
+If you get a good set of initial parameters,
+and dyou will get good results.
+If you draw a set of bad initial parameters,
+you will get bad results.
+Looking at this,
+lottery game is also a matter of luck.
+But how to get a higher winning rate
+in the lottery game?
+You can buy all the tickets.
+Buy more lottery tickets
+and you can increase your winning rate.
+So it’s the same for a large network.
+A big network
+can be regarded as a combination of many small sub-networks.
+We can think of it as a big network
+that contains a lot of small networks.
+When we train the big network,
+we are actually training
+many small networks at the same time.
+Not every small network
+would be able to be successfully trained.
+A successful training
+does not mean that
+it could find a good solution
+through gradient descent.
+We may not be able to get a good result
+that lowers the loss.
+But, among those
+sub-networks,
+we only need one of them to work
+to count as a success.
+If one of the sub-network succeeded,
+it would also be a win for the big network.
+If the big network contains
+more small networks,
+it would be like
+buying more tickets
+for the lottery.
+The more tickets you have,
+the higher the chance of winning.
+So, the larger the network,
+the more likely it could be successfully trained.
+How is the big lottery hypothesis
+confirmed experimentally?
+The way it is confirmed
+is highly related to network pruning.
+Let’s take a look at
+how it's confirmed experimentally.
+Ok, suppose we have a big network.
+In the beginning, the parameters of this big network
+are randomly initialized.
+After initializing the parameters randomly,
+we get a set of trained parameters,
+which we will represent them with purple color.
+Next, we use the technology of network pruning to
+discard some purple parameters
+and get a relatively small network.
+Now, if we
+directly initialize
+the parameters of the small network randomly again,
+it would be the same as training
+a small network
+of the same size again.
+It would be like copying the small network
+and training a new model with the same size
+but different parameters.
+You'll find that
+training this small network directly would be unsuccessful.
+It is doable
+to train a big one and then make it smaller,
+but we can’t directly train small networks.
+However,
+if we reinitialize the parameters
+of the small network
+with the same parameters of the red parameters,
+the training would be successful.
+Do you guys get the difference between the two?
+Although these two sets of parameters
+were all randomly initialized,
+the set of green parameters
+has nothing to do with the set of red parameters.
+However, these randomly initialized red parameters
+are picked from
+the corresponding red parameters back here.
+For instance, these four parameters here
+were copied directly from
+the corresponding parameters back here.
+Same for these ones on the bottom,
+they were also directly copied
+from the corresponding parameters
+back here.
+This way, the training could be done.
+We can use the lottery ticket hypothesis to explain this.
+There are a lot of sub-networks in this network.
+This particular subset of initial parameters
+is the lucky subset
+that gives good results after training.
+So if you already have
+a trained large network,
+the parameters that
+survive after pruning
+are the lucky parameters
+that can be trained.
+This subset of the parameters
+is the best subset that can be trained.
+But if you re-initialize this subset randomly,
+there is a possibility
+that you draw a set of bad parameters.
+This concludes the lottery ticket hypothesis.
+The hypothesis is very well-known.
+It received
+the Best Paper Award
+at ICLR 2019.
+So it is a very well-known hypothesis.
+There are also many follow-up studies.
+For example, there is an
+interesting paper called
+Deconstructing Lottery Tickets.
+Let's directly talk about
+some interesting conclusions.
+First,
+the researchers tried out various Pruning Strategies,
+and discovered that
+two particular Pruning Strategies are the most effective.
+We won’t talk about the details.
+They did a complete experiment
+on different pruning strategies
+and concluded that
+if the difference of the absolute value
+before and after training is larger,
+then the pruning
+is more effective.
+The other result is related to initialization.
+What makes an initialization good?
+The conclusion is,
+as long as
+we don’t change the sign of the parameters,
+the parameters are trainable.
+More specifically,
+the parameters refer to those in the sub-network.
+What does that mean?
+For example,
+let's take a look at
+the randomly initialized
+parameters
+in the sub-network.
+Suppose they are
+0.9, 3.1, -9.1, and 8.5.
+According to the paper,
+you can completely ignore these numbers.
+You can replace all positive numbers with positive α,
+and replace all negative numbers with -α.
+The new parameters
+are still trainable!
+The result get from this set of parameters
+is not that different from this one.
+The conclusion suggests that
+the sign of the parameters
+is the key to training.
+Compared to the signs,
+the absolute values are not that different.
+Interestingly,
+the researchers played a pun
+in the title.
+You would think that
+the paper is related to
+the significance of initial weights.
+But note that there is a -.
+So what they are actually talking about
+is the significance of the "sign".
+They played a good pun in the title!
+But no one seems to notice it.
+There is a magical discovery.
+It found that
+since we were thinking about
+there are some sub-networks
+with good initialization parameters
+in the big network.
+The sub-networks will be trained very smoothly.
+In a big network,
+will there be a sub-network
+that doesn’t even need training.
+Just take it out and it will be a good network?
+We don’t need to train the network at all.
+We just prune the big network
+and get a classifier that can be used for classification.
+Could it be like this?
+It's like Michelangelo said that
+how he sculpted the statue of David.
+He didn’t sculpt a statue of David.
+He released David from the stone.
+The statue of David turned out to be inside the stone.
+It was in the stone.
+He just carved out the extra space.
+Remove the extra space.
+In the big network
+whose parameters are all random,
+will there be a set of parameters
+that can already be used to classify?
+Remove the redundant part,
+and get good classification results directly.
+The answer is like this.
+You can read that paper by yourself.
+It can get the correct rate
+that is close to supervised learning.
+When I read this paper,
+this conclusion doesn’t make me feel very magical anymore.
+Because a few months
+before the paper of Deconstructing Lottery Tickets is published,
+there is a paper called
+Weights Agnostic Neural networks.
+It made a magical network.
+In this network,
+all the values are random
+or all are set to 1.5.
+As a result, this network
+can also get a certain degree of results.
+It looks like even
+the parameters in your network are all random
+or given constants.
+It is also possible to get good performance.
+This conclusion is not particularly surprising
+because there was the same paper a few months ago.
+I put these two papers here.
+Arxiv has a similar argument.
+Here are the Arxiv links of these two papers.
+The link here
+is the last version they uploaded to Arxiv.
+So if you look at
+the month of the last upload,
+you will think
+Weight Agnostic Networks is published later.
+Deconstructing Lottery Tickets is published first.
+But if you look at the first uploaded version,
+Weight Agnostic Networks is earlier
+than Deconstructing Lottery Tickets.
+So, I read this first and then read the Deconstructing Lottery Tickets.
+Is the lottery hypothesis must be right?
+Not necessarily.
+There is a paper that disagreed with the lottery hypothesis.
+This paper is called
+Rethinking The Value Of network Pruning.
+And the magic is that
+this paper is published at the same time as the Lottery hypothesis.
+They appeared at ICLR 2019 at the same time.
+So there are two papers in ICLR 2019
+and they got different conclusions.
+What does that paper say?
+This paper says that it tried two datasets
+and there are several different models.
+Okay, then,
+it says that
+this is the correct rate of the network without pruning.
+Then, it tried to do network pruning
+and do fine-tune again.
+The small network
+can get the same correct rate as the big network.
+It says that the imagination of ordinary people is like this.
+If we directly train the small network,
+the correct rate is not as good as that of a large network
+after pruning.
+It tries the first experiment
+called Scratch-E.
+Scratch-E means
+its parameters are initialized randomly.
+Notice that its random initialization
+is not the same as the random initialization in the big lottery hypothesis.
+Its random initialization is really random initialization.
+The random initialization in the big lottery hypothesis is
+to borrow the random parameters
+from the original set of the random parameters.
+I know it's difficult to understand.
+I hope you know what I'm talking about.
+Good.
+The Scratch-E here means
+we really initialize the parameters randomly.
+The size of a small network and
+the size of the pruning network are the same.
+It found it was a little bit worse.
+It seems to be the same as most people's imagination.
+But then,
+what happens if we update
+for more epochs?
+The number of epochs is set by the previous person.
+The number of epochs trainings for a small network
+are the same as the big network.
+But what if the number of epochs of the small network
+is set a bit more?
+If we set it a bit more,
+it's better than the results after pruning.
+So before
+we think that
+the small network cannot be trained.
+We need to train the big ones first and do the pruning.
+Is this an illusion?
+It's just an illusion.
+It's an urban legend.
+You directly train a small network
+with more epochs.
+It can be trained.
+That's it.
+Actually, this article,
+at the time
+of ICLR review,
+the reviewer asked
+that it's the opposite of the big lottery hypothesis.
+Did you have any comments?
+Actually, this article
+also responds to the big lottery hypothesis.
+It thinks the observation
+observed by the big lottery hypothesis
+may only be observed under certain specific circumstances.
+According to the experiment in this article,
+it's observed when the learning rate is relatively low or
+unstructured.
+Unstructured means
+when doing pruning,
+it uses weight as the unit of pruning,
+which can observe the phenomenon of the big lottery hypothesis.
+It finds that when the learning rate is increased,
+it cannot observe the phenomenon of the big lottery hypothesis.
+So, in the end, whether the big lottery hypothesis
+is true or false
+needs more research to confirm.

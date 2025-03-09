@@ -1,0 +1,1539 @@
+Let's begin our class now.
+We talked about
+Network Pruning last week.
+Today,
+we will talk about more methods
+that can reduce the size of the network.
+This method is called
+Knowledge Distillation.
+You will soon discover that
+the main idea of this technique
+is similar to network pruning.
+So Knowledge Distillation
+works like this.
+Train a big network first,
+which is called
+"Teacher Network"
+in this method.
+It is the teacher.
+Then,
+train the small network,
+which is called "Student Network".
+So you should train the
+big Teacher Network first,
+then build the Student Network
+according to the Teacher Network.
+In Network Pruning,
+the small network
+is created by
+removing, or pruning,
+some redundant parameters
+of the larger network.
+But Knowledge Distillation
+is different.
+This time,
+the student network
+learns from the teacher network.
+The two networks are named
+teacher and student
+is because of the learning relationship
+between them.
+But how does the Student Network
+learn from the Teacher?
+Here's the answer.
+Suppose the task we are doing is
+Handwritten number recognition.
+Throw all the data
+into the Teacher Network.
+Because this is a
+classification problem,
+so the output
+of the Teacher
+should be a distribution.
+As an example,
+the output of this picture
+might be
+0.7 for 1,
+0.2 for 7
+and 0.1 for 9, etc.
+Then, the student is given
+the exact same picture.
+But the students does not learn
+from the correct answer.
+It treats the teacher's output
+as the correct answer.
+That is, 0.7 for 1,
+0.2 for 7
+and 0.1 for 9.
+The student should try to output something
+as close as possible to the teacher's output.
+So it should try its best to output
+0.7 for 1,
+0.2 for 7,
+and 0.1 for 9.
+What if the teacher
+makes a mistake?
+Wouldn't the student learn something wrong?
+Yes. But the student doesn't care.
+Students learn from the teacher’s answers.
+The student just learns wrong knowledge
+if the teacher gave it a wrong answer.
+You might want to ask:
+"why don't we
+train the small network directly?"
+We added a step
+that can cause the student to learn something wrong.
+Why don't we allow the student network
+to learn from the correct answer?
+The reason here is the same as
+that of Network Pruning.
+Do you remember?
+Last week,
+I talked about why don't we
+train a small network directly.
+The most intuitive reason
+is that
+training a small network directly
+is not good compared to pruning from a large network.
+The same answer holds for Knowledge Distillation.
+Why not directly train the small network?
+Because directly training a small network
+is worse than letting the small network
+learn from the large network.
+In fact, this technique
+is relatively old.
+The most well-known article of Knowledge Distillation
+is published
+in 2015
+by Hinton.
+Hinton is regarded as the proposer
+of Knowledge Distillation by many people.
+Because Hinton
+published the article
+"Knowledge Distillation of Neural Network".
+But I had read
+some papers that
+proposed the similar idea
+even before Hinton.
+For example,
+this article
+with a fancy title
+"Do Deep Nets Really Need to be Deep?"
+is published in 2013.
+The authors also proposed the idea of ​​Network Distillation.
+Obviously,
+this paper is published earlier than Hinton's.
+At that time, people doubt
+the power of Deep Learning.
+Therefore,
+you have to do reasearch
+and write articles
+to justify the power of Deep Learning.
+This article
+mainly discuss
+the power of "Deep" Networks.
+It gives the answer to why the Deep Network needs to be deep.
+Back to Knowledge Distillation. Why does it work?
+An intuitive reason is that
+the teacher
+provides additional information to the student.
+It might be too hard
+for the student to learn that
+this symbol is 1,
+because there are some symbols similar to 1,
+such as 7
+and 9.
+It's hard to require
+the student to output
+1 for 1,
+and 0 for both 7 and 9
+given this image.
+It's too difficult
+for the student network to learn this.
+But if it asked the teacher for advice,
+the teacher will tell him that
+it is ok
+to be unsure what this symbol actually is.
+You don't have to output
+1 for 1,
+because even the teacher
+can’t tell the difference between 1 and 7.
+The student does not
+need to be better than the teacher.
+So learning 0.7 for 1
+and 0.2 for 7 is enough.
+In this way, the small network
+can learn more efficiently than
+learning from the correct answer directly.
+Actually, Knowledge Distillation can do more magical things.
+Hinton pointed out that
+it is enough for the student to learn
+if the teacher told it
+the important relationships the student should know
+between the numbers.
+That is,
+the student network can still learn
+even though it had never seen some of the symbols.
+Even if the dataset
+does not contain the symbol "7"
+at all,
+as long as the teacher had seen it before,
+it can still teach the student that
+1, 7 and 9
+look quite similar.
+Information like this
+might be enough
+for the student to learn what 7 actually is,
+without actually seeing
+the symbol 7.
+This is the main idea of Knowledge Distillation.
+Actually,
+the Teacher Network doesn't have to be a single large network.
+It can be an Ensemble of multiple networks.
+What is "Ensemble"?
+Although it is a
+commonly used techiqnue
+in Deep Learning, especially in machine learning competitions,
+we didn't talk about it
+throughout this course.
+But this technique is very simple.
+So it only takes a short time to introduce the technique.
+The idea is simple.
+Train multiple models.
+Each model generates an output.
+The final output is voted
+by all the models.
+You can also use the average
+as the final output.
+Ensemble
+is a very good technique
+to use in competition.
+You can often
+achieve good ranks on the leaderboard
+by a very super large
+Ensemble.
+That is,
+train 100 models,
+or even 1000,
+and take the average.
+This is often used
+to get good results
+in machine learning competitions.
+But practically
+it is kind of useless.
+If you trained 1000 models,
+you have to run through
+every model
+to obtain one result.
+The computational requirement is too high.
+You can use Ensemble in competitions,
+but it is impractical to use
+in actual systems.
+An alternative way
+is to use an Ensemble
+for the Teacher Network,
+and use Knowledge Distillation to reduce the size.
+The Teacher Network's output
+is the average of all the models in the Teacher Network.
+Then the Student Network
+will learn from the result
+of the Ensemble.
+Let the Student learn to
+approximate the output
+of the Ensemble.
+Then you only have to
+keep this Student Network
+for further computations.
+This is an application
+of Knowledge Distillation.
+Also,
+there is a little trick you should now.
+While using Knowledge Distillation,
+you should slightly change the Function of Softmax.
+You should include an additional parameter
+"Temperature".
+We will encounter it again
+soon.
+Okay! We briefly go through the review of Softmax.
+What are we going to do?
+At the beginning of the semester,
+when we were talking about the classification,
+I introduced Softmax to everyone.
+What Softmax has to do is that
+you take every Neural's output
+to an Exponential function,
+and then you normalize it
+to get the final Network output.
+By doing this, you can make the output of your network
+become a probability distribution,
+which restrains the final network's
+output value
+between 0 and 1.
+Okay! The so-called "Temperature" means that
+before taking in the exponential function,
+each value was
+divided by a value "T."
+This "T",
+it is one kind of hyperparameters.
+This "T",
+is a parameter you need to tune.
+What's the effect of being divided by "T"?
+We assume "T" is greater than 1,
+and this "T",
+which is "Temperature",
+is for
+making the original sharp
+and concentrated distribution
+a little bit smooth.
+Why do we let the centralized distribution
+become a little bit smooth?
+Here is an example.
+We assume that your "y1", "y2" and "y3",
+before Softmax,
+are 100, 10 and 1, respectively.
+After Softmax,
+you will find that
+"y1′" is the result of Softmax.
+"y1′" is 1.
+"y2′" and "y3′" both approximate 0.
+We assume that this is the output
+of your Teacher Network.
+You ask your student,
+which is your Student Network, to learn from this result.
+Then, there is no difference to direct
+learning from ground truth.
+One of the benefits of learning from the teacher is that
+the teacher will tell you that
+which classes are actually similar
+to let Student Network not be so hard while learning.
+But, if the teacher's output is
+very concentrated,
+namely one of the class is 1
+and the others are 0,
+then what is the difference to learning from the ground truth?
+There is no difference.
+So, you have to take a "Temperature."
+We assume our "Temperature" is set to 100,
+and then you just divide "y1", "y2" and "y3" by 100
+to become 1,
+0.1 and 0.01.
+For the teacher,
+adding the "Temperature" won't change
+the result of classification.
+After Softmax,
+the highest score is still the highest score,
+and the lowest score is still the lowest score.
+The order of
+the output classes sequence
+will not change.
+The result of the classification will not change at all.
+But, the advantage is
+the score of each class
+will be smooth
+and average.
+Then, you let the student learn from this result
+will make sense.
+It will be able to let the student
+learn well.
+Then, this is a little trick of Knowledge Distillation.
+Okay!
+Okay! Let me
+see if any students have questions.
+I just find out that
+I made a mistake.
+What is it?
+It is that I forgot using the phone
+to turn on the system of
+everyone's leaving message.
+So,
+I hurry up now.
+Please allow me to open it.
+Okay! Let me see.
+I just find out that
+the voice is out.
+Okay!
+Come on! Let me see!
+Are there any classmates
+having questions to ask?
+Hey! Speaking of that education,
+in the chat room just now,
+we mentioned the one of the questionnaire from Ministry of Education.
+About that questionnaire,
+it suddenly brings to me that
+if you feel that
+this Taiwanese machine learning course
+should be with more computing resources
+to make everyone do their homework smoothly,
+you should tell the Ministry of Education.
+You should tell the Ministry of Education.
+Okay!
+Well!
+A classmate asks that
+when will TAs announce
+the score of Homework 9.
+It should be announced next week.
+Just now,
+actually this question was answered.
+Okay! Let me see!
+Okay! A student asks that,
+if we take the output before Softmax
+for training,
+what will happen?
+You can take the output before Softmax
+for training.
+In fact, someone take
+every layer of this network
+for training.
+You can say that
+hey, I have a giant Teacher Network,
+and this is the first layer.
+There are 12 layers in total.
+There are 6 layers in the small Student Network.
+Then, I want to make the 6th layer of the Student Network
+like the 12th layer of the giant Teacher Network,
+and the third layer of the Student Network
+like the 6th layer of the giant Teacher Network.
+Could it be like that?
+Yes, it could.
+Usually when you do many restrictions,
+you will actually get better results.
+Then, this is a commonly used trick
+in Knowledge Distillation.
+Okay!
+A student wants to ask questions about Lifelong Learning.
+It's Okay.
+You can ask questions about Lifelong Learning.
+I see what your problem is.
+Last week, we mentioned using a Generator to generate data
+to let the model learn.
+But, this model will only need to learn the old data once again.
+Has it achieved the purpose of Lifelong Learning?
+I can understand your question.
+You said what the Lifelong Learning wants
+is not to see the old data.
+If I generate some old-data-like data
+and add it to training data,
+will it violate the spirit of Lifelong Learning?
+It is a issue that
+different people have different opinions.
+If we define Lifelong Learning as
+you can't read the real old data,
+and if your Network
+can generate old-data-like data,
+it didn't really save the old data.
+The old-data-like data was generated by itself.
+At least today in Lifelong Learning's Community,
+if you want to write the Lifelong Learning paper,
+it is
+accepted as a Lifelong Learning method
+because you don't really use the old data.
+The old-data-like data is generated.
+A classmate asks that
+if there is too much difference between the student and the teacher,
+can we add an intermediate network
+to let the students learn from that Network?
+Yes, we can.
+It's Possible.
+That kind of technique,
+a minute later in TAs' video,
+will be brought up to everyone that
+there is such a way.
+A classmate asks that if "T" is too large,
+will the model change a lot?
+If the "Temperature" is too large,
+will it change a lot?
+Yes, it will.
+you could think about that,
+if your "Temperature" is close to infinity,
+then all the scores of the classes will become almost the same.
+So, the Student Network can't learn anymore.
+So, "T"
+is another hyperparameter
+like Learning Rate.
+It is a parameter you need to tune
+when you are doing Knowledge Distillation.
+Okay! A student asks that,
+to teacher,
+is the distillation of ensemble
+only a way to combine logistic?
+I guess what this classmate wants to ask is below.
+By doing ensemble,
+as my example
+when I told you what ensemble is,
+I meant that
+we could average the outputs
+of a lot of networks.
+This is a kind of ensemble.
+Is there any other way of ensemble?
+Yes, actually there is.
+But, it is a long story to tell.
+Later,
+this ensemble technique,
+in fact, was mentioned in my previous video record.
+Actually, it was mentioned.
+Later on, I will post this video record
+to the club
+to let everyone to investigate it.
+Actually, about ensemble,
+there are many different kinds of forms.
+For example,
+when you are doing ensemble,
+what we just mentioned
+is averaging
+the outputs of the networks.
+But, in fact, there are other ways to do.
+For example,
+Have you seen someone directly
+averaging parameters of networks?
+The method of averaging parameters of networks,
+in this course,
+you have even used.
+In the homework of translation,
+the program provided by the TAs
+has done the ensemble for you.
+It is to average different parameters.
+It is such a little trick.
+About this trick
+on translation,
+somehow, it's particularly useful.
+So, in TAs' program,
+there is a implementation of this method.
+Okay! I hope I answered all your questions well.
+Okay! If there is no more question,
+I will continue the lecture.
+For the rest,
+which is related
+to the Network Compression, doesn't remain much.
+We will go through it quickly.
+Next, we can play TAs' video record.
+Okay!
+Next trick we are going to tell everyone
+is quantization of parameter.
+But, this trick
+can't be used in our homework.
+Why is it not useful in our homework?
+Because the restriction on the size of your network
+in our homework
+doesn't depend on
+the size of the network itself,
+it depends on how many parameters you use.
+So, if you don’t reduce the number of the parameters
+but simply use other methods to compress the network,
+you won’t get better grades,
+which is not advantageous
+in this assignment.
+Okay, but let me introduce it to everyone.
+The practice of Parameter Quantization.
+What does it mean?
+It means that
+if we can use less space
+to store a parameter.
+For example,
+when you save a parameter,
+you may be using 64 bits
+or 32 bits.
+Is it really necessary to have such high accuracy?
+Will 16 bits be enough?
+Will 8 bits be enough?
+Will even fewer bits be enough?
+So Parameter Quantization
+The easiest way is as the following.
+For example,
+if you saved the network,
+you stored a value in 16 bits.
+Now, change to 6 bits
+or 8 bits to store a value.
+Hey, your storage space
+and the size of your network,
+are only half of it.
+What about your performance?
+It won't drop a lot.
+Even sometimes,
+you reduce the precision of your parameters,
+the result will be slightly better.
+Ok, there is one method
+to further compress your parameters.
+It is called Weight Clustering.
+What does Weight Clustering mean?
+Let’s give you an example directly.
+Suppose these
+are the parameters of your network,
+and then
+you just do clustering.
+You just cluster
+according to the value of these parameters.
+If the values are close,
+you put them in a group.
+How many groups do you want to divide into?
+You will set it up in advance.
+For example,
+we set it up in advance that
+we have to divide into four groups.
+Then you will find that
+the relatively similar numbers
+are treated as a group.
+Then for every group,
+we all use only one value to represent it.
+That is, as long as they belong to the yellow group,
+We don't care
+what its value is.
+Let’s say it’s all -0.4.
+Anyway, others parameters
+might also follow the result of -0.4.
+Maybe the results are similar.
+This -0.4
+may be the average of all the values ​​in it.
+If the average of all the numbers in it is -0.4,
+we just use -0.4
+to represent all the yellow parameters
+Use 0.4 to represent all blue parameters
+Use 2.9 to represent the parameters assigned to the green group.
+Use -4.2 to represent the parameters assigned to the red group.
+What are the benefits of doing this?
+The advantage of this is
+when you saved your parameters,
+you just have to remember two things.
+One is a table.
+This form is the record of
+what the value represented by each group is.
+What about the other one?
+What you want to record is
+which group does
+each parameter belong to.
+Suppose you set a smaller number of groups.
+For example, if you set up four groups,
+when you want to save a parameter,
+you only need two bits
+to save a parameter.
+You can save a parameter
+with fewer bits.
+It may originally need 16 bits
+or 8 bits,
+now you can further compress it
+to only two bits
+to save a parameter.
+Okay, you can further compress
+the parameters.
+If you are familiar with communication,
+then you may have learned something
+called Huffman Encoding.
+The concept of Huffman Encoding is that
+for things that appear more often,
+we use fewer bits to describe them.
+For something rarer,
+we use more bits to describe it.
+The advantage of this is something that often appears
+can be described with fewer bits.
+Rare things
+are used more bits to describe.
+So on average,
+the number of bits
+you need to save your data is reduced.
+So this is Huffman Encoding.
+So you can use these techniques
+to compress your parameters.
+This can make the space required
+to save every parameter
+become relatively small.
+Okay, to what extent can it be compressed?
+The ultimate result is that
+you can only take one bit
+to save every parameter.
+You can say the weight in your network
+is either +1
+or -1.
+There are only these two possibilities.
+Nothing else.
+Assuming you can do that
+each of your weights
+is only either plus or minus 1.
+Every weight you need
+can be saved
+with one bit.
+There are many
+studies of Binary Weights.
+I have listed some references here for your reference.
+We won't talk about the detail
+to train this kind of binary network,
+we won't talk about
+The impression that most people have of the binary network is that
+the value of one parameter
+is either +1
+or -1.
+Will the performance of this network be poor?
+This network should be miserable, right?
+It should be bad.
+Not necessarily.
+Here,
+we take one of the classic methods
+inside the binary network,
+which is called Binary Connect.
+Let’s share its results with you.
+In this paper of Binary Connect,
+the author told you that
+he used the technique of Binary Connect
+to treat three image recognition problems.
+From the simplest MNIST,
+CIFAR-10, which is a little bit more difficult,
+to the corpus designed by him.
+What did he find?
+This first row is a normal network.
+It is not a binary network,
+it is a general network.
+On MNIST,
+Your error rate is 1.3%.
+Here is the error rate.
+So the smaller the value, the better.
+After that it is 10% on CIFAR-10,
+he found that
+using a Binary Connect,
+that is, every parameter
+is either +1
+or -1,
+the result is better.
+So you use the binary network
+and get a result that was better
+than the result of a normal network.
+The possible reason is that
+when we used a binary network,
+we gave the network a relatively large limit.
+We put a relatively large limit on network capacity,
+so it’s not easy to be overfitting.
+Therefore, using Binary Weights
+can achieve the effect of preventing overfitting.
+So here I want to share with you
+the advantage
+of the binary network.
+Okay, let’s see if you have any questions.
+OK.
+So some students asked
+about Lifelong Learning last week.
+We talked about the EWC method.
+before training a new task,
+to calculate the importance of each parameter,
+it will use the previous data to calculate Gradient.
+Is it similar to
+the GEM,
+which also stores the previous data?
+They are different.
+Because that Gradient
+is not calculated after seeing the new task.
+That Gradient
+is to calculate the importance of the parameter.
+After training for a task,
+you will calculate it right away.
+So you do not calculate the importance of each parameter
+with the data of old task ,
+when you are trying to solve a new task.
+Once the old task is finished,
+you immediately
+record the importance of the parameters.
+After recording the importance of the parameters,
+all the information of the old task
+can be thrown away.
+So it's not the same
+as GEM.
+But I had a reminder last week that
+if you use the EWC method,
+you also use
+extra storage space.
+Although it does not store data,
+it needs to store the importance of parameters,
+which will also consume some storage space.
+Let’s talk about it in terms of the information theory.
+I guess you are talking about Huffman Coding.
+Ok.
+You can also discuss it in terms of the information theory
+or data compression.
+Because this series of
+weight quantization
+is relatively irrelevant to the main axis of this course,
+so we didn’t emphasize it
+in the homework.
+About Weight Quantization,
+I just want to tell everyone that
+these techniques do exist.
+Some students asked
+how to update Weight Clustering.
+Do I need to regroup each time I update?
+In fact, there is a very simple way for Weight Clustering.
+You might think that Weight Clustering
+needs to be considered during training.
+But there is a simple way that
+you finish the training network first
+and then do Weight Clustering directly.
+But you do it directly
+may cause
+the parameters to be too different from the original parameters
+after clustering.
+One of the ways
+to do that is by
+requiring the network parameters to
+stay close to each other
+during training.
+You can let the quantization be
+part of the loss.
+Directly integrate it into your training process
+to achieve the effect of
+clustering the parameters
+during training.
+This is something that can be done.
+Someone asked
+to what extent can we compress the model
+so as not to lose too much information.
+This depends
+on your decision.
+You'll have to decide
+how much do you want to compress it.
+It is inevitable that some information will be lost
+during compression.
+Thus, it is up to you to decide
+how much information loss is tolerable for your application.
+In weight clustering,
+how to determine the value for each cluster?
+Do we just take the average of values in the clusters
+after deciding their regions?
+Yes, precisely.
+We take the average.
+Someone asked
+would it be better
+if we add diefer
+to the binary weight.
+Sorry,
+I'm not sure what you mean by difer.
+Ok, someone else asked
+a question regarding EWC.
+He would like to ask
+whether there would be a conflict between
+the importance of different task data,
+and if so, how to merge the importance of different tasks.
+Here, the solution
+of merging the importance of different tasks
+provided in the paper
+is simpler than you think.
+An importance score
+would be calculated for each task.
+We simply need to
+add up the importance of all tasks.
+Each parameter
+would get a first value, b,
+after the training process
+had been done for each task.
+We add up the b of each task,
+and that's it.
+I hope that answers your question.
+Someone said that Diefer is about
+adding noise would keep more information instead.
+Well, I haven't seen any research about
+adding noise to the binary weight,
+so I don’t have a good answer to that.
+That sounds like a pretty creative method.
+Acknowledge me
+if you got some result out of it.
+Okay, I hope I've answered all of your questions.
+Let's continue.
+Next,
+I want to talk about
+reducing the number of parameters
+through designing
+different network architectures.
+We will introduce something called
+"depthwise separable convolution".
+This will be the main point of focus for the homework.
+You'll have to rely on this method
+to achieve the strong baseline.
+Okay,
+before we talk about this method,
+let’s do a quick review on CNN.
+At the beginning of the semester,
+we talked about CNN.
+We said that
+in the convolution layers of CNN,
+the input for each layer
+is a feature map.
+In this example,
+the feature map has two channels.
+If the feature map has two channels,
+the height for every filter
+also has to be 2.
+Also, the filter is a cube,
+not a rectangle.
+The thickness of the filter must match
+the number of channels.
+We then scan through the feature map
+using the filter
+and get another matrix,
+which is represented by the square.
+The number of filters we have
+and the number of channels of the output feature map are the same.
+Here, we have 4 filters,
+which are all cubes.
+Correspondingly, the output feature map has 4 channels.
+How many parameters are there in this example?
+We have a total of 4 filters,
+and the number of parameter for each filter is 3 times 3 times 2.
+Pay attention to the fact that
+each filter is actually a cube.
+So, the total amount of parameters is 3*3*2*4.
+72 parameters in total.
+The method I'm going to introduce is called
+"depthwise separable convolution".
+What makes that
+a good method?
+We'll talk about its principle later.
+Before that,
+let's first talk about its operation.
+There are two steps
+in depthwise separable convolution.
+The first step
+is called "depthwise convolution".
+What does it do?
+What it does is
+creating one filter
+for every channel.
+Each filter only manages one channel.
+Because each filter only manages one channel,
+the number of filters
+and the number of channels would be the same.
+For example,
+in the depthwise convolution layers,
+if the input feature map has two channels,
+we would only put two filters.
+That's unlike normal convolution layers,
+where the number of filters has nothing to do with the number of channels.
+In the example in the previous slide,
+although there were only two channels,
+we could have four filters.
+However, in depthwise convolution,
+the number of filters
+and the number of channels are the same.
+Each filter is only responsible for one channel.
+Actually, I think depthwise convolution
+is more aligned with the incorrect concept of CNN that people normally have in mind.
+People who aren't familiar with doing convolution
+usually mistook depthwise convolution
+for the algorithm of convolution.
+You have already taken this course
+and you know that is not the case.
+We’ve spent a lot of time introducing CNN to everyone,
+so you must know that CNN is not done like this.
+But, there is a special variation of CNN
+that reduces the number of parameters.
+In fact, it's pretty similar to people's misunderstanding of CNN.
+That is, each filter only manages one channel.
+How does a filter only manage one channel?
+Suppose this light blue filter manages the first channel.
+The light blue filter
+scans over the first channel
+and calculates
+a feature map.
+The dark blue filter manages the second channel.
+It does convolution on the second channel,
+and we get another feature map.
+So, in depthwise convolution,
+the number of filters and the number of channels
+would naturally be the same.
+This is different from the normal convolution layer.
+In a normal convolution layer,
+the number of input and output channels can be different.
+But, in depthwise convolution,
+the number of input and output channels are exactly the same.
+However, you will encounter a problem
+if only depthwise convolution
+was implemented.
+The problem is the lack of interaction
+between channels.
+Suppose there exists a pattern
+that could only be seen across channels.
+Depthwise convolution is useless
+against cross-channel patterns like that.
+What do we do now?
+We add pointwise convolution.
+What is pointwise convolution?
+Let me explain.
+We now have a bunch of filters,
+which is the same as the normal convolution layer.
+But, there is now a restriction
+on the size of the filter.
+The size of its kernel is always 1 x 1.
+In the normal Convolution layer,
+the filter size might be 2 x 2, 3 x 3, or 4 x 4.
+However, in pointwise convolution,
+the size is limited to 1 x 1.
+The purpose
+of the 1 x 1 filter
+is to consider the relationship between different channels.
+So, the first 1 x 1 filter
+would scan through
+the feature map we got from depthwise convolution
+and generate another feature map.
+Okay, there are three other filters here,
+and they would do the same thing.
+Each filter will generate one feature map.
+So,
+pointwise convolution
+can have different amount of input and output channels,
+which is the same as the normal convolution layer.
+However, pointwise convolution
+has a very big limitation.
+We force the size of the filter
+to be 1 x 1.
+It only needs to consider the relationship between channels.
+The relationship within the same channel is not considered.
+Depthwise convolution would be responsible for
+considering the relationship within the same channel.
+Thus, pointwise convolution
+would only focus on
+the relationship between channels.
+Okay, let's calculate
+the number of parameters when using this method.
+For depthwise convolution,
+the two filters
+are both 3 x 3 in size.
+So the size is 3*3*2.
+There are 18 parameters in total.
+For pointwise convolution,
+there are 4 filters
+that are 2 in size.
+Each filter only uses two parameters,
+so there are 8 parameters in total.
+Ok, the images on the left
+represent the normal convolutions.
+The images on the right
+represent the combination of depthwise and pointwise convolution.
+Let's compare the difference in
+the number of parameters between them.
+Let’s assume that
+the number of input channels is I
+and the number of output channels is O.
+And, these two cases
+both have k x k for their kernel sizes.
+If we're doing a normal convolution,
+how many parameters do we need
+if there are I input channels
+and O output channels,
+using k x k kernels?
+We can first calculate
+the size of each filter.
+The size of each filter should be k*k.
+Then, the kernel size multiplied by the number of input channels
+would be k*k*I.
+If we want to output O channels,
+we would need
+O filters in total.
+So the total number of parameters is
+the number of parameters per filter multiplied by O.
+If it is a depthwise plus pointwise convolution,
+how to reach
+I input channels
+and O output channels?
+Depthwise convolution's filter...
+Its filter
+does not have thickness.
+Its filter has no thickness.
+So you will find that adding up all the filters
+of depthwise convolution,
+its parameter count is only k x k x I,
+the same as one of the filter
+in a normal convolution.
+On the other hand, pointwise convolution
+has I x O here.
+If the number of your input channels is I,
+the height of
+each 1 x 1 convolution will be I.
+Where did O come from?
+Suppose you want to output O channels,
+you will have O 1 x 1 convolution.
+So pointwise convolution's
+total parameter count is I x O.
+Compare the two,
+you divide k x k x I + I x O
+by k x k x I x O.
+You divide the two.
+After some calculations, you will find
+that the ratio of the two is 1/O + 1/(k x k).
+Because O is usually a large value,
+the number of your channels may be 256 or 512,
+we can ignore this 1/O for now.
+k x k is usually,
+in this expression,
+a more critical value.
+The size of this whole expression
+may relate more to 1 / (k x k).
+Suppose your kernel size
+is 3 x 3
+or 2 x 2.
+If you choose 2 x 2,
+changing the general convolution
+to depthwise and pointwise convolution,
+the network size becomes 1 / (2 x 2).
+If your kernel size is 3 x 3,
+when you go from convolution to
+depthwise and pointwise,
+your network size becomes 1/9 of the original size.
+Okay, the next thing I want to explain to everyone is
+why is this trick useful.
+Where did this trick come from?
+Actually,
+this depthwise plus pointwise trick
+has its origin.
+In the past,
+there was already a method
+preceding depthwise separable convolution.
+It uses low rank approximation to
+reduce the number of parameters of a network layer.
+If you don’t know what low rank approximation is,
+it doesn't matter.
+I'll tell you directly.
+How does this work?
+Suppose you have a certain layer.
+This layer has
+N input neurons
+and M output neurons.
+If either N or M is very large,
+let's say that M is very large,
+the number of your parameters will be very impressive.
+For the parameter count W,
+assuming there are N input neurons
+and M output neurons,
+what is the parameter count?
+What is the number of parameters between these two layers?
+It's N x M, right?
+As long as one of N and M is big,
+W has a lot of parameters.
+How to reduce the number of parameters?
+There is a very simple way.
+Insert another layer between N and M.
+No activation function is needed for this layer.
+Insert one more layer directly.
+The number of neurons on this layer is K.
+Originally, there was only one layer.
+Now we split it into two layers.
+The first of these two layers
+will be represented as V.
+We use U to represent the second layer.
+You might think
+splitting a one-layer network into a two-layer network,
+shouldn't the number of parameters increase?
+You can calculate it carefully.
+This two-layer network
+actually has fewer parameters.
+Why?
+The original network's
+parameter count is M x N.
+Now we split it into two layers.
+The first layer
+is N x K, right?
+N x K.
+The second layer
+is K x M.
+K x M.
+If K is much smaller than M and N,
+you will find that
+the sum of parameters of U and V
+is much less than W.
+W is N x M.
+The parameters of U plus V is K x (N + M).
+N and M are not multiplied together.
+As long as K is small enough,
+the parameter count of U + V will become less.
+So, often
+the usual practice in the past is...
+if N = 1000 or M = 1000,
+it’s okay. I can insert k=20 or k=50.
+The number of parameters will be reduced quite a lot.
+Although a method like this
+can reduce the number of parameters,
+of course, it has some limitations.
+What kind of limitations they are?
+You will find that
+when you disassemble W into U x V,
+When you split W into
+two layers of U and V,
+you reduce the possibility of W.
+Originally W can have any parameters,
+but splitting W into U and V
+will make the W matrix's
+rank less than or equal to K.
+It doesn’t matter if you don’t know what rank is.
+Anyway, W will have some restrictions.
+Not all W
+can be used as
+your parameters.
+Your parameters will become limited.
+Ok, this method
+is a very common practice to reduce parameters.
+So,
+depthwise plus pointwise convolution
+actually uses the concept here,
+splitting one layer into two.
+Let’s take a look at
+the original convolution first.
+In the original convolution,
+where did this parameter
+in the upper-left corner of the red matrix come from?
+It comes from placing a red filter
+on the upper-left corner
+of the feature input's feature map.
+In this example,
+what is the number of
+parameters in a filter?
+The parameter count of a filter is 3 x 3 x 2, which is 18.
+You take the 18 parameters in the filter
+and the 18 values at the upper-left corner of the input feature map
+and do the inner product
+to get the value
+at the upper-left corner of the output feature map.
+So each of your filters has 18 parameters.
+If you disassemble it into
+depthwise plus pointwise,
+what will happen then?
+If it is split into depthwise and pointwise,
+the upper-left corner of the output feature map...
+The value in the upper-left corner comes from the
+output of depthwise convolution.
+So the value in the upper-left corner comes from
+these two values in the upper-left corner
+of depthwise convolution.
+And these two values come from the input feature map.
+These 9 values in the upper-left corner of the first channel
+and the 9 values in the upper-left corner of the second channel.
+So how to go from here to here?
+You can think of it as if
+we have two filters.
+These two filters
+have 9 inputs
+and get the output.
+Then the output of these two filters
+are combined to
+get the final output.
+So originally these 18 values
+becomes a number.
+Now, it is divided into two stages.
+18 values become two values,
+then become one value.
+If we look at
+the parameter in the lower-left corner
+of the yellow feature map,
+Where did the value in the lower-left corner of the yellow feature map
+come from?
+It came from these two values
+in the lower-left corner of depthwise convolution's output.
+And the two values in the lower-left corner come from
+the lower-left of this
+input feature map's
+18 values in the lower-left corner.
+So you can think of it as
+when we split
+general convolution
+into depthwise and pointwise,
+we can think of it as a one-layer network
+being disassembled into a two-layer network.
+So its principle
+is the same as what you saw on the previous slide's
+low rank approximation.
+We split one layer into two
+and its demand for parameters is reduced.
+Okay, this is about the design of network architecture.
+In fact, there are so many papers
+related to the design of network architecture.
+These papers
+are also in TA's slides.
+TA won’t elaborate on the architecture of these networks later.
+But in this assignment,
+if you can implement
+depthwise and
+pointwise convolution,
+splitting one layer of CNN into two layers of CNN,
+then you have a good chance to pass the strong baseline.
+Great.
+Let me see
+if you have any questions.
+Okay, if you don't have any questions,
+let's continue.
+The last one I want to share with everyone
+is Dynamic Computation.
+What dynamic computation wants to do
+is not the same as the previous methods.
+What we want in the first previous methods
+is simply to make the network smaller.
+In dynamic computation,
+what is the goal?
+In dynamic computation,
+We hope that
+the network
+can dynamically adjust the amount of calculation it needs.
+Why we want the network
+to freely adjust the amount of calculation it needs?
+Because sometimes you may want to run the same model
+on different devices.
+And the different devices'
+computing resources are not the same.
+So after you train a network,
+you expect that
+putting it on the new device
+will not require you to re-train the network.
+Because this magical model,
+this magical model
+can adjust
+its computing resources dynamically.
+When there are few computing resources,
+it only needs low computing resources to perform operations.
+When computing resources are abundant,
+it can fully utilize
+the sufficient computing resources for computation.
+Another possibility is that
+even on the same device,
+you will also need different computation.
+For example,
+when your mobile phone's power is sufficient,
+you may have more computing resources.
+Suppose your phone is out of power.
+Then, you may need to save computing resources
+for other things.
+Then, the computing resources the network be allocated to are relatively small.
+So even on the same device,
+We also want a network to
+adjust its demand for computing
+based on existing computing resources.
+For example, how much battery does the mobile phone have now?
+Okay, someone might ask
+why we don't just prepare
+a lot of networks.
+Suppose we need all kinds of situations to
+cope with a variety of different computing resources.
+Why don't we train 10 networks
+from the least computationally intensive to the most computationally intensive?
+Then, according to the state of our calculations,
+we choose a different network.
+But you know today,
+assuming you are on the same phone.
+You need to respond differently according to different situations.
+Then, you may need to train a lot of networks.
+But the storage space on the phone is limited.
+So today, we are going to reduce our calculations.
+But if you need to train a lot of networks,
+you need a lot of storage space.
+This may not be what we want.
+So we actually expect to let
+a network adjust
+its demand for computing resources.
+How to let the network adjust
+its demand for computing resources?
+One possible direction is to
+let the network adjust its depth freely.
+How to let the network adjust its depth freely?
+You can train.
+Generally, we train a very deep network.
+It has input.
+For example, when doing image classification,
+you give a picture as input.
+It outputs
+the result of image classification.
+Then,
+you can add an additional layer
+between these two layers.
+The job of this extra layer
+is to decide what the result of the classification should be
+based on the output of each hidden layer.
+When you have sufficient computing resources,
+you can let this picture go through all the layers
+and get the final classification result.
+When computing resources are insufficient,
+you can let the network decide
+in which layer it will output by itself.
+For example, when computing resources are relatively insufficient,
+after the first layer,
+it directly goes into this extra layer 1.
+Then, we get the final result.
+How to train this network?
+Actually, the concept is simpler than you think.
+We all have labeled data when we train.
+Usually, during training,
+we only need to care about the output of
+the last layer.
+We hope its output
+is closer to the ground truth.
+But today,
+You can also make the ground truth
+closer to the output of each extra layer.
+Then, we add up all the distances
+between output and the ground truth.
+We add up all the cross-entropy
+between output and the ground truth
+to get L.
+Then, we minimize this L.
+It's over.
+Okay, for the most basic way like this,
+can it work well?
+This training method can be used.
+You can indeed use the training method I just talked about.
+Every layer is connected for training.
+And you take all the results
+to calculate the distance with the ground truth.
+Then, you minimize distances
+between the output and the ground truth.
+It is possible to use this method to reach dynamic depth.
+But it’s not the best way.
+If you want to know the best way to do it.
+It’s not the best way now.
+Suppose you want to know how to do it better.
+Maybe you can refer to this article on MSDNet.
+In addition, you can let the network freely determine its width.
+How to let the network freely determine its width?
+You set several different widths.
+Then, you throw in the same picture today.
+During training,
+you throw in the same picture.
+Each network
+with different width will have different output.
+We hope that every output
+is closer to the ground truth. it’s over.
+We add up the distance between all outputs and the ground truth
+to get a loss.
+Then, we are going to minimize this loss. It's over.
+Here, I want to emphasize this to everyone.
+Although I draw three networks
+on these slides,
+These are not three different networks.
+They are the same network that
+can choose different widths.
+In other words, this weight
+is this weight.
+I use the same color
+to represent the same weight.
+In the leftmost situation,
+All neurons in
+the network will be used.
+But in the middle of this situation,
+You might decide not to
+use 25% neurons.
+But which neurons are not needed
+is decided in advance.
+You decide in advance.
+Some neurons are not used
+as long as this 75% parameter is used.
+For 50% of neurons, we don’t use them.
+Or, for 50% of neurons, we don’t use them.
+And then, during training,
+we consider all the conditions together
+and get an output.
+All outputs will calculate their distances with the ground truth.
+We make all the distances as small as possible, and it's over.
+But in fact, you will find that
+it also has its problem.
+So some special ideas are needed to solve this problem.
+How to train the network
+with depthwise dynamic depth?
+You can refer to Slimmable's neuron network.
+Okay, what I just said is that
+we can train a network
+that can decide
+its depth and its width.
+But the decidability is still on the human's side.
+You have to decide for yourself.
+When the battery power is less than a threshold,
+how many layers we use?
+Or how wide is the network?
+But is there a way to let the network decide on its own
+according to its environment?
+According to the situation,
+can it determine its width or depth?
+There is a way.
+Why do we need the network to
+decide its width and depth itself?
+That's because sometimes,
+even if it’s the same image classification problem,
+some images may be particularly difficult
+while some images may be particularly simple.
+For those relatively simple images,
+maybe you only need to pass a layer,
+and the network can already know the answer.
+For some difficult questions,
+for example, for the same cat,
+this cat is made into a burrito.
+So this is a particularly difficult question.
+Maybe when this picture only passes through one layer,
+the network will think it is a burrito.
+When passing through the second layer,
+it's still a burrito.
+When going through many layers,
+the network can judge that it is a cat.
+If it's such a difficult problem,
+you shouldn't stop in the middle.
+So can we let the network decide on its own?
+This is a simple picture.
+So it passes the first layer and stops.
+This is a more difficult picture.
+So it has to run to the last layer before stopping.
+We can do this.
+Suppose you want to know how to do it.
+You can refer to the following references.
+Such a method like this
+is not necessarily limited to the situation
+when the computing resources are relatively limited.
+Sometimes even if you have sufficient computing resources,
+for some simple pictures,
+you can get the result you want
+with fewer layers.
+That's actually enough.
+So you can save some computing resources
+to do other things.
+It's like saying I can understand it.
+In this class,
+because it’s very clear that
+you will get points for what you do,
+everyone will know what to do
+to get A+.
+Then, for the homework behind,
+after you get A+,
+maybe you don’t want to do them.
+So you are just like the situation above.
+You stop in the middle
+after getting A+.
+You just output, and your result is over.
+This is also human nature.
+I can also accept it.
+But it's not like this
+before this semester.
+This semester,
+the original grade is directly defined.
+It directly corresponds to that ranking.
+There's been a while that
+this original score did not directly correspond to the ranking.
+Grades were relative.
+Everyone was in pain.
+Some classmates
+got more than 100 points in their original scores.
+Wow, it turns out to be C-.
+In the past, if it was directly distributed in proportion,
+only the top 1/4 people got A+
+and so on.
+It might be a bit painful.
+But in this semester,
+we directly correspond the original score to the ranking
+to make everyone's life easier.
+Okay, the above
+are the five techniques that I introduce to you.
+The first four techniques
+make the network smaller.
+These four techniques
+are not mutually exclusive.
+Actually, when you are doing network compression today,
+you actually have no reason to just do with one technique.
+You can use both network architecture
+and knowledge distillation.
+You can also do the knowledge distillation
+and do network pruning again.
+You can also do network pruning
+and do quantization of parameters.
+If you really want to
+compress the network to a small size,
+these methods are not mutually exclusive.
+They can all be used together.
+Okay, the above
+is an introduction to network compression.
+So here,
+we finish
+the network compression.
+Let’s see if you have any questions.

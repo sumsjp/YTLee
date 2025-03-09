@@ -1674,36 +1674,148 @@ GAN 技術在多種數據類型和應用場景中展現了廣泛的潛力，特�
 </details>
 
 <details>
-<summary>92. DRL Lecture 2:  Proximal Policy Optimization (PPO)</summary><br>
+<summary>92. [2018-06-09] DRL Lecture 2:  Proximal Policy Optimization (PPO)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=OAKAZhFmYoI" target="_blank">
     <img src="https://img.youtube.com/vi/OAKAZhFmYoI/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+### 文章重點整理
 
+#### 核心主題
+- 探討強化學習（Reinforcement Learning, RL）中策略優化方法，特別是近端策略優化（Proximal Policy Optimization, PPO）及其在不同任務中的表現。
+- 比較PPO與其他Actor-Critic方法（如A2C+TrustRegion、TRPO）的性能。
+
+#### 主要觀念
+1. **策略優化的目標**：
+   - 通過優化策略函數，使智能體在環境中獲得最大化的累積獎勵。
+   
+2. **近端策略優化的核心思想**：
+   - 確保新舊策略之間的差異可控，避免策略更新過大導致性能下降。
+   - 引入約束條件（如策略比值的上下界），限制策略更新幅度。
+
+3. **PPO的優勢**：
+   - 簡化了信任區域方法（Trust Region）的實現，易於調參和部署。
+   - 在多種任務中表現出穩定的性能和較好的收斂性。
+
+#### 問題原因
+- 傳統策略搜索方法（如TRPO）在實際應用中存在以下問題：
+  1. **策略更新幅度難以控制**：過大的策略更新可能導致性能下降或發散。
+  2. **實現複雜度較高**：需要精確設計信任區域的大小和形狀，增加了算法的複雜性。
+
+#### 解決方法
+- 引入PPO作爲改進方案：
+  1. **策略比值約束**：
+     - 在優化過程中，限制新舊策略之間的比值變化幅度。
+     - 使用上下界（clip）技術，確保策略更新在可控制範圍內。
+  2. **優勢函數的使用**：
+     - 利用優勢函數（Advantage Function）來衡量不同狀態-動作對的優劣，指導策略優化方向。
+
+#### 優化方式
+1. **策略比值上下界**：
+   - 對於每個狀態-動作對，計算其舊策略概率與新策略概率的比值，並將其限制在[1−ε, 1+ε]範圍內。
+   - 這種約束機制能夠有效防止策略更新幅度過大。
+
+2. **多任務適用性**：
+   - PPO通過調節超參數（如ε值），適應不同任務的需求，展現出較強的通用性和靈活性。
+
+#### 結論
+- PPO作爲一種簡單而有效的策略優化方法，在多個強化學習任務中表現出色。
+- 相較於其他Actor-Critic方法，PPO在實現複雜度和性能穩定性之間取得了較好的平衡。
+- 未來研究可以進一步探索如何通過改進策略比值約束或其他機制（如結合價值函數的多步優化），提升PPO的性能和適用範圍。
 </details>
 
 <details>
-<summary>93. DRL Lecture 8: Imitation Learning</summary><br>
+<summary>93. [2018-06-18] DRL Lecture 8: Imitation Learning</summary><br>
 
 <a href="https://www.youtube.com/watch?v=rl_ozvqQUU8" target="_blank">
     <img src="https://img.youtube.com/vi/rl_ozvqQUU8/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章整理：模仿學習（Imitation Learning）與生成對抗網絡（GAN）在自然語言處理中的應用
 
+## 核心主題
+- 模仿學習（Imitation Learning）是一種通過觀察和模仿專家行爲來學習任務的方法。
+- 生成對抗網絡（GAN）可以應用於模仿學習，特別是在序列生成任務中。
+
+## 主要觀念
+1. **模仿學習的定義與應用**：
+   - 模仿學習通過學習專家的行爲軌跡來生成新的動作或序列。
+   - 在自然語言處理中，模仿學習常用於句子生成和對話系統（Chat-bot）。
+
+2. **GAN在模仿學習中的角色**：
+   - GAN可以通過對抗訓練的方式，幫助模型生成更逼真和多樣化的輸出。
+   - Inverse Reinforcement Learning（IRL）可以看作是一種基於GAN的模仿學習方法。
+
+3. **序列生成與GAN結合的應用**：
+   - 在句子生成任務中，使用GAN可以提高生成文本的質量和多樣性。
+   - 對話系統中，通過對抗訓練可以增強對話的自然性和流暢性。
+
+4. **視角轉換問題（Third Person Imitation Learning）**：
+   - 當模型需要從第三人稱視角觀察行爲並轉化爲第一人稱執行時，會出現視角不一致的問題。
+   - 解決方法是使用領域對抗訓練（Domain-Adversarial Training）來統一不同視角的特徵表示。
+
+## 問題與原因
+1. **模仿學習的局限性**：
+   - 基於最大似然估計的行爲克隆（Behavior Cloning）可能無法捕捉到更複雜或多樣化的策略。
+   
+2. **視角不一致的問題**：
+   - 第三人稱觀察與第一人稱執行之間的視角差異可能導致模型無法有效泛化。
+
+## 解決方法
+1. **引入GAN技術**：
+   - 使用生成對抗網絡進行序列生成，提升輸出的質量和多樣性。
+   
+2. **領域對抗訓練（Domain-Adversarial Training）**：
+   - 通過學習跨領域的特徵表示，解決第三人稱觀察與第一人稱執行之間的視角差異。
+
+## 結論
+- 模仿學習結合GAN技術在自然語言處理中展現出強大的潛力，特別是在序列生成任務中。
+- 需要進一步研究如何有效解決視角轉換問題，以提升模型的泛化能力。
 </details>
 
 <details>
-<summary>94. DRL Lecture 5: Q-learning (Continuous Action)</summary><br>
+<summary>94. [2018-06-18] DRL Lecture 5: Q-learning (Continuous Action)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=tnPVcec22cg" target="_blank">
     <img src="https://img.youtube.com/vi/tnPVcec22cg/maxresdefault.jpg" 
         alt="[Youtube]" width="200">
 </a>
 
+# 文章整理：連續行動空間中的深度強化學習方法
 
+## 核心主題
+本篇文章探討了在連續行動空間中應用深度強化學習（Deep Reinforcement Learning, DRL）的挑戰與解決方案。特別是針對Q-learning在連續行動空間中的應用限制，介紹了一種基於策略（Policy-based）的方法，並結合Actor-Critic架構提出了解決方案。
+
+## 主要觀念
+1. **強化學習的基本概念**：強化學習Agent通過與環境互動，學習如何做出決策以最大化累積獎勵。
+2. **連續行動空間的挑戰**：在連續控制問題中，傳統離散行動空間的方法（如Q-learning）不再適用，因為行動數量無限且狀態遷移動態複雜。
+
+## 問題原因
+1. **Q-learning的局限性**：傳統Q-learning在離散行動 space 中表現良好，但在連續行動 space 中存在以下問題：
+   - 行動空間無限，無法直接適用Bellman方程。
+   - 維度災難（Curse of Dimensionality）：高維狀態和行動導致學習效率低。
+
+## 解決方法
+1. **基於策略的方法**：將強化學習從價值評估轉向策略優化，直接學習最佳策略：
+   - 使用Actor網絡表達策略，並使用Critic網絡評估策略的優劣。
+2. **Actor-Critic架構**：結合.policy gradients 和Q-learning，通過.Actor負責更新策略，Critic負責估值。
+3. **特定的技術實現**：
+   - **策略梯度法（Policy Gradient Methods）**：直接優化策略，使其在某個方向上最大化.reward。
+   - **近端策略優化（Proximal Policy Optimization, PPO）**：限制策略更新幅度，確保穩定性。
+
+## 優化方式
+1. **策略設計的改進**：
+   - 使用Gaussian分佈來表示行動的概率，並在Actor網絡中學習分佈的均值和方差。
+2. **價值函數的設計**：
+   - 引入基於高斯分佈的Q函數設計，確保其正定性，從而簡化最優行動的求解。
+
+## 結論
+1. 深度強化學習在連續控制問題中具有廣泛應用潛力。
+2. 基於策略的方法（如Actor-Critic架構）有效克服了Q-learning在連續空間中的局限性。
+3. 未來研究可以進一步優化策略和價值函數的設計，提高算法穩定性和學習效率。
 </details>
 
 <details>

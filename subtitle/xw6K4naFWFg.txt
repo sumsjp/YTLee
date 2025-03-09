@@ -1,0 +1,675 @@
+Hi, lets have class.
+Let’s talk about the adversarial attack.
+What is the adversarial attack?
+In the homework,
+we have trained a lot of neural networks.
+Of course, we expect that these models
+can be used for real applications.
+However, to apply these neural networks for real life,
+a model that achieves high accuracy is not enough.
+It is still far from real applications.
+So, what else do we need?
+We need our model to be able to defend against hostility.
+What is the so-called hostility?
+Consider a network
+that is made to detect malicious behavior;
+since it is for malicious behavior detection,
+whoever is involved will
+try to spoof the network.
+It is not enough
+if a network achieves high accuracy in normal conditions.
+It also needs to achieve high accuracy
+when someone tries to deceive it.
+For example, we use neural networks
+for spam filtering nowadays.
+The network judges whether an e-mail
+is spam or not.
+For spammers,
+they also try to keep their spams
+from being classified as spam.
+Someone may modify the content in the mail
+and attempt to deceive the network.
+Is the network robust to these modifications?
+We thus want the neural network
+to defend against human hostility
+in addition to achieving high accuracy.
+For example, he is the King of the Chimera Ants,
+and his name is Meruem.
+He is superior to any other creatures in the world.
+He is very strong,
+and humans cannot defeat him.
+He attempted to exterminate all the humans.
+However, humans did not fight against it directly.
+Humans discarded their self-esteem.
+They just deployed an atom bomb to kill him.
+That is the end of the story.
+So, what does this tell us?
+It tells us that
+it is not enough for a network to achieve high accuracy.
+It must defend against human hostility.
+Okay, now let's see
+what human hostility may be like.
+We start from a real case.
+We have trained a lot of models
+for image classification in the homework.
+Given an image, a classification model
+tells which class it belongs to.
+Now we can apply some noise,
+a noise that is really small.
+An image can be considered a very long vector,
+and we can introduce some little noise
+to every dimension of the vector.
+Then we input this noise-added image
+to the network and observe what happens.
+Generally, this noise is quite small.
+It is too small that humans are not aware of it.
+The noise added in this example is actually too large.
+The noise should be so small that it is human-imperceptible.
+The images with noise are called attacked images.
+As for the original image,
+we call them the Benign Image.
+It's a good image that has not been attacked.
+We feed the Benign Image into Network,
+and the network prediction is a cat.
+Then we anticipate that the attacked image,
+which is perturbed by the bad guys,
+can make the model prediction differ.
+The attack can be roughly divided into two types.
+One is the targetless attack.
+The targetless attack only aims to
+make the prediction of the model something except a cat.
+Apart from the targetless attack,
+there is another more challenging attack,
+which is the targeted attack.
+In other words, we not only want
+the output of the model is not a cat
+but also is the desired class.
+For example, we hope that after adding noise,
+the model prediction becomes a starfish.
+The model misjudged the cat as a starfish,
+so we considered it a successful attack.
+Okay, is it really possible to make the targeted attack?
+Is it possible to add human-imperceptible noise to make
+the output of the model different?
+It is actually possible.
+The model here is not a very weak network.
+It is a 50-layered ResNet.
+We feed the Benign Image that is not
+attacked into the 50-layered ResNet.
+The model prediction is a Tiger cat.
+Do you know image recognition systems nowadays can tell you what the animal is
+and tell you its species?
+After you input this image into the model,
+the model predicts not merely a cat
+but a Tiger cat.
+However, it is said that the cat is actually not a Tiger cat.
+It doesn't matter.
+Anyway, we can recognize that it is a cat.
+At least, we can know that it belongs to the cat family.
+Okay, there is a confidence score.
+The confidence score here is 0.64.
+What does this confidence score mean?
+This confidence score is the result after performing softmax.
+Suppose your image classification has 2000 categories.
+There will be 2000 scores corresponding to the 2000 categories.
+The score must be between 0 and 1,
+and the summarization of
+the 2000 scores should be 1.
+We can see that the Tiger cat gets a score of 0.64
+among 2000 categories.
+It's actually quite high.
+Followingly, we add some noise to this Benign image.
+Now we want to attack this image
+the prediction of the model becomes a starfish.
+Then the attacked image looks like this.
+You wonder where the noises are.
+Actually, the noises are added;
+however, they are so small that are human-imperceptible.
+they are human-imperceptible.
+What will happen if we
+feed this image into ResNet?
+The output of ResNet becomes Starfish
+with a confidence score of 100%!
+Initially, ResNet was not so sure if it was a cat,
+but now the model is 100% sure
+that it is a starfish.
+In order to prove
+there are still some differences between these two images,
+let's subtract one from another.
+Besides, after subtraction,
+we also enlarge the difference by 50 times.
+The result will look like this.
+So these two photos are indeed different;
+I didn't copy the same image twice to lie to you.
+Although they are a little different,
+people can't tell
+what impact the difference will make.
+However, the outputs of the ResNet
+are very different for the two images.
+You might think that
+there is possibly a special relationship between cats and starfishes,
+thus make it a special case.
+Yet, it is not a special case.
+You can easily turn this cat into anything.
+I can simply add another noise
+to make this cat a keyboard,
+and the confidence score is as high as 0.98.
+Initially, the model wasn't so certain if it was a cat.
+After adding another noise,
+The model is 98% sure it is a keyboard.
+Again, you might think that
+how can such an outrageous behavior happen?
+Maybe the model is just poor.
+However, there are 50 layers for ResNet,
+so it’s not a bad network at all.
+Assume that only common noise was added,
+the model doesn't necessarily make mistakes.
+Here we have the original image.
+We add noise to the image,
+which is human-aware.
+Apparently, You can see that
+the noise has been added to the image.
+For this image, ResNet classifies
+it as a Tabby Cat.
+This may be the correct answer.
+Anyway, the model knows it is a cat.
+Adding more noise,
+now the model classifies it as a Persian Cat.
+This might due to the increasing noise making
+this cat look fluffy,
+so ResNet thinks it saw a Persian cat.
+Keep increasing the noise.
+Now you may no longer know what the image is.
+For this image, ResNet classifies
+it as a Fire Screen.
+What is a Fire Screen?
+I Googled it,
+and a Fire Screen looks like this.
+Hence, you can fully understand why the model makes a wrong prediction.
+It considers the noise we added to be the screen
+and the orange cat in the back to be the flame.
+Although the model makes a wrong prediction,
+it still has a point here.
+However,
+when adding a noise that is human-unaware,
+the model output a result that doesn't make sense.
+In the following section, before we talk about why it happens,
+let's first take a look at the attack mentioned above
+and how to do it.
+How did we add a very small noise to
+make the network predict a wrong result?
+This is our network.
+This is a function called f.
+This Function takes an image as input,
+which is called x0,
+and output the prediction result of the classification.
+The prediction result is called y0.
+Then we assume that the parameters of the network here are fixed.
+We will not discuss the network parameters here.
+They are not the key points today.
+Just keep in mind that they are fixed.
+When performing the non-targeted attack,
+how can we find out the noise?
+The goal is to get a new image
+which is denoted as x.
+Then the network f output y when given the input x.
+Then correct label of the input x is ŷ.
+We hope that the bigger the gap between y and ŷ, the better.
+That is the non-targeted attack.
+It is a non-target attack.
+We only need to know that the correct label is ŷ.
+We just have to make the network’s output and the correct answer differ.
+Then, the attack is succeeded.
+How to do it?
+How to find an x
+such that the output y has a large gap with ŷ?
+We also have to solve an optimization problem.
+This resembles training a network as we did.
+Let's first define a loss function.
+This loss function is called L.
+What is this L?
+This L is the difference
+between y and ŷ with a minus sign.
+For example, we usually utilize entropy loss
+when training a classification model.
+As for the -e(y, ŷ),
+it represents the cross-entropy between y and ŷ.
+However, we want to maximize the cross-entropy.
+Accordingly, we put a negative sign in front of cross-entropy.
+Then this negative cross-entropy is our loss,
+and we minimize this loss.
+We hope to find an x
+so as to minimize the L(x).
+The smaller L(x) is
+the bigger cross-entropy between y and ŷ.
+That is, the greater the distance between y and ŷ.
+This is a non-target attack.
+If it is a targeted attack,
+then we will set our goal first.
+We use y target to represent our attacking target.
+The ŷ is actually a one-hot vector,
+and the y target is also a one-hot vector.
+Then we now hope that y will be not only different from ŷ
+but also be close to y target.
+Suppose your y target is a Fish.
+Then the desired y should
+have a low score on the cat
+and a high score on the fish.
+Then, your loss function is written like this.
+Our loss function
+is the cross-entropy of negative "y" and "ŷ".
+You hope it the bigger, the better.
+But, at the same time, you want the cross-entropy of "y" and "y target",
+the smaller, the better.
+You sum up these two together to get your loss.
+You want to find an "x"
+to minimize this loss.
+But, just finding an "x"
+to minimize the loss is not enough.
+Because we actually expect
+the fewer noises we add, the better.
+That is to say, we hope our newly found picture,
+which could deceive the Network,
+is as close to the original picture as possible.
+"x" and "x0" should be as close as possible.
+So, when we solve this
+problem of Optimization,
+we add one more restriction,
+which is "d(x0,x)
+less than or equal to Σ."
+Then, what does this "d(x0,x) less than or equal to Σ"
+mean?
+It means that
+we hope that the difference between "x" and "x0"
+is less than a certain threshold.
+It is less than a certain threshold.
+What is the threshold based on?
+It is usually based on human perceptive ability.
+We assume that if the difference between "x" and "x0"
+is greater than "d(x0,x)",
+then it represents the difference between the two.
+Just wait a moment. In the next slide, I will talk about
+how to calculate the difference between two pictures.
+If the difference between "x0" and "x" is greater than "Σ",
+we assume that people will see this noise
+and find out that there is a noise.
+So, we have to make the difference between "x0" and "x"
+less than or equal to "Σ."
+We have to make it less than or equal to the limit that humans can perceive.
+Then, we could generate a picture,
+which humans look no difference between "x" and "x0."
+But, the result it generates
+is very different for Network.
+Okay! How do we calculate the difference between "x" and "x0"?
+How do we calculate the distance between them?
+"d(x0,x)" represents the distance between them.
+There are different algorithms for it.
+For the convenience of using symbols,
+we assume that "x" is a vector.
+Since it is a picture, it is a vector.
+"x0" is another picture.
+It is also a vector.
+The subtraction of these two vectors is called "Δx"
+About the distance,
+you can use L2-Norm as their distance.
+In other words, you can calculate the L2-Norm of "Δx",
+which is square the first place of
+this "Δx",
+square the second place,
+and square the third place.
+In fact, you can even square root them here.
+It depends on your definition of L2-Norm.
+You can square root them.
+Okay! There is another definition, which is L-Infinity.
+What is L-Infinity?
+It is taking this "Δx",
+seeing which dimension has the largest absolute value,
+and that one is L-Infinity.
+We take "Δx1", "Δx2" and "Δx3",
+which are every dimension of "Δx", to see their absolute values
+to find the largest one.
+The largest one represents the distance between "x" and "x0."
+Okay, there are many different ways
+to calculate the distance between two pictures.
+But when we are deciding which method to use to
+calculate the distance between pictures,
+we should take human perception into account.
+Which is a better distance
+during an attack, L2 or L-Infinity?
+Let me give you an example to explain.
+Ok, this is a picture.
+Suppose this picture only has four pixels.
+Now,
+we made two different changes to this picture.
+The first one is to make very small changes
+to the color of these four pixels.
+The second one is to only alter the color of the pixel
+in the lower right corner.
+The change is also relatively larger.
+If we were to calculate the L2-norm
+of these two pictures,
+it would be the same as the L2-norm of these two pictures.
+The picture above is the result of
+altering all four pixels of the picture below.
+The middle picture is the picture below.
+The picture below is the result of
+altering only the pixel in the lower right corner of the picture in the middle.
+This change is relatively larger.
+The L2-norm of these two changes is the same.
+But if you look at L-Infinity,
+they are not the same.
+Because L-Infinity only cares about the largest change.
+For L-Infinity,
+it looks at the largest amount of change here
+and the largest amount of change here.
+The biggest change at the bottom scenario is greater than
+the biggest change at the top scenario.
+So if you look at L-Infinity and L2 from this example,
+which is closer to human perception?
+Maybe it should be L-Infinity.
+Because for you,
+these two pictures,
+I believe most of you may not be able to
+tell the difference between them.
+I can guarantee you that there is a difference between the two.
+They have very, very slight differences.
+It’s just that the difference is distributed on each pixel.
+As for the bottom scenario,
+you can clearly see the green in the lower right corner
+is darkened.
+Although the colors of these three pixels are fixed,
+when the color in the lower right corner becomes darker,
+you immediately find that there are changes in the picture.
+You can tell that this picture
+has been modified.
+So it seems that L-Infinity may be more in line with actual needs.
+If we want to avoid...
+If we want to avoid being perceived by a human,
+a small L2 is not enough.
+We want to make L-Infinity the smaller, the better.
+To make it less likely to be perceived.
+So in the homework, we use L-Infinity
+as our restriction,
+as the attack.
+Our homework is to attack
+the image produced by the image recognition system
+on JudgeBoi.
+We will put limits on
+the gap between the new pictures
+and the original benign picture.
+The gap should be less than a certain threshold.
+When we were setting this gap,
+we chose to use L-Infinity.
+In reality, how the distance should be chosen
+also depends on the domain knowledge.
+The example we just gave was about images.
+If the attack was targeted at
+a voice-related system,
+x and x⁰ would be audio signals.
+Audio signals that
+sound distant to a human
+won't necessarily be judged from L2 and L-Infinity.
+You would have to study the auditory system of a human
+and see what kind of changes humans are particularly sensitive to.
+Then, design the method of measuring the distance between x and x⁰
+according to that.
+So, domain knowledge is needed in that part.
+Now we have the
+optimization problem,
+what we have to do is
+minimize the loss.
+We are looking for an x ​​to minimize this loss;
+however, there are some limitations on x.
+The distance between x and x⁰ must be less than or equal to x.
+How do we solve this problem?
+Let's ignore this restriction first.
+If there are no restrictions,
+can we solve this problem?
+Well, we actually know how to solve that
+as it's no different from training a normal model.
+In our first class,
+I showed this optimization question to you
+and told you that we could minimize the loss
+by tuning the parameters of the network.
+Now, we're simply replacing the parameters
+with the input.
+That's it.
+Just treat the input image
+as part of the network parameters
+and minimize the loss, then we're done.
+Now that the parameters of the network are fixed,
+we only need to adjust the input
+to minimize the loss.
+That's all.
+We're still using gradient descent.
+How exactly
+do we do it?
+We need to have an initialization first.
+The target we are looking for now is x,
+the input image,
+not the network parameter.
+Still, it needs an initial value, right?
+We still need an initial value
+when doing gradient descent.
+What kind of value is better for the initial value?
+You might not start with a random image.
+Instead, you might start with x⁰.
+Since we want the newly found x
+to be as close to x⁰ as possible,
+why not start searching from x⁰?
+If we start looking from x⁰,
+the x you find next may be closer to x⁰.
+So, we should
+initialize the value of x to x⁰.
+After that,
+it's pretty much the same as the normal gradient descent.
+We update the parameters iteratively.
+For example,
+we set the iteration, t, to start from 1 and go up to T.
+Then, we calculate the gradient
+in every iteration.
+It’s just that it's not the gradient of
+the network parameters with regard to the loss.
+We're now focusing on the gradient of
+the input image
+with regard to the loss.
+The input x
+is a very long vector.
+Let's call its elements x1, x2, x3, etc.
+Given the image or the vector,
+calculate the partial derivative of L
+with respect to all the variables at these points.
+For example, calculate the partial derivative of L with respect to x1
+and a partial L with respect to x2.
+and you end up with a gradient.
+Use the gradient to update with the image;
+that's it.
+So you multiply
+the gradient with the learning rate
+and subtract this product from the image x0.
+This is exactly the same as the original gradient descent method.
+The only difference is that
+we are doing gradient descent with respect to the input, not the parameters.
+Everything else is the same.
+We have a learning rate;
+we multiply it with the gradient,
+subtract the product
+from the original image,
+and get a new image.
+You can run this method iteratively,
+just as you did in normal gradient descent.
+But this is under the premise that there are no constraints.
+Now we have to add the constraints back.
+When we did gradient descent before,
+we didn't impose any kind of constraint
+on the parameters.
+We didn't set limits
+on the parameters.
+Now we need to impose the constraint that
+the difference between x0 and x
+must be less than or equal to ε.
+How can we deal with this problem?
+We will add a module
+into the gradient descent procedure...
+Oh, it's almost 5:20.
+We need to end at 5:20.
+We might need to stop
+after I finish talking about the most important things.
+So we are trying to run gradient descent
+but we should also take account of the difference between x0 and x.
+How can we achieve this?
+The answer is
+very easy,
+actually kind of worthless.
+After you finished updating the parameters
+and discovered that x0 and x...
+Sorry, I mean xt.
+If you finished updating the parameters
+and discovered that
+the difference between xt and x0 is greater than ε,
+just modify xt directly
+to satisfy the constraints.
+For example,
+suppose we are using L-Infinity
+and x0 is right here.
+Then x can only
+lie in this square, right?
+Because L-Infinity considers the biggest difference between x0 and x,
+so the difference will exceed ε outside of this square.
+Therefore,
+it should lie in this range
+after gradient descent.
+How do we ensure that
+it falls in this area?
+Simply pull it back
+if it went out of the area
+after updating.
+So, if you get the blue point
+and find it out of the box after this step, what should we do?
+Find a position in the box that is closest to the blue point,
+and then pull the blue point in.
+Done, it's over.
+This kind of attack has many different variants.
+You can find various attack methods
+in the literature.
+But in fact, they are all spirited
+by what we will talk about today.
+The differences between them
+are the constraints
+or the optimization methods.
+But gradient descent is still used.
+Their spirit is still the same.
+It’s just that you may have a different optimizer here.
+You may have different restrictions here.
+It becomes a different attack method.
+But they are all spirited
+by the example we gave you today.
+Okay.
+Let’s introduce one of the easiest methods of attack.
+This should be the method
+that can pass the medium baseline.
+What is this method?
+This method is called FGSM.
+Can it pass the medium baseline?
+Oh, it can't pass the medium baseline.
+It can only pass the simple baseline.
+Okay, how does this FGSM work?
+Very simple.
+Its full name is Fast gradient Sign Method.
+How does it do?
+It's like the one-punch man.
+It only takes one hit.
+Normally, when you are doing gradient descent,
+you have to update parameters many times.
+But what makes FGSM powerful is that
+it decides to update the parameters only once
+and see if you can kill with one hit.
+Find an image that can attack successfully in one hit.
+So, first of all,
+it was supposed to iteratively update parameters,
+but now it has changed.
+We only do one attack.
+For G,
+it made a special design.
+As for why this special design was made,
+you can go and look at the original document
+to understand why there is such an idea at the beginning.
+It says we don’t use
+gradient descent value directly.
+We give it a sign.
+What does this sign mean?
+This sign means
+if the value in the brackets is greater than 0,
+the output is 1.
+If the value in the brackets is less than 0,
+the output is -1.
+So after adding a sign,
+The element in vector g
+is either 1 or -1.
+Originally, if you used gradient,
+its value can be any real number.
+But now, we apply the sign function.
+Either it is 1 or -1.
+So g is always 1 or -1.
+What about the learning rate?
+The learning rate is assumed to be ε.
+It depends on how big this ε is on your side.
+Here, the learning rate is set exactly the same.
+What effect will you get if you set it exactly the same?
+The effect
+will be like this.
+After you attack,
+you must fall on the four corners of this blue frame
+because you think about it.
+This G is either 1 or -1.
+Each dimension of it is either 1 or -1.
+Then the front of it will be multiplied by ε.
+So after multiplying ε,
+your x0 today
+may move ε steps to the right,
+or move ε steps to the left,
+or move up ε steps,
+or move down ε steps.
+So after making an attack today,
+after your x0 has made an attack,
+it will definitely move to the four corners of this square.
+It must be one of these four corners.
+Just do this.
+You can always pass if you just do this.
+So you can use it to pass the simple baseline.
+Then some classmates will ask what's the benefit of killing with one blow.
+If I attack a few more times,
+wouldn’t it be better after a few more iterations?
+It will be better.
+So you run a few more iterations,
+then you pass the Medium Baseline, that's it.
+Okay, so how do I run more iterations?
+You run an iteration originally.
+Now you just run a few more iterations.
+How many iterations you have to run?
+You can set it whatever you want.
+Let’s set it to, such as 3, 5, 10.
+We run more iterations.
+But the disadvantage of running more iterations is
+you may be out of bounds accidentally.
+It is possible to accidentally run out of this square range.
+What should we do after it runs out of the square range?
+It's very simple.
+We pull it back, and it's over.
+Just look at it here.
+If this blue dot is updated and later
+it runs out of this square,
+you look at these four corners.
+Which corner is closest to the blue point?
+Just choose that corner,
+and it's over.
+Okay, this is an iterative FGSM.
+It can help you pass the medium baseline.
+Okay, let's stop here
+because it's half-past five.
+Maybe we should stop now.
+Let's end the class first.
+If you have a problem,
+you can still stay and ask.
+We can go outside to discuss it.
+Ok, class dismiss.

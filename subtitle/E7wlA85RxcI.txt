@@ -1,0 +1,440 @@
+Okay. Now let's talk about auto-encoder.
+We may talk about it just for a short while
+and take a break.
+Then, we will finish this part in the next lecture.
+The TA will announce homework
+about auto-encoder later.
+Okay, let’s start.
+In fact, auto-encoder can also be considered
+a part of self-supervised learning.
+So, let's quickly review
+the framework of self-supervised learning.
+How does self-supervised learning work?
+First, we start with lots of unlabeled data.
+With these unlabeled data,
+we can train a model
+with tasks that do not require annotated data.
+For example, fill-in-the-blank questions
+or the next token prediction.
+We have design tasks that do not require annotated labels
+to make the model learn from these data.
+Such learning manner is known as
+self-supervised learning or pre-training.
+After we train a model with these labeled-data-free tasks,
+this model is still not that useful.
+BERT can only do fill-in-the-blank questions,
+while GPT can only complete a sentence.
+For other downstream tasks,
+we have to fine-tune the self-supervised learning model.
+It can then be useful in downstream tasks.
+Among these self-supervised learning tasks,
+or among these labeled-data-free tasks,
+or before BERT and GPT,
+actually, there is a widely adopted task
+that also does not require annotated data
+called auto-encoder.
+We can thus also consider auto-encoder
+one of the ways in self-supervised learning
+or a way for pre-training.
+Of course, not everyone will agree with this point of view.
+Someone might say that Auto-Encoder should
+not be considered as a Self-Supervised Learning method.
+This Auto-Encoder has been there for a long time,
+which is proposed in 2006.
+However, Self-Supervised Learning
+was proposed in 2019.
+Accordingly, whether the Auto-Encoder is
+a Self-Supervised Learning method is
+a matter of opinion.
+The problem is just noun definition.
+Actually, we do not need to care about this.
+From the aspect that Self-Supervised Learning
+does not need labeled data to
+train a model,
+I think Auto-Encoder can be regarded as
+one of the methods of Self-Supervised Learning.
+It resembles fill-in-the-blank
+and predicting the next token but with a different idea.
+It’s just a different idea.
+Okay, let's keep going.
+Here we take a look at how the Auto-Encoder works.
+We utilize texts to simulate the input
+when talking about Self-Supervised Learning.
+Now let’s use images as an input for Auto-Encoder.
+Suppose you have a very large number of pictures.
+The Auto-Encoder is composed of two sub-networks, including an Encoder and a Decoder.
+What do these two networks do?
+When given an input picture,
+the Encoder reads it in and returns a corresponding vector.
+The Encoder may be comprised of CNN layers.
+It read a picture in and output a vector.
+Following, this vector will become the input of the Decoder.
+Then the Decoder will generate a picture.
+The network architecture of Decoder may just like the Generator of GAN.
+It takes a vector and output a picture.
+For both the Encoder and Decoder, anyway,
+there are multi-layer networks.
+So, what is the goal of the training now?
+The goal of training here is to make
+the input of the Encoder and the output of the Decoder
+as close as possible.
+Consider the picture as a vector.
+We want this vector and the output of the Decoder,
+which is another vector here;
+the distance between these two vectors is as small as possible.
+Some people call this approach "Reconstruction"
+We first compressed an image
+into a vector;
+then, the Decoder needs to reconstruct the original image
+based on this vector.
+After that, we hope the original image and
+the reconstructed image to be as close as possible.
+Speaking of this, you may have
+a sense of déjà vu.
+This is because I've already talked about this concept
+when teaching Cycle GAN, right?
+For Cycle GAN,
+We will need two generators.
+The first generator
+transforms an image from domain X to domain Y,
+and the other generator
+reconstructs the image from domain Y.
+The more closer the original image
+is to the transformed image, the better.
+As for the Encoder and the Decoder here,
+the concept of Auto-Encoder
+is exactly the same as that of Cycle GAN.
+Both approaches hope the reconstructed image
+to be as close to the original image as possible.
+Besides, the training procedure
+actually needs no annotated data.
+You only need to collect lots of images
+to train an Auto-Encoder.
+Hence, it is a method of Unsupervised Learning.
+Just like the Pre-Training step
+of Self-Supervised Learning;
+no annotated data is needed at all.
+Furthermore, as for the output of the Encoder here,
+we sometimes call it "Embedding"
+Remember? When we are talking about BERT,
+I also mentioned the term "Embedding."
+Some people call it representation.
+Some people call it code.
+The destination of the encoder is that encoding an input to a vector.
+No matter what people call this vector representation or code,
+it refers to the same thing.
+Okay, how do you use the auto-encoder technology?
+How to use a pre-trained auto-encoder in downstream tasks?
+I will show the common usage to you.
+This is a picture.
+You can think of it as a very long vector.
+However, the vector is too long for the downstream tasks.
+What can we do?
+You can input the picture into the pre-trained encoder.
+Then, the encoder will output another vector to you.
+It is more compact than the original vector.
+For example, the vector is only 10 or 100 dimensions.
+Then you can use the vector to train your downstream tasks.
+The picture is no longer a very high-dimensional vector.
+It is compressed to a low-dimensional vector by the encoder.
+You can use the low-dimensional vector to train your downstream tasks.
+This is common usage to use auto-encoder in downstream tasks.
+The input of the encoder is usually a very high-dimensional vector.
+And the output of the encoder is
+usually a very low-dimensional vector.
+For example, the input is a 100×100 picture.
+You can think of the 100×100 picture as a 10,000-dimensional vector.
+If we consider the RGB of the picture, it will become a 30,000-dimensional vector.
+The dimension of the encoder output is usually set very small.
+For example, only 10 or 100 dimensions.
+Compare to the original vector and the output of the decoder of the auto-encoder,
+the output of the encoder of the auto-encoder is narrow.
+In this case, the input and the output of the decoder are high-dimensions,
+and the middle dimension of the auto-encoder is narrow.
+We also call the middle section a bottleneck.
+What the Encoder does
+is transforming high-dimensional things
+into low-dimensional things.
+Transforming high-dimensional things into low-dimensional things
+is also known as Dimension Reduction.
+About the Dimension Reduction technology,
+I believe, in applications of Machine Learning,
+you hear of it frequently.
+About Dimension Reduction technology,
+it actually involves very widely.
+So, we won't go into details here
+because this course
+only focuses on deep-learning-related technologies.
+You can consider the Encoder of Auto-Encoder
+as Dimension Reduction.
+Then, there are many others not based on Deep Learning.
+There are many Dimension Reduction technologies
+not based on Deep Learning.
+I will leave the video link here,
+for example, PCA and T-SNE.
+I will leave the video link here for your reference.
+Okay! What's so good about Auto-Encoder?
+When we transform a high-dimensional picture
+into a low-dimensional vector,
+what kind of help does it bring?
+It reminds me of a scenario of the Romance of the Condor Heroes.
+I don't know if you have ever seen the Romance of the Condor Heroes.
+I will do a quick survey.
+Can people who have seen the Romance of the Condor Heroes please raise their hands?
+Wow! There are so many! Good! Hands down, please!
+There are much more people than I thought.
+I thought everyone no longer watches Jin Yong's works.
+There is a scenario in the Romance of the Condor Heroes,
+where Yang Guo goes into the Unfeeling Valley
+and encounters the disciple of Zhi Gong Sun Zhi, who is the master of the Unfeeling Valley.
+That disciple is Fan Yi Weng.
+Fan Yi Weng is that person.
+What is Fan Yi Weng's weapon?
+His weapons are a steel rod
+and his beard.
+He can swish his beard as a soft whip.
+His beard is two feet long.
+It can be a very powerful weapon while whipping.
+Yang Guo fights against him for a long time, and it is hard to tell who is the winner.
+Suddenly, Yang Guo says
+"I will cut off your beard within three strokes."
+Everyone was surprised.
+They think although Yang Guo's skill in martial arts may be higher than Fan Yi Weng,
+it's not that high.
+How can he cut off his beard in three rounds?
+As it turns out, Yang Guo really cut his beard in three rounds.
+How?
+Because Yang Guo found out
+that the beard is controlled by the head.
+Although the beard is 20 feet long,
+the changes that the head can make are still limited.
+So even though the beard-whip technique is seemingly very powerful,
+if you try to hit him on the head
+or slap him in the face,
+you will force him to dodge,
+which will force him to limit the way his beard can move.
+So he defeated Fan Yi Weng
+and cut off his beard.
+End of story.
+What does this have to do with auto-encoder?
+Ok, let's think about it.
+What auto-encoder has to do here
+is to compress and restore a picture.
+But why is it possible to restore the picture successfully?
+Think about it, suppose the original picture is 3×3.
+3×3 is very small
+but let’s assume it's 3×3.
+The original picture is 3×3.
+You have to use 9 values ​​to describe a 3×3 picture.
+Suppose that the vector output by the encoder is two-dimensional.
+How can we use a two-dimensional vector to
+restore a 3×3 picture,
+to restore 9 values?
+How can we turn 9 numbers into 2 numbers,
+then revert it back
+to 9 values ​​again?
+We can do this because,
+for images,
+not all 3×3 matrices are pictures.
+Changes in pictures are actually limited.
+Sample a random noise,
+a random matrix,
+it's usually not the picture you will see normally.
+Or for example,
+suppose the picture is 3×3.
+It might seem that you would need
+3×3 values to be able to
+describe a 3×3 picture.
+But maybe the changes in pixels are limited.
+Perhaps after collecting the images, you found out that
+the images were either this type
+or this type.
+Other types weren't something you'll see
+during training.
+In other words, since the variation of images is limited,
+we can utilize an encoder to
+represent an image
+using only two dimensions.
+Although the resolution of the image is 3×3,
+which needs 9 values to store in theory,
+there are actually only two variations of images.
+This way, when we see an image of this type,
+we represent it as [0, 1].
+If we see an image of this type,
+we represent it as [1, 0].
+So, back to our previous example.
+The beard represents the image
+in the complicated state,
+which is the combination of
+all the pixels of the original image.
+The purpose of the encoder is to simplify things.
+Something that seems complicated
+could just be complicated on the surface,
+while in reality, its variation is quite limited.
+If we can figure out the limited variations of it,
+we can simplify the complicated things
+and find a simpler way to represent them.
+If we have a simpler way
+to represent a complicated image,
+we won't need as much training data during training.
+In the downstream tasks,
+we might not need as much training data
+to make the machine learn
+what we want it to learn.
+This is the concept of auto-encoder.
+Auto-encoders
+are nothing new.
+It has been around for quite some time.
+For example, in this paper published by Hinton.
+You know who Hinton is, right?
+Hinton is the father of deep learning,
+and in the paper published in Science back in 2006,
+the concept of an auto-encoder was mentioned.
+It's just that the network they used back then
+was quite different from
+what we're using nowadays, of course.
+Let's take a look at
+how the Auto-Encoder looked like 15 years ago.
+At that time, people didn’t think that
+Deep's Network is trainable.
+People thought that simultaneously stacking up layers
+and training them is impossible.
+Thus they believed that
+each layer should be trained separately.
+The technique Hinton used is called
+the Restricted Boltzmann Machine.
+Its abbreviation is RBM.
+I selected a picture from
+Hinton’s 15-year-old article.
+You can have a taste of
+how people approached
+a deep learning problem.
+At that time,
+they thought that it’s impossible to train a deep network
+and each layer should be trained separately.
+But by the word "deep",
+they actually meant three layers, which is not very deep nowadays.
+You already used more than three layers in homework 2,
+right?
+But back to 15 years ago,
+this was considered very deep.
+Okay, so the three layers need to be trained separately.
+Here they called the separated training part "pre-training".
+But it’s different from
+the pre-training in self-supervised learning.
+Do you understand what I mean?
+The pre-training of the auto-encoder
+is actually
+a pre-training of another pre-training.
+The pre-training target is the auto-encoder,
+and each layer's training is done separately
+with RBM.
+Train every layer first
+and then connect all of them to do fine-tuning.
+The fine-tuning here is not the fine-tuning of BERT.
+They are fine-tuning the pre-trained model.
+OK. But nowadays,
+seldom people use the Restricted Boltzmann Machine.
+It is actually not a deep-learning technology.
+It's a bit complicated
+and we won't go into the details of it
+in this course.
+Why did no one use it now?
+Because it's useless.
+10 years ago,
+all researchers believed there must be
+a Restricted Boltzmann Machine in this Deep Network.
+Later in 2012,
+Hinton published a paper and concluded at the end that
+there is no need to use
+Restricted Boltzmann Machine.
+So, no one used it anymore.
+For Restricted Boltzmann Machine,
+there was a magical belief that
+the Encoder and the Decoder
+must be symmetric.
+The first layer of Encoder
+and the last layer of Encoder,
+these two layers
+must be transposed to each other.
+But few people are using
+such restrictions now.
+In this slide, I just want to tell you
+Auto-Encoder is not a new concept.
+It is a very historical concept.
+There is a common variant of Auto-Encoder,
+called denoising Auto-Encoder.
+The denoising Auto-Encoder works like this.
+We will input the original image to the Encoder
+with some noise.
+You can create noise and add it.
+Then, pass the Encoder,
+pass the Decoder,
+and try to restore the original picture.
+What we are restoring now
+is not the input of the Encoder.
+The input image of the Encoder is noisy.
+What we want to restore is not the input of the Encoder.
+What we want to restore is the result before adding noise;
+results before adding noise.
+So, you will find that
+Encoder and Decoder not only have the task
+of restoring the original picture.
+They have one more task.
+What is the task?
+This task is
+the model must learn to remove the noise by itself.
+Encoder sees a picture with noise,
+but the goal of Decoder is to restore
+the picture without noise.
+So for the encoder and the decoder,
+they must work together to get rid of the noise.
+Therefore, that you can
+train the de-noising auto-encoder.
+Speaking of the de-noising auto-encoder,
+did you find this concept
+not unfamiliar at all?
+The de-noising auto-encoder
+is not a new technology.
+In 2008,
+it already had related papers.
+But if you look at today’s BERT,
+in fact, you can also think of it as a
+de-noising auto-encoder.
+On input, we add masking.
+Those masking are actually noises.
+BERT's model is the encoder.
+Its output is the embedding.
+When talking about BERT technology,
+we tell you that this output is called embedding.
+Next, there is a linear model.
+It is the decoder.
+What the decode does is
+to restore the original sentence.
+That is, for the place where the fill-in-the-blank questions are covered,
+it restores it back.
+So we can say that
+BERT is actually
+a de-noising auto-encoder.
+Some students may ask
+why this decoder has to be linear.
+It doesn’t have to be linear.
+It can be non-linear.
+Or let us put it in another way.
+This BERT has 12 layers.
+The smallest BERT has 12 layers.
+The larger ones have 24 or 48 layers.
+Okay, the smallest BERT is 12 layers.
+If we say that in the middle of the 12 layers,
+the output of layer 6 is embedding,
+then you can actually say the remaining 6 layers
+are the decoder.
+You can say BERT.
+Assuming you are using BERT.
+You are not using the output of layer 12
+but the output of layer 6.
+Then you can say
+the first 6 layers of BERT are the encoder.
+The next 6 layers are the decoder.
+Anyway, this decoder
+doesn’t have to be linear.

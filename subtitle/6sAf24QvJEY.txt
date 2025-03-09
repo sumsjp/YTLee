@@ -1,0 +1,433 @@
+Last time we have not finished
+the lecture about
+self-supervised learning.
+We only talked about BERT.
+Besides BERT,
+There is another
+well-known model called the GPT family.
+So, what is the GPT family?
+Last time we talked about
+how BERT is trained:
+It is trained to do fill-in-the-blank questions.
+Then how is GPT trained?
+GPT is also trained with self-supervised learning,
+but with a different task from BERT.
+What GPT does is
+to predict the next token
+from the given sequence.
+For example,
+suppose there is a sentence of
+"Tai Wan Da Xue" in the training data.
+As we give this sentence to GPT,
+what will happen?
+We start with
+a special token <BOS>.
+GPT yields an embedding
+based on the BOS token.
+Then, we predict the next token.
+In this sentence,
+according to its content,
+What is the next token?
+The next token should be "Tai".
+So we have our model,
+according to the first token
+and the embedded of <BOS>
+output the token "Tai".
+Let's go more detailed.
+We have an embedding
+that is denoted as h.
+It is fed to a linear transformation
+and normalized by softmax function,
+yielding a distribution.
+This is the same as classification tasks.
+Next,
+We want the cross-entropy between
+the output distribution and the ground truth
+to be as small as possible.
+That is, you are going to predict the next token.
+Followingly, iteratively repeat this process.
+You gave your GPT "Begin Of Sentence" and "台" as input,
+and it produces corresponding embeddings.
+Then, it is going to predict the next token.
+You tell it that the next token is "灣".
+Ok, let's keep it going.
+You give it "Begin Of Sentence", "台", and "灣",
+and ask it to predict the next token.
+The next token should be "大".
+Then you give it "Begin Of Sentence", "台", "灣", and "大".
+The next token should be "學".
+Accordingly, it should predict "學".
+In this example,
+we just use one sentence to illustrate the training process of GPT.
+Of course, you will not just use one sentence for training.
+You will utilize millions of sentences to train the model in practice.
+This is the training process.
+That's it.
+The most remarkable thing is that it utilizes tons of data
+to train an extremely large model.
+Then see how the model performs in many aspects.
+There is one more thing worth mentioning.
+The GPT model is just like the transformer decoder.
+We know that there are transformer encoders and transformer decoders, right?
+I talked about this in previous lectures.
+The architecture of the GPT resembles that of the transformer decoder.
+However, the cross attention is replaced.
+It is replaced by a masked attention.
+In other words, when the GPT is asked to predict "台" when given "Begin Of Sentence",
+it can not see the following words.
+When the GPT is asked to predict "灣" given "Begin Of Sentence" and "台",
+it can not see the following words and so on.
+This is how the GPT is trained.
+What makes GPT famous is that
+since it can predict the next token,
+it has the ability to generate text.
+If you have GPT predict the next token constantly,
+then a complete article can be generated.
+Moreover, whenever I mention GPT,
+we will have an image of a unicorn.
+Why do unicorns represent GPT?
+The reason is one of the most well-known examples of the GPT series
+is about generating fake news of unicorns.
+Here's the fake news.
+Roughly speaking,
+the fake news is about
+discovering unicorns in The Andes.
+What a piece of lifelike fake news, right?
+Hence, whenever someone mentions GPT,
+fake news about the unicorn will also be brought to mind.
+Besides, for a better understanding of
+how GPT actually works,
+there is a demo page for you.
+It is called "talk to transformer".
+On this page,
+since the largest GPT model
+is not publicly available,
+the relatively smaller GPT model is used here.
+This demo page allows you to
+enter the beginning of a sentence
+and it will generate the rest for you.
+Okay, so this is the brief explanation
+of the GPT series.
+We have already known that
+it can complete a sentence.
+However,
+for the human-language-processing-related downstream tasks,
+such as question answering,
+how can GPT be used in these tasks?
+GPT actually uses a different idea from BERT,
+but I still have to emphasize that
+GPT can also be used in the same way as BERT.
+Do you remember how BERT works?
+Consider there is a BERT model
+followed by a simple linear classifier,
+then this model can be used on many downstream tasks.
+Similarly, consider there is a GPT model
+followed by a simple linear classifier.
+I believe it also works.
+However, there is no additional classifier in the GPT paper.
+The paper proposes a crazier idea.
+Why is it a crazier idea?
+The additional classifier is already used in BERT's paper.
+If we always use the additional classifier in the paper,
+no one will think it is a good paper.
+Another reason is that the GPT model is too big.
+Because the GPT model is too big, it is difficult to finetune it.
+When we are using BERT model, you will put a linear classifier after BERT model.
+In this case, the BERT model also a part of the model you want to train.
+The parameters of BERT model also need to be adjusted.
+In the homework about BERT model,
+you need to spend a little time training the model.
+You don’t train the complete BERT model in the homework,
+so the TA says you can finish the training process in about 20 minutes.
+The BERT model is already trained before
+you do the fill-in-the-blank question with the BERT model.
+You just need to finetune the BERT model.
+However, it still takes time to finetune the BERT model.
+The GPT model may be too huge such that it is difficult to finetune.
+It may be impossible to train the GPT model for even one epoch.
+There is a crazier usage for the GPT models.
+This usage is close to how humans do it.
+Think about it, suppose you go to the exam.
+For example, you take the TOEFL listening test.
+What happens in your mind when you do take the test?
+What is the description of this TOEFL listening test?
+First, you will see a description of a question.
+It told you that it is a multiple-choice question.
+You have to the select correct answer from the four options ABCD.
+Then give you an example, guiding you on how to answer the question.
+Then, you see a new question
+and hope you can start answering by analogy.
+The GPT series is going to do the things below.
+Can this model
+do the same thing?
+For example, assuming that you want the GPT model to do translation,
+you just input "Translate English to French."
+You give the model this sentence first.
+This sentence represents the description of the question.
+Then, you give it a few examples and tell the model
+"sea otter =>."
+It should look like this.
+Or, you tell it something like "plush girafe."
+After "plush girafe",
+it should look like this and so on.
+Next,
+you tell it "cheese =>"
+and ask it to fill in the rest.
+You hope that it can generate the translation results.
+Do you know
+how crazy this idea is?
+During training,
+GPT wasn't taught to do translation.
+The only thing it was taught is that,
+given the first half of a text,
+it should produce the second half of it.
+It is just like the example we showed you.
+Now, we directly give it the first half of the text
+like this,
+and tell it that you are going to do translation.
+Then we give it few examples
+to teach it what translation is.
+Next, we give it the English word "cheese."
+Can it generate the results
+regarding the English-to-French translation?
+In the GPT document, this is
+called Few-shot Learning.
+But, from the general Few-shot Learning point of view,
+it is a little bit different.
+The so-called "Few Shot" means that
+it really relies on few examples.
+So, it's called Few Shot.
+But, it is not a general learning.
+There is nothing
+about gradient descent here.
+During training,
+we must run gradient descent.
+There is nothing about gradient descent here.
+We don't want to tune
+the parameters of the GPT model at all.
+So in the literature on GPT,
+they gave this training a special name.
+They are called In-context Learning.
+This means it’s not a kind of
+general learning.
+It didn’t even do gradient descent.
+Of course, you can give GPT a greater challenge.
+When we took the TOEFL listening test,
+we are given only one example.
+Can GPT know it had to translate
+by just looking at one example?
+This is called One-shot Learning.
+There is a more crazy one
+called Zero-shot Learning.
+Give it a narrative
+and say we have to translate now.
+Can GPT automatically know
+that it needs to translate?
+If it can be done,
+that's really amazing.
+So did the GPT series
+achieve this goal?
+This is a question of different opinions.
+It's not impossible to get it right,
+but the accuracy is a bit low.
+Compared to when you can fine-tune the model,
+the accuracy is a bit low.
+For details, please read the article on GPT.
+The third generation of GPT
+was tested for 42 tasks.
+The vertical axis is the accuracy.
+These three solid lines
+are the average accuracy of 42 tasks.
+Few-Shot is included here,
+as well as One-Shot and Zero-Shot.
+The three lines represent Few-Shot,
+One-Shot, and Zero-Shot, respectively.
+The horizontal axis represents the size of the model.
+They tested a series of models of different sizes,
+from only 0.1 billion parameters
+to 175 billion parameters.
+So from only 0.1 billion parameters
+to 175 billion parameters,
+Few-Shot's accuracy
+ranged from 20%
+to about 50%,
+as for whether the average accuracy of 50%
+can be considered successful or not
+is a matter of opinion.
+It appears that
+the model actually learned some of the tasks successfully.
+For example, the task of doing addition.
+If you give it two numbers,
+it can actually output the result
+of adding those two numbers together.
+However, some tasks
+seem to be impossible for it to learn.
+For example, it performs poorly on
+tasks related to logical reasoning.
+Okay, I’ll leave the details of GPT3
+for you to look it up yourself if you're interested.
+Also, here is a video of a past lesson,
+and below is the link to it.
+The examples we have given so far,
+including the one we were just talking about,
+have all been related to texts.
+However, don't get me wrong.
+The concept of self-supervised learning
+is not restricted to only texts.
+In the field of audio or CV,
+which means
+computer vision,
+the concept of self-supervised learning
+can also be applied to audio or video applications.
+Nowadays,
+there are various
+self-supervised learning techniques,
+and the BERT and GPT series that we mentioned
+belongs to merely
+one of the three methods
+of self-supervised learning.
+They belong to the category of prediction.
+While there are other types,
+they are out of the scope of this course.
+The course,
+which you may find a bit too shallow,
+is mainly about
+introducing the main idea of a topic
+and leaving the details for you
+to do further research on if interested.
+So, these slides
+are just here to introduce to you
+this specific section of self-supervised learning.
+This is just the tip of the iceberg,
+and there is much more
+waiting for everyone to explore.
+Okay, so we won't go into the details
+of image processing tasks.
+I will only put two slides here
+to inform you of a very famous method
+called SimCLR.
+Its main idea is not that difficult.
+I believe you can read the paper by yourself
+to understand it.
+There is also a strange method
+called BYOL.
+BYOL is very peculiar,
+and we won't talk about it in class.
+Why?
+Because I don’t know why it works.
+This method was proposed in a paper
+published last summer.
+If this paper had not been published
+and a student came to me
+to share the same idea with me,
+I will definitely
+reject his idea.
+This idea should not work.
+It should be impossible!
+This idea seemed to have
+a huge flaw in it.
+But somehow, it worked
+and achieved
+state-of-the-art results.
+Deep learning is amazing, right?
+So I am going to
+skip this part.
+For speech recognition tasks,
+you can also use
+self-supervised learning techniques.
+You can try to train
+a speech version of BERT.
+How can you do that?
+Just look at how the text version of BERT is trained
+and do the same.
+For example, the text BERT was trained to do fill-in-the-blank questions.
+You can do the same thing in speech recognition!
+Just cover some part of the voice signal
+and let the machine guess what the covered part is.
+Also, we can let the machine predict the proceeding sound signals.
+Recall that GPT
+predicts the token that will appear next.
+You can also use a speech version of GPT
+to predict the sound that will appear next.
+So, you can also try the voice version of GPT.
+Whether it is the voice version
+of BERT or GPT,
+there are a lot of related research results.
+But in the voice field,
+there is something lacking
+compared to the text field.
+The one I think is lacking now
+is the benchmark corpus
+like GLUE.
+In the field of natural language processing,
+there is the GLUE corpus for text.
+At the beginning of this course
+and this slide,
+we just said that there is one database of this benchmark
+called GLUE.
+There are nine NLP tasks in it.
+Today, if you need to know whether BERT is doing well,
+just let it run those nine tasks and average them.
+That means the quality
+of this self-supervised learning model.
+But so far in the voice field,
+there is no database for similar benchmarks.
+So, our laboratory and other research teams
+co-developed a voice version of GLUE.
+We called it "SUPERB".
+It is the abbreviation of
+"Speech processing Universal of PERformance Benchmark".
+No matter what kind of model you used,
+you need to give it a name.
+It's the same here;
+we call it SUPERB.
+We are almost done,
+and the website is ready to use.
+Once other teams have watched it,
+it can be published.
+Although it is not online yet,
+you should be able to find related links
+very soon.
+In this benchmark corpus,
+there are ten different tasks.
+The speech has many different aspects.
+Many people talk about speech-related technologies.
+They only know that speech recognition converts voices into text.
+But this is not the full view of speech technology.
+The speech actually contains a lot of information.
+In addition to the information of content,
+it contains information of what you said
+and other information.
+For example, this sentence.
+For example, when this person says this sentence,
+what is his tone?
+And behind this sentence,
+what kind of semantics does it have?
+So we prepared ten different tasks.
+These tasks include different aspects of speech.
+They include testing a model's
+ability to identify content.
+The ability to recognize who is speaking.
+The ability to recognize how he says.
+Even the ability to recognize the meaning behind the sentence.
+From all aspects to detect
+a self-supervised learning model's
+ability to understand human language.
+And we also have a toolkit.
+This toolkit contains
+a variety of
+self-supervised learning models.
+And for these
+self-supervised learning models,
+they can do
+a variety of downstream tasks for speech.
+I put the link here for your reference.
+I just want to tell everyone that
+the technology of self-supervised learning
+is not only used in words.
+For images, speeches,
+they still have a lot of space to apply
+the technology of self-supervised learning.
+Ok,
+for the self-supervised learning part
+like BERT, GPT, we finish here.

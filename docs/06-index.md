@@ -480,7 +480,7 @@
 </details>
 
 <details>
-<summary>338. [ML 2021 (English version)] Lecture 23:  Adversarial Attack (1/2)</summary><br>
+<summary>338. [2021-05-07] [ML 2021 (English version)] Lecture 23:  Adversarial Attack (1/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=xw6K4naFWFg" target="_blank">
     <img src="https://img.youtube.com/vi/xw6K4naFWFg/maxresdefault.jpg" 
@@ -489,11 +489,53 @@
 
 # [ML 2021 (English version)] Lecture 23:  Adversarial Attack (1/2)
 
+### 英文標題  
+A Comprehensive Overview of Adversarial Attack Methods in Deep Learning  
 
+### 中文摘要  
+本文系統性地介紹了深度學習中對抗攻擊的核心主題、主要觀念、問題原因、解決方法及優化方式，並總結了相關結論。文章重點圍繞.gradient descent method和.fast gradient sign method (FGSM) 展開，探討了單次攻擊與多次迭代攻擊的差異及其在不同基線模型中的表現。
+
+---
+
+### 重點整理  
+
+#### 核心主題  
+1. **對抗攻擊在深度學習中的應用**：探討通過擾動資料來 fool 模型的可能性與方法。  
+2. **梯度下降法（Gradient Descent Method）**：用於迭代更新參數以實現對抗攻擊的技術。  
+3. **Fast Gradient Sign Method (FGSM)**：一種基於.gradient descent 的快速對抗攻擊方法，只需一次迭代即可完成攻擊。  
+
+#### 主要觀念  
+1. **梯度下降法的基本原理**：通過反覆更新參數來接近目標，是一種常見的最優化技術。  
+2. **FGSM的核心思想**：基於梯度的方向簽號進行一次性更新，將擾動限制在特定範圍內（如 ε）。  
+3. **對抗攻擊的目的**：使模型在受到微小擾動後產生錯誤分類，測試模型的魯棒性。  
+
+#### 問題原因  
+1. **簡單基線模型易受對抗攻擊**：如未經過充分訓練或缺乏防禦機制的模型，容易被 FGSM 等方法攻破。  
+2. **多次迭代可能超出擾動範圍**：在多輪更新中，參數可能超出行為邊界（如 L∞ 球），影響攻擊的有效性。  
+
+#### 解決方法  
+1. **一擊必殺法（FGSM）**：一次性完成對抗攻擊，確保擾動範圍在可控之內。  
+2. **迭代式 FGSM**：允許多輪更新，但需定期將參數拉回行為邊界以避免越界。  
+3. **防禦機制**：如加入正則化、訓練時增強對抗樣本等方法，提升模型的 robustness。  
+
+#### 優化方式  
+1. **調整學習率（ε）**：根據具體場景調節擾動幅度，平衡攻擊效果與可感知性。  
+2. **多輪迭代**：通過增加迭代次數來增強攻擊能力，但需注意邊界控制。  
+3. **智能擾動設計**：基於模型特性設計更有針對性的擾動，提升攻擊成功率。  
+
+#### 結論  
+1. **FGSM的優勢**：快速、簡潔，適合用於簡單基線模型的攻擊測試。  
+2. **迭代式 FGSM 的提升**：通過多次更新可進一步提升攻擊效果，但需注意邊界的控制與恢復。  
+3. **未來研究方向**：探索更高效的對抗攻擊方法，並結合防禦技術提升模型的 robustness。  
+
+---
+
+### 總結  
+本文系統性地介紹了深度學習中對抗攻擊的核心技術與方法，特別是.gradient descent method 和.FGSM 的原理、應用及優化方式。文章強調了在不同基線模型下，一擊必殺法與多次迭代法的差異，並提出了未來研究的方向。
 </details>
 
 <details>
-<summary>339. [ML 2021 (English version)] Lecture 21:  Auto-encoder (1/2)</summary><br>
+<summary>339. [2021-05-07] [ML 2021 (English version)] Lecture 21:  Auto-encoder (1/2)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=E7wlA85RxcI" target="_blank">
     <img src="https://img.youtube.com/vi/E7wlA85RxcI/maxresdefault.jpg" 
@@ -502,11 +544,32 @@
 
 # [ML 2021 (English version)] Lecture 21:  Auto-encoder (1/2)
 
+### 核心主題
+- 自動編碼器（Auto-Encoder）及其變體的研究與發展。
 
+### 主要觀念
+1. **自動編碼器的基本原理**：用於學習數據的表徵，通過編碼器將數據壓縮為潛在空間表示，再通過解碼器重建原始數據。
+2. **去噪自動編碼器（Denoising Auto-Encoder）**：在編碼器輸入端加入噪聲，並要求解碼器恢復原始乾淨數據，從而學習去除噪聲的能力。
+
+### 問題原因
+- 早期研究中，受限玻耳茲曼機（Restricted Boltzmann Machine, RBM）被廣泛使用，但其複雜性限制了其實用性。
+- RBM 的對稱編解碼器結構限制了模型的靈活性。
+
+### 解決方法
+1. **去噪自動編碼器**：通過添加噪聲來提高模型的魯棒性，並強迫模型學習更健壯的表徵。
+2. **大型語言模型如BERT**：可以視作一種去噪自動編碼器，通過掩蔽詞令牌加入噪聲，並重建原始句子。
+
+### 優化方式
+- 棄對稱結構限制，改用更靈活的深度神經網絡架構。
+- BERT等現代模型將自動編碼器與解碼器結合，提升表徵學習能力。
+
+### 總結
+- 自動編碼器是一種歷史悠久但重要性持續的研究方向。
+- 去噪自動編碼器及其衍生物BERT展示了其在現代深度學習中的廣泛應用價值。
 </details>
 
 <details>
-<summary>340. [ML 2021 (English version)] Lecture 20:  Self-supervised Learning (aka Foundation Model) (3/3)</summary><br>
+<summary>340. [2021-05-07] [ML 2021 (English version)] Lecture 20:  Self-supervised Learning (aka Foundation Model) (3/3)</summary><br>
 
 <a href="https://www.youtube.com/watch?v=6sAf24QvJEY" target="_blank">
     <img src="https://img.youtube.com/vi/6sAf24QvJEY/maxresdefault.jpg" 
@@ -515,7 +578,56 @@
 
 # [ML 2021 (English version)] Lecture 20:  Self-supervised Learning (aka Foundation Model) (3/3)
 
+### 小節歸納
 
+#### 核心主題  
+- 自我監督學習（Self-Supervised Learning, SSL）在多模態數據（如文本、語音和圖像）中的應用。  
+
+#### 主要觀念  
+1. **自我監督學習的定義與核心思想**  
+   - 自我監督學習是一種無監督學習方法，通過設計偽任務從未標注數據中提取有用的特徵。  
+   - 常見於自然語言處理（NLP）領域，如BERT和GPT模型的訓練。  
+
+2. **文本領域的應用**  
+   - BERT模型：通過填空任務（Masked Language Model, MLM）學習上下文語義。  
+   - GPT模型：預測下一步詞元，實現生成式語言模型。  
+
+3. **語音領域的挑戰與進展**  
+   - 語音BERT和GPT的實現：將文本模型的概念遷移至語音處理。  
+   - 常用策略包括遮蔽語音信號片段並讓模型重複預測缺失部分，或預測下一音節。  
+
+4. **圖像領域的探索**  
+   - 對圖像進行旋轉分類、區域掩蔽等任務，提取多模態特徵。  
+
+5. **SUPERBbenchmark的提出**  
+   - 為語音處理領域提供一個綜合性的benchmark，涵蓋內容識別、說話人識別、語調分析和語義理解等功能。  
+
+#### 問題原因  
+1. **語音領域的限制**  
+   - 相對於文本領域（如GLUE benchmark），語音處理缺乏統一的benchmark來評估模型性能。  
+
+2. **多模態數據的複雜性**  
+   - 語音數據包含內容、語調、語義等多方面信息，難以用單一任務全面評估模型能力。  
+
+#### 解決方法  
+1. **SUPERBbenchmark的設計與實現**  
+   - 提供十個不同類型的任務，涵蓋語音處理的多個層面（內容識別、說話人特徵提取、語義分析等）。  
+   - 統一評估標準，便於研究者比較不同模型性能。  
+
+2. **工具包的開發**  
+   - 提供一套包含多種自我監督學習模型和下遊任務的工具包，簡化研究流程。  
+
+#### 優化方式  
+1. **benchmark的持續更新與完善**  
+   - 根據研究進展不斷增加新任務和數據集，提升benchmark的代表性和實用性。  
+
+2. **跨模態對比研究**  
+   - 探索文本、語音和圖像等不同模態之間的相互作用，提升多模態自我監督學習的效果。  
+
+#### 結論  
+- 自我監督學習在文本、語音和圖像等數據處理中顯示出巨大的潛力。  
+- 通過設計綜合性benchmark（如SUPERB）和工具包，可以推動語音處理領域的研究進展。  
+- 未來的研究方向包括多模態對比學習、benchmark的拓展以及實用化場景的探索。
 </details>
 
 <details>
